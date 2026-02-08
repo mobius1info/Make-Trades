@@ -114,7 +114,7 @@ async function loadAllBlogPosts() {
             <span>${post.reading_time || 5} ${minLabel}</span>
           </div>
         </div>
-        <meta itemprop="url" content="https://maketrades.space/blog-post.html?slug=${post.slug}">
+        <meta itemprop="url" content="https://maketrades.info/blog-post.html?slug=${post.slug}">
       </a>
     `).join('');
   } catch (error) {

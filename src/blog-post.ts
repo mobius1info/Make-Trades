@@ -107,7 +107,7 @@ function updateMetaTags(post: BlogPost) {
   if (metaKeywords && post.tags) metaKeywords.content = post.tags.join(', ');
 
   const canonical = document.getElementById('page-canonical') as HTMLLinkElement;
-  if (canonical) canonical.href = `https://maketrades.space/blog-post.html?slug=${post.slug}`;
+  if (canonical) canonical.href = `https://maketrades.info/blog-post.html?slug=${post.slug}`;
 
   const ogTitle = document.getElementById('og-title') as HTMLMetaElement;
   if (ogTitle) ogTitle.content = post.title;
@@ -116,10 +116,10 @@ function updateMetaTags(post: BlogPost) {
   if (ogDescription) ogDescription.content = post.excerpt;
 
   const ogImage = document.getElementById('og-image') as HTMLMetaElement;
-  if (ogImage) ogImage.content = post.image_url || 'https://maketrades.space/og-image.jpg';
+  if (ogImage) ogImage.content = post.image_url || 'https://maketrades.info/og-image.jpg';
 
   const ogUrl = document.getElementById('og-url') as HTMLMetaElement;
-  if (ogUrl) ogUrl.content = `https://maketrades.space/blog-post.html?slug=${post.slug}`;
+  if (ogUrl) ogUrl.content = `https://maketrades.info/blog-post.html?slug=${post.slug}`;
 
   const twitterTitle = document.getElementById('twitter-title') as HTMLMetaElement;
   if (twitterTitle) twitterTitle.content = post.title;
@@ -128,7 +128,7 @@ function updateMetaTags(post: BlogPost) {
   if (twitterDescription) twitterDescription.content = post.excerpt;
 
   const twitterImage = document.getElementById('twitter-image') as HTMLMetaElement;
-  if (twitterImage) twitterImage.content = post.image_url || 'https://maketrades.space/twitter-image.jpg';
+  if (twitterImage) twitterImage.content = post.image_url || 'https://maketrades.info/twitter-image.jpg';
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -140,13 +140,13 @@ function updateMetaTags(post: BlogPost) {
     "publisher": {
       "@type": "Organization",
       "name": "MakeTrades",
-      "logo": { "@type": "ImageObject", "url": "https://maketrades.space/logo.svg" }
+      "logo": { "@type": "ImageObject", "url": "https://maketrades.info/logo.svg" }
     },
     "datePublished": post.created_at,
     "dateModified": post.updated_at,
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://maketrades.space/blog-post.html?slug=${post.slug}`
+      "@id": `https://maketrades.info/blog-post.html?slug=${post.slug}`
     }
   };
 
@@ -157,8 +157,8 @@ function updateMetaTags(post: BlogPost) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "MakeTrades", "item": "https://maketrades.space" },
-      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://maketrades.space/blog.html" },
+      { "@type": "ListItem", "position": 1, "name": "MakeTrades", "item": "https://maketrades.info" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://maketrades.info/blog.html" },
       { "@type": "ListItem", "position": 3, "name": post.title }
     ]
   };

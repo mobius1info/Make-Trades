@@ -26,7 +26,7 @@ Deno.serve(async (req: Request) => {
       },
     });
 
-    const adminEmail = "admin@maketrades.space";
+    const adminEmail = "admin@maketrades.info";
     const adminPassword = "Admin123456!";
 
     const { data: existingAdmins, error: checkError } = await supabaseAdmin
