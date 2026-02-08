@@ -7,6 +7,8 @@
   <title id="page-title">Загрузка... | MakeTrades</title>
   <meta name="description" id="page-description" content="Статья блога MakeTrades">
   <meta name="keywords" id="page-keywords" content="трейдинг, брокер, форекс">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="MakeTrades">
   <link rel="canonical" id="page-canonical" href="https://maketrades.space/blog-post.html">
 
   <meta property="og:type" content="article">
@@ -14,16 +16,29 @@
   <meta property="og:title" id="og-title" content="Статья | MakeTrades">
   <meta property="og:description" id="og-description" content="Статья блога MakeTrades">
   <meta property="og:image" id="og-image" content="https://maketrades.space/og-image.jpg">
+  <meta property="og:site_name" content="MakeTrades">
+  <meta property="og:locale" content="ru_RU">
 
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" id="twitter-url" content="https://maketrades.space/blog-post.html">
   <meta name="twitter:title" id="twitter-title" content="Статья | MakeTrades">
   <meta name="twitter:description" id="twitter-description" content="Статья блога MakeTrades">
   <meta name="twitter:image" id="twitter-image" content="https://maketrades.space/twitter-image.jpg">
 
   <link rel="alternate" hreflang="ru" href="https://maketrades.space/blog-post.html">
-  <link rel="alternate" hreflang="en" href="https://maketrades.space/en/blog-post.html">
+  <link rel="alternate" hreflang="en" href="https://maketrades.space/blog-post.html?lang=en">
+  <link rel="alternate" hreflang="de" href="https://maketrades.space/blog-post.html?lang=de">
+  <link rel="alternate" hreflang="uk" href="https://maketrades.space/blog-post.html?lang=uk">
+  <link rel="alternate" hreflang="zh" href="https://maketrades.space/blog-post.html?lang=zh">
+  <link rel="alternate" hreflang="x-default" href="https://maketrades.space/blog-post.html">
 
   <link rel="icon" type="image/png" href="/icon.png">
+  <link rel="apple-touch-icon" href="/icon.png">
+  <meta name="theme-color" content="#0F172A">
+
+  <link rel="preconnect" href="https://vhahxcmzpaxosthlorfm.supabase.co" crossorigin>
+  <link rel="preconnect" href="https://images.pexels.com">
+
 
   <script type="application/ld+json" id="structured-data">
   {
@@ -37,15 +52,46 @@
     },
     "publisher": {
       "@type": "Organization",
-      "name": "MakeTrades"
+      "name": "MakeTrades",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://maketrades.space/logo.svg"
+      }
     },
     "datePublished": "",
     "dateModified": ""
   }
   </script>
-  <script type="module" crossorigin src="/assets/blogPost-fvg9871F.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/index-Cfu0LHQK.js">
-  <link rel="stylesheet" crossorigin href="/assets/index-DkSRcc3X.css">
+
+  <script type="application/ld+json" id="breadcrumb-data">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "MakeTrades",
+        "item": "https://maketrades.space"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://maketrades.space/blog.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Загрузка..."
+      }
+    ]
+  }
+  </script>
+  <script type="module" crossorigin src="/assets/blogPost-CN8b9D20.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index-D488pGsG.js">
+  <link rel="modulepreload" crossorigin href="/assets/content-loader-C4ub3CoC.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-DKYr5cp4.css">
 </head>
 <body>
   <header class="header">
@@ -64,7 +110,7 @@
             <button class="lang-btn" data-lang="zh" aria-label="中文">ZH</button>
           </div>
 
-          <a href="/blog.html" class="btn btn-secondary">Блог</a>
+          <a href="/blog.html" class="btn btn-secondary" id="backBlogBtn">Блог</a>
         </div>
       </nav>
     </div>
@@ -74,13 +120,13 @@
     <article class="blog-post-page">
       <div class="container">
         <div id="loading" style="text-align: center; padding: 4rem 0;">
-          <p>Загрузка статьи...</p>
+          <p id="loadingText">Загрузка статьи...</p>
         </div>
 
         <div id="error" style="display: none; text-align: center; padding: 4rem 0;">
-          <h2>Статья не найдена</h2>
-          <p style="color: var(--neutral-600); margin-bottom: 2rem;">К сожалению, запрашиваемая статья не найдена.</p>
-          <a href="/blog.html" class="btn btn-primary">Вернуться к блогу</a>
+          <h2 id="errorTitle">Статья не найдена</h2>
+          <p id="errorDesc" style="color: var(--neutral-600); margin-bottom: 2rem;">К сожалению, запрашиваемая статья не найдена.</p>
+          <a href="/blog.html" class="btn btn-primary" id="errorBackBtn">Вернуться к блогу</a>
         </div>
 
         <div id="post-content" style="display: none;">
@@ -98,7 +144,7 @@
               <img src="/icons/user.svg" alt="Автор" width="40" height="40">
               <div>
                 <div class="author-name" id="post-author"></div>
-                <div class="author-role">Эксперт MakeTrades</div>
+                <div class="author-role" id="authorRole">Эксперт MakeTrades</div>
               </div>
             </div>
           </div>
@@ -114,13 +160,13 @@
           </div>
 
           <div class="blog-post-cta">
-            <h3>Готовы запустить свою брокерскую платформу?</h3>
-            <p>MakeTrades предоставляет все необходимые инструменты для успешного старта</p>
-            <a href="/#demo" class="btn btn-primary btn-large">Запросить демо</a>
+            <h3 id="postCtaTitle">Готовы запустить свою брокерскую платформу?</h3>
+            <p id="postCtaDesc">MakeTrades предоставляет все необходимые инструменты для успешного старта</p>
+            <button class="btn btn-primary btn-large" id="postCtaBtn">Запросить демо</button>
           </div>
 
           <div class="related-posts">
-            <h3>Похожие статьи</h3>
+            <h3 id="relatedTitle">Похожие статьи</h3>
             <div class="blog-grid" id="related-posts-grid">
             </div>
           </div>
@@ -132,10 +178,34 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-bottom">
-        <p>&copy; 2024 MakeTrades. Все права защищены.</p>
+        <p id="postCopyright">&copy; 2026 MakeTrades. Все права защищены.</p>
       </div>
     </div>
   </footer>
+
+  <div id="demoModal" class="modal" role="dialog" aria-labelledby="demoModalTitle" aria-hidden="true">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h2 id="demoModalTitle">Запросить демо-аккаунт</h2>
+      <form id="demoForm" novalidate>
+        <div class="form-field">
+          <input type="text" name="name" placeholder="Ваше имя" aria-label="Ваше имя">
+        </div>
+        <div class="form-field">
+          <input type="email" name="email" placeholder="Email" aria-label="Ваш email">
+        </div>
+        <div class="form-field">
+          <input type="text" name="telegram" placeholder="Telegram (необязательно)" aria-label="Ваш Telegram">
+        </div>
+        <label class="checkbox-field">
+          <input type="checkbox" name="not_robot">
+          <span class="checkbox-custom"></span>
+          <span class="checkbox-label" data-translate="form.not_robot">Я не робот</span>
+        </label>
+        <button type="submit" class="btn btn-primary btn-large">Запросить</button>
+      </form>
+    </div>
+  </div>
 
 </body>
 </html>

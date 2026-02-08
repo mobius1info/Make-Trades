@@ -31,18 +31,27 @@
 
   <!-- Hreflang Tags for Multilingual Support -->
   <link rel="alternate" hreflang="ru" href="https://maketrades.space">
-  <link rel="alternate" hreflang="en" href="https://maketrades.space/en">
-  <link rel="alternate" hreflang="de" href="https://maketrades.space/de">
+  <link rel="alternate" hreflang="en" href="https://maketrades.space?lang=en">
+  <link rel="alternate" hreflang="de" href="https://maketrades.space?lang=de">
+  <link rel="alternate" hreflang="uk" href="https://maketrades.space?lang=uk">
+  <link rel="alternate" hreflang="zh" href="https://maketrades.space?lang=zh">
   <link rel="alternate" hreflang="x-default" href="https://maketrades.space">
 
-  <!-- Favicon -->
+  <!-- Favicon & Icons -->
   <link rel="icon" type="image/png" href="/icon.png">
+  <link rel="apple-touch-icon" href="/icon.png">
+  <meta name="theme-color" content="#0F172A">
 
   <!-- Preconnect to external domains -->
-  <link rel="preconnect" href="https://images.pexels.com">
-  <link rel="dns-prefetch" href="https://images.pexels.com">
+  <link rel="preconnect" href="https://vhahxcmzpaxosthlorfm.supabase.co" crossorigin>
+  <link rel="dns-prefetch" href="https://vhahxcmzpaxosthlorfm.supabase.co">
   <link rel="preconnect" href="https://www.googletagmanager.com">
   <link rel="preconnect" href="https://mc.yandex.ru">
+  <link rel="preconnect" href="https://images.pexels.com">
+
+  <!-- Preload critical resources -->
+  <link rel="preload" href="/assets/hero-main.jpg" as="image">
+  <link rel="preload" href="/assets/logo.svg" as="image">
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
@@ -61,13 +70,15 @@
     k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
     (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-    ym(XXXXXXXX, "init", {
-      clickmap:true,
-      trackLinks:true,
-      accurateTrackBounce:true,
-      webvisor:true,
-      ecommerce:"dataLayer"
-    });
+    if (typeof XXXXXXXX !== 'undefined') {
+      ym(XXXXXXXX, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true,
+        ecommerce:"dataLayer"
+      });
+    }
   </script>
 
   <!-- Schema.org structured data -->
@@ -134,7 +145,12 @@
     "@type": "Organization",
     "name": "MakeTrades",
     "url": "https://maketrades.space",
-    "logo": "https://maketrades.space/logo.svg",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://maketrades.space/logo.svg",
+      "width": 160,
+      "height": 40
+    },
     "description": "Создание брокеров, криптобирж и дилинговых центров под ключ",
     "address": {
       "@type": "PostalAddress",
@@ -146,24 +162,55 @@
         "@type": "ContactPoint",
         "telephone": "+1-855-635-6252",
         "contactType": "sales",
-        "availableLanguage": ["en", "ru", "de"]
+        "availableLanguage": ["en", "ru", "de", "uk", "zh"]
       },
       {
         "@type": "ContactPoint",
         "telephone": "+44-744-191-7770",
         "contactType": "customer support",
-        "availableLanguage": ["en", "ru", "de"]
+        "availableLanguage": ["en", "ru", "de", "uk", "zh"]
       }
-    ],
-    "sameAs": [
-      "https://maketrades.space"
     ]
   }
   </script>
 
-  <script type="module" crossorigin src="/assets/main-TfzIoDEo.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/index-Cfu0LHQK.js">
-  <link rel="stylesheet" crossorigin href="/assets/index-DkSRcc3X.css">
+  <!-- WebSite Schema for Sitelinks -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "MakeTrades",
+    "url": "https://maketrades.space",
+    "description": "Комплексная платформа для создания брокерской компании, криптобирж и дилинговых центров под ключ",
+    "inLanguage": ["ru", "en", "de", "uk", "zh"],
+    "publisher": {
+      "@type": "Organization",
+      "name": "MakeTrades",
+      "url": "https://maketrades.space"
+    }
+  }
+  </script>
+
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "MakeTrades",
+        "item": "https://maketrades.space"
+      }
+    ]
+  }
+  </script>
+
+  <script type="module" crossorigin src="/assets/main-CGd7iIX0.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index-D488pGsG.js">
+  <link rel="modulepreload" crossorigin href="/assets/content-loader-C4ub3CoC.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-DKYr5cp4.css">
 </head>
 <body>
   <!-- Yandex.Metrika noscript -->
@@ -174,7 +221,7 @@
     <div class="container">
       <nav class="nav">
         <a href="/" class="logo" aria-label="MakeTrades Home">
-          <img src="/logo.svg" alt="MakeTrades логотип - платформа для создания брокеров" width="160" height="40">
+          <img src="/assets/logo.svg" alt="MakeTrades логотип - платформа для создания брокеров" width="160" height="40">
         </a>
 
         <div class="nav-actions">
@@ -187,8 +234,8 @@
           </div>
 
           <a href="#login" class="btn btn-secondary" aria-label="Войти в личный кабинет">
-            <img src="/icons/user.svg" alt="" width="20" height="20" aria-hidden="true">
-            Личный кабинет
+            <img src="/assets/icon-user.svg" alt="" width="20" height="20" aria-hidden="true">
+            <span id="loginBtnText">Личный кабинет</span>
           </a>
         </div>
       </nav>
@@ -206,23 +253,23 @@
 
           <div class="hero-features">
             <div class="feature-badge">
-              <img src="/icons/check.svg" alt="" width="24" height="24" aria-hidden="true">
+              <img src="/assets/icon-check.svg" alt="" width="24" height="24" aria-hidden="true">
               <span>500+ торговых инструментов</span>
             </div>
             <div class="feature-badge">
-              <img src="/icons/check.svg" alt="" width="24" height="24" aria-hidden="true">
+              <img src="/assets/icon-check.svg" alt="" width="24" height="24" aria-hidden="true">
               <span>200+ компаний используют</span>
             </div>
             <div class="feature-badge">
-              <img src="/icons/check.svg" alt="" width="24" height="24" aria-hidden="true">
+              <img src="/assets/icon-check.svg" alt="" width="24" height="24" aria-hidden="true">
               <span>White Label решение</span>
             </div>
           </div>
 
           <div class="pricing-badge">
-            <span class="price-label">От</span>
-            <span class="price">$1000-3000</span>
-            <span class="price-period">в месяц</span>
+            <span class="price-label" id="priceFrom">От</span>
+            <span class="price" id="priceAmount">$1000-3000</span>
+            <span class="price-period" id="pricePeriod">в месяц</span>
           </div>
 
           <button class="btn btn-primary btn-large" id="requestDemoBtn" aria-label="Запросить демо-аккаунт">
@@ -231,7 +278,7 @@
         </div>
 
         <div class="hero-image">
-          <img src="https://images.pexels.com/photos/7567443/pexels-photo-7567443.jpeg?auto=compress&cs=tinysrgb&w=1200"
+          <img src="/assets/hero-main.jpg"
                alt="Торговая платформа MakeTrades с графиками и инструментами анализа"
                width="600"
                height="450"
@@ -243,125 +290,77 @@
     <!-- Features Grid Section -->
     <section class="features-grid" id="features">
       <div class="container">
-        <h2 class="section-title">Полный функционал для вашего брокера</h2>
+        <h2 class="section-title reveal">Полный функционал для вашего брокера</h2>
 
         <div class="grid">
-          <article class="feature-card">
-            <img src="https://images.pexels.com/photos/7567443/pexels-photo-7567443.jpeg?auto=compress&cs=tinysrgb&w=400"
-                 alt="Иконка торгового терминала с множественными графиками"
-                 width="64"
-                 height="64"
-                 loading="lazy">
+          <article class="feature-card reveal stagger-1" data-feature="terminals">
+            <img src="/assets/feature-terminals.png" alt="" width="64" height="64" loading="lazy">
             <h3>Все торговые терминалы</h3>
             <p>Виджеты, сервер, котировки, CRM, кабинет трейдера - всё включено в одну платформу</p>
           </article>
 
-          <article class="feature-card">
-            <img src="https://images.pexels.com/photos/147413/twitter-facebook-together-exchange-of-information-147413.jpeg?auto=compress&cs=tinysrgb&w=400"
-                 alt="Иконка мобильных приложений для iOS и Android"
-                 width="64"
-                 height="64"
-                 loading="lazy">
+          <article class="feature-card reveal stagger-2" data-feature="apps">
+            <img src="/assets/feature-apps.png" alt="" width="64" height="64" loading="lazy">
             <h3>Приложения в сторах</h3>
             <p>Регистрация приложения с вашим логотипом в Apple Store и Google Play</p>
           </article>
 
-          <article class="feature-card">
-            <img src="https://images.pexels.com/photos/6801874/pexels-photo-6801874.jpeg?auto=compress&cs=tinysrgb&w=400"
-                 alt="Иконка финансовых инструментов и котировок"
-                 width="64"
-                 height="64"
-                 loading="lazy">
+          <article class="feature-card reveal stagger-3" data-feature="instruments">
+            <img src="/assets/feature-instruments.png" alt="" width="64" height="64" loading="lazy">
             <h3>500+ инструментов</h3>
             <p>Котировки forex, криптовалют, акций и индексов в реальном времени</p>
           </article>
 
-          <article class="feature-card">
-            <img src="https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=400"
-                 alt="Иконка настройки спредов и комиссий"
-                 width="64"
-                 height="64"
-                 loading="lazy">
+          <article class="feature-card" data-feature="settings">
+            <img src="/assets/feature-settings.png" alt="" width="64" height="64" loading="lazy">
             <h3>Гибкие настройки</h3>
             <p>Настраиваемые спреды, комиссии и параметры для каждого инструмента</p>
           </article>
 
-          <article class="feature-card">
-            <img src="https://images.pexels.com/photos/7567528/pexels-photo-7567528.jpeg?auto=compress&cs=tinysrgb&w=400"
-                 alt="Иконка инвестиционного портфеля и копирования сделок"
-                 width="64"
-                 height="64"
-                 loading="lazy">
+          <article class="feature-card" data-feature="investments">
+            <img src="/assets/feature-investments.png" alt="" width="64" height="64" loading="lazy">
             <h3>Инвестиции и копирование</h3>
             <p>Самый функциональный терминал с инвестициями и копированием сделок</p>
           </article>
 
-          <article class="feature-card">
-            <img src="https://images.pexels.com/photos/7567486/pexels-photo-7567486.jpeg?auto=compress&cs=tinysrgb&w=400"
-                 alt="Иконка Prop-trading и бинарных опционов"
-                 width="64"
-                 height="64"
-                 loading="lazy">
+          <article class="feature-card" data-feature="prop">
+            <img src="/assets/feature-prop.png" alt="" width="64" height="64" loading="lazy">
             <h3>Prop-trading и бинарные опционы</h3>
             <p>Возможность интеграции prop-trading и бинарных опционов</p>
           </article>
 
-          <article class="feature-card">
-            <img src="https://images.pexels.com/photos/8358031/pexels-photo-8358031.jpeg?auto=compress&cs=tinysrgb&w=400"
-                 alt="Иконка магазина торговых ботов и индикаторов"
-                 width="64"
-                 height="64"
-                 loading="lazy">
+          <article class="feature-card" data-feature="store">
+            <img src="/assets/feature-store.png" alt="" width="64" height="64" loading="lazy">
             <h3>Store ботов и индикаторов</h3>
             <p>Магазин ботов и индикаторов с поддержкой JavaScript разработки</p>
           </article>
 
-          <article class="feature-card">
-            <img src="https://images.pexels.com/photos/7567434/pexels-photo-7567434.jpeg?auto=compress&cs=tinysrgb&w=400"
-                 alt="Иконка криптовалютного процессинга"
-                 width="64"
-                 height="64"
-                 loading="lazy">
+          <article class="feature-card" data-feature="crypto">
+            <img src="/assets/feature-crypto.png" alt="" width="64" height="64" loading="lazy">
             <h3>Криптовалютный процессинг</h3>
             <p>Встроенный процессинг для приема и вывода криптовалюты</p>
           </article>
 
-          <article class="feature-card">
-            <img src="https://images.pexels.com/photos/5980866/pexels-photo-5980866.jpeg?auto=compress&cs=tinysrgb&w=400"
-                 alt="Иконка API интеграций платежных систем"
-                 width="64"
-                 height="64"
-                 loading="lazy">
+          <article class="feature-card" data-feature="api">
+            <img src="/assets/feature-api.png" alt="" width="64" height="64" loading="lazy">
             <h3>API интеграции</h3>
             <p>API для интеграции платежных систем и сторонних сервисов</p>
           </article>
 
-          <article class="feature-card">
-            <img src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=400"
-                 alt="Иконка довольных клиентов, использующих платформу"
-                 width="64"
-                 height="64"
-                 loading="lazy">
+          <article class="feature-card" data-feature="companies">
+            <img src="/assets/feature-companies.png" alt="" width="64" height="64" loading="lazy">
             <h3>200+ компаний</h3>
             <p>Более 200 компаний по всему миру используют нашу платформу</p>
           </article>
 
-          <article class="feature-card">
-            <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=400"
-                 alt="Иконка CRM системы для управления клиентами"
-                 width="64"
-                 height="64"
-                 loading="lazy">
+          <article class="feature-card" data-feature="crm">
+            <img src="/assets/feature-crm.png" alt="" width="64" height="64" loading="lazy">
             <h3>Полнофункциональная CRM</h3>
             <p>CRM с разделением ролей, управлением лидами и автоматизацией</p>
           </article>
 
-          <article class="feature-card">
-            <img src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=400"
-                 alt="Иконка партнерской программы и IB-кабинета"
-                 width="64"
-                 height="64"
-                 loading="lazy">
+          <article class="feature-card" data-feature="partner">
+            <img src="/assets/feature-partner.png" alt="" width="64" height="64" loading="lazy">
             <h3>Партнерская программа</h3>
             <p>Автоматическое распределение бонусов и партнерских комиссий, IB-кабинет</p>
           </article>
@@ -372,31 +371,31 @@
     <!-- Detailed Features Section -->
     <section class="detailed-features">
       <div class="container">
-        <article class="feature-detail">
-          <div class="feature-detail-content">
+        <article class="feature-detail" data-detail="1">
+          <div class="feature-detail-content reveal-left">
             <h2>Лучшее решение для ваших клиентов</h2>
             <p>Предоставьте вашим клиентам профессиональный инструмент для трейдинга с продвинутыми функциями анализа, автоматизации и управления портфелем.</p>
             <ul class="feature-list">
               <li>
-                <img src="/icons/check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
-                Интуитивно понятный интерфейс
+                <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
+                <span>Интуитивно понятный интерфейс</span>
               </li>
               <li>
-                <img src="/icons/check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
-                Продвинутые графики и индикаторы
+                <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
+                <span>Продвинутые графики и индикаторы</span>
               </li>
               <li>
-                <img src="/icons/check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
-                Мобильная торговля 24/7
+                <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
+                <span>Мобильная торговля 24/7</span>
               </li>
               <li>
-                <img src="/icons/check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
-                Автоматизация стратегий
+                <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
+                <span>Автоматизация стратегий</span>
               </li>
             </ul>
           </div>
-          <div class="feature-detail-image">
-            <img src="https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=800"
+          <div class="feature-detail-image reveal-right">
+            <img src="/assets/detail-solution.jpg"
                  alt="Торговый терминал с графиками и аналитическими инструментами"
                  width="600"
                  height="400"
@@ -404,63 +403,63 @@
           </div>
         </article>
 
-        <article class="feature-detail feature-detail-reverse">
-          <div class="feature-detail-image">
-            <img src="https://images.pexels.com/photos/8358031/pexels-photo-8358031.jpeg?auto=compress&cs=tinysrgb&w=800"
+        <article class="feature-detail feature-detail-reverse" data-detail="2">
+          <div class="feature-detail-image reveal-left">
+            <img src="/assets/detail-bots.jpg"
                  alt="Магазин торговых ботов с различными стратегиями"
                  width="600"
                  height="400"
                  loading="lazy">
           </div>
-          <div class="feature-detail-content">
+          <div class="feature-detail-content reveal-right">
             <h2>Магазин торговых ботов</h2>
             <p>Предоставьте клиентам доступ к маркетплейсу торговых ботов и позвольте разработчикам создавать собственные стратегии на JavaScript.</p>
             <ul class="feature-list">
               <li>
-                <img src="/icons/check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
-                Готовые торговые стратегии
+                <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
+                <span>Готовые торговые стратегии</span>
               </li>
               <li>
-                <img src="/icons/check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
-                Backtesting и оптимизация
+                <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
+                <span>Backtesting и оптимизация</span>
               </li>
               <li>
-                <img src="/icons/check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
-                JavaScript API для разработки
+                <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
+                <span>JavaScript API для разработки</span>
               </li>
               <li>
-                <img src="/icons/check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
-                Монетизация для разработчиков
+                <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
+                <span>Монетизация для разработчиков</span>
               </li>
             </ul>
           </div>
         </article>
 
-        <article class="feature-detail">
-          <div class="feature-detail-content">
+        <article class="feature-detail" data-detail="3">
+          <div class="feature-detail-content reveal-left">
             <h2>Инвестиционные портфели</h2>
             <p>Позвольте вашим клиентам инвестировать в готовые портфели и копировать сделки успешных трейдеров.</p>
             <ul class="feature-list">
               <li>
-                <img src="/icons/check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
-                PAMM и MAM счета
+                <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
+                <span>PAMM и MAM счета</span>
               </li>
               <li>
-                <img src="/icons/check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
-                Social Trading
+                <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
+                <span>Social Trading</span>
               </li>
               <li>
-                <img src="/icons/check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
-                Детальная статистика доходности
+                <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
+                <span>Детальная статистика доходности</span>
               </li>
               <li>
-                <img src="/icons/check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
-                Автоматическое копирование сделок
+                <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true">
+                <span>Автоматическое копирование сделок</span>
               </li>
             </ul>
           </div>
-          <div class="feature-detail-image">
-            <img src="https://images.pexels.com/photos/7567528/pexels-photo-7567528.jpeg?auto=compress&cs=tinysrgb&w=800"
+          <div class="feature-detail-image reveal-right">
+            <img src="/assets/detail-portfolios.jpg"
                  alt="Инвестиционные портфели с графиками доходности"
                  width="600"
                  height="400"
@@ -473,12 +472,12 @@
     <!-- Blog Preview Section -->
     <section class="blog-preview" id="blog">
       <div class="container">
-        <h2 class="section-title">Полезные статьи</h2>
+        <h2 class="section-title reveal">Полезные статьи</h2>
         <div class="blog-grid" id="blogGrid">
           <!-- Blog posts will be loaded dynamically -->
         </div>
         <div class="text-center">
-          <a href="/blog.html" class="btn btn-secondary">Все статьи</a>
+          <a href="/blog.html" class="btn btn-secondary" id="allArticlesBtn">Все статьи</a>
         </div>
       </div>
     </section>
@@ -486,7 +485,7 @@
     <!-- CTA Section -->
     <section class="cta-section">
       <div class="container">
-        <div class="cta-content">
+        <div class="cta-content reveal">
           <h2>Готовы начать?</h2>
           <p>Получите демо-аккаунт и протестируйте все возможности платформы бесплатно</p>
           <button class="btn btn-primary btn-large" id="ctaRequestDemoBtn">Запросить демо-аккаунт</button>
@@ -497,12 +496,12 @@
     <!-- FAQ Section -->
     <section class="faq-section" id="faq">
       <div class="container">
-        <h2 class="section-title">Часто задаваемые вопросы</h2>
+        <h2 class="section-title reveal">Часто задаваемые вопросы</h2>
         <div class="faq-list" id="faqList">
           <!-- FAQ items will be loaded dynamically -->
         </div>
         <div class="text-center">
-          <a href="/faq.html" class="btn btn-secondary">Все вопросы</a>
+          <a href="/faq.html" class="btn btn-secondary" id="allFaqBtn">Все вопросы</a>
         </div>
       </div>
     </section>
@@ -511,54 +510,36 @@
   <!-- Footer -->
   <footer class="footer" id="contact">
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-column">
-          <h3>MakeTrades</h3>
-          <p>Создание брокеров, криптобирж и дилинговых центров под ключ</p>
-          <div class="social-links">
-            <!-- Social links can be added here -->
+      <div class="footer-contacts">
+        <div class="footer-contact-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div>
+            <span class="footer-contact-label" id="footerAddressLabel">Адрес</span>
+            <address>Geneva Place, Waterfront Drive<br>Road Town, Tortola, P.O. BOX 3469</address>
           </div>
         </div>
-
-        <div class="footer-column">
-          <h3>Навигация</h3>
-          <ul class="footer-links">
-            <li><a href="#home">Главная</a></li>
-            <li><a href="#features">Возможности</a></li>
-            <li><a href="/blog.html">Блог</a></li>
-            <li><a href="/faq.html">FAQ</a></li>
-            <li><a href="#contact">Контакты</a></li>
-          </ul>
+        <div class="footer-contact-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <div>
+            <span class="footer-contact-label" id="footerPhoneLabel">Телефон</span>
+            <a href="tel:+18556356252">+1 855 635 6252</a>
+            <a href="tel:+447441917770">+44 744 191 7770</a>
+          </div>
         </div>
-
-        <div class="footer-column">
-          <h3>Контакты</h3>
-          <address class="contact-info">
-            <p>Geneva Place, Waterfront Drive<br>Road Town, Tortola<br>P.O. BOX 3469</p>
-            <p>
-              <a href="tel:+18556356252">+1 855 635 6252</a><br>
-              <a href="tel:+447441917770">+44 744 191 7770</a>
-            </p>
-            <p>
-              <a href="mailto:sales@maketrades.space">sales@maketrades.space</a>
-            </p>
-          </address>
-        </div>
-
-        <div class="footer-column">
-          <h3>Обратная связь</h3>
-          <form id="contactForm" class="contact-form">
-            <input type="text" name="name" placeholder="Ваше имя" required aria-label="Ваше имя">
-            <input type="email" name="email" placeholder="Email" required aria-label="Ваш email">
-            <textarea name="message" placeholder="Сообщение" required aria-label="Ваше сообщение"></textarea>
-            <input type="text" name="telegram" placeholder="Telegram (необязательно)" aria-label="Ваш Telegram">
-            <button type="submit" class="btn btn-primary">Отправить</button>
-          </form>
+        <div class="footer-contact-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <div>
+            <span class="footer-contact-label" id="footerEmailLabel">Email</span>
+            <a href="mailto:sales@maketrades.space">sales@maketrades.space</a>
+          </div>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <p>&copy; 2024 MakeTrades. Все права защищены.</p>
+        <a href="/" class="footer-logo" aria-label="MakeTrades Home">
+          <img src="/assets/logo.svg" alt="MakeTrades" width="160" height="40">
+        </a>
+        <p id="copyrightText">&copy; 2026 MakeTrades. Все права защищены.</p>
       </div>
     </div>
   </footer>
@@ -568,21 +549,45 @@
     <div class="modal-content">
       <button class="modal-close" aria-label="Закрыть модальное окно">&times;</button>
       <h2 id="demoModalTitle">Запросить демо-аккаунт</h2>
-      <form id="demoForm">
-        <input type="text" name="name" placeholder="Ваше имя" required aria-label="Ваше имя">
-        <input type="email" name="email" placeholder="Email" required aria-label="Ваш email">
-        <input type="text" name="telegram" placeholder="Telegram (необязательно)" aria-label="Ваш Telegram">
+      <form id="demoForm" novalidate>
+        <div class="form-field">
+          <input type="text" name="name" placeholder="Ваше имя" aria-label="Ваше имя">
+        </div>
+        <div class="form-field">
+          <input type="email" name="email" placeholder="Email" aria-label="Ваш email">
+        </div>
+        <div class="form-field">
+          <input type="text" name="telegram" placeholder="Telegram (необязательно)" aria-label="Ваш Telegram">
+        </div>
+        <label class="checkbox-field">
+          <input type="checkbox" name="not_robot">
+          <span class="checkbox-custom"></span>
+          <span class="checkbox-label" data-translate="form.not_robot">Я не робот</span>
+        </label>
         <button type="submit" class="btn btn-primary btn-large">Запросить</button>
       </form>
     </div>
   </div>
 
-  <!-- Telegram Widget -->
-  <script src="https://telegram.org/js/telegram-widget.js?22" data-telegram-discussion="your_channel_name" data-comments-limit="5" data-colorful="1" data-dark="0"></script>
+  <div id="loginModal" class="modal" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h2 id="loginModalTitle">Вход в личный кабинет</h2>
+      <form id="loginForm" novalidate>
+        <div class="form-field">
+          <input type="email" name="email" placeholder="Email" aria-label="Email">
+        </div>
+        <div class="form-field">
+          <input type="password" name="password" placeholder="Пароль" aria-label="Password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-large" id="loginSubmitBtn">Войти</button>
+      </form>
+    </div>
+  </div>
 
   <!-- Floating Telegram Button -->
   <div id="telegram-button" style="position: fixed; bottom: 30px; right: 30px; z-index: 1000;">
-    <a href="https://t.me/your_telegram_username" target="_blank" rel="noopener noreferrer"
+    <a href="https://t.me/Make_Soft_Ltd" target="_blank" rel="noopener noreferrer"
        style="display: flex; align-items: center; justify-content: center; width: 60px; height: 60px;
               background: linear-gradient(135deg, #0088cc 0%, #229ED9 100%); border-radius: 50%;
               box-shadow: 0 4px 12px rgba(0, 136, 204, 0.4); transition: all 0.3s ease; text-decoration: none;"

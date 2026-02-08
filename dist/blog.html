@@ -7,18 +7,38 @@
   <title>Блог MakeTrades - Статьи о трейдинге и брокерском бизнесе</title>
   <meta name="description" content="Полезные статьи о создании брокерской компании, торговых ботах, стратегиях трейдинга и управлении финансовыми платформами.">
   <meta name="keywords" content="блог трейдинг, статьи брокер, торговые боты, стратегии форекс, финансовые рынки">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="MakeTrades">
   <link rel="canonical" href="https://maketrades.space/blog.html">
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://maketrades.space/blog.html">
-  <meta property="og:title" content="Блог MakeTrades - Статьи о трейдинге">
-  <meta property="og:description" content="Полезные статьи о создании брокерской компании и трейдинге">
+  <meta property="og:title" content="Блог MakeTrades - Статьи о трейдинге и брокерском бизнесе">
+  <meta property="og:description" content="Полезные статьи о создании брокерской компании, торговых ботах, стратегиях трейдинга и управлении финансовыми платформами.">
+  <meta property="og:image" content="https://maketrades.space/og-image.jpg">
+  <meta property="og:site_name" content="MakeTrades">
+  <meta property="og:locale" content="ru_RU">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://maketrades.space/blog.html">
+  <meta name="twitter:title" content="Блог MakeTrades - Статьи о трейдинге">
+  <meta name="twitter:description" content="Полезные статьи о создании брокерской компании и трейдинге">
+  <meta name="twitter:image" content="https://maketrades.space/twitter-image.jpg">
 
   <link rel="alternate" hreflang="ru" href="https://maketrades.space/blog.html">
-  <link rel="alternate" hreflang="en" href="https://maketrades.space/en/blog.html">
-  <link rel="alternate" hreflang="de" href="https://maketrades.space/de/blog.html">
+  <link rel="alternate" hreflang="en" href="https://maketrades.space/blog.html?lang=en">
+  <link rel="alternate" hreflang="de" href="https://maketrades.space/blog.html?lang=de">
+  <link rel="alternate" hreflang="uk" href="https://maketrades.space/blog.html?lang=uk">
+  <link rel="alternate" hreflang="zh" href="https://maketrades.space/blog.html?lang=zh">
+  <link rel="alternate" hreflang="x-default" href="https://maketrades.space/blog.html">
 
   <link rel="icon" type="image/png" href="/icon.png">
+  <link rel="apple-touch-icon" href="/icon.png">
+  <meta name="theme-color" content="#0F172A">
+
+  <link rel="preconnect" href="https://vhahxcmzpaxosthlorfm.supabase.co" crossorigin>
+  <link rel="preconnect" href="https://images.pexels.com">
+
 
   <script type="application/ld+json">
   {
@@ -27,15 +47,43 @@
     "name": "MakeTrades Blog",
     "description": "Статьи о создании брокерской компании, торговых ботах и трейдинге",
     "url": "https://maketrades.space/blog.html",
+    "inLanguage": ["ru", "en", "de", "uk", "zh"],
     "publisher": {
       "@type": "Organization",
-      "name": "MakeTrades"
+      "name": "MakeTrades",
+      "url": "https://maketrades.space",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://maketrades.space/logo.svg"
+      }
     }
   }
   </script>
-  <script type="module" crossorigin src="/assets/blog-Dd8svrLc.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/index-Cfu0LHQK.js">
-  <link rel="stylesheet" crossorigin href="/assets/index-DkSRcc3X.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "MakeTrades",
+        "item": "https://maketrades.space"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://maketrades.space/blog.html"
+      }
+    ]
+  }
+  </script>
+  <script type="module" crossorigin src="/assets/blog-C4zkYN98.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index-D488pGsG.js">
+  <link rel="modulepreload" crossorigin href="/assets/content-loader-C4ub3CoC.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-DKYr5cp4.css">
 </head>
 <body>
   <header class="header">
@@ -54,7 +102,7 @@
             <button class="lang-btn" data-lang="zh" aria-label="中文">ZH</button>
           </div>
 
-          <a href="/" class="btn btn-secondary">На главную</a>
+          <a href="/" class="btn btn-secondary" id="backHomeBtn">На главную</a>
         </div>
       </nav>
     </div>
@@ -63,20 +111,10 @@
   <main>
     <section class="blog-page">
       <div class="container">
-        <h1 class="section-title">Блог MakeTrades</h1>
-        <p style="text-align: center; max-width: 700px; margin: 0 auto 2rem auto; color: var(--neutral-600); font-size: 1.125rem;">
+        <h1 class="section-title" id="blogPageTitle">Блог MakeTrades</h1>
+        <p id="blogPageSubtitle" style="text-align: center; max-width: 700px; margin: 0 auto 3rem auto; color: var(--neutral-600); font-size: 1.125rem;">
           Полезные статьи о создании брокерской компании, торговых стратегиях и управлении финансовыми платформами
         </p>
-
-        <div class="blog-filters">
-          <button class="filter-btn active" data-category="all">Все статьи</button>
-          <button class="filter-btn" data-category="Брокеры">Брокеры</button>
-          <button class="filter-btn" data-category="Трейдинг">Трейдинг</button>
-          <button class="filter-btn" data-category="Технологии">Технологии</button>
-          <button class="filter-btn" data-category="Стратегии">Стратегии</button>
-          <button class="filter-btn" data-category="Регуляция">Регуляция</button>
-          <button class="filter-btn" data-category="Маркетинг">Маркетинг</button>
-        </div>
 
         <div class="blog-grid" id="allBlogPosts">
           <!-- Blog posts will be loaded dynamically -->
@@ -88,7 +126,7 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-bottom">
-        <p>&copy; 2024 MakeTrades. Все права защищены.</p>
+        <p id="blogCopyright">&copy; 2026 MakeTrades. Все права защищены.</p>
       </div>
     </div>
   </footer>
