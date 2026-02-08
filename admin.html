@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Админ-панель | MakeTrades</title>
+  <link rel="icon" type="image/png" href="/icon.png">
+  <link rel="stylesheet" href="/src/styles/main.css">
+  <style>
+    .admin-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #e5e7eb;
+    }
+
+    .admin-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #e5e7eb;
+    }
+
+    .tab-btn {
+      padding: 1rem 2rem;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #6b7280;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s;
+    }
+
+    .tab-btn.active {
+      color: #2563eb;
+      border-bottom-color: #2563eb;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .data-table th {
+      background: #f9fafb;
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      color: #374151;
+      border-bottom: 2px solid #e5e7eb;
+    }
+
+    .data-table td {
+      padding: 1rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .data-table tr:hover {
+      background: #f9fafb;
+    }
+
+    .action-btn {
+      padding: 0.5rem 1rem;
+      margin: 0 0.25rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      transition: all 0.3s;
+    }
+
+    .btn-edit {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .btn-edit:hover {
+      background: #2563eb;
+    }
+
+    .btn-delete {
+      background: #ef4444;
+      color: white;
+    }
+
+    .btn-delete:hover {
+      background: #dc2626;
+    }
+
+    .btn-add {
+      background: #10b981;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .btn-add:hover {
+      background: #059669;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    .form-group textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 2rem;
+    }
+
+    .auth-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .auth-box {
+      background: white;
+      padding: 3rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 90%;
+    }
+
+    .auth-box h2 {
+      margin-bottom: 2rem;
+      text-align: center;
+      color: #1f2937;
+    }
+
+    #adminContent {
+      display: none;
+    }
+
+    #adminContent.active {
+      display: block;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: #6b7280;
+    }
+
+    .search-box {
+      margin-bottom: 1rem;
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      width: 100%;
+      font-size: 1rem;
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      align-items: center;
+    }
+
+    .filter-group select {
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="authContainer" class="auth-container">
+    <div class="auth-box">
+      <h2>Админ-панель</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Пароль</label>
+          <input type="password" id="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">Войти</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="adminContent">
+    <div class="admin-container">
+      <div class="admin-header">
+        <h1>Админ-панель MakeTrades</h1>
+        <button id="logoutBtn" class="btn btn-secondary">Выйти</button>
+      </div>
+
+      <div class="admin-tabs">
+        <button class="tab-btn active" data-tab="translations">Локализация</button>
+        <button class="tab-btn" data-tab="images">Картинки</button>
+        <button class="tab-btn" data-tab="blog">Статьи блога</button>
+      </div>
+
+      <div id="translations" class="tab-content active">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <h2>Управление переводами</h2>
+          <button class="btn-add" id="addTranslationBtn">+ Добавить перевод</button>
+        </div>
+
+        <div class="filter-group">
+          <input type="text" id="translationSearch" class="search-box" placeholder="Поиск по ключу или значению...">
+          <select id="translationLangFilter">
+            <option value="">Все языки</option>
+            <option value="ru">Русский</option>
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+            <option value="uk">Українська</option>
+            <option value="zh">中文</option>
+          </select>
+          <select id="translationCategoryFilter">
+            <option value="">Все категории</option>
+            <option value="buttons">Кнопки</option>
+            <option value="pricing">Цены</option>
+            <option value="labels">Метки</option>
+            <option value="general">Общее</option>
+          </select>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Ключ</th>
+              <th>Язык</th>
+              <th>Значение</th>
+              <th>Категория</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody id="translationsTable">
+            <tr><td colspan="5" class="loading">Загрузка...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="images" class="tab-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <h2>Управление картинками</h2>
+          <button class="btn-add" id="addImageBtn">+ Добавить картинку</button>
+        </div>
+
+        <input type="text" id="imageSearch" class="search-box" placeholder="Поиск по ключу или категории...">
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Ключ</th>
+              <th>URL</th>
+              <th>Alt текст</th>
+              <th>Категория</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody id="imagesTable">
+            <tr><td colspan="5" class="loading">Загрузка...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="blog" class="tab-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <h2>Управление статьями блога</h2>
+          <button class="btn-add" id="addBlogBtn">+ Добавить статью</button>
+        </div>
+
+        <div class="filter-group">
+          <input type="text" id="blogSearch" class="search-box" placeholder="Поиск по заголовку...">
+          <select id="blogLangFilter">
+            <option value="">Все языки</option>
+            <option value="ru">Русский</option>
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+            <option value="uk">Українська</option>
+            <option value="zh">中文</option>
+          </select>
+          <select id="blogPublishedFilter">
+            <option value="">Все статьи</option>
+            <option value="true">Опубликованные</option>
+            <option value="false">Черновики</option>
+          </select>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Заголовок</th>
+              <th>Язык</th>
+              <th>Опубликовано</th>
+              <th>Дата публикации</th>
+              <th>Просмотры</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody id="blogTable">
+            <tr><td colspan="6" class="loading">Загрузка...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="translationModal" class="modal">
+    <div class="modal-content">
+      <h2 id="translationModalTitle">Добавить перевод</h2>
+      <form id="translationForm">
+        <div class="form-group">
+          <label for="translationKey">Ключ</label>
+          <input type="text" id="translationKey" required>
+        </div>
+        <div class="form-group">
+          <label for="translationLanguage">Язык</label>
+          <select id="translationLanguage" required>
+            <option value="ru">Русский</option>
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+            <option value="uk">Українська</option>
+            <option value="zh">中文</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="translationValue">Значение</label>
+          <textarea id="translationValue" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="translationCategory">Категория</label>
+          <select id="translationCategory" required>
+            <option value="buttons">Кнопки</option>
+            <option value="pricing">Цены</option>
+            <option value="labels">Метки</option>
+            <option value="general">Общее</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" id="closeTranslationModal">Отмена</button>
+          <button type="submit" class="btn btn-primary">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="imageModal" class="modal">
+    <div class="modal-content">
+      <h2 id="imageModalTitle">Добавить картинку</h2>
+      <form id="imageForm">
+        <div class="form-group">
+          <label for="imageKey">Ключ</label>
+          <input type="text" id="imageKey" required>
+        </div>
+        <div class="form-group">
+          <label for="imageUrl">URL картинки</label>
+          <input type="url" id="imageUrl" required>
+        </div>
+        <div class="form-group">
+          <label for="imageAlt">Alt текст</label>
+          <input type="text" id="imageAlt">
+        </div>
+        <div class="form-group">
+          <label for="imageCategory">Категория</label>
+          <select id="imageCategory" required>
+            <option value="hero">Hero</option>
+            <option value="features">Возможности</option>
+            <option value="icons">Иконки</option>
+            <option value="general">Общее</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" id="closeImageModal">Отмена</button>
+          <button type="submit" class="btn btn-primary">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="blogModal" class="modal">
+    <div class="modal-content">
+      <h2 id="blogModalTitle">Добавить статью</h2>
+      <form id="blogForm">
+        <div class="form-group">
+          <label for="blogTitle">Заголовок</label>
+          <input type="text" id="blogTitle" required>
+        </div>
+        <div class="form-group">
+          <label for="blogSlug">Slug</label>
+          <input type="text" id="blogSlug" required>
+        </div>
+        <div class="form-group">
+          <label for="blogLanguage">Язык</label>
+          <select id="blogLanguage" required>
+            <option value="ru">Русский</option>
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+            <option value="uk">Українська</option>
+            <option value="zh">中文</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="blogExcerpt">Краткое описание</label>
+          <textarea id="blogExcerpt" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="blogContent">Контент (HTML)</label>
+          <textarea id="blogContent" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="blogImageUrl">URL картинки</label>
+          <input type="url" id="blogImageUrl" required>
+        </div>
+        <div class="form-group">
+          <label for="blogPublished">Опубликовано</label>
+          <select id="blogPublished">
+            <option value="false">Черновик</option>
+            <option value="true">Опубликовано</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="blogPublishDate">Дата публикации</label>
+          <input type="datetime-local" id="blogPublishDate" required>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" id="closeBlogModal">Отмена</button>
+          <button type="submit" class="btn btn-primary">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="/src/admin.ts"></script>
+</body>
+</html>

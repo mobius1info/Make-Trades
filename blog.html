@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Блог MakeTrades - Статьи о трейдинге и брокерском бизнесе</title>
+  <meta name="description" content="Полезные статьи о создании брокерской компании, торговых ботах, стратегиях трейдинга и управлении финансовыми платформами.">
+  <meta name="keywords" content="блог трейдинг, статьи брокер, торговые боты, стратегии форекс, финансовые рынки">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="MakeTrades">
+  <link rel="canonical" href="https://maketrades.space/blog.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://maketrades.space/blog.html">
+  <meta property="og:title" content="Блог MakeTrades - Статьи о трейдинге и брокерском бизнесе">
+  <meta property="og:description" content="Полезные статьи о создании брокерской компании, торговых ботах, стратегиях трейдинга и управлении финансовыми платформами.">
+  <meta property="og:image" content="https://maketrades.space/og-image.jpg">
+  <meta property="og:site_name" content="MakeTrades">
+  <meta property="og:locale" content="ru_RU">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://maketrades.space/blog.html">
+  <meta name="twitter:title" content="Блог MakeTrades - Статьи о трейдинге">
+  <meta name="twitter:description" content="Полезные статьи о создании брокерской компании и трейдинге">
+  <meta name="twitter:image" content="https://maketrades.space/twitter-image.jpg">
+
+  <link rel="alternate" hreflang="ru" href="https://maketrades.space/blog.html">
+  <link rel="alternate" hreflang="en" href="https://maketrades.space/blog.html?lang=en">
+  <link rel="alternate" hreflang="de" href="https://maketrades.space/blog.html?lang=de">
+  <link rel="alternate" hreflang="uk" href="https://maketrades.space/blog.html?lang=uk">
+  <link rel="alternate" hreflang="zh" href="https://maketrades.space/blog.html?lang=zh">
+  <link rel="alternate" hreflang="x-default" href="https://maketrades.space/blog.html">
+
+  <link rel="icon" type="image/png" href="/icon.png">
+  <link rel="apple-touch-icon" href="/icon.png">
+  <meta name="theme-color" content="#0F172A">
+
+  <link rel="preconnect" href="https://vhahxcmzpaxosthlorfm.supabase.co" crossorigin>
+  <link rel="preconnect" href="https://images.pexels.com">
+
+  <link rel="stylesheet" href="/src/styles/main.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "MakeTrades Blog",
+    "description": "Статьи о создании брокерской компании, торговых ботах и трейдинге",
+    "url": "https://maketrades.space/blog.html",
+    "inLanguage": ["ru", "en", "de", "uk", "zh"],
+    "publisher": {
+      "@type": "Organization",
+      "name": "MakeTrades",
+      "url": "https://maketrades.space",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://maketrades.space/logo.svg"
+      }
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "MakeTrades",
+        "item": "https://maketrades.space"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://maketrades.space/blog.html"
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <nav class="nav">
+        <a href="/" class="logo" aria-label="MakeTrades Home">
+          <img src="/logo.svg" alt="MakeTrades логотип" width="160" height="40">
+        </a>
+
+        <div class="nav-actions">
+          <div class="language-selector" role="navigation" aria-label="Выбор языка">
+            <button class="lang-btn active" data-lang="ru" aria-label="Русский язык">RU</button>
+            <button class="lang-btn" data-lang="en" aria-label="English language">EN</button>
+            <button class="lang-btn" data-lang="de" aria-label="Deutsche Sprache">DE</button>
+            <button class="lang-btn" data-lang="uk" aria-label="Українська мова">UK</button>
+            <button class="lang-btn" data-lang="zh" aria-label="中文">ZH</button>
+          </div>
+
+          <a href="/" class="btn btn-secondary" id="backHomeBtn">На главную</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="blog-page">
+      <div class="container">
+        <h1 class="section-title" id="blogPageTitle">Блог MakeTrades</h1>
+        <p id="blogPageSubtitle" style="text-align: center; max-width: 700px; margin: 0 auto 3rem auto; color: var(--neutral-600); font-size: 1.125rem;">
+          Полезные статьи о создании брокерской компании, торговых стратегиях и управлении финансовыми платформами
+        </p>
+
+        <div class="blog-grid" id="allBlogPosts">
+          <!-- Blog posts will be loaded dynamically -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p id="blogCopyright">&copy; 2026 MakeTrades. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/blog.ts"></script>
+</body>
+</html>
