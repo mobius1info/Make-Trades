@@ -583,11 +583,12 @@ async function init() {
   document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
   document.querySelector(`[data-lang="${currentLanguage}"]`)?.classList.add('active');
 
+  setupLanguageSwitcher();
+  setupModal();
+
   translations = await loadTranslations(currentLanguage);
   images = await loadImages();
 
-  setupLanguageSwitcher();
-  setupModal();
   await updateContent();
   loadBlogPosts();
   loadFAQItems();
