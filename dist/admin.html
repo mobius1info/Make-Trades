@@ -243,7 +243,7 @@
       font-size: 1rem;
     }
   </style>
-  <script type="module" crossorigin src="/assets/admin-AEhSO1g2.js"></script>
+  <script type="module" crossorigin src="/assets/admin-0gZRqoTa.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/index-D488pGsG.js">
   <link rel="stylesheet" crossorigin href="/assets/index-DKYr5cp4.css">
 </head>
@@ -511,5 +511,15 @@
     </div>
   </div>
 
+  <script>
+    window.addEventListener('error', function(e) {
+      var el = document.getElementById('loginError');
+      if (el) { el.textContent = 'JS: ' + (e.message || e.error || 'Unknown error'); el.style.display = 'block'; }
+    });
+    window.addEventListener('unhandledrejection', function(e) {
+      var el = document.getElementById('loginError');
+      if (el) { el.textContent = 'Async: ' + (e.reason && e.reason.message ? e.reason.message : String(e.reason)); el.style.display = 'block'; }
+    });
+  </script>
 </body>
 </html>
