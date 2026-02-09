@@ -528,10 +528,10 @@ async function handleDemoRequest(e: Event) {
     const successMsg = translations['success.demo_submitted'] || 'Thank you! We will contact you shortly.';
     showFormMessage(form, successMsg, 'success');
     form.reset();
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error submitting demo request:', error);
-    const errorMsg = translations['error.submit_failed'] || 'An error occurred. Please try again later.';
-    showFormMessage(form, errorMsg, 'error');
+    const detail = error?.message || error?.code || JSON.stringify(error);
+    showFormMessage(form, `Error: ${detail}`, 'error');
   }
 }
 
