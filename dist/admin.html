@@ -243,7 +243,7 @@
       font-size: 1rem;
     }
   </style>
-  <script type="module" crossorigin src="/assets/admin-EAb6bW_1.js"></script>
+  <script type="module" crossorigin src="/assets/admin-AEhSO1g2.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/index-D488pGsG.js">
   <link rel="stylesheet" crossorigin href="/assets/index-DKYr5cp4.css">
 </head>
@@ -251,7 +251,7 @@
   <div id="authContainer" class="auth-container">
     <div class="auth-box">
       <h2>Админ-панель</h2>
-      <form id="loginForm">
+      <form id="loginForm" onsubmit="event.preventDefault(); return false;">
         <div class="form-group">
           <label for="email">Email</label>
           <input type="email" id="email" required>
@@ -260,7 +260,8 @@
           <label for="password">Пароль</label>
           <input type="password" id="password" required>
         </div>
-        <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">Войти</button>
+        <div id="loginError" style="display:none; color:#dc2626; background:#fef2f2; padding:0.75rem; border-radius:4px; margin-bottom:1rem; font-size:0.875rem;"></div>
+        <button type="submit" id="loginBtn" class="btn btn-primary btn-large" style="width: 100%;">Войти</button>
       </form>
     </div>
   </div>
