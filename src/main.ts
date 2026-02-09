@@ -501,6 +501,14 @@ async function handleDemoRequest(e: Event) {
 
     if (error) throw error;
 
+    supabase.from('leads').insert([{
+      name: data.name,
+      email: data.email,
+      telegram: data.telegram,
+      source: 'demo',
+      language: currentLanguage,
+    }]).then(() => {});
+
     trackEvent('demo_request_submitted', {
       language: currentLanguage,
       has_telegram: !!data.telegram
@@ -534,6 +542,15 @@ async function handleContactSubmission(e: Event) {
       .insert([data]);
 
     if (error) throw error;
+
+    supabase.from('leads').insert([{
+      name: data.name,
+      email: data.email,
+      telegram: data.telegram,
+      message: data.message,
+      source: 'contact',
+      language: currentLanguage,
+    }]).then(() => {});
 
     trackEvent('contact_form_submitted', {
       language: currentLanguage,

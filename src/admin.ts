@@ -246,7 +246,103 @@ function renderBlogPosts(posts: any[]) {
   `).join('');
 }
 
+async function loadLeads() {
+  const sb = getSupabase();
+  const { data, error } = await sb
+    .from('leads')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error loading leads:', error);
+    return;
+  }
+
+  const leads = data || [];
+  const newCount = leads.filter(l => l.is_new).length;
+
+  const badge = document.getElementById('leadsBadge');
+  if (badge) {
+    badge.textContent = String(newCount);
+    badge.classList.toggle('visible', newCount > 0);
+  }
+
+  const totalEl = document.getElementById('leadsTotal');
+  const newEl = document.getElementById('leadsNew');
+  if (totalEl) totalEl.textContent = String(leads.length);
+  if (newEl) newEl.textContent = String(newCount);
+
+  renderLeads(leads);
+}
+
+function renderLeads(leads: any[]) {
+  const container = document.getElementById('leadsContainer')!;
+
+  if (leads.length === 0) {
+    container.innerHTML = `
+      <div class="empty-leads">
+        <div class="empty-leads-icon">--</div>
+        <p>Заявок пока нет</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = leads.map(lead => {
+    const date = new Date(lead.created_at).toLocaleString('ru-RU', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
+    const sourceLabel = lead.source === 'demo' ? 'Demo' : 'Contact';
+    const sourceClass = lead.source === 'demo' ? 'demo' : 'contact';
+
+    return `
+      <div class="lead-card ${lead.is_new ? 'is-new' : ''}">
+        <div class="lead-card-header">
+          <span class="lead-name">${escapeHtml(lead.name || 'Без имени')}</span>
+          <span class="lead-source ${sourceClass}">${sourceLabel}</span>
+        </div>
+        <div class="lead-meta">
+          <span>${escapeHtml(lead.email)}</span>
+          ${lead.telegram ? `<span>TG: ${escapeHtml(lead.telegram)}</span>` : ''}
+          <span>${date}</span>
+          ${lead.language ? `<span>${lead.language.toUpperCase()}</span>` : ''}
+        </div>
+        ${lead.message ? `<div class="lead-message">${escapeHtml(lead.message)}</div>` : ''}
+        <div class="lead-actions">
+          ${lead.is_new ? `<button class="action-btn btn-edit" onclick="markLeadRead('${lead.id}')">Прочитано</button>` : ''}
+          <button class="action-btn btn-delete" onclick="deleteLead('${lead.id}')">Удалить</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function escapeHtml(text: string): string {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+
+(window as any).markLeadRead = async (id: string) => {
+  const sb = getSupabase();
+  await sb.from('leads').update({ is_new: false }).eq('id', id);
+  loadLeads();
+};
+
+(window as any).deleteLead = async (id: string) => {
+  if (!confirm('Удалить эту заявку?')) return;
+  const sb = getSupabase();
+  await sb.from('leads').delete().eq('id', id);
+  loadLeads();
+};
+
+document.getElementById('markAllReadBtn')?.addEventListener('click', async () => {
+  const sb = getSupabase();
+  await sb.from('leads').update({ is_new: false }).eq('is_new', true);
+  loadLeads();
+});
+
 function loadAllData() {
+  loadLeads();
   loadTranslations();
   loadImages();
   loadBlogPosts();
