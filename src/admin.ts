@@ -5,13 +5,13 @@ let editingTranslationId: string | null = null;
 let editingImageId: string | null = null;
 let editingBlogId: string | null = null;
 
+const SUPABASE_URL = 'https://gknfzfxjaeuvrncgljyi.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdrbmZ6ZnhqYWV1dnJuY2dsanlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA1NzMwNjEsImV4cCI6MjA4NjE0OTA2MX0.rZoKwEl9nbE4KLh3J5MZM5FfbdtCxOJGXTSTCe9VEds';
+
 function getSupabase(): SupabaseClient {
   if (!supabase) {
-    const url = import.meta.env.VITE_SUPABASE_URL;
-    const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
-    if (!url || !key) {
-      throw new Error('Supabase URL or Key is missing. URL=' + (url ? 'set' : 'empty') + ', KEY=' + (key ? 'set' : 'empty'));
-    }
+    const url = import.meta.env.VITE_SUPABASE_URL || SUPABASE_URL;
+    const key = import.meta.env.VITE_SUPABASE_ANON_KEY || SUPABASE_ANON_KEY;
     supabase = createClient(url, key);
   }
   return supabase;
