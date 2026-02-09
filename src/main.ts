@@ -500,6 +500,11 @@ async function handleDemoRequest(e: Event) {
     telegram: formData.get('telegram') as string || null,
   };
 
+  if (!supabase) {
+    showFormMessage(form, translations['error.submit_failed'] || 'An error occurred. Please try again later.', 'error');
+    return;
+  }
+
   try {
     const { error } = await supabase
       .from('demo_requests')
@@ -541,6 +546,11 @@ async function handleContactSubmission(e: Event) {
     message: formData.get('message') as string,
     telegram: formData.get('telegram') as string || null,
   };
+
+  if (!supabase) {
+    showFormMessage(form, translations['error.submit_failed'] || 'An error occurred. Please try again later.', 'error');
+    return;
+  }
 
   try {
     const { error } = await supabase
