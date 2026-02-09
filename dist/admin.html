@@ -74,10 +74,11 @@
     .data-table td {
       padding: 1rem;
       border-bottom: 1px solid #e5e7eb;
+      color: #1f2937;
     }
 
     .data-table tr:hover {
-      background: #f9fafb;
+      background: #f3f4f6;
     }
 
     .action-btn {
@@ -220,6 +221,154 @@
       color: #6b7280;
     }
 
+    .tab-btn-leads {
+      position: relative;
+    }
+
+    .leads-badge {
+      position: absolute;
+      top: 4px;
+      right: -4px;
+      background: #ef4444;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      min-width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 0 5px;
+      line-height: 1;
+      animation: badge-pulse 2s infinite;
+    }
+
+    .leads-badge.visible {
+      display: flex;
+    }
+
+    @keyframes badge-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    .lead-card {
+      background: white;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 0.75rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      border-left: 4px solid #d1d5db;
+      transition: all 0.2s;
+    }
+
+    .lead-card.is-new {
+      border-left-color: #10b981;
+      background: #f0fdf4;
+    }
+
+    .lead-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+    }
+
+    .lead-name {
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: #1f2937;
+    }
+
+    .lead-source {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .lead-source.demo {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .lead-source.contact {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .lead-meta {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: 0.5rem;
+    }
+
+    .lead-message {
+      font-size: 0.875rem;
+      color: #374151;
+      background: #f9fafb;
+      padding: 0.75rem;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+    }
+
+    .lead-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .leads-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+    }
+
+    .leads-stats {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .leads-stat {
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+
+    .leads-stat strong {
+      color: #1f2937;
+    }
+
+    .btn-mark-read {
+      background: #10b981;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+
+    .btn-mark-read:hover {
+      background: #059669;
+    }
+
+    .empty-leads {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: #9ca3af;
+    }
+
+    .empty-leads-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
     .search-box {
       margin-bottom: 1rem;
       padding: 0.75rem;
@@ -243,7 +392,7 @@
       font-size: 1rem;
     }
   </style>
-  <script type="module" crossorigin src="/assets/admin-0gZRqoTa.js"></script>
+  <script type="module" crossorigin src="/assets/admin-Dy9jl4-r.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/index-D488pGsG.js">
   <link rel="stylesheet" crossorigin href="/assets/index-DKYr5cp4.css">
 </head>
@@ -274,9 +423,29 @@
       </div>
 
       <div class="admin-tabs">
+        <button class="tab-btn tab-btn-leads" data-tab="leads">Лиды <span id="leadsBadge" class="leads-badge">0</span></button>
         <button class="tab-btn active" data-tab="translations">Локализация</button>
         <button class="tab-btn" data-tab="images">Картинки</button>
         <button class="tab-btn" data-tab="blog">Статьи блога</button>
+      </div>
+
+      <div id="leads" class="tab-content">
+        <div class="leads-toolbar">
+          <div>
+            <h2 style="color:#e5e7eb; margin:0;">Входящие заявки</h2>
+            <div class="leads-stats">
+              <span class="leads-stat">Всего: <strong id="leadsTotal">0</strong></span>
+              <span class="leads-stat">Новых: <strong id="leadsNew" style="color:#10b981;">0</strong></span>
+            </div>
+          </div>
+          <button class="btn-mark-read" id="markAllReadBtn">Отметить все прочитанными</button>
+        </div>
+        <div id="leadsContainer">
+          <div class="empty-leads">
+            <div class="empty-leads-icon">--</div>
+            <p>Заявок пока нет</p>
+          </div>
+        </div>
       </div>
 
       <div id="translations" class="tab-content active">
