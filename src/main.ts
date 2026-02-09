@@ -1,10 +1,16 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { loadTranslations, loadImages } from './content-loader';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+let supabase: SupabaseClient;
+try {
+  supabase = createClient(supabaseUrl, supabaseAnonKey);
+} catch (e) {
+  console.error('Supabase init failed:', e);
+  supabase = null as any;
+}
 
 const params = new URLSearchParams(window.location.search);
 let currentLanguage = params.get('lang') || 'ru';
@@ -586,13 +592,6 @@ async function init() {
   setupLanguageSwitcher();
   setupModal();
 
-  translations = await loadTranslations(currentLanguage);
-  images = await loadImages();
-
-  await updateContent();
-  loadBlogPosts();
-  loadFAQItems();
-
   const demoForm = document.getElementById('demoForm');
   const contactForm = document.getElementById('contactForm');
 
@@ -627,6 +626,16 @@ async function init() {
   loginForm?.querySelectorAll<HTMLInputElement>('input').forEach(input => {
     input.addEventListener('input', () => clearFieldError(input));
   });
+
+  try {
+    translations = await loadTranslations(currentLanguage);
+    images = await loadImages();
+    await updateContent();
+    loadBlogPosts();
+    loadFAQItems();
+  } catch (e) {
+    console.error('Failed to load content:', e);
+  }
 }
 
 function setupScrollAnimations() {
