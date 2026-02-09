@@ -1,19 +1,21 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-let supabase: ReturnType<typeof createClient>;
-try {
-  supabase = createClient(supabaseUrl, supabaseKey);
-} catch (err) {
-  console.error('Supabase init error:', err);
-  showLoginError('Ошибка инициализации. Обновите страницу.');
-}
-
+let supabase: SupabaseClient | null = null;
 let editingTranslationId: string | null = null;
 let editingImageId: string | null = null;
 let editingBlogId: string | null = null;
+
+function getSupabase(): SupabaseClient {
+  if (!supabase) {
+    const url = import.meta.env.VITE_SUPABASE_URL;
+    const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    if (!url || !key) {
+      throw new Error('Supabase URL or Key is missing. URL=' + (url ? 'set' : 'empty') + ', KEY=' + (key ? 'set' : 'empty'));
+    }
+    supabase = createClient(url, key);
+  }
+  return supabase;
+}
 
 function showLoginError(msg: string) {
   const el = document.getElementById('loginError');
@@ -32,21 +34,22 @@ function hideLoginError() {
 
 async function checkAuth() {
   try {
-    const { data: { session } } = await supabase.auth.getSession();
+    const sb = getSupabase();
+    const { data: { session } } = await sb.auth.getSession();
 
     if (!session) {
       showAuthForm();
       return false;
     }
 
-    const { data: adminUser } = await supabase
+    const { data: adminUser } = await sb
       .from('admin_users')
       .select('*')
       .eq('id', session.user.id)
       .maybeSingle();
 
     if (!adminUser) {
-      await supabase.auth.signOut();
+      await sb.auth.signOut();
       showLoginError('У вас нет прав доступа к админ-панели');
       showAuthForm();
       return false;
@@ -54,7 +57,7 @@ async function checkAuth() {
 
     showAdminPanel();
     return true;
-  } catch (err) {
+  } catch (err: any) {
     console.error('Auth check error:', err);
     showAuthForm();
     return false;
@@ -91,7 +94,8 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
   loginBtn.textContent = 'Вход...';
 
   try {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const sb = getSupabase();
+    const { error } = await sb.auth.signInWithPassword({ email, password });
 
     if (error) {
       showLoginError('Ошибка входа: ' + error.message);
@@ -102,14 +106,17 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
 
     await checkAuth();
   } catch (err: any) {
-    showLoginError('Ошибка сети: ' + (err.message || 'попробуйте ещё раз'));
+    showLoginError('Ошибка: ' + (err.message || 'попробуйте ещё раз'));
     loginBtn.disabled = false;
     loginBtn.textContent = 'Войти';
   }
 });
 
 document.getElementById('logoutBtn')?.addEventListener('click', async () => {
-  await supabase.auth.signOut();
+  try {
+    const sb = getSupabase();
+    await sb.auth.signOut();
+  } catch (e) {}
   showAuthForm();
 });
 
@@ -127,7 +134,8 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 });
 
 async function loadTranslations() {
-  const { data, error } = await supabase
+  const sb = getSupabase();
+  const { data, error } = await sb
     .from('translations')
     .select('*')
     .order('key');
@@ -163,7 +171,8 @@ function renderTranslations(translations: any[]) {
 }
 
 async function loadImages() {
-  const { data, error } = await supabase
+  const sb = getSupabase();
+  const { data, error } = await sb
     .from('site_images')
     .select('*')
     .order('key');
@@ -199,7 +208,8 @@ function renderImages(images: any[]) {
 }
 
 async function loadBlogPosts() {
-  const { data, error } = await supabase
+  const sb = getSupabase();
+  const { data, error } = await sb
     .from('blog_posts')
     .select('*')
     .order('created_at', { ascending: false })
@@ -225,7 +235,7 @@ function renderBlogPosts(posts: any[]) {
     <tr>
       <td>${post.title}</td>
       <td><strong>${post.language.toUpperCase()}</strong></td>
-      <td>${post.published ? '✅ Да' : '❌ Нет'}</td>
+      <td>${post.published ? 'Да' : 'Нет'}</td>
       <td>${new Date(post.publish_date).toLocaleDateString('ru-RU')}</td>
       <td>${post.views}</td>
       <td>
@@ -262,9 +272,10 @@ document.getElementById('translationForm')?.addEventListener('submit', async (e)
   const category = (document.getElementById('translationCategory') as HTMLSelectElement).value;
 
   const data = { key, language, value, category };
+  const sb = getSupabase();
 
   if (editingTranslationId) {
-    const { error } = await supabase
+    const { error } = await sb
       .from('translations')
       .update({ ...data, updated_at: new Date().toISOString() })
       .eq('id', editingTranslationId);
@@ -274,7 +285,7 @@ document.getElementById('translationForm')?.addEventListener('submit', async (e)
       return;
     }
   } else {
-    const { error } = await supabase
+    const { error } = await sb
       .from('translations')
       .insert([data]);
 
@@ -308,9 +319,10 @@ document.getElementById('imageForm')?.addEventListener('submit', async (e) => {
   const category = (document.getElementById('imageCategory') as HTMLSelectElement).value;
 
   const data = { key, url, alt_text, category };
+  const sb = getSupabase();
 
   if (editingImageId) {
-    const { error } = await supabase
+    const { error } = await sb
       .from('site_images')
       .update({ ...data, updated_at: new Date().toISOString() })
       .eq('id', editingImageId);
@@ -320,7 +332,7 @@ document.getElementById('imageForm')?.addEventListener('submit', async (e) => {
       return;
     }
   } else {
-    const { error } = await supabase
+    const { error } = await sb
       .from('site_images')
       .insert([data]);
 
@@ -375,8 +387,10 @@ document.getElementById('blogForm')?.addEventListener('submit', async (e) => {
     views: 0
   };
 
+  const sb = getSupabase();
+
   if (editingBlogId) {
-    const { error } = await supabase
+    const { error } = await sb
       .from('blog_posts')
       .update({ ...data, updated_at: new Date().toISOString() })
       .eq('id', editingBlogId);
@@ -386,7 +400,7 @@ document.getElementById('blogForm')?.addEventListener('submit', async (e) => {
       return;
     }
   } else {
-    const { error } = await supabase
+    const { error } = await sb
       .from('blog_posts')
       .insert([data]);
 
@@ -401,7 +415,8 @@ document.getElementById('blogForm')?.addEventListener('submit', async (e) => {
 });
 
 (window as any).editTranslation = async (id: string) => {
-  const { data } = await supabase
+  const sb = getSupabase();
+  const { data } = await sb
     .from('translations')
     .select('*')
     .eq('id', id)
@@ -421,7 +436,8 @@ document.getElementById('blogForm')?.addEventListener('submit', async (e) => {
 (window as any).deleteTranslation = async (id: string) => {
   if (!confirm('Удалить этот перевод?')) return;
 
-  const { error } = await supabase
+  const sb = getSupabase();
+  const { error } = await sb
     .from('translations')
     .delete()
     .eq('id', id);
@@ -435,7 +451,8 @@ document.getElementById('blogForm')?.addEventListener('submit', async (e) => {
 };
 
 (window as any).editImage = async (id: string) => {
-  const { data } = await supabase
+  const sb = getSupabase();
+  const { data } = await sb
     .from('site_images')
     .select('*')
     .eq('id', id)
@@ -455,7 +472,8 @@ document.getElementById('blogForm')?.addEventListener('submit', async (e) => {
 (window as any).deleteImage = async (id: string) => {
   if (!confirm('Удалить эту картинку?')) return;
 
-  const { error } = await supabase
+  const sb = getSupabase();
+  const { error } = await sb
     .from('site_images')
     .delete()
     .eq('id', id);
@@ -469,7 +487,8 @@ document.getElementById('blogForm')?.addEventListener('submit', async (e) => {
 };
 
 (window as any).editBlogPost = async (id: string) => {
-  const { data } = await supabase
+  const sb = getSupabase();
+  const { data } = await sb
     .from('blog_posts')
     .select('*')
     .eq('id', id)
@@ -493,7 +512,8 @@ document.getElementById('blogForm')?.addEventListener('submit', async (e) => {
 (window as any).deleteBlogPost = async (id: string) => {
   if (!confirm('Удалить эту статью?')) return;
 
-  const { error } = await supabase
+  const sb = getSupabase();
+  const { error } = await sb
     .from('blog_posts')
     .delete()
     .eq('id', id);
@@ -511,7 +531,8 @@ document.getElementById('translationSearch')?.addEventListener('input', async (e
   const langFilter = (document.getElementById('translationLangFilter') as HTMLSelectElement).value;
   const categoryFilter = (document.getElementById('translationCategoryFilter') as HTMLSelectElement).value;
 
-  let query = supabase.from('translations').select('*');
+  const sb = getSupabase();
+  let query = sb.from('translations').select('*');
 
   if (langFilter) query = query.eq('language', langFilter);
   if (categoryFilter) query = query.eq('category', categoryFilter);
@@ -537,7 +558,8 @@ document.getElementById('translationCategoryFilter')?.addEventListener('change',
 
 document.getElementById('imageSearch')?.addEventListener('input', async (e) => {
   const search = (e.target as HTMLInputElement).value.toLowerCase();
-  const { data } = await supabase.from('site_images').select('*');
+  const sb = getSupabase();
+  const { data } = await sb.from('site_images').select('*');
   const filtered = (data || []).filter(img =>
     img.key.toLowerCase().includes(search) ||
     (img.category && img.category.toLowerCase().includes(search))
@@ -551,7 +573,8 @@ document.getElementById('blogSearch')?.addEventListener('input', async (e) => {
   const langFilter = (document.getElementById('blogLangFilter') as HTMLSelectElement).value;
   const publishedFilter = (document.getElementById('blogPublishedFilter') as HTMLSelectElement).value;
 
-  let query = supabase.from('blog_posts').select('*').limit(100);
+  const sb = getSupabase();
+  let query = sb.from('blog_posts').select('*').limit(100);
 
   if (langFilter) query = query.eq('language', langFilter);
   if (publishedFilter) query = query.eq('published', publishedFilter === 'true');
