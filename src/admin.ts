@@ -2,37 +2,63 @@ import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
 
-let currentUser: any = null;
+let supabase: ReturnType<typeof createClient>;
+try {
+  supabase = createClient(supabaseUrl, supabaseKey);
+} catch (err) {
+  console.error('Supabase init error:', err);
+  showLoginError('Ошибка инициализации. Обновите страницу.');
+}
+
 let editingTranslationId: string | null = null;
 let editingImageId: string | null = null;
 let editingBlogId: string | null = null;
 
+function showLoginError(msg: string) {
+  const el = document.getElementById('loginError');
+  if (el) {
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+}
+
+function hideLoginError() {
+  const el = document.getElementById('loginError');
+  if (el) {
+    el.style.display = 'none';
+  }
+}
+
 async function checkAuth() {
-  const { data: { session } } = await supabase.auth.getSession();
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
 
-  if (!session) {
+    if (!session) {
+      showAuthForm();
+      return false;
+    }
+
+    const { data: adminUser } = await supabase
+      .from('admin_users')
+      .select('*')
+      .eq('id', session.user.id)
+      .maybeSingle();
+
+    if (!adminUser) {
+      await supabase.auth.signOut();
+      showLoginError('У вас нет прав доступа к админ-панели');
+      showAuthForm();
+      return false;
+    }
+
+    showAdminPanel();
+    return true;
+  } catch (err) {
+    console.error('Auth check error:', err);
     showAuthForm();
     return false;
   }
-
-  const { data: adminUser } = await supabase
-    .from('admin_users')
-    .select('*')
-    .eq('id', session.user.id)
-    .maybeSingle();
-
-  if (!adminUser) {
-    await supabase.auth.signOut();
-    alert('У вас нет прав доступа к админ-панели');
-    showAuthForm();
-    return false;
-  }
-
-  currentUser = session.user;
-  showAdminPanel();
-  return true;
 }
 
 function showAuthForm() {
@@ -48,17 +74,38 @@ function showAdminPanel() {
 
 document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
   e.preventDefault();
+  e.stopPropagation();
+
+  hideLoginError();
+
+  const loginBtn = document.getElementById('loginBtn') as HTMLButtonElement;
   const email = (document.getElementById('email') as HTMLInputElement).value;
   const password = (document.getElementById('password') as HTMLInputElement).value;
 
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-  if (error) {
-    alert('Ошибка входа: ' + error.message);
+  if (!email || !password) {
+    showLoginError('Введите email и пароль');
     return;
   }
 
-  await checkAuth();
+  loginBtn.disabled = true;
+  loginBtn.textContent = 'Вход...';
+
+  try {
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      showLoginError('Ошибка входа: ' + error.message);
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'Войти';
+      return;
+    }
+
+    await checkAuth();
+  } catch (err: any) {
+    showLoginError('Ошибка сети: ' + (err.message || 'попробуйте ещё раз'));
+    loginBtn.disabled = false;
+    loginBtn.textContent = 'Войти';
+  }
 });
 
 document.getElementById('logoutBtn')?.addEventListener('click', async () => {
