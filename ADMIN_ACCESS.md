@@ -4,7 +4,7 @@
 
 Администратор успешно создан!
 
-- **URL админки:** `/admin.html`
+- **URL админки:** `https://maketrades.info/admin.html`
 - **Email:** admin@maketrades.space
 - **Пароль:** Admin123456!
 
