@@ -500,25 +500,37 @@ async function handleDemoRequest(e: Event) {
     telegram: formData.get('telegram') as string || null,
   };
 
-  if (!supabase) {
-    showFormMessage(form, translations['error.submit_failed'] || 'An error occurred. Please try again later.', 'error');
-    return;
-  }
+  const restUrl = `${supabaseUrl}/rest/v1/demo_requests`;
+  const headers = {
+    'Content-Type': 'application/json',
+    'apikey': supabaseAnonKey,
+    'Authorization': `Bearer ${supabaseAnonKey}`,
+    'Prefer': 'return=minimal',
+  };
 
   try {
-    const { error } = await supabase
-      .from('demo_requests')
-      .insert([data]);
+    const res = await fetch(restUrl, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(data),
+    });
 
-    if (error) throw error;
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ message: res.statusText }));
+      throw new Error(err.message || err.error || `HTTP ${res.status}`);
+    }
 
-    supabase.from('leads').insert([{
-      name: data.name,
-      email: data.email,
-      telegram: data.telegram,
-      source: 'demo',
-      language: currentLanguage,
-    }]).then(() => {});
+    fetch(`${supabaseUrl}/rest/v1/leads`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        telegram: data.telegram,
+        source: 'demo',
+        language: currentLanguage,
+      }),
+    }).catch(() => {});
 
     trackEvent('demo_request_submitted', {
       language: currentLanguage,
@@ -530,8 +542,7 @@ async function handleDemoRequest(e: Event) {
     form.reset();
   } catch (error: any) {
     console.error('Error submitting demo request:', error);
-    const detail = error?.message || error?.code || JSON.stringify(error);
-    showFormMessage(form, `Error: ${detail}`, 'error');
+    showFormMessage(form, `Error: ${error?.message || 'Unknown error'}`, 'error');
   }
 }
 
@@ -547,26 +558,38 @@ async function handleContactSubmission(e: Event) {
     telegram: formData.get('telegram') as string || null,
   };
 
-  if (!supabase) {
-    showFormMessage(form, translations['error.submit_failed'] || 'An error occurred. Please try again later.', 'error');
-    return;
-  }
+  const restUrl = `${supabaseUrl}/rest/v1/contact_submissions`;
+  const headers = {
+    'Content-Type': 'application/json',
+    'apikey': supabaseAnonKey,
+    'Authorization': `Bearer ${supabaseAnonKey}`,
+    'Prefer': 'return=minimal',
+  };
 
   try {
-    const { error } = await supabase
-      .from('contact_submissions')
-      .insert([data]);
+    const res = await fetch(restUrl, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(data),
+    });
 
-    if (error) throw error;
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ message: res.statusText }));
+      throw new Error(err.message || err.error || `HTTP ${res.status}`);
+    }
 
-    supabase.from('leads').insert([{
-      name: data.name,
-      email: data.email,
-      telegram: data.telegram,
-      message: data.message,
-      source: 'contact',
-      language: currentLanguage,
-    }]).then(() => {});
+    fetch(`${supabaseUrl}/rest/v1/leads`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        telegram: data.telegram,
+        message: data.message,
+        source: 'contact',
+        language: currentLanguage,
+      }),
+    }).catch(() => {});
 
     trackEvent('contact_form_submitted', {
       language: currentLanguage,
@@ -576,10 +599,9 @@ async function handleContactSubmission(e: Event) {
     const successMsg = translations['success.contact_submitted'] || 'Thank you for your message! We will contact you shortly.';
     showFormMessage(form, successMsg, 'success');
     form.reset();
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error submitting contact form:', error);
-    const errorMsg = translations['error.submit_failed'] || 'An error occurred. Please try again later.';
-    showFormMessage(form, errorMsg, 'error');
+    showFormMessage(form, `Error: ${error?.message || 'Unknown error'}`, 'error');
   }
 }
 
