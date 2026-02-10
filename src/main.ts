@@ -516,8 +516,8 @@ async function handleDemoRequest(e: Event) {
     });
 
     if (!res.ok) {
-      const err = await res.json().catch(() => ({ message: res.statusText }));
-      throw new Error(err.message || err.error || `HTTP ${res.status}`);
+      const text = await res.text().catch(() => '');
+      throw new Error(`${res.status} ${res.statusText}: ${text} [URL: ${restUrl}]`);
     }
 
     fetch(`${supabaseUrl}/rest/v1/leads`, {
