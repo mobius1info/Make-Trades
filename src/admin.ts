@@ -238,6 +238,8 @@ function renderBlogPosts(posts: any[]) {
   `).join('');
 }
 
+let allLeads: any[] = [];
+
 async function loadLeads() {
   const sb = getSupabase();
   const { data, error } = await sb
@@ -250,8 +252,10 @@ async function loadLeads() {
     return;
   }
 
-  const leads = data || [];
-  const newCount = leads.filter(l => l.is_new).length;
+  allLeads = data || [];
+  const newCount = allLeads.filter(l => l.is_new).length;
+  const demoCount = allLeads.filter(l => l.source === 'demo').length;
+  const contactCount = allLeads.filter(l => l.source === 'contact').length;
 
   const badge = document.getElementById('leadsBadge');
   if (badge) {
@@ -261,10 +265,36 @@ async function loadLeads() {
 
   const totalEl = document.getElementById('leadsTotal');
   const newEl = document.getElementById('leadsNew');
-  if (totalEl) totalEl.textContent = String(leads.length);
+  const demoEl = document.getElementById('leadsDemo');
+  const contactEl = document.getElementById('leadsContact');
+  if (totalEl) totalEl.textContent = String(allLeads.length);
   if (newEl) newEl.textContent = String(newCount);
+  if (demoEl) demoEl.textContent = String(demoCount);
+  if (contactEl) contactEl.textContent = String(contactCount);
 
-  renderLeads(leads);
+  filterAndRenderLeads();
+}
+
+function filterAndRenderLeads() {
+  const search = (document.getElementById('leadsSearch') as HTMLInputElement)?.value?.toLowerCase() || '';
+  const sourceFilter = (document.getElementById('leadsSourceFilter') as HTMLSelectElement)?.value || '';
+
+  let filtered = allLeads;
+
+  if (sourceFilter) {
+    filtered = filtered.filter(l => l.source === sourceFilter);
+  }
+
+  if (search) {
+    filtered = filtered.filter(l =>
+      (l.name && l.name.toLowerCase().includes(search)) ||
+      (l.email && l.email.toLowerCase().includes(search)) ||
+      (l.telegram && l.telegram.toLowerCase().includes(search)) ||
+      (l.message && l.message.toLowerCase().includes(search))
+    );
+  }
+
+  renderLeads(filtered);
 }
 
 function renderLeads(leads: any[]) {
@@ -294,10 +324,10 @@ function renderLeads(leads: any[]) {
           <span class="lead-source ${sourceClass}">${sourceLabel}</span>
         </div>
         <div class="lead-meta">
-          <span>${escapeHtml(lead.email)}</span>
-          ${lead.telegram ? `<span>TG: ${escapeHtml(lead.telegram)}</span>` : ''}
-          <span>${date}</span>
-          ${lead.language ? `<span>${lead.language.toUpperCase()}</span>` : ''}
+          <span>&#9993; ${escapeHtml(lead.email)}</span>
+          ${lead.telegram ? `<span>&#9992; ${escapeHtml(lead.telegram)}</span>` : ''}
+          <span>&#128339; ${date}</span>
+          ${lead.language ? `<span>&#127760; ${lead.language.toUpperCase()}</span>` : ''}
         </div>
         ${lead.message ? `<div class="lead-message">${escapeHtml(lead.message)}</div>` : ''}
         <div class="lead-actions">
@@ -331,6 +361,14 @@ document.getElementById('markAllReadBtn')?.addEventListener('click', async () =>
   const sb = getSupabase();
   await sb.from('leads').update({ is_new: false }).eq('is_new', true);
   loadLeads();
+});
+
+document.getElementById('leadsSearch')?.addEventListener('input', () => {
+  filterAndRenderLeads();
+});
+
+document.getElementById('leadsSourceFilter')?.addEventListener('change', () => {
+  filterAndRenderLeads();
 });
 
 function loadAllData() {
