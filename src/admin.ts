@@ -204,8 +204,7 @@ async function loadBlogPosts() {
   const { data, error } = await sb
     .from('blog_posts')
     .select('*')
-    .order('created_at', { ascending: false })
-    .limit(100);
+    .order('created_at', { ascending: false });
 
   if (error) {
     console.error('Error loading blog posts:', error);
@@ -700,7 +699,7 @@ document.getElementById('blogSearch')?.addEventListener('input', async (e) => {
   const publishedFilter = (document.getElementById('blogPublishedFilter') as HTMLSelectElement).value;
 
   const sb = getSupabase();
-  let query = sb.from('blog_posts').select('*').limit(100);
+  let query = sb.from('blog_posts').select('*');
 
   if (langFilter) query = query.eq('language', langFilter);
   if (publishedFilter) query = query.eq('published', publishedFilter === 'true');
