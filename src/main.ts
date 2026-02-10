@@ -411,7 +411,7 @@ async function handleLogin(e: Event) {
   submitBtn.textContent = '...';
 
   try {
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data: signInData, error } = await supabase.auth.signInWithPassword({
       email: emailInput.value.trim(),
       password: passwordInput.value,
     });
@@ -422,11 +422,23 @@ async function handleLogin(e: Event) {
       return;
     }
 
+    const { data: adminCheck } = await supabase
+      .from('admin_users')
+      .select('id')
+      .eq('id', signInData.user.id)
+      .maybeSingle();
+
+    if (adminCheck) {
+      await supabase.auth.signOut();
+      showFormMessage(form, t('error.login_invalid', 'Invalid email or password'), 'error');
+      return;
+    }
+
     trackEvent('login_success', { language: currentLanguage });
     const loginModal = document.getElementById('loginModal');
     if (loginModal) closeModal(loginModal);
     form.reset();
-    window.location.href = `/admin.html?lang=${currentLanguage}`;
+    showFormMessage(form, t('login.success', 'You have successfully logged in'), 'success');
   } catch (err) {
     showFormMessage(form, t('error.login_invalid', 'Invalid email or password'), 'error');
   } finally {
