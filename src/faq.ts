@@ -1,10 +1,5 @@
-import { createClient } from '@supabase/supabase-js';
 import { loadTranslations } from './content-loader';
-
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { supabase } from './supabase';
 
 let currentLanguage = new URLSearchParams(window.location.search).get('lang') || 'ru';
 let currentCategory = 'all';
