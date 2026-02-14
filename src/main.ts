@@ -6,6 +6,12 @@ let currentLanguage = params.get('lang') || 'ru';
 let translations: Record<string, string> = {};
 let images: any = {};
 let demoFormOpenedAt = 0;
+let pageLoadedAt = Date.now();
+let userActivity = {
+  mouseMoved: false,
+  scrolled: false,
+  clicked: false
+};
 
 declare global {
   interface Window {
@@ -672,11 +678,91 @@ function setupLanguageSwitcher() {
   });
 }
 
+function handleTelegramClick() {
+  const timeOnPage = Date.now() - pageLoadedAt;
+  const hasActivity = userActivity.mouseMoved || userActivity.scrolled;
+
+  if (timeOnPage < 2000 || !hasActivity) {
+    openVerifyModal();
+  } else {
+    proceedToTelegram();
+  }
+}
+
+function proceedToTelegram() {
+  const link = document.querySelector('#telegram-button a');
+  const url = link?.getAttribute('data-telegram-link');
+  if (url) {
+    trackEvent('telegram_button_clicked', { language: currentLanguage, verified: true });
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+}
+
+function openVerifyModal() {
+  const modal = document.getElementById('verifyModal');
+  const confirmBtn = document.getElementById('confirmVerify');
+  const timerSpan = document.getElementById('verifyTimer');
+
+  if (!modal || !confirmBtn || !timerSpan) return;
+
+  let countdown = 3;
+  timerSpan.textContent = countdown.toString();
+  confirmBtn.setAttribute('disabled', 'true');
+
+  const interval = setInterval(() => {
+    countdown--;
+    timerSpan.textContent = countdown.toString();
+
+    if (countdown <= 0) {
+      clearInterval(interval);
+      confirmBtn.removeAttribute('disabled');
+      timerSpan.parentElement!.textContent = t('button.confirm', 'Подтвердить');
+    }
+  }, 1000);
+
+  openModal(modal);
+}
+
+function setupVerifyModal() {
+  const modal = document.getElementById('verifyModal');
+  const confirmBtn = document.getElementById('confirmVerify');
+  const cancelBtn = document.getElementById('cancelVerify');
+
+  confirmBtn?.addEventListener('click', () => {
+    if (modal) closeModal(modal);
+    proceedToTelegram();
+  });
+
+  cancelBtn?.addEventListener('click', () => {
+    if (modal) closeModal(modal);
+  });
+}
+
+function trackUserActivity() {
+  let mouseMoveTimeout: number;
+
+  document.addEventListener('mousemove', () => {
+    clearTimeout(mouseMoveTimeout);
+    mouseMoveTimeout = window.setTimeout(() => {
+      userActivity.mouseMoved = true;
+    }, 100);
+  }, { once: true });
+
+  document.addEventListener('scroll', () => {
+    userActivity.scrolled = true;
+  }, { once: true });
+
+  document.addEventListener('click', () => {
+    userActivity.clicked = true;
+  }, { once: true });
+}
+
 async function init() {
   document.documentElement.lang = currentLanguage;
   document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
   document.querySelector(`[data-lang="${currentLanguage}"]`)?.classList.add('active');
 
+  trackUserActivity();
   setupLanguageSwitcher();
   setupModal();
 
@@ -716,9 +802,12 @@ async function init() {
   });
 
   const telegramButton = document.querySelector('#telegram-button a');
-  telegramButton?.addEventListener('click', () => {
-    trackEvent('telegram_button_clicked', { language: currentLanguage });
+  telegramButton?.addEventListener('click', (e) => {
+    e.preventDefault();
+    handleTelegramClick();
   });
+
+  setupVerifyModal();
 
   const loginForm = document.getElementById('loginForm');
   loginForm?.addEventListener('submit', handleLogin);

@@ -602,8 +602,20 @@
   </div>
 
   <!-- Floating Telegram Button -->
+  <div id="verifyModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="verifyModalTitle" aria-hidden="true">
+    <div class="modal-content" style="max-width: 400px;">
+      <button class="modal-close" aria-label="Закрыть">&times;</button>
+      <h2 id="verifyModalTitle" style="margin-bottom: 1rem;">Подтвердите действие</h2>
+      <p style="margin-bottom: 1.5rem; color: var(--neutral-600);">Пожалуйста, подтвердите, что вы хотите перейти в Telegram</p>
+      <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+        <button id="cancelVerify" class="btn btn-secondary" style="background: var(--neutral-200); color: var(--neutral-800);">Отмена</button>
+        <button id="confirmVerify" class="btn btn-primary" disabled>Подтвердить (<span id="verifyTimer">3</span>)</button>
+      </div>
+    </div>
+  </div>
+
   <div id="telegram-button" style="position: fixed; bottom: 30px; right: 30px; z-index: 1000;">
-    <a href="https://t.me/Make_Soft_Ltd" target="_blank" rel="noopener noreferrer"
+    <a href="#telegram" data-telegram-link="https://t.me/Make_Soft_Ltd"
        style="display: flex; align-items: center; justify-content: center; width: 60px; height: 60px;
               background: linear-gradient(135deg, #0088cc 0%, #229ED9 100%); border-radius: 50%;
               box-shadow: 0 4px 12px rgba(0, 136, 204, 0.4); transition: all 0.3s ease; text-decoration: none;"

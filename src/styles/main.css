@@ -241,6 +241,13 @@ img {
   transform: translateY(-1px);
 }
 
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .btn-large {
   padding: 1rem 2.5rem;
   font-size: 1.0625rem;
