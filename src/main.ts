@@ -657,6 +657,11 @@ async function handleDemoRequest(e: Event) {
     referral_source: formData.get('referral_source') as string,
   };
 
+  const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+  const originalText = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = '...';
+
   const restUrl = `${supabaseUrl}/rest/v1/demo_requests`;
   const headers = {
     'Content-Type': 'application/json',
@@ -666,6 +671,16 @@ async function handleDemoRequest(e: Event) {
   };
 
   try {
+    const { data: dupCheck } = await supabase.rpc('check_recent_submission', {
+      p_email: data.email,
+      p_telegram: data.telegram,
+    });
+
+    if (dupCheck?.is_duplicate) {
+      showFormMessage(form, t('error.duplicate_submission', 'You have already submitted a request. Please wait 24 hours before submitting again.'), 'error');
+      return;
+    }
+
     const res = await fetch(restUrl, {
       method: 'POST',
       headers,
@@ -703,6 +718,9 @@ async function handleDemoRequest(e: Event) {
   } catch (error: any) {
     console.error('Error submitting demo request:', error);
     showFormMessage(form, `Error: ${error?.message || 'Unknown error'}`, 'error');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalText;
   }
 }
 
@@ -718,6 +736,11 @@ async function handleContactSubmission(e: Event) {
     telegram: formData.get('telegram') as string || null,
   };
 
+  const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+  const originalText = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = '...';
+
   const restUrl = `${supabaseUrl}/rest/v1/contact_submissions`;
   const headers = {
     'Content-Type': 'application/json',
@@ -727,6 +750,16 @@ async function handleContactSubmission(e: Event) {
   };
 
   try {
+    const { data: dupCheck } = await supabase.rpc('check_recent_submission', {
+      p_email: data.email,
+      p_telegram: data.telegram,
+    });
+
+    if (dupCheck?.is_duplicate) {
+      showFormMessage(form, t('error.duplicate_submission', 'You have already submitted a request. Please wait 24 hours before submitting again.'), 'error');
+      return;
+    }
+
     const res = await fetch(restUrl, {
       method: 'POST',
       headers,
@@ -762,6 +795,9 @@ async function handleContactSubmission(e: Event) {
   } catch (error: any) {
     console.error('Error submitting contact form:', error);
     showFormMessage(form, `Error: ${error?.message || 'Unknown error'}`, 'error');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalText;
   }
 }
 
