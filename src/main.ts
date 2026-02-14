@@ -145,8 +145,18 @@ async function updateContent() {
     const telegramInput = demoForm.querySelector<HTMLInputElement>('input[name="telegram"]');
     if (nameInput) nameInput.placeholder = t('form.name', 'Your name');
     if (emailInput) emailInput.placeholder = t('form.email', 'Email');
-    if (telegramInput) telegramInput.placeholder = t('form.telegram', 'Telegram (optional)');
+    if (telegramInput) telegramInput.placeholder = t('form.telegram_required', 'Telegram');
   }
+
+  document.querySelectorAll('[data-translate="form.broker_experience"]').forEach(el => {
+    el.textContent = t('form.broker_experience', 'Have you had experience working as a broker?');
+  });
+  document.querySelectorAll('[data-translate="form.yes"]').forEach(el => {
+    el.textContent = t('form.yes', 'Yes');
+  });
+  document.querySelectorAll('[data-translate="form.no"]').forEach(el => {
+    el.textContent = t('form.no', 'No');
+  });
 
   setById('loginModalTitle', 'login.title', 'Sign In');
   const loginForm = document.getElementById('loginForm');
@@ -454,6 +464,9 @@ async function handleDemoRequest(e: Event) {
 
   const nameInput = form.querySelector<HTMLInputElement>('input[name="name"]')!;
   const emailInput = form.querySelector<HTMLInputElement>('input[name="email"]')!;
+  const telegramInput = form.querySelector<HTMLInputElement>('input[name="telegram"]')!;
+  const brokerRadio = form.querySelector<HTMLInputElement>('input[name="broker_experience"]:checked');
+  const radioGroup = form.querySelector<HTMLElement>('.radio-group');
   const checkbox = form.querySelector<HTMLInputElement>('input[name="not_robot"]');
   const checkboxField = checkbox?.closest('.checkbox-field');
   const existingError = checkboxField?.parentElement?.querySelector('.checkbox-error');
@@ -471,6 +484,28 @@ async function handleDemoRequest(e: Event) {
   } else if (!validateEmail(emailInput.value.trim())) {
     showFieldError(emailInput, t('error.email_invalid', 'Please enter a valid email address'));
     hasError = true;
+  }
+
+  if (!telegramInput.value.trim()) {
+    showFieldError(telegramInput, t('error.telegram_required', 'Please enter your Telegram'));
+    hasError = true;
+  }
+
+  if (!brokerRadio) {
+    const existingRadioError = radioGroup?.querySelector('.radio-error');
+    if (!existingRadioError) {
+      const errorEl = document.createElement('div');
+      errorEl.className = 'radio-error';
+      errorEl.textContent = t('error.broker_experience_required', 'Please select an option');
+      radioGroup?.appendChild(errorEl);
+      requestAnimationFrame(() => errorEl.classList.add('visible'));
+    }
+    radioGroup?.classList.add('has-error');
+    hasError = true;
+  } else {
+    const existingRadioError = radioGroup?.querySelector('.radio-error');
+    if (existingRadioError) existingRadioError.remove();
+    radioGroup?.classList.remove('has-error');
   }
 
   if (checkbox && !checkbox.checked) {
@@ -498,7 +533,8 @@ async function handleDemoRequest(e: Event) {
   const data = {
     name: formData.get('name') as string,
     email: formData.get('email') as string,
-    telegram: formData.get('telegram') as string || null,
+    telegram: formData.get('telegram') as string,
+    broker_experience: formData.get('broker_experience') === 'yes',
   };
 
   const restUrl = `${supabaseUrl}/rest/v1/demo_requests`;
@@ -528,6 +564,7 @@ async function handleDemoRequest(e: Event) {
         name: data.name,
         email: data.email,
         telegram: data.telegram,
+        broker_experience: data.broker_experience,
         source: 'demo',
         language: currentLanguage,
       }),
@@ -535,7 +572,7 @@ async function handleDemoRequest(e: Event) {
 
     trackEvent('demo_request_submitted', {
       language: currentLanguage,
-      has_telegram: !!data.telegram
+      broker_experience: data.broker_experience
     });
 
     const successMsg = translations['success.demo_submitted'] || 'Thank you! We will contact you shortly.';
@@ -646,6 +683,18 @@ async function init() {
       setTimeout(() => error?.remove(), 200);
       field?.classList.remove('has-error');
     }
+  });
+
+  demoForm?.querySelectorAll<HTMLInputElement>('input[name="broker_experience"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const group = radio.closest('.radio-group');
+      const error = group?.querySelector('.radio-error');
+      if (error) {
+        error.classList.remove('visible');
+        setTimeout(() => error.remove(), 200);
+      }
+      group?.classList.remove('has-error');
+    });
   });
 
   const telegramButton = document.querySelector('#telegram-button a');

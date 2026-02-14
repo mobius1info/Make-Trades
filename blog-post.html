@@ -226,7 +226,22 @@
           <input type="email" name="email" placeholder="Email" aria-label="Ваш email">
         </div>
         <div class="form-field">
-          <input type="text" name="telegram" placeholder="Telegram (необязательно)" aria-label="Ваш Telegram">
+          <input type="text" name="telegram" placeholder="Telegram" aria-label="Ваш Telegram" required>
+        </div>
+        <div class="form-field radio-group">
+          <p class="radio-group-label" data-translate="form.broker_experience">Был ли у вас опыт работы брокером?</p>
+          <div class="radio-options">
+            <label class="radio-field">
+              <input type="radio" name="broker_experience" value="yes">
+              <span class="radio-custom"></span>
+              <span class="radio-label" data-translate="form.yes">Да</span>
+            </label>
+            <label class="radio-field">
+              <input type="radio" name="broker_experience" value="no">
+              <span class="radio-custom"></span>
+              <span class="radio-label" data-translate="form.no">Нет</span>
+            </label>
+          </div>
         </div>
         <label class="checkbox-field">
           <input type="checkbox" name="not_robot">
