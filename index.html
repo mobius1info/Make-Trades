@@ -560,6 +560,16 @@
         <div class="form-field">
           <input type="text" name="telegram" placeholder="Telegram" aria-label="Ваш Telegram" required>
         </div>
+        <div class="form-field select-group">
+          <select name="referral_source" aria-label="Откуда узнали о нас?" required>
+            <option value="" disabled selected data-translate="form.referral_placeholder">Откуда узнали о нас? *</option>
+            <option value="google" data-translate="form.referral_google">Поиск в Google</option>
+            <option value="social_media" data-translate="form.referral_social">Социальные сети</option>
+            <option value="recommendation" data-translate="form.referral_recommendation">Рекомендация</option>
+            <option value="ads" data-translate="form.referral_ads">Реклама</option>
+            <option value="other" data-translate="form.referral_other">Другое</option>
+          </select>
+        </div>
         <div class="form-field radio-group">
           <p class="radio-group-label" data-translate="form.broker_experience">Был ли у вас опыт работы брокером?</p>
           <div class="radio-options">

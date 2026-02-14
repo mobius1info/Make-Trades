@@ -155,6 +155,11 @@ async function updateContent() {
     if (telegramInput) telegramInput.placeholder = t('form.telegram_required', 'Telegram');
   }
 
+  document.querySelectorAll('[data-translate]').forEach(el => {
+    const key = el.getAttribute('data-translate');
+    if (key && translations[key]) el.textContent = translations[key];
+  });
+
   document.querySelectorAll('[data-translate="form.broker_experience"]').forEach(el => {
     el.textContent = t('form.broker_experience', 'Have you had experience working as a broker?');
   });
@@ -474,6 +479,8 @@ async function handleDemoRequest(e: Event) {
   const nameInput = form.querySelector<HTMLInputElement>('input[name="name"]')!;
   const emailInput = form.querySelector<HTMLInputElement>('input[name="email"]')!;
   const telegramInput = form.querySelector<HTMLInputElement>('input[name="telegram"]')!;
+  const referralSelect = form.querySelector<HTMLSelectElement>('select[name="referral_source"]')!;
+  const selectGroup = referralSelect?.closest('.select-group');
   const brokerRadio = form.querySelector<HTMLInputElement>('input[name="broker_experience"]:checked');
   const radioGroup = form.querySelector<HTMLElement>('.radio-group');
   const checkbox = form.querySelector<HTMLInputElement>('input[name="not_robot"]');
@@ -498,6 +505,23 @@ async function handleDemoRequest(e: Event) {
   if (!telegramInput.value.trim()) {
     showFieldError(telegramInput, t('error.telegram_required', 'Please enter your Telegram'));
     hasError = true;
+  }
+
+  if (!referralSelect.value) {
+    const existingSelectError = selectGroup?.querySelector('.select-error');
+    if (!existingSelectError) {
+      const errorEl = document.createElement('div');
+      errorEl.className = 'select-error';
+      errorEl.textContent = t('error.referral_required', 'Please select how you heard about us');
+      selectGroup?.appendChild(errorEl);
+      requestAnimationFrame(() => errorEl.classList.add('visible'));
+    }
+    referralSelect.classList.add('input-error');
+    hasError = true;
+  } else {
+    const existingSelectError = selectGroup?.querySelector('.select-error');
+    if (existingSelectError) existingSelectError.remove();
+    referralSelect.classList.remove('input-error');
   }
 
   if (!brokerRadio) {
@@ -559,6 +583,7 @@ async function handleDemoRequest(e: Event) {
     email: formData.get('email') as string,
     telegram: formData.get('telegram') as string,
     broker_experience: formData.get('broker_experience') === 'yes',
+    referral_source: formData.get('referral_source') as string,
   };
 
   const restUrl = `${supabaseUrl}/rest/v1/demo_requests`;
@@ -589,6 +614,7 @@ async function handleDemoRequest(e: Event) {
         email: data.email,
         telegram: data.telegram,
         broker_experience: data.broker_experience,
+        referral_source: data.referral_source,
         source: 'demo',
         language: currentLanguage,
       }),
@@ -787,6 +813,17 @@ async function init() {
       setTimeout(() => error?.remove(), 200);
       field?.classList.remove('has-error');
     }
+  });
+
+  const referralSelect = demoForm?.querySelector<HTMLSelectElement>('select[name="referral_source"]');
+  referralSelect?.addEventListener('change', () => {
+    const group = referralSelect.closest('.select-group');
+    const error = group?.querySelector('.select-error');
+    if (error) {
+      error.classList.remove('visible');
+      setTimeout(() => error.remove(), 200);
+    }
+    referralSelect.classList.remove('input-error');
   });
 
   demoForm?.querySelectorAll<HTMLInputElement>('input[name="broker_experience"]').forEach(radio => {

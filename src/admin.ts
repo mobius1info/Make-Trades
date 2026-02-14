@@ -302,12 +302,21 @@ function filterAndRenderLeads() {
       (l.name && l.name.toLowerCase().includes(search)) ||
       (l.email && l.email.toLowerCase().includes(search)) ||
       (l.telegram && l.telegram.toLowerCase().includes(search)) ||
-      (l.message && l.message.toLowerCase().includes(search))
+      (l.message && l.message.toLowerCase().includes(search)) ||
+      (l.referral_source && l.referral_source.toLowerCase().includes(search))
     );
   }
 
   renderLeads(filtered);
 }
+
+const referralLabels: Record<string, string> = {
+  google: 'Google',
+  social_media: 'Соц. сети',
+  recommendation: 'Рекомендация',
+  ads: 'Реклама',
+  other: 'Другое',
+};
 
 function renderLeads(leads: any[]) {
   const container = document.getElementById('leadsContainer')!;
@@ -328,6 +337,8 @@ function renderLeads(leads: any[]) {
     });
     const sourceLabel = lead.source === 'demo' ? 'Demo' : 'Contact';
     const sourceClass = lead.source === 'demo' ? 'demo' : 'contact';
+    const brokerExp = lead.broker_experience === true ? 'Да' : lead.broker_experience === false ? 'Нет' : '-';
+    const referral = lead.referral_source ? (referralLabels[lead.referral_source] || escapeHtml(lead.referral_source)) : '';
 
     return `
       <div class="lead-card ${lead.is_new ? 'is-new' : ''}">
@@ -335,11 +346,31 @@ function renderLeads(leads: any[]) {
           <span class="lead-name">${escapeHtml(lead.name || 'Без имени')}</span>
           <span class="lead-source ${sourceClass}">${sourceLabel}</span>
         </div>
-        <div class="lead-meta">
-          <span>&#9993; ${escapeHtml(lead.email)}</span>
-          ${lead.telegram ? `<span>&#9992; ${escapeHtml(lead.telegram)}</span>` : ''}
-          <span>&#128339; ${date}</span>
-          ${lead.language ? `<span>&#127760; ${lead.language.toUpperCase()}</span>` : ''}
+        <div class="lead-info-grid">
+          <div class="lead-info-item">
+            <span class="lead-info-label">Email</span>
+            <span class="lead-info-value">${escapeHtml(lead.email)}</span>
+          </div>
+          <div class="lead-info-item">
+            <span class="lead-info-label">Telegram</span>
+            <span class="lead-info-value ${!lead.telegram ? 'lead-info-empty' : ''}">${lead.telegram ? escapeHtml(lead.telegram) : 'Не указан'}</span>
+          </div>
+          <div class="lead-info-item">
+            <span class="lead-info-label">Опыт брокера</span>
+            <span class="lead-info-value">${brokerExp}</span>
+          </div>
+          <div class="lead-info-item">
+            <span class="lead-info-label">Откуда узнал</span>
+            <span class="lead-info-value ${!referral ? 'lead-info-empty' : ''}">${referral || '-'}</span>
+          </div>
+          <div class="lead-info-item">
+            <span class="lead-info-label">Дата</span>
+            <span class="lead-info-value">${date}</span>
+          </div>
+          <div class="lead-info-item">
+            <span class="lead-info-label">Язык</span>
+            <span class="lead-info-value">${lead.language ? lead.language.toUpperCase() : '-'}</span>
+          </div>
         </div>
         ${lead.message ? `<div class="lead-message">${escapeHtml(lead.message)}</div>` : ''}
         <div class="lead-actions">
