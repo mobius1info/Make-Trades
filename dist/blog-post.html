@@ -120,10 +120,10 @@
     ]
   }
   </script>
-  <script type="module" crossorigin src="/assets/blogPost-B8EfQLm5.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/supabase-BKCL4Eps.js">
-  <link rel="modulepreload" crossorigin href="/assets/content-loader-Bs0FwDnX.js">
-  <link rel="stylesheet" crossorigin href="/assets/supabase-DKYr5cp4.css">
+  <script type="module" crossorigin src="/assets/blogPost-D4aDkumg.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/supabase-BZBwCKW6.js">
+  <link rel="modulepreload" crossorigin href="/assets/content-loader-BMv8fMip.js">
+  <link rel="stylesheet" crossorigin href="/assets/supabase-DrovdCOB.css">
 </head>
 <body>
   <noscript><div><img src="https://mc.yandex.ru/watch/106721763" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
@@ -229,7 +229,22 @@
           <input type="email" name="email" placeholder="Email" aria-label="Ваш email">
         </div>
         <div class="form-field">
-          <input type="text" name="telegram" placeholder="Telegram (необязательно)" aria-label="Ваш Telegram">
+          <input type="text" name="telegram" placeholder="Telegram" aria-label="Ваш Telegram" required>
+        </div>
+        <div class="form-field radio-group">
+          <p class="radio-group-label" data-translate="form.broker_experience">Был ли у вас опыт работы брокером?</p>
+          <div class="radio-options">
+            <label class="radio-field">
+              <input type="radio" name="broker_experience" value="yes">
+              <span class="radio-custom"></span>
+              <span class="radio-label" data-translate="form.yes">Да</span>
+            </label>
+            <label class="radio-field">
+              <input type="radio" name="broker_experience" value="no">
+              <span class="radio-custom"></span>
+              <span class="radio-label" data-translate="form.no">Нет</span>
+            </label>
+          </div>
         </div>
         <label class="checkbox-field">
           <input type="checkbox" name="not_robot">

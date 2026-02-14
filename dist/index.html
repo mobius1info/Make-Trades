@@ -208,10 +208,10 @@
   }
   </script>
 
-  <script type="module" crossorigin src="/assets/main-CyCVRAUS.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/supabase-BKCL4Eps.js">
-  <link rel="modulepreload" crossorigin href="/assets/content-loader-Bs0FwDnX.js">
-  <link rel="stylesheet" crossorigin href="/assets/supabase-DKYr5cp4.css">
+  <script type="module" crossorigin src="/assets/main-Cc_OJPYk.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/supabase-BZBwCKW6.js">
+  <link rel="modulepreload" crossorigin href="/assets/content-loader-BMv8fMip.js">
+  <link rel="stylesheet" crossorigin href="/assets/supabase-DrovdCOB.css">
 </head>
 <body>
   <!-- Yandex.Metrika noscript -->
@@ -551,6 +551,9 @@
       <button class="modal-close" aria-label="Закрыть модальное окно">&times;</button>
       <h2 id="demoModalTitle">Запросить демо-аккаунт</h2>
       <form id="demoForm" novalidate>
+        <div class="form-field hp-field" aria-hidden="true">
+          <input type="text" name="website" autocomplete="off" tabindex="-1">
+        </div>
         <div class="form-field">
           <input type="text" name="name" placeholder="Ваше имя" aria-label="Ваше имя">
         </div>
@@ -558,7 +561,22 @@
           <input type="email" name="email" placeholder="Email" aria-label="Ваш email">
         </div>
         <div class="form-field">
-          <input type="text" name="telegram" placeholder="Telegram (необязательно)" aria-label="Ваш Telegram">
+          <input type="text" name="telegram" placeholder="Telegram" aria-label="Ваш Telegram" required>
+        </div>
+        <div class="form-field radio-group">
+          <p class="radio-group-label" data-translate="form.broker_experience">Был ли у вас опыт работы брокером?</p>
+          <div class="radio-options">
+            <label class="radio-field">
+              <input type="radio" name="broker_experience" value="yes">
+              <span class="radio-custom"></span>
+              <span class="radio-label" data-translate="form.yes">Да</span>
+            </label>
+            <label class="radio-field">
+              <input type="radio" name="broker_experience" value="no">
+              <span class="radio-custom"></span>
+              <span class="radio-label" data-translate="form.no">Нет</span>
+            </label>
+          </div>
         </div>
         <label class="checkbox-field">
           <input type="checkbox" name="not_robot">
