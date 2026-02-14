@@ -208,9 +208,9 @@
   }
   </script>
 
-  <script type="module" crossorigin src="/assets/main-CjTFp99q.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/supabase-Oy0nagOi.js">
-  <link rel="modulepreload" crossorigin href="/assets/content-loader-xWymZvdG.js">
+  <script type="module" crossorigin src="/assets/main-BTvMQQlu.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/supabase-DHWaaCdK.js">
+  <link rel="modulepreload" crossorigin href="/assets/content-loader-CSxsALxx.js">
   <link rel="stylesheet" crossorigin href="/assets/supabase-Cff30pdV.css">
 </head>
 <body>
@@ -567,7 +567,7 @@
           <input type="email" name="email" placeholder="Email" aria-label="Ваш email">
         </div>
         <div class="form-field">
-          <input type="text" name="telegram" placeholder="Telegram" aria-label="Ваш Telegram" required>
+          <input type="text" name="telegram" placeholder="Telegram" aria-label="Ваш Telegram">
         </div>
         <div class="form-field custom-select-group">
           <input type="hidden" name="referral_source" value="">
@@ -629,6 +629,26 @@
         </div>
         <button type="submit" class="btn btn-primary btn-large" id="loginSubmitBtn">Войти</button>
       </form>
+    </div>
+  </div>
+
+  <!-- Bonus Modal -->
+  <div id="bonusModal" class="modal" role="dialog" aria-labelledby="bonusModalTitle" aria-hidden="true">
+    <div class="modal-content" style="max-width: 480px; text-align: center;">
+      <button class="modal-close" aria-label="Закрыть">&times;</button>
+      <div style="font-size: 48px; margin-bottom: 16px;">&#127873;</div>
+      <h2 id="bonusModalTitle" data-translate="bonus.title">Получите бонусы!</h2>
+      <p style="margin-bottom: 24px; color: var(--neutral-600); line-height: 1.6;" data-translate="bonus.text">Напишите нам на почту — мы дадим вам персональные бонусы и поможем с настройкой!</p>
+      <a href="mailto:sales@maketrades.space" class="btn btn-primary btn-large" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        <span data-translate="bonus.email_btn">sales@maketrades.space</span>
+      </a>
+      <div style="margin-top: 16px;">
+        <a href="https://t.me/Make_Soft_Ltd" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; background: var(--neutral-100); color: var(--neutral-800); border: 1px solid var(--neutral-300);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.601 8.217l-2.031 9.57c-.153.687-.555.858-1.125.534l-3.108-2.289-1.5 1.443c-.165.165-.306.306-.627.306l.222-3.162 5.76-5.202c.252-.222-.054-.345-.39-.123l-7.122 4.488-3.066-.954c-.666-.21-.678-.666.144-.99l12.006-4.626c.555-.198 1.038.132.837 1.005z" fill="currentColor"/></svg>
+          <span data-translate="bonus.telegram_btn">Telegram</span>
+        </a>
+      </div>
     </div>
   </div>
 
