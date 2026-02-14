@@ -591,11 +591,13 @@
             </label>
           </div>
         </div>
-        <label class="checkbox-field">
-          <input type="checkbox" name="not_robot">
-          <span class="checkbox-custom"></span>
-          <span class="checkbox-label" data-translate="form.not_robot">Я не робот</span>
-        </label>
+        <div class="captcha-field" id="captchaField">
+          <label class="captcha-label" data-translate="form.captcha_label">Решите пример:</label>
+          <div class="captcha-row">
+            <span class="captcha-question" id="captchaQuestion"></span>
+            <input type="text" name="captcha_answer" id="captchaAnswer" class="captcha-input" autocomplete="off" inputmode="numeric" placeholder="?">
+          </div>
+        </div>
         <button type="submit" class="btn btn-primary btn-large">Запросить</button>
         <div class="promo-hint">
           <div class="promo-hint-badge" data-translate="form.promo_badge">-50%</div>

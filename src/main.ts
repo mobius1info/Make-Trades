@@ -7,6 +7,7 @@ let translations: Record<string, string> = {};
 let images: any = {};
 let demoFormOpenedAt = 0;
 let pageLoadedAt = Date.now();
+let currentCaptchaAnswer = 0;
 let userActivity = {
   mouseMoved: false,
   scrolled: false,
@@ -133,10 +134,6 @@ async function updateContent() {
       const span = li.querySelector('span');
       if (span) span.textContent = t(`detail${num}.item${i + 1}`, span.textContent || '');
     });
-  });
-
-  document.querySelectorAll('[data-translate="form.not_robot"]').forEach(label => {
-    label.textContent = t('form.not_robot', 'I am not a robot');
   });
 
   const demoFormButton = document.querySelector('#demoForm button[type="submit"]');
@@ -310,6 +307,7 @@ function setupModal() {
   requestDemoBtn?.addEventListener('click', () => {
     if (demoModal) {
       demoFormOpenedAt = Date.now();
+      generateCaptcha();
       openModal(demoModal);
       trackEvent('demo_modal_opened', { language: currentLanguage });
     }
@@ -317,6 +315,7 @@ function setupModal() {
   ctaRequestDemoBtn?.addEventListener('click', () => {
     if (demoModal) {
       demoFormOpenedAt = Date.now();
+      generateCaptcha();
       openModal(demoModal);
       trackEvent('demo_modal_opened', { language: currentLanguage });
     }
@@ -408,6 +407,18 @@ function clearAllFieldErrors(form: HTMLFormElement) {
 
 function validateEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function generateCaptcha() {
+  const ops = [
+    () => { const a = 2 + Math.floor(Math.random() * 18); const b = 1 + Math.floor(Math.random() * a); return { q: `${a} − ${b}`, a: a - b }; },
+    () => { const a = 1 + Math.floor(Math.random() * 12); const b = 1 + Math.floor(Math.random() * 12); return { q: `${a} + ${b}`, a: a + b }; },
+    () => { const a = 2 + Math.floor(Math.random() * 9); const b = 2 + Math.floor(Math.random() * 5); return { q: `${a} × ${b}`, a: a * b }; },
+  ];
+  const op = ops[Math.floor(Math.random() * ops.length)]();
+  currentCaptchaAnswer = op.a;
+  const el = document.getElementById('captchaQuestion');
+  if (el) el.textContent = op.q + ' =';
 }
 
 async function handleLogin(e: Event) {
@@ -554,9 +565,8 @@ async function handleDemoRequest(e: Event) {
   const selectGroup = form.querySelector<HTMLElement>('.custom-select-group');
   const brokerRadio = form.querySelector<HTMLInputElement>('input[name="broker_experience"]:checked');
   const radioGroup = form.querySelector<HTMLElement>('.radio-group');
-  const checkbox = form.querySelector<HTMLInputElement>('input[name="not_robot"]');
-  const checkboxField = checkbox?.closest('.checkbox-field');
-  const existingError = checkboxField?.parentElement?.querySelector('.checkbox-error');
+  const captchaInput = form.querySelector<HTMLInputElement>('#captchaAnswer');
+  const captchaField = form.querySelector<HTMLElement>('#captchaField');
 
   let hasError = false;
 
@@ -612,25 +622,28 @@ async function handleDemoRequest(e: Event) {
     radioGroup?.classList.remove('has-error');
   }
 
-  if (checkbox && !checkbox.checked) {
-    if (!existingError) {
-      const errorEl = document.createElement('div');
-      errorEl.className = 'checkbox-error';
-      errorEl.textContent = t('error.robot_check', 'Please confirm you are not a robot');
-      checkboxField?.after(errorEl);
-      requestAnimationFrame(() => errorEl.classList.add('visible'));
+  if (captchaInput && captchaField) {
+    const userAnswer = parseInt(captchaInput.value.trim(), 10);
+    const existingCaptchaError = captchaField.querySelector('.captcha-error');
+    if (isNaN(userAnswer) || userAnswer !== currentCaptchaAnswer) {
+      if (!existingCaptchaError) {
+        const errorEl = document.createElement('div');
+        errorEl.className = 'captcha-error';
+        errorEl.textContent = t('error.captcha_wrong', 'Wrong answer, try again');
+        captchaField.appendChild(errorEl);
+        requestAnimationFrame(() => errorEl.classList.add('visible'));
+      }
+      captchaField.classList.add('has-error');
+      generateCaptcha();
+      captchaInput.value = '';
+      hasError = true;
+    } else {
+      if (existingCaptchaError) existingCaptchaError.remove();
+      captchaField.classList.remove('has-error');
     }
-    checkboxField?.classList.add('has-error');
-    hasError = true;
-  } else {
-    if (existingError) existingError.remove();
-    checkboxField?.classList.remove('has-error');
   }
 
   if (hasError) return;
-
-  if (existingError) existingError.remove();
-  checkboxField?.classList.remove('has-error');
 
   const honeypot = form.querySelector<HTMLInputElement>('input[name="website"]');
   if (honeypot && honeypot.value) {
@@ -912,17 +925,18 @@ async function init() {
     });
   });
 
-  const robotCheckbox = demoForm?.querySelector<HTMLInputElement>('input[name="not_robot"]');
-  robotCheckbox?.addEventListener('change', () => {
-    const field = robotCheckbox.closest('.checkbox-field');
-    const error = field?.parentElement?.querySelector('.checkbox-error');
-    if (robotCheckbox.checked) {
-      error?.classList.remove('visible');
-      setTimeout(() => error?.remove(), 200);
-      field?.classList.remove('has-error');
+  const captchaInput = demoForm?.querySelector<HTMLInputElement>('#captchaAnswer');
+  captchaInput?.addEventListener('input', () => {
+    const captchaField = document.getElementById('captchaField');
+    const error = captchaField?.querySelector('.captcha-error');
+    if (error) {
+      error.classList.remove('visible');
+      setTimeout(() => error.remove(), 200);
     }
+    captchaField?.classList.remove('has-error');
   });
 
+  generateCaptcha();
   initCustomSelects(demoForm);
 
   demoForm?.querySelectorAll<HTMLInputElement>('input[name="broker_experience"]').forEach(radio => {
