@@ -149,7 +149,7 @@ async function updateContent() {
     const telegramInput = demoForm.querySelector<HTMLInputElement>('input[name="telegram"]');
     if (nameInput) nameInput.placeholder = t('form.name', 'Your name');
     if (emailInput) emailInput.placeholder = t('form.email', 'Email');
-    if (telegramInput) telegramInput.placeholder = t('form.telegram_required', 'Telegram');
+    if (telegramInput) telegramInput.placeholder = t('form.telegram', 'Telegram (optional)');
   }
 
   const htmlTranslateKeys = new Set(['form.promo_text']);
@@ -409,22 +409,17 @@ function validateEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function validateTelegramFormat(username: string): boolean {
-  const clean = username.replace(/^@/, '').trim();
-  return /^[a-zA-Z][a-zA-Z0-9_]{3,30}[a-zA-Z0-9]$/.test(clean) && clean.length >= 5;
-}
-
-async function checkTelegramExists(username: string): Promise<boolean> {
-  try {
-    const res = await fetch(`${supabaseUrl}/functions/v1/check-telegram`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username }),
-    });
-    const data = await res.json();
-    return data.exists === true;
-  } catch {
-    return true;
+function showBonusModal() {
+  const demoModal = document.getElementById('demoModal');
+  if (demoModal) closeModal(demoModal);
+  const bonusModal = document.getElementById('bonusModal');
+  if (bonusModal) {
+    openModal(bonusModal);
+    const closeBtn = bonusModal.querySelector('.modal-close');
+    closeBtn?.addEventListener('click', () => closeModal(bonusModal), { once: true });
+    bonusModal.addEventListener('click', (e) => {
+      if (e.target === bonusModal) closeModal(bonusModal);
+    }, { once: true });
   }
 }
 
@@ -602,14 +597,6 @@ async function handleDemoRequest(e: Event) {
     hasError = true;
   }
 
-  if (!telegramInput.value.trim()) {
-    showFieldError(telegramInput, t('error.telegram_required', 'Please enter your Telegram'));
-    hasError = true;
-  } else if (!validateTelegramFormat(telegramInput.value.trim())) {
-    showFieldError(telegramInput, t('error.telegram_invalid', 'Invalid Telegram username format (min 5 chars, latin letters, digits, underscores)'));
-    hasError = true;
-  }
-
   if (!referralHidden.value) {
     const existingSelectError = selectGroup?.querySelector('.select-error');
     if (!existingSelectError) {
@@ -667,110 +654,9 @@ async function handleDemoRequest(e: Event) {
 
   if (hasError) return;
 
-  const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
-  const originalBtnText = submitBtn.textContent;
-  submitBtn.disabled = true;
-  submitBtn.textContent = '...';
-
-  const tgExists = await checkTelegramExists(telegramInput.value.trim());
-  if (!tgExists) {
-    showFieldError(telegramInput, t('error.telegram_not_found', 'This Telegram username was not found. Please check the spelling.'));
-    submitBtn.disabled = false;
-    submitBtn.textContent = originalBtnText;
-    return;
-  }
-
-  submitBtn.disabled = false;
-  submitBtn.textContent = originalBtnText;
-
-  const honeypot = form.querySelector<HTMLInputElement>('input[name="website"]');
-  if (honeypot && honeypot.value) {
-    const successMsg = translations['success.demo_submitted'] || 'Thank you! We will contact you shortly.';
-    showFormMessage(form, successMsg, 'success');
-    form.reset();
-    return;
-  }
-
-  if (demoFormOpenedAt && Date.now() - demoFormOpenedAt < 3000) {
-    const successMsg = translations['success.demo_submitted'] || 'Thank you! We will contact you shortly.';
-    showFormMessage(form, successMsg, 'success');
-    form.reset();
-    return;
-  }
-
-  const formData = new FormData(form);
-
-  const data = {
-    name: formData.get('name') as string,
-    email: formData.get('email') as string,
-    telegram: formData.get('telegram') as string,
-    broker_experience: formData.get('broker_experience') === 'yes',
-    referral_source: formData.get('referral_source') as string,
-  };
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = '...';
-
-  const restUrl = `${supabaseUrl}/rest/v1/demo_requests`;
-  const headers = {
-    'Content-Type': 'application/json',
-    'apikey': supabaseAnonKey,
-    'Authorization': `Bearer ${supabaseAnonKey}`,
-    'Prefer': 'return=minimal',
-  };
-
-  try {
-    const { data: dupCheck } = await supabase.rpc('check_recent_submission', {
-      p_email: data.email,
-      p_telegram: data.telegram,
-    });
-
-    if (dupCheck?.is_duplicate) {
-      showFormMessage(form, t('error.duplicate_submission', 'You have already submitted a request. Please wait 24 hours before submitting again.'), 'error');
-      return;
-    }
-
-    const res = await fetch(restUrl, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(data),
-    });
-
-    if (!res.ok) {
-      const text = await res.text().catch(() => '');
-      throw new Error(`${res.status} ${res.statusText}: ${text} [URL: ${restUrl}]`);
-    }
-
-    fetch(`${supabaseUrl}/rest/v1/leads`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
-        name: data.name,
-        email: data.email,
-        telegram: data.telegram,
-        broker_experience: data.broker_experience,
-        referral_source: data.referral_source,
-        source: 'demo',
-        language: currentLanguage,
-      }),
-    }).catch(() => {});
-
-    trackEvent('demo_request_submitted', {
-      language: currentLanguage,
-      broker_experience: data.broker_experience
-    });
-
-    const successMsg = translations['success.demo_submitted'] || 'Thank you! We will contact you shortly.';
-    showFormMessage(form, successMsg, 'success');
-    form.reset();
-    resetCustomSelects(form);
-  } catch (error: any) {
-    console.error('Error submitting demo request:', error);
-    showFormMessage(form, `Error: ${error?.message || 'Unknown error'}`, 'error');
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = originalBtnText;
-  }
+  form.reset();
+  resetCustomSelects(form);
+  showBonusModal();
 }
 
 async function handleContactSubmission(e: Event) {
