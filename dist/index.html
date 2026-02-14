@@ -208,10 +208,10 @@
   }
   </script>
 
-  <script type="module" crossorigin src="/assets/main-B-fYlRNk.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/supabase-Bv6V6ciD.js">
-  <link rel="modulepreload" crossorigin href="/assets/content-loader-DI9ghJP_.js">
-  <link rel="stylesheet" crossorigin href="/assets/supabase-BIUWlo65.css">
+  <script type="module" crossorigin src="/assets/main-CjTFp99q.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/supabase-Oy0nagOi.js">
+  <link rel="modulepreload" crossorigin href="/assets/content-loader-xWymZvdG.js">
+  <link rel="stylesheet" crossorigin href="/assets/supabase-Cff30pdV.css">
 </head>
 <body>
   <!-- Yandex.Metrika noscript -->
@@ -550,6 +550,12 @@
     <div class="modal-content">
       <button class="modal-close" aria-label="Закрыть модальное окно">&times;</button>
       <h2 id="demoModalTitle">Запросить демо-аккаунт</h2>
+      <div class="form-notice" id="formNotice">
+        <div class="form-notice-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L2 18h16L10 2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 8v4M10 14.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <p data-translate="form.notice_text">Мы не брокер. MakeTrades — это технологическая платформа: мы предоставляем профессиональный софт для запуска брокерского бизнеса в аренду с полным техническим сопровождением и поддержкой 24/7.</p>
+      </div>
       <form id="demoForm" novalidate>
         <div class="form-field hp-field" aria-hidden="true">
           <input type="text" name="website" autocomplete="off" tabindex="-1">
@@ -594,15 +600,17 @@
             </label>
           </div>
         </div>
-        <label class="checkbox-field">
-          <input type="checkbox" name="not_robot">
-          <span class="checkbox-custom"></span>
-          <span class="checkbox-label" data-translate="form.not_robot">Я не робот</span>
-        </label>
+        <div class="captcha-field" id="captchaField">
+          <label class="captcha-label" data-translate="form.captcha_label">Решите пример:</label>
+          <div class="captcha-row">
+            <span class="captcha-question" id="captchaQuestion"></span>
+            <input type="text" name="captcha_answer" id="captchaAnswer" class="captcha-input" autocomplete="off" inputmode="numeric" placeholder="?">
+          </div>
+        </div>
         <button type="submit" class="btn btn-primary btn-large">Запросить</button>
         <div class="promo-hint">
           <div class="promo-hint-badge" data-translate="form.promo_badge">-50%</div>
-          <p class="promo-hint-text" data-translate="form.promo_text">Напишите нам напрямую на <a href="mailto:sales@maketrades.space">sales@maketrades.space</a> и получите <strong>скидку 50% на установку</strong> софта + бонусную неделю вне учёта аренды для настройки с нашей техподдержкой</p>
+          <p class="promo-hint-text" data-translate="form.promo_text">Напишите нам напрямую на <a href="mailto:sales@maketrades.space">sales@maketrades.space</a> или в телеграмм и получите <strong>скидку 50% на установку</strong> софта + бонусную неделю вне учёта аренды для настройки с нашей техподдержкой</p>
         </div>
       </form>
     </div>
