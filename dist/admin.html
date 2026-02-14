@@ -602,7 +602,7 @@
       font-size: 1rem;
     }
   </style>
-  <script type="module" crossorigin src="/assets/admin-fCVX1H_y.js"></script>
+  <script type="module" crossorigin src="/assets/admin-Cygw7Aki.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/supabase-BKCL4Eps.js">
   <link rel="stylesheet" crossorigin href="/assets/supabase-DKYr5cp4.css">
 </head>
@@ -629,7 +629,13 @@
     <div class="admin-container">
       <div class="admin-header">
         <h1>Админ-панель MakeTrades</h1>
-        <button id="logoutBtn" class="btn btn-secondary">Выйти</button>
+        <div style="display:flex;gap:0.75rem;align-items:center;">
+          <button id="refreshBtn" class="btn btn-secondary" style="display:flex;align-items:center;gap:0.4rem;" title="Обновить данные">
+            <svg id="refreshIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.5s"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Обновить
+          </button>
+          <button id="logoutBtn" class="btn btn-secondary">Выйти</button>
+        </div>
       </div>
 
       <div class="admin-tabs">
