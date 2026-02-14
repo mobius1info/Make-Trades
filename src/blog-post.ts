@@ -1,5 +1,5 @@
 import { loadTranslations } from './content-loader';
-import { supabase } from './supabase';
+import { supabase, supabaseUrl } from './supabase';
 
 const params = new URLSearchParams(window.location.search);
 let currentLanguage = params.get('lang') || 'ru';
@@ -358,6 +358,25 @@ function validateEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+function validateTelegramFormat(username: string): boolean {
+  const clean = username.replace(/^@/, '').trim();
+  return /^[a-zA-Z][a-zA-Z0-9_]{3,30}[a-zA-Z0-9]$/.test(clean) && clean.length >= 5;
+}
+
+async function checkTelegramExists(username: string): Promise<boolean> {
+  try {
+    const res = await fetch(`${supabaseUrl}/functions/v1/check-telegram`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username }),
+    });
+    const data = await res.json();
+    return data.exists === true;
+  } catch {
+    return true;
+  }
+}
+
 async function handleDemoRequest(e: Event) {
   e.preventDefault();
   const form = e.target as HTMLFormElement;
@@ -390,6 +409,9 @@ async function handleDemoRequest(e: Event) {
 
   if (!telegramInput.value.trim()) {
     showFieldError(telegramInput, t('error.telegram_required', 'Please enter your Telegram'));
+    hasError = true;
+  } else if (!validateTelegramFormat(telegramInput.value.trim())) {
+    showFieldError(telegramInput, t('error.telegram_invalid', 'Invalid Telegram username format (min 5 chars, latin letters, digits, underscores)'));
     hasError = true;
   }
 
@@ -430,6 +452,19 @@ async function handleDemoRequest(e: Event) {
   if (existingError) existingError.remove();
   checkboxField?.classList.remove('has-error');
 
+  const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+  const originalBtnText = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = '...';
+
+  const tgExists = await checkTelegramExists(telegramInput.value.trim());
+  if (!tgExists) {
+    showFieldError(telegramInput, t('error.telegram_not_found', 'This Telegram username was not found. Please check the spelling.'));
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
+    return;
+  }
+
   const formData = new FormData(form);
   const data = {
     name: formData.get('name') as string,
@@ -446,6 +481,9 @@ async function handleDemoRequest(e: Event) {
   } catch (error) {
     console.error('Error submitting demo request:', error);
     showFormMessage(form, t('error.submit_failed', 'An error occurred. Please try again later.'), 'error');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
   }
 }
 

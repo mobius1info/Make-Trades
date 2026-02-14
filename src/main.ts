@@ -409,6 +409,25 @@ function validateEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+function validateTelegramFormat(username: string): boolean {
+  const clean = username.replace(/^@/, '').trim();
+  return /^[a-zA-Z][a-zA-Z0-9_]{3,30}[a-zA-Z0-9]$/.test(clean) && clean.length >= 5;
+}
+
+async function checkTelegramExists(username: string): Promise<boolean> {
+  try {
+    const res = await fetch(`${supabaseUrl}/functions/v1/check-telegram`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username }),
+    });
+    const data = await res.json();
+    return data.exists === true;
+  } catch {
+    return true;
+  }
+}
+
 function generateCaptcha() {
   const ops = [
     () => { const a = 2 + Math.floor(Math.random() * 18); const b = 1 + Math.floor(Math.random() * a); return { q: `${a} − ${b}`, a: a - b }; },
@@ -586,6 +605,9 @@ async function handleDemoRequest(e: Event) {
   if (!telegramInput.value.trim()) {
     showFieldError(telegramInput, t('error.telegram_required', 'Please enter your Telegram'));
     hasError = true;
+  } else if (!validateTelegramFormat(telegramInput.value.trim())) {
+    showFieldError(telegramInput, t('error.telegram_invalid', 'Invalid Telegram username format (min 5 chars, latin letters, digits, underscores)'));
+    hasError = true;
   }
 
   if (!referralHidden.value) {
@@ -645,6 +667,22 @@ async function handleDemoRequest(e: Event) {
 
   if (hasError) return;
 
+  const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+  const originalBtnText = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = '...';
+
+  const tgExists = await checkTelegramExists(telegramInput.value.trim());
+  if (!tgExists) {
+    showFieldError(telegramInput, t('error.telegram_not_found', 'This Telegram username was not found. Please check the spelling.'));
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
+    return;
+  }
+
+  submitBtn.disabled = false;
+  submitBtn.textContent = originalBtnText;
+
   const honeypot = form.querySelector<HTMLInputElement>('input[name="website"]');
   if (honeypot && honeypot.value) {
     const successMsg = translations['success.demo_submitted'] || 'Thank you! We will contact you shortly.';
@@ -670,8 +708,6 @@ async function handleDemoRequest(e: Event) {
     referral_source: formData.get('referral_source') as string,
   };
 
-  const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
-  const originalText = submitBtn.textContent;
   submitBtn.disabled = true;
   submitBtn.textContent = '...';
 
@@ -733,7 +769,7 @@ async function handleDemoRequest(e: Event) {
     showFormMessage(form, `Error: ${error?.message || 'Unknown error'}`, 'error');
   } finally {
     submitBtn.disabled = false;
-    submitBtn.textContent = originalText;
+    submitBtn.textContent = originalBtnText;
   }
 }
 
