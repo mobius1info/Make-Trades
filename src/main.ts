@@ -155,9 +155,16 @@ async function updateContent() {
     if (telegramInput) telegramInput.placeholder = t('form.telegram_required', 'Telegram');
   }
 
+  const htmlTranslateKeys = new Set(['form.promo_text']);
   document.querySelectorAll('[data-translate]').forEach(el => {
     const key = el.getAttribute('data-translate');
-    if (key && translations[key]) el.textContent = translations[key];
+    if (key && translations[key]) {
+      if (htmlTranslateKeys.has(key)) {
+        el.innerHTML = translations[key];
+      } else {
+        el.textContent = translations[key];
+      }
+    }
   });
 
   document.querySelectorAll('[data-translate="form.broker_experience"]').forEach(el => {
