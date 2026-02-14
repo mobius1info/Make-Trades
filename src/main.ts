@@ -471,6 +471,69 @@ async function handleLogin(e: Event) {
   }
 }
 
+function initCustomSelects(container: HTMLElement | null) {
+  if (!container) return;
+  container.querySelectorAll<HTMLElement>('.custom-select').forEach(select => {
+    const trigger = select.querySelector<HTMLElement>('.custom-select-trigger')!;
+    const options = select.querySelectorAll<HTMLElement>('.custom-select-option');
+    const hidden = select.closest('.custom-select-group')?.querySelector<HTMLInputElement>('input[type="hidden"]');
+    const valueSpan = select.querySelector<HTMLElement>('.custom-select-value')!;
+
+    trigger.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      const wasOpen = select.classList.contains('open');
+      document.querySelectorAll('.custom-select.open').forEach(s => s.classList.remove('open'));
+      if (!wasOpen) select.classList.add('open');
+    });
+
+    options.forEach(opt => {
+      opt.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        options.forEach(o => o.classList.remove('active'));
+        opt.classList.add('active');
+        if (hidden) hidden.value = opt.dataset.value || '';
+        valueSpan.textContent = opt.textContent || '';
+        select.classList.add('selected');
+        select.classList.remove('open', 'has-error');
+        const group = select.closest('.custom-select-group');
+        const error = group?.querySelector('.select-error');
+        if (error) {
+          error.classList.remove('visible');
+          setTimeout(() => error.remove(), 200);
+        }
+      });
+    });
+
+    select.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        trigger.click();
+      } else if (ev.key === 'Escape') {
+        select.classList.remove('open');
+      }
+    });
+  });
+
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.custom-select.open').forEach(s => s.classList.remove('open'));
+  });
+}
+
+function resetCustomSelects(container: HTMLElement) {
+  container.querySelectorAll<HTMLElement>('.custom-select').forEach(select => {
+    select.classList.remove('selected', 'open', 'has-error');
+    const valueSpan = select.querySelector<HTMLElement>('.custom-select-value');
+    const placeholder = valueSpan?.getAttribute('data-translate');
+    if (valueSpan && placeholder) {
+      valueSpan.textContent = translations[placeholder] || valueSpan.textContent;
+    }
+    select.querySelectorAll('.custom-select-option.active').forEach(o => o.classList.remove('active'));
+  });
+  container.querySelectorAll<HTMLInputElement>('.custom-select-group input[type="hidden"]').forEach(h => {
+    h.value = '';
+  });
+}
+
 async function handleDemoRequest(e: Event) {
   e.preventDefault();
   const form = e.target as HTMLFormElement;
@@ -479,8 +542,9 @@ async function handleDemoRequest(e: Event) {
   const nameInput = form.querySelector<HTMLInputElement>('input[name="name"]')!;
   const emailInput = form.querySelector<HTMLInputElement>('input[name="email"]')!;
   const telegramInput = form.querySelector<HTMLInputElement>('input[name="telegram"]')!;
-  const referralSelect = form.querySelector<HTMLSelectElement>('select[name="referral_source"]')!;
-  const selectGroup = referralSelect?.closest('.select-group');
+  const referralHidden = form.querySelector<HTMLInputElement>('input[name="referral_source"]')!;
+  const customSelect = form.querySelector<HTMLElement>('.custom-select');
+  const selectGroup = form.querySelector<HTMLElement>('.custom-select-group');
   const brokerRadio = form.querySelector<HTMLInputElement>('input[name="broker_experience"]:checked');
   const radioGroup = form.querySelector<HTMLElement>('.radio-group');
   const checkbox = form.querySelector<HTMLInputElement>('input[name="not_robot"]');
@@ -507,7 +571,7 @@ async function handleDemoRequest(e: Event) {
     hasError = true;
   }
 
-  if (!referralSelect.value) {
+  if (!referralHidden.value) {
     const existingSelectError = selectGroup?.querySelector('.select-error');
     if (!existingSelectError) {
       const errorEl = document.createElement('div');
@@ -516,12 +580,12 @@ async function handleDemoRequest(e: Event) {
       selectGroup?.appendChild(errorEl);
       requestAnimationFrame(() => errorEl.classList.add('visible'));
     }
-    referralSelect.classList.add('input-error');
+    customSelect?.classList.add('has-error');
     hasError = true;
   } else {
     const existingSelectError = selectGroup?.querySelector('.select-error');
     if (existingSelectError) existingSelectError.remove();
-    referralSelect.classList.remove('input-error');
+    customSelect?.classList.remove('has-error');
   }
 
   if (!brokerRadio) {
@@ -628,6 +692,7 @@ async function handleDemoRequest(e: Event) {
     const successMsg = translations['success.demo_submitted'] || 'Thank you! We will contact you shortly.';
     showFormMessage(form, successMsg, 'success');
     form.reset();
+    resetCustomSelects(form);
   } catch (error: any) {
     console.error('Error submitting demo request:', error);
     showFormMessage(form, `Error: ${error?.message || 'Unknown error'}`, 'error');
@@ -815,16 +880,7 @@ async function init() {
     }
   });
 
-  const referralSelect = demoForm?.querySelector<HTMLSelectElement>('select[name="referral_source"]');
-  referralSelect?.addEventListener('change', () => {
-    const group = referralSelect.closest('.select-group');
-    const error = group?.querySelector('.select-error');
-    if (error) {
-      error.classList.remove('visible');
-      setTimeout(() => error.remove(), 200);
-    }
-    referralSelect.classList.remove('input-error');
-  });
+  initCustomSelects(demoForm);
 
   demoForm?.querySelectorAll<HTMLInputElement>('input[name="broker_experience"]').forEach(radio => {
     radio.addEventListener('change', () => {

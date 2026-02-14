@@ -560,15 +560,21 @@
         <div class="form-field">
           <input type="text" name="telegram" placeholder="Telegram" aria-label="Ваш Telegram" required>
         </div>
-        <div class="form-field select-group">
-          <select name="referral_source" aria-label="Откуда узнали о нас?" required>
-            <option value="" disabled selected data-translate="form.referral_placeholder">Откуда узнали о нас? *</option>
-            <option value="google" data-translate="form.referral_google">Поиск в Google</option>
-            <option value="social_media" data-translate="form.referral_social">Социальные сети</option>
-            <option value="recommendation" data-translate="form.referral_recommendation">Рекомендация</option>
-            <option value="ads" data-translate="form.referral_ads">Реклама</option>
-            <option value="other" data-translate="form.referral_other">Другое</option>
-          </select>
+        <div class="form-field custom-select-group">
+          <input type="hidden" name="referral_source" value="">
+          <div class="custom-select" tabindex="0" aria-label="Откуда узнали о нас?">
+            <div class="custom-select-trigger">
+              <span class="custom-select-value" data-translate="form.referral_placeholder">Откуда узнали о нас? *</span>
+              <svg class="custom-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="custom-select-options">
+              <div class="custom-select-option" data-value="google" data-translate="form.referral_google">Поиск в Google</div>
+              <div class="custom-select-option" data-value="social_media" data-translate="form.referral_social">Социальные сети</div>
+              <div class="custom-select-option" data-value="recommendation" data-translate="form.referral_recommendation">Рекомендация</div>
+              <div class="custom-select-option" data-value="ads" data-translate="form.referral_ads">Реклама</div>
+              <div class="custom-select-option" data-value="other" data-translate="form.referral_other">Другое</div>
+            </div>
+          </div>
         </div>
         <div class="form-field radio-group">
           <p class="radio-group-label" data-translate="form.broker_experience">Был ли у вас опыт работы брокером?</p>
