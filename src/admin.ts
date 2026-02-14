@@ -344,22 +344,59 @@ function escapeHtml(text: string): string {
 }
 
 (window as any).markLeadRead = async (id: string) => {
-  const sb = getSupabase();
-  await sb.from('leads').update({ is_new: false }).eq('id', id);
-  loadLeads();
+  try {
+    const sb = getSupabase();
+    const { error } = await sb.from('leads').update({ is_new: false }).eq('id', id);
+
+    if (error) {
+      console.error('Error marking lead as read:', error);
+      alert('Ошибка обновления: ' + error.message);
+      return;
+    }
+
+    await loadLeads();
+  } catch (err: any) {
+    console.error('Error in markLeadRead:', err);
+    alert('Ошибка: ' + (err.message || 'Не удалось обновить заявку'));
+  }
 };
 
 (window as any).deleteLead = async (id: string) => {
   if (!confirm('Удалить эту заявку?')) return;
-  const sb = getSupabase();
-  await sb.from('leads').delete().eq('id', id);
-  loadLeads();
+
+  try {
+    const sb = getSupabase();
+    const { error } = await sb.from('leads').delete().eq('id', id);
+
+    if (error) {
+      console.error('Error deleting lead:', error);
+      alert('Ошибка удаления: ' + error.message);
+      return;
+    }
+
+    await loadLeads();
+  } catch (err: any) {
+    console.error('Error in deleteLead:', err);
+    alert('Ошибка: ' + (err.message || 'Не удалось удалить заявку'));
+  }
 };
 
 document.getElementById('markAllReadBtn')?.addEventListener('click', async () => {
-  const sb = getSupabase();
-  await sb.from('leads').update({ is_new: false }).eq('is_new', true);
-  loadLeads();
+  try {
+    const sb = getSupabase();
+    const { error } = await sb.from('leads').update({ is_new: false }).eq('is_new', true);
+
+    if (error) {
+      console.error('Error marking all leads as read:', error);
+      alert('Ошибка обновления всех заявок: ' + error.message);
+      return;
+    }
+
+    await loadLeads();
+  } catch (err: any) {
+    console.error('Error in markAllReadBtn:', err);
+    alert('Ошибка: ' + (err.message || 'Не удалось обновить заявки'));
+  }
 });
 
 document.getElementById('leadsSearch')?.addEventListener('input', () => {
