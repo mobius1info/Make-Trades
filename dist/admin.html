@@ -475,6 +475,48 @@
       border: 1px solid rgba(245, 158, 11, 0.25);
     }
 
+    .lead-info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .lead-info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 0.4rem 0.6rem;
+      background: rgba(15, 23, 42, 0.4);
+      border-radius: 6px;
+      border: 1px solid rgba(51, 65, 85, 0.3);
+    }
+
+    .lead-info-label {
+      font-size: 0.65rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+    .lead-info-value {
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      word-break: break-all;
+    }
+
+    .lead-info-empty {
+      color: #475569;
+      font-style: italic;
+    }
+
+    @media (max-width: 640px) {
+      .lead-info-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     .lead-meta {
       display: flex;
       gap: 1.25rem;
@@ -602,9 +644,9 @@
       font-size: 1rem;
     }
   </style>
-  <script type="module" crossorigin src="/assets/admin-CiLnWrZS.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/supabase-BZBwCKW6.js">
-  <link rel="stylesheet" crossorigin href="/assets/supabase-DrovdCOB.css">
+  <script type="module" crossorigin src="/assets/admin-DDNKz2ua.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/supabase-Bv6V6ciD.js">
+  <link rel="stylesheet" crossorigin href="/assets/supabase-BIUWlo65.css">
 </head>
 <body>
   <div id="authContainer" class="auth-container">

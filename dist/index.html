@@ -208,10 +208,10 @@
   }
   </script>
 
-  <script type="module" crossorigin src="/assets/main-Cc_OJPYk.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/supabase-BZBwCKW6.js">
-  <link rel="modulepreload" crossorigin href="/assets/content-loader-BMv8fMip.js">
-  <link rel="stylesheet" crossorigin href="/assets/supabase-DrovdCOB.css">
+  <script type="module" crossorigin src="/assets/main-B-fYlRNk.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/supabase-Bv6V6ciD.js">
+  <link rel="modulepreload" crossorigin href="/assets/content-loader-DI9ghJP_.js">
+  <link rel="stylesheet" crossorigin href="/assets/supabase-BIUWlo65.css">
 </head>
 <body>
   <!-- Yandex.Metrika noscript -->
@@ -563,6 +563,22 @@
         <div class="form-field">
           <input type="text" name="telegram" placeholder="Telegram" aria-label="Ваш Telegram" required>
         </div>
+        <div class="form-field custom-select-group">
+          <input type="hidden" name="referral_source" value="">
+          <div class="custom-select" tabindex="0" aria-label="Откуда узнали о нас?">
+            <div class="custom-select-trigger">
+              <span class="custom-select-value" data-translate="form.referral_placeholder">Откуда узнали о нас? *</span>
+              <svg class="custom-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="custom-select-options">
+              <div class="custom-select-option" data-value="google" data-translate="form.referral_google">Поиск в Google</div>
+              <div class="custom-select-option" data-value="social_media" data-translate="form.referral_social">Социальные сети</div>
+              <div class="custom-select-option" data-value="recommendation" data-translate="form.referral_recommendation">Рекомендация</div>
+              <div class="custom-select-option" data-value="ads" data-translate="form.referral_ads">Реклама</div>
+              <div class="custom-select-option" data-value="other" data-translate="form.referral_other">Другое</div>
+            </div>
+          </div>
+        </div>
         <div class="form-field radio-group">
           <p class="radio-group-label" data-translate="form.broker_experience">Был ли у вас опыт работы брокером?</p>
           <div class="radio-options">
@@ -584,6 +600,10 @@
           <span class="checkbox-label" data-translate="form.not_robot">Я не робот</span>
         </label>
         <button type="submit" class="btn btn-primary btn-large">Запросить</button>
+        <div class="promo-hint">
+          <div class="promo-hint-badge" data-translate="form.promo_badge">-50%</div>
+          <p class="promo-hint-text" data-translate="form.promo_text">Напишите нам напрямую на <a href="mailto:sales@maketrades.space">sales@maketrades.space</a> и получите <strong>скидку 50% на установку</strong> софта + бонусную неделю вне учёта аренды для настройки с нашей техподдержкой</p>
+        </div>
       </form>
     </div>
   </div>
@@ -605,8 +625,20 @@
   </div>
 
   <!-- Floating Telegram Button -->
+  <div id="verifyModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="verifyModalTitle" aria-hidden="true">
+    <div class="modal-content" style="max-width: 400px;">
+      <button class="modal-close" aria-label="Закрыть">&times;</button>
+      <h2 id="verifyModalTitle" style="margin-bottom: 1rem;">Подтвердите действие</h2>
+      <p style="margin-bottom: 1.5rem; color: var(--neutral-600);">Пожалуйста, подтвердите, что вы хотите перейти в Telegram</p>
+      <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+        <button id="cancelVerify" class="btn btn-secondary" style="background: var(--neutral-200); color: var(--neutral-800);">Отмена</button>
+        <button id="confirmVerify" class="btn btn-primary" disabled>Подтвердить (<span id="verifyTimer">3</span>)</button>
+      </div>
+    </div>
+  </div>
+
   <div id="telegram-button" style="position: fixed; bottom: 30px; right: 30px; z-index: 1000;">
-    <a href="https://t.me/Make_Soft_Ltd" target="_blank" rel="noopener noreferrer"
+    <a href="#telegram" data-telegram-link="https://t.me/Make_Soft_Ltd"
        style="display: flex; align-items: center; justify-content: center; width: 60px; height: 60px;
               background: linear-gradient(135deg, #0088cc 0%, #229ED9 100%); border-radius: 50%;
               box-shadow: 0 4px 12px rgba(0, 136, 204, 0.4); transition: all 0.3s ease; text-decoration: none;"
