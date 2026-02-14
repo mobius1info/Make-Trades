@@ -1,5 +1,5 @@
 import { loadTranslations } from './content-loader';
-import { supabase } from './supabase';
+import { supabase, supabaseUrl, supabaseAnonKey } from './supabase';
 
 const params = new URLSearchParams(window.location.search);
 let currentLanguage = params.get('lang') || 'ru';
@@ -438,6 +438,52 @@ async function handleDemoRequest(e: Event) {
 
   if (existingError) existingError.remove();
   checkboxField?.classList.remove('has-error');
+
+  const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+  const originalBtnText = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = '...';
+
+  const formData = new FormData(form);
+  const data = {
+    name: formData.get('name') as string,
+    email: formData.get('email') as string,
+    telegram: (formData.get('telegram') as string) || null,
+    broker_experience: formData.get('broker_experience') === 'yes',
+  };
+
+  const restUrl = `${supabaseUrl}/rest/v1/demo_requests`;
+  const headers = {
+    'Content-Type': 'application/json',
+    'apikey': supabaseAnonKey,
+    'Authorization': `Bearer ${supabaseAnonKey}`,
+    'Prefer': 'return=minimal',
+  };
+
+  try {
+    await fetch(restUrl, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(data),
+    });
+
+    fetch(`${supabaseUrl}/rest/v1/leads`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        telegram: data.telegram,
+        broker_experience: data.broker_experience,
+        source: 'blog',
+        language: currentLanguage,
+      }),
+    }).catch(() => {});
+  } catch {
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
+  }
 
   form.reset();
   showBonusModal();

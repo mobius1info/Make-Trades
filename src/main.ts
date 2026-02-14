@@ -654,6 +654,73 @@ async function handleDemoRequest(e: Event) {
 
   if (hasError) return;
 
+  const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+  const originalBtnText = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = '...';
+
+  const honeypot = form.querySelector<HTMLInputElement>('input[name="website"]');
+  if (honeypot && honeypot.value) {
+    form.reset();
+    resetCustomSelects(form);
+    showBonusModal();
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
+    return;
+  }
+
+  if (demoFormOpenedAt && Date.now() - demoFormOpenedAt < 3000) {
+    form.reset();
+    resetCustomSelects(form);
+    showBonusModal();
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
+    return;
+  }
+
+  const formData = new FormData(form);
+  const data = {
+    name: formData.get('name') as string,
+    email: formData.get('email') as string,
+    telegram: (formData.get('telegram') as string) || null,
+    broker_experience: formData.get('broker_experience') === 'yes',
+    referral_source: formData.get('referral_source') as string,
+  };
+
+  const restUrl = `${supabaseUrl}/rest/v1/demo_requests`;
+  const headers = {
+    'Content-Type': 'application/json',
+    'apikey': supabaseAnonKey,
+    'Authorization': `Bearer ${supabaseAnonKey}`,
+    'Prefer': 'return=minimal',
+  };
+
+  try {
+    await fetch(restUrl, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(data),
+    });
+
+    fetch(`${supabaseUrl}/rest/v1/leads`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        telegram: data.telegram,
+        broker_experience: data.broker_experience,
+        referral_source: data.referral_source,
+        source: 'demo',
+        language: currentLanguage,
+      }),
+    }).catch(() => {});
+  } catch {
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
+  }
+
   form.reset();
   resetCustomSelects(form);
   showBonusModal();
