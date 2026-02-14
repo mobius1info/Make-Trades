@@ -104,6 +104,19 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
   }
 });
 
+document.getElementById('refreshBtn')?.addEventListener('click', async () => {
+  const icon = document.getElementById('refreshIcon');
+  const btn = document.getElementById('refreshBtn') as HTMLButtonElement;
+  if (icon) icon.style.transform = 'rotate(360deg)';
+  btn.disabled = true;
+  try {
+    await loadAllData();
+  } finally {
+    btn.disabled = false;
+    setTimeout(() => { if (icon) icon.style.transform = ''; }, 600);
+  }
+});
+
 document.getElementById('logoutBtn')?.addEventListener('click', async () => {
   try {
     const sb = getSupabase();
