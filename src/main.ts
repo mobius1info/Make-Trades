@@ -5,6 +5,7 @@ const params = new URLSearchParams(window.location.search);
 let currentLanguage = params.get('lang') || 'ru';
 let translations: Record<string, string> = {};
 let images: any = {};
+let demoFormOpenedAt = 0;
 
 declare global {
   interface Window {
@@ -290,12 +291,14 @@ function setupModal() {
 
   requestDemoBtn?.addEventListener('click', () => {
     if (demoModal) {
+      demoFormOpenedAt = Date.now();
       openModal(demoModal);
       trackEvent('demo_modal_opened', { language: currentLanguage });
     }
   });
   ctaRequestDemoBtn?.addEventListener('click', () => {
     if (demoModal) {
+      demoFormOpenedAt = Date.now();
       openModal(demoModal);
       trackEvent('demo_modal_opened', { language: currentLanguage });
     }
@@ -527,6 +530,21 @@ async function handleDemoRequest(e: Event) {
 
   if (existingError) existingError.remove();
   checkboxField?.classList.remove('has-error');
+
+  const honeypot = form.querySelector<HTMLInputElement>('input[name="website"]');
+  if (honeypot && honeypot.value) {
+    const successMsg = translations['success.demo_submitted'] || 'Thank you! We will contact you shortly.';
+    showFormMessage(form, successMsg, 'success');
+    form.reset();
+    return;
+  }
+
+  if (demoFormOpenedAt && Date.now() - demoFormOpenedAt < 3000) {
+    const successMsg = translations['success.demo_submitted'] || 'Thank you! We will contact you shortly.';
+    showFormMessage(form, successMsg, 'success');
+    form.reset();
+    return;
+  }
 
   const formData = new FormData(form);
 

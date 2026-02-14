@@ -1024,6 +1024,15 @@ img {
   color: var(--text-secondary);
 }
 
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 .form-field {
   position: relative;
 }
