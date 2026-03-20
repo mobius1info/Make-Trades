@@ -4,14 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17949596244"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'AW-17949596244');
-  </script>
-
   <!-- Primary Meta Tags -->
   <title>MakeTrades - Лучшее решение для создания брокера | Платформа для трейдинга под ключ</title>
   <meta name="title" content="MakeTrades - Лучшее решение для создания брокера | Платформа для трейдинга под ключ">
@@ -51,35 +43,35 @@
   <meta name="theme-color" content="#0F172A">
 
   <!-- Preconnect to external domains -->
-  <link rel="preconnect" href="https://vhahxcmzpaxosthlorfm.supabase.co" crossorigin>
-  <link rel="dns-prefetch" href="https://vhahxcmzpaxosthlorfm.supabase.co">
-  <link rel="preconnect" href="https://www.googletagmanager.com">
-  <link rel="preconnect" href="https://mc.yandex.ru">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://gknfzfxjaeuvrncgljyi.supabase.co" crossorigin>
+  <link rel="dns-prefetch" href="https://gknfzfxjaeuvrncgljyi.supabase.co">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://mc.yandex.ru">
   <link rel="preconnect" href="https://images.pexels.com">
 
+  <!-- Font loading -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+
   <!-- Preload critical resources -->
-  <link rel="preload" href="/assets/hero-main.jpg" as="image">
+  <link rel="preload" href="/assets/hero-main.jpg" as="image" fetchpriority="high">
   <link rel="preload" href="/assets/logo.svg" as="image">
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <!-- Yandex.Metrika counter (deferred) -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
-  </script>
-
-  <!-- Yandex.Metrika counter -->
-  <script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=106721763', 'ym');
-
-    ym(106721763, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=106721763', 'ym');
+        ym(106721763, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+      }, 2000);
+    });
   </script>
 
   <!-- Schema.org structured data -->
@@ -208,10 +200,29 @@
   }
   </script>
 
-  <script type="module" crossorigin src="/assets/main-BTvMQQlu.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/supabase-DHWaaCdK.js">
-  <link rel="modulepreload" crossorigin href="/assets/content-loader-CSxsALxx.js">
-  <link rel="stylesheet" crossorigin href="/assets/supabase-Cff30pdV.css">
+
+  <!-- Google Ads Tag (deferred) -->
+  <script>
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        var s = document.createElement('script');
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17949596244';
+        s.async = true;
+        document.head.appendChild(s);
+        s.onload = function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'AW-17949596244');
+        };
+      }, 1500);
+    });
+  </script>
+  <script type="module" crossorigin src="/assets/main-3FWKMXRx.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/supabase-D6VhTj2z.js">
+  <link rel="modulepreload" crossorigin href="/assets/supabase-wmiloDLf.js">
+  <link rel="modulepreload" crossorigin href="/assets/content-loader-CwsPFtvy.js">
+  <link rel="stylesheet" crossorigin href="/assets/supabase-DbdLc335.css">
 </head>
 <body>
   <!-- Yandex.Metrika noscript -->
@@ -283,7 +294,9 @@
                alt="Торговая платформа MakeTrades с графиками и инструментами анализа"
                width="600"
                height="450"
-               loading="eager">
+               loading="eager"
+               fetchpriority="high"
+               decoding="sync">
         </div>
       </div>
     </section>
@@ -608,10 +621,6 @@
           </div>
         </div>
         <button type="submit" class="btn btn-primary btn-large">Запросить</button>
-        <div class="promo-hint">
-          <div class="promo-hint-badge" data-translate="form.promo_badge">-50%</div>
-          <p class="promo-hint-text" data-translate="form.promo_text">Напишите нам напрямую на <a href="mailto:sales@maketrades.space">sales@maketrades.space</a> или в телеграмм и получите <strong>скидку 50% на установку</strong> софта + бонусную неделю вне учёта аренды для настройки с нашей техподдержкой</p>
-        </div>
       </form>
     </div>
   </div>
