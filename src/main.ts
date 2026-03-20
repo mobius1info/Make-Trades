@@ -959,11 +959,28 @@ async function init() {
     translations = await loadTranslations(currentLanguage);
     images = await loadImages();
     await updateContent();
-    loadBlogPosts();
-    loadFAQItems();
+    setupLazyContentLoading();
   } catch (e) {
     console.error('Failed to load content:', e);
   }
+}
+
+function setupLazyContentLoading() {
+  const lazyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        if (id === 'blogGrid') loadBlogPosts();
+        if (id === 'faqList') loadFAQItems();
+        lazyObserver.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '200px 0px' });
+
+  const blogGrid = document.getElementById('blogGrid');
+  const faqList = document.getElementById('faqList');
+  if (blogGrid) lazyObserver.observe(blogGrid);
+  if (faqList) lazyObserver.observe(faqList);
 }
 
 function setupScrollAnimations() {

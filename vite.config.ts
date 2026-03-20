@@ -6,6 +6,8 @@ export default defineConfig({
     port: 3000,
   },
   build: {
+    target: 'es2020',
+    cssMinify: true,
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
@@ -13,6 +15,11 @@ export default defineConfig({
         blogPost: resolve(__dirname, 'blog-post.html'),
         faq: resolve(__dirname, 'faq.html'),
         admin: resolve(__dirname, 'admin.html'),
+      },
+      output: {
+        manualChunks: {
+          supabase: ['@supabase/supabase-js'],
+        },
       },
     },
   },
