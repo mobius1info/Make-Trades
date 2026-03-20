@@ -51,14 +51,15 @@
   <link rel="dns-prefetch" href="https://mc.yandex.ru">
   <link rel="preconnect" href="https://images.pexels.com">
 
-  <!-- Font loading -->
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <!-- Font loading (non-blocking with display=optional to prevent CLS) -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=optional" as="style" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=optional" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=optional"></noscript>
 
   <!-- Preload critical resources -->
-  <link rel="preload" href="/assets/hero-main.jpg" as="image" fetchpriority="high">
-  <link rel="preload" href="/assets/logo.svg" as="image">
+  <link rel="preload" href="/assets/hero-main-mobile.jpg" as="image" fetchpriority="high" media="(max-width: 640px)">
+  <link rel="preload" href="/assets/hero-main-tablet.jpg" as="image" fetchpriority="high" media="(min-width: 641px) and (max-width: 1024px)">
+  <link rel="preload" href="/assets/hero-main.jpg" as="image" fetchpriority="high" media="(min-width: 1025px)">
 
   <!-- Yandex.Metrika counter (deferred) -->
   <script>
@@ -200,6 +201,41 @@
   }
   </script>
 
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg-primary:#0a0e17;--bg-secondary:#111827;--bg-glass:rgba(255,255,255,0.03);--bg-glass-hover:rgba(255,255,255,0.06);--accent-400:#34d399;--accent-500:#10b981;--accent-600:#059669;--accent-glow:rgba(16,185,129,0.15);--accent-glow-strong:rgba(16,185,129,0.3);--blue-glow:rgba(59,130,246,0.15);--text-primary:#f1f5f9;--text-secondary:#94a3b8;--text-muted:#64748b;--border-subtle:rgba(255,255,255,0.06);--border-medium:rgba(255,255,255,0.1);--font-sans:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--radius-lg:0.875rem;--radius-xl:1.25rem;--radius-2xl:1.5rem;--radius-full:9999px;--ease-out:cubic-bezier(0.16,1,0.3,1)}
+    body{font-family:var(--font-sans);font-size:1rem;line-height:1.6;color:var(--text-primary);background-color:var(--bg-primary);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    h1,h2{line-height:1.2;font-weight:700;color:var(--text-primary)}
+    img{max-width:100%;height:auto;display:block}
+    .container{max-width:1280px;margin:0 auto;padding:0 2rem}
+    .header{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 0;background:rgba(10,14,23,0.8);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--border-subtle)}
+    .nav{display:flex;justify-content:space-between;align-items:center;gap:2rem}
+    .logo img{height:48px;width:auto}
+    .nav-actions{display:flex;align-items:center;gap:1.5rem}
+    .language-selector{display:flex;gap:0.25rem;background:var(--bg-glass);border:1px solid var(--border-subtle);border-radius:var(--radius-full);padding:0.25rem}
+    .lang-btn{padding:0.375rem 0.75rem;border:none;background:transparent;color:var(--text-muted);border-radius:var(--radius-full);cursor:pointer;font-size:0.8125rem;font-weight:600;font-family:var(--font-sans)}
+    .lang-btn.active{background:var(--accent-500);color:white}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.75rem 1.75rem;border:none;border-radius:var(--radius-lg);font-size:0.9375rem;font-weight:600;font-family:var(--font-sans);cursor:pointer;text-decoration:none}
+    .btn-primary{background:linear-gradient(135deg,var(--accent-500),var(--accent-600));color:white;box-shadow:0 4px 16px var(--accent-glow)}
+    .btn-secondary{background:var(--bg-glass);color:var(--text-primary);border:1px solid var(--border-medium)}
+    .btn-large{padding:1rem 2.5rem;font-size:1.0625rem;border-radius:var(--radius-xl)}
+    .hero{padding:10rem 0 6rem;position:relative;overflow:hidden;min-height:100vh;display:flex;align-items:center}
+    .hero .container{display:grid;grid-template-columns:5fr 7fr;gap:3rem;align-items:center;position:relative;z-index:2}
+    .hero-content{position:relative}
+    .hero-title{font-size:clamp(2.5rem,4vw,3.5rem);font-weight:900;letter-spacing:-0.03em;line-height:1.08;margin-bottom:1.25rem;background:linear-gradient(135deg,var(--text-primary),var(--text-secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-subtitle{font-size:1.0625rem;color:var(--text-secondary);margin-bottom:1.75rem;line-height:1.6;max-width:440px}
+    .hero-features{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.75rem}
+    .feature-badge{display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;background:var(--bg-glass);border:1px solid var(--border-subtle);border-radius:var(--radius-full);font-size:0.875rem;font-weight:500;color:var(--text-secondary)}
+    .feature-badge img{width:18px;height:18px}
+    .pricing-badge{display:inline-flex;align-items:baseline;gap:0.5rem;padding:0.875rem 1.75rem;background:linear-gradient(135deg,var(--accent-500),var(--accent-600));color:white;border-radius:var(--radius-xl);margin-bottom:1.75rem}
+    .price{font-size:2.25rem;font-weight:800;letter-spacing:-0.02em}
+    .price-label,.price-period{font-size:0.875rem;opacity:0.9}
+    .hero-image{position:relative;margin-right:-2rem}
+    .hero-image img{width:100%;border-radius:var(--radius-2xl)}
+    @media(max-width:1024px){.hero .container{grid-template-columns:1fr}.hero{min-height:auto;padding:8rem 0 4rem}}
+    @media(max-width:768px){.hero{padding:8rem 0 4rem;min-height:auto}.hero-title{font-size:2.25rem}.nav{flex-direction:column;gap:1rem}.nav-actions{width:100%;justify-content:center}}
+    @media(max-width:480px){.container{padding:0 1.25rem}.hero-title{font-size:1.875rem}.hero-subtitle{font-size:1rem}}
+  </style>
   <link rel="stylesheet" href="/src/styles/main.css">
 
   <!-- Google Ads Tag (deferred) -->
@@ -286,13 +322,17 @@
         </div>
 
         <div class="hero-image">
-          <img src="/assets/hero-main.jpg"
-               alt="Торговая платформа MakeTrades с графиками и инструментами анализа"
-               width="600"
-               height="450"
-               loading="eager"
-               fetchpriority="high"
-               decoding="sync">
+          <picture>
+            <source media="(max-width: 640px)" srcset="/assets/hero-main-mobile.jpg" width="800" height="412">
+            <source media="(max-width: 1024px)" srcset="/assets/hero-main-tablet.jpg" width="1200" height="617">
+            <img src="/assets/hero-main.jpg"
+                 alt="Торговая платформа MakeTrades с графиками и инструментами анализа"
+                 width="1864"
+                 height="957"
+                 loading="eager"
+                 fetchpriority="high"
+                 decoding="sync">
+          </picture>
         </div>
       </div>
     </section>
