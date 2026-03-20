@@ -159,6 +159,23 @@ function updateMetaTags(post: BlogPost) {
   };
   const breadcrumbTag = document.getElementById('breadcrumb-data');
   if (breadcrumbTag) breadcrumbTag.textContent = JSON.stringify(breadcrumbData);
+
+  const faqData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": post.meta_title || post.title,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": post.excerpt
+        }
+      }
+    ]
+  };
+  const faqTag = document.getElementById('faq-data');
+  if (faqTag) faqTag.textContent = JSON.stringify(faqData);
 }
 
 async function incrementViews(postId: string) {
@@ -240,6 +257,7 @@ async function loadBlogPost(slug: string) {
     }
 
     loadRelatedPosts(post.category, post.id);
+    addInternalLinks(post.tags);
 
     if (loadingEl) loadingEl.style.display = 'none';
     if (contentEl) contentEl.style.display = 'block';
@@ -248,6 +266,47 @@ async function loadBlogPost(slug: string) {
     console.error('Error loading blog post:', error);
     if (loadingEl) loadingEl.style.display = 'none';
     if (errorEl) errorEl.style.display = 'block';
+  }
+}
+
+async function addInternalLinks(tags: string[]) {
+  if (!tags || tags.length === 0) return;
+
+  const linksContainer = document.createElement('div');
+  linksContainer.className = 'internal-links';
+  linksContainer.innerHTML = `<h3>${t('blog_post.related_topics', 'Related topics:')}</h3>`;
+
+  try {
+    const { data: posts, error } = await supabase
+      .from('blog_posts')
+      .select('slug, title, tags')
+      .eq('language', currentLanguage)
+      .eq('published', true)
+      .eq('hidden_from_users', false)
+      .limit(50);
+
+    if (error || !posts) return;
+
+    const relatedByTags = posts
+      .filter((post: BlogPost) => post.tags && post.tags.some((tag: string) => tags.includes(tag)))
+      .slice(0, 5);
+
+    if (relatedByTags.length > 0) {
+      const linksList = document.createElement('ul');
+      relatedByTags.forEach((post: BlogPost) => {
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="/blog-post.html?slug=${post.slug}&lang=${currentLanguage}">${post.title}</a>`;
+        linksList.appendChild(li);
+      });
+      linksContainer.appendChild(linksList);
+
+      const textEl = document.getElementById('post-text');
+      if (textEl && textEl.parentNode) {
+        textEl.parentNode.insertBefore(linksContainer, textEl.nextSibling);
+      }
+    }
+  } catch (error) {
+    console.error('Error adding internal links:', error);
   }
 }
 
