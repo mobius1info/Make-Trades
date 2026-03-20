@@ -24,7 +24,7 @@ export async function loadTranslations(language: string): Promise<Record<string,
 
   const { data, error } = await supabase
     .from('translations')
-    .select('*')
+    .select('key, value')
     .eq('language', language);
 
   if (error) {
@@ -51,7 +51,7 @@ export async function loadImages(): Promise<Record<string, SiteImage>> {
 
   const { data, error } = await supabase
     .from('site_images')
-    .select('*');
+    .select('key, url, alt_text');
 
   if (error) {
     console.error('Error loading images:', error);

@@ -90,11 +90,6 @@ function setById(id: string, key: string, fallback: string) {
 async function updateContent() {
   setText('.hero-title', 'hero.title', 'Best solution for creating a broker');
   setText('.hero-subtitle', 'hero.subtitle', 'Turnkey creation of brokers, crypto exchanges and dealing centers with MakeTrades');
-  setText('.features-grid .section-title', 'section.features_title', 'Full functionality for your broker');
-  setText('.blog-preview .section-title', 'section.blog_title', 'Useful articles');
-  setText('.faq-section .section-title', 'section.faq_title', 'Frequently asked questions');
-  setText('.cta-content h2', 'cta.title', 'Ready to start?');
-  setText('.cta-content p', 'cta.description', 'Get a demo account and test all platform features for free');
 
   document.querySelectorAll('#requestDemoBtn, #ctaRequestDemoBtn').forEach(btn => {
     btn.textContent = t('button.request_demo', 'Request Demo Account');
@@ -108,9 +103,19 @@ async function updateContent() {
   setById('loginBtnText', 'button.login', 'Personal Account');
   setById('priceFrom', 'pricing.from', 'From');
   setById('pricePeriod', 'pricing.period', 'per month');
+
+  requestAnimationFrame(() => updateContentDeferred());
+}
+
+function updateContentDeferred() {
+  setText('.features-grid .section-title', 'section.features_title', 'Full functionality for your broker');
+  setText('.blog-preview .section-title', 'section.blog_title', 'Useful articles');
+  setText('.faq-section .section-title', 'section.faq_title', 'Frequently asked questions');
+  setText('.cta-content h2', 'cta.title', 'Ready to start?');
+  setText('.cta-content p', 'cta.description', 'Get a demo account and test all platform features for free');
+
   setById('allArticlesBtn', 'button.all_articles', 'All articles');
   setById('allFaqBtn', 'button.all_questions', 'All questions');
-  setById('demoModalTitle', 'modal.demo_title', 'Request Demo Account');
   setById('copyrightText', 'footer.copyright', '© 2026 MakeTrades. All rights reserved.');
   setById('footerAddressLabel', 'footer.address', 'Address');
   setById('footerPhoneLabel', 'footer.phone', 'Phone');
@@ -136,6 +141,24 @@ async function updateContent() {
     });
   });
 
+  const htmlTranslateKeys = new Set(['form.promo_text']);
+  document.querySelectorAll('[data-translate]').forEach(el => {
+    const key = el.getAttribute('data-translate');
+    if (key && translations[key]) {
+      if (htmlTranslateKeys.has(key)) {
+        el.innerHTML = translations[key];
+      } else {
+        el.textContent = translations[key];
+      }
+    }
+  });
+
+  requestAnimationFrame(() => updateModalsAndForms());
+}
+
+function updateModalsAndForms() {
+  setById('demoModalTitle', 'modal.demo_title', 'Request Demo Account');
+
   const demoFormButton = document.querySelector('#demoForm button[type="submit"]');
   if (demoFormButton) demoFormButton.textContent = t('form.request', 'Request');
 
@@ -151,28 +174,6 @@ async function updateContent() {
     if (emailInput) emailInput.placeholder = t('form.email', 'Email');
     if (telegramInput) telegramInput.placeholder = t('form.telegram', 'Telegram (optional)');
   }
-
-  const htmlTranslateKeys = new Set(['form.promo_text']);
-  document.querySelectorAll('[data-translate]').forEach(el => {
-    const key = el.getAttribute('data-translate');
-    if (key && translations[key]) {
-      if (htmlTranslateKeys.has(key)) {
-        el.innerHTML = translations[key];
-      } else {
-        el.textContent = translations[key];
-      }
-    }
-  });
-
-  document.querySelectorAll('[data-translate="form.broker_experience"]').forEach(el => {
-    el.textContent = t('form.broker_experience', 'Have you had experience working as a broker?');
-  });
-  document.querySelectorAll('[data-translate="form.yes"]').forEach(el => {
-    el.textContent = t('form.yes', 'Yes');
-  });
-  document.querySelectorAll('[data-translate="form.no"]').forEach(el => {
-    el.textContent = t('form.no', 'No');
-  });
 
   setById('loginModalTitle', 'login.title', 'Sign In');
   const loginForm = document.getElementById('loginForm');
@@ -199,7 +200,7 @@ async function loadBlogPosts(limit: number = 3) {
   try {
     const { data: posts, error } = await supabase
       .from('blog_posts')
-      .select('*')
+      .select('id, title, slug, excerpt, image_url, author, created_at')
       .eq('language', currentLanguage)
       .eq('published', true)
       .order('created_at', { ascending: false })
@@ -248,7 +249,7 @@ async function loadFAQItems(limit: number = 4) {
   try {
     const { data: items, error } = await supabase
       .from('faq_items')
-      .select('*')
+      .select('id, question, answer')
       .eq('language', currentLanguage)
       .order('order', { ascending: true })
       .limit(limit);
