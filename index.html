@@ -51,28 +51,20 @@
   <link rel="dns-prefetch" href="https://mc.yandex.ru">
   <link rel="preconnect" href="https://images.pexels.com">
 
-  <!-- Font loading (non-blocking with display=optional to prevent CLS) -->
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=optional" as="style" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=optional" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=optional"></noscript>
+  <!-- Font loading (non-blocking with display=swap for faster text rendering) -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" as="style" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"></noscript>
 
   <!-- Preload critical resources -->
   <link rel="preload" href="/assets/hero-main-mobile.jpg" as="image" fetchpriority="high" media="(max-width: 640px)">
   <link rel="preload" href="/assets/hero-main-tablet.jpg" as="image" fetchpriority="high" media="(min-width: 641px) and (max-width: 1024px)">
   <link rel="preload" href="/assets/hero-main.jpg" as="image" fetchpriority="high" media="(min-width: 1025px)">
 
-  <!-- Yandex.Metrika counter (deferred) -->
+  <!-- Yandex.Metrika counter (deferred until idle) -->
   <script>
-    window.addEventListener('load', function() {
-      setTimeout(function() {
-        (function(m,e,t,r,i,k,a){
-            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();
-            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=106721763', 'ym');
-        ym(106721763, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
-      }, 2000);
-    });
+    function loadYM(){(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=106721763','ym');ym(106721763,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true})}
+    if('requestIdleCallback' in window){requestIdleCallback(function(){setTimeout(loadYM,1000)})}else{window.addEventListener('load',function(){setTimeout(loadYM,3000)})}
   </script>
 
   <!-- Schema.org structured data -->
@@ -233,27 +225,15 @@
     .hero-image{position:relative;margin-right:-2rem}
     .hero-image img{width:100%;border-radius:var(--radius-2xl)}
     @media(max-width:1024px){.hero .container{grid-template-columns:1fr}.hero{min-height:auto;padding:8rem 0 4rem}}
-    @media(max-width:768px){.hero{padding:11rem 0 4rem;min-height:auto}.hero-title{font-size:2.25rem}.nav{flex-direction:column;gap:1rem}.nav-actions{width:100%;justify-content:center}}
+    @media(max-width:768px){.hero{padding:11rem 0 4rem;min-height:auto}.hero-title{font-size:2.25rem}.nav{flex-direction:column;gap:1rem}.nav-actions{width:100%;justify-content:center}.header{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}}
     @media(max-width:480px){.container{padding:0 1.25rem}.hero-title{font-size:1.875rem}.hero-subtitle{font-size:1rem}}
   </style>
   <link rel="stylesheet" href="/src/styles/main.css">
 
-  <!-- Google Ads Tag (deferred) -->
+  <!-- Google Ads Tag (deferred until idle) -->
   <script>
-    window.addEventListener('load', function() {
-      setTimeout(function() {
-        var s = document.createElement('script');
-        s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17949596244';
-        s.async = true;
-        document.head.appendChild(s);
-        s.onload = function() {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'AW-17949596244');
-        };
-      }, 1500);
-    });
+    function loadGtag(){var s=document.createElement('script');s.src='https://www.googletagmanager.com/gtag/js?id=AW-17949596244';s.async=true;document.head.appendChild(s);s.onload=function(){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','AW-17949596244')}}
+    if('requestIdleCallback' in window){requestIdleCallback(function(){setTimeout(loadGtag,500)})}else{window.addEventListener('load',function(){setTimeout(loadGtag,2500)})}
   </script>
 </head>
 <body>
@@ -323,15 +303,15 @@
 
         <div class="hero-image">
           <picture>
-            <source media="(max-width: 640px)" srcset="/assets/hero-main-mobile.jpg" width="800" height="412">
-            <source media="(max-width: 1024px)" srcset="/assets/hero-main-tablet.jpg" width="1200" height="617">
+            <source media="(max-width: 640px)" srcset="/assets/hero-main-mobile.jpg" type="image/jpeg" width="800" height="412">
+            <source media="(max-width: 1024px)" srcset="/assets/hero-main-tablet.jpg" type="image/jpeg" width="1200" height="617">
             <img src="/assets/hero-main.jpg"
                  alt="Торговая платформа MakeTrades с графиками и инструментами анализа"
                  width="1864"
                  height="957"
                  loading="eager"
                  fetchpriority="high"
-                 decoding="sync">
+                 decoding="async">
           </picture>
         </div>
       </div>

@@ -478,6 +478,13 @@ img {
   .reveal, .reveal-left, .reveal-right { opacity: 1; transform: none; transition: none; }
 }
 
+@media (max-width: 768px) {
+  .hero::before { animation: none; opacity: 0.6; }
+  .hero-image::before { animation: none; opacity: 0.4; }
+  .header { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  .feature-badge { backdrop-filter: none; }
+}
+
 .feature-card:hover::before { opacity: 1; }
 
 .feature-card img {

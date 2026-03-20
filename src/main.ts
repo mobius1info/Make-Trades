@@ -957,8 +957,12 @@ async function init() {
   });
 
   try {
-    translations = await loadTranslations(currentLanguage);
-    images = await loadImages();
+    const [translationsData, imagesData] = await Promise.all([
+      loadTranslations(currentLanguage),
+      loadImages()
+    ]);
+    translations = translationsData;
+    images = imagesData;
     await updateContent();
     setupLazyContentLoading();
   } catch (e) {
