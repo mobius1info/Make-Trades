@@ -17,10 +17,12 @@ import {
   legacyArticlePath,
 } from './seo-urls';
 import { supabase, supabaseUrl, supabaseAnonKey } from './supabase';
+import { resolveLegacyArticleSlug, resolvePublicArticleSlug } from './article-slugs';
 
 const params = new URLSearchParams(window.location.search);
 let currentLanguage = getBlogLanguageFromPath(window.location.pathname) || params.get('lang') || 'ru';
 let translations: Record<string, string> = {};
+let currentPost: BlogPost | null = null;
 
 declare global {
   interface Window {
@@ -47,6 +49,13 @@ interface BlogPost {
   meta_title: string;
   meta_description: string;
   views: number;
+  canonical_slug?: string;
+  legacy_slug?: string;
+  alternates?: Array<{
+    language: string;
+    slug: string;
+    legacy_slug?: string;
+  }>;
 }
 
 function t(key: string, fallback: string): string {
@@ -96,6 +105,22 @@ async function setLanguage(lang: string) {
   document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
   document.querySelector(`[data-lang="${lang}"]`)?.classList.add('active');
 
+  const alternate = currentPost?.alternates?.find(item => item.language === lang);
+  if (alternate) {
+    const targetHref = articleHref(
+      {
+        slug: alternate.legacy_slug || alternate.slug,
+        legacy_slug: alternate.legacy_slug,
+        canonical_slug: alternate.slug,
+        language: lang,
+      },
+      lang
+    );
+
+    window.location.assign(targetHref);
+    return;
+  }
+
   let slug = getSlugFromUrl();
   if (slug) {
     const newSlug = slug.replace(new RegExp(`-${oldLang}$`), `-${lang}`);
@@ -103,7 +128,7 @@ async function setLanguage(lang: string) {
   }
 
   if (slug) {
-    const nextPath = getArticleSlugFromPath(window.location.pathname) || isProductionBuild()
+    const nextPath = (getArticleSlugFromPath(window.location.pathname) || isProductionBuild())
       ? articlePath(slug, lang)
       : legacyArticlePath(slug, lang);
     window.history.replaceState({}, '', nextPath);
@@ -117,7 +142,7 @@ async function setLanguage(lang: string) {
 }
 
 function updateMetaTags(post: BlogPost) {
-  const postUrl = articleAbsoluteUrl(post.slug, post.language || currentLanguage);
+  const postUrl = articleAbsoluteUrl(post, post.language || currentLanguage);
 
   document.title = post.meta_title || `${post.title} | MakeTrades`;
 
@@ -204,6 +229,7 @@ async function incrementViews(postId: string) {
 }
 
 function renderBlogPost(post: BlogPost) {
+  currentPost = post;
   currentLanguage = post.language || currentLanguage;
   document.documentElement.lang = currentLanguage;
   updateMetaTags(post);
@@ -325,7 +351,7 @@ async function addInternalLinks(tags: string[]) {
       const linksList = document.createElement('ul');
       relatedByTags.forEach(post => {
         const li = document.createElement('li');
-        li.innerHTML = `<a href="${articleHref(post.slug, currentLanguage)}">${post.title}</a>`;
+        li.innerHTML = `<a href="${articleHref(post, currentLanguage)}">${post.title}</a>`;
         linksList.appendChild(li);
       });
       linksContainer.appendChild(linksList);
@@ -365,7 +391,7 @@ async function loadRelatedPosts(category: string, currentPostId: string) {
     }
 
     gridEl.innerHTML = posts.map((post: BlogPost) => `
-      <a href="${articleHref(post.slug, currentLanguage)}" class="blog-card fade-in">
+      <a href="${articleHref(post, currentLanguage)}" class="blog-card fade-in">
         <img src="${normalizePostImageUrl(post.image_url, post.slug)}"
              alt="${post.title}"
              class="blog-card-image"
@@ -667,7 +693,9 @@ async function init() {
 
   const prerenderedPost = window.__MAKETRADES_PRERENDERED_POST__;
   const slug = getSlugFromUrl();
-  if (prerenderedPost && (!slug || prerenderedPost.slug === slug)) {
+  const prerenderedPublicSlug = prerenderedPost ? resolvePublicArticleSlug(prerenderedPost) : null;
+  const prerenderedLegacySlug = prerenderedPost ? resolveLegacyArticleSlug(prerenderedPost) : null;
+  if (prerenderedPost && (!slug || slug === prerenderedPublicSlug || slug === prerenderedLegacySlug)) {
     renderBlogPost(prerenderedPost);
     incrementViews(prerenderedPost.id);
   } else if (slug) {

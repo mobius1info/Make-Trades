@@ -195,7 +195,7 @@ async function loadBlogPosts(limit: number = 3) {
     }
 
     blogGrid.innerHTML = posts.map(post => `
-      <a href="${articleHref(post.slug, currentLanguage)}" class="blog-card fade-in">
+      <a href="${articleHref(post, currentLanguage)}" class="blog-card fade-in">
         <img src="${normalizePostImageUrl(post.image_url, post.slug)}"
              alt="${post.title}"
              class="blog-card-image"

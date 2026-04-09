@@ -184,7 +184,7 @@ async function fetchSeoData(config) {
     order: 'language.asc,order.asc',
   });
 
-  return { posts, publishedCount, faqItems };
+  return { posts: ensureUniquePublicSlugs(posts), publishedCount, faqItems };
 }
 
 function escapeHtml(value) {
@@ -224,12 +224,173 @@ function truncate(value, maxLength) {
   return `${text.slice(0, maxLength - 1).trimEnd()}...`;
 }
 
+const TECHNICAL_SLUG_PATTERNS = [
+  /^(?:post|article|blog|news|entry|page)-\d+(?:-(?:ru|en|de|uk|zh))?$/i,
+  /^(?:draft|temp|test|untitled)(?:-\d+)?$/i,
+  /^new-(?:post|article)(?:-\d+)?$/i,
+];
+
+const GERMAN_CHAR_REPLACEMENTS = {
+  'ä': 'ae',
+  'ö': 'oe',
+  'ü': 'ue',
+  'ß': 'ss',
+};
+
+const CYRILLIC_TO_LATIN = {
+  'а': 'a',
+  'б': 'b',
+  'в': 'v',
+  'г': 'g',
+  'ґ': 'g',
+  'д': 'd',
+  'е': 'e',
+  'ё': 'e',
+  'є': 'ye',
+  'ж': 'zh',
+  'з': 'z',
+  'и': 'i',
+  'і': 'i',
+  'ї': 'yi',
+  'й': 'y',
+  'к': 'k',
+  'л': 'l',
+  'м': 'm',
+  'н': 'n',
+  'о': 'o',
+  'п': 'p',
+  'р': 'r',
+  'с': 's',
+  'т': 't',
+  'у': 'u',
+  'ф': 'f',
+  'х': 'h',
+  'ц': 'ts',
+  'ч': 'ch',
+  'ш': 'sh',
+  'щ': 'shch',
+  'ы': 'y',
+  'э': 'e',
+  'ю': 'yu',
+  'я': 'ya',
+  'ъ': '',
+  'ь': '',
+};
+
 function hashString(value) {
   let hash = 0;
   for (const char of String(value || 'post')) {
     hash = ((hash << 5) - hash + char.charCodeAt(0)) | 0;
   }
   return Math.abs(hash);
+}
+
+function stableSlugSuffix(post) {
+  return hashString(String(post.id || post.slug || post.title || 'post')).toString(36).slice(0, 6) || 'post';
+}
+
+function truncateSlug(slug, maxLength = 80) {
+  if (slug.length <= maxLength) return slug;
+
+  const parts = slug.split('-').filter(Boolean);
+  let result = '';
+
+  for (const part of parts) {
+    const next = result ? `${result}-${part}` : part;
+    if (next.length > maxLength) break;
+    result = next;
+  }
+
+  return result || slug.slice(0, maxLength).replace(/-+$/g, '');
+}
+
+function replaceLanguageSpecificChars(value, language) {
+  const lowerCased = String(value || '').toLowerCase();
+
+  if (language === 'de') {
+    return Array.from(lowerCased, char => GERMAN_CHAR_REPLACEMENTS[char] ?? char).join('');
+  }
+
+  if (language === 'ru' || language === 'uk') {
+    return Array.from(lowerCased, char => CYRILLIC_TO_LATIN[char] ?? char).join('');
+  }
+
+  return lowerCased;
+}
+
+function isTechnicalArticleSlug(slug) {
+  const normalized = String(slug || '').trim();
+  if (!normalized) return true;
+  return TECHNICAL_SLUG_PATTERNS.some(pattern => pattern.test(normalized));
+}
+
+function hasHumanReadableArticleSlug(slug) {
+  const normalized = String(slug || '').trim();
+  if (!normalized || isTechnicalArticleSlug(normalized)) return false;
+  return /[\p{Letter}\p{Number}]/u.test(normalized);
+}
+
+function buildTitleBasedArticleSlug(post, maxLength = 80) {
+  const titleSlug = replaceLanguageSpecificChars(post.title, post.language)
+    .normalize('NFKD')
+    .replace(/\p{Mark}+/gu, '')
+    .replace(/&/g, ' and ')
+    .replace(/[%]+/g, ' percent ')
+    .replace(/['’"`]+/g, '')
+    .replace(/[/.+]+/g, ' ')
+    .replace(/[^\p{Letter}\p{Number}\s-]+/gu, ' ')
+    .replace(/[_\s-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+  const trimmedTitleSlug = truncateSlug(titleSlug, maxLength);
+  if (trimmedTitleSlug) return trimmedTitleSlug;
+
+  if (hasHumanReadableArticleSlug(post.slug)) {
+    return truncateSlug(String(post.slug).trim(), maxLength);
+  }
+
+  return `article-${stableSlugSuffix(post)}`;
+}
+
+function resolvePublicArticleSlug(post) {
+  const explicitCanonicalSlug = String(post.canonical_slug || '').trim();
+  if (explicitCanonicalSlug) return explicitCanonicalSlug;
+  if (hasHumanReadableArticleSlug(post.slug)) return String(post.slug).trim();
+  return buildTitleBasedArticleSlug(post);
+}
+
+function ensureUniquePublicSlugs(posts) {
+  const usedByLanguage = new Map();
+
+  return posts.map(post => {
+    const language = String(post.language || 'ru');
+    const used = usedByLanguage.get(language) || new Set();
+    const legacySlug = String(post.slug || '').trim();
+    const desiredSlug = resolvePublicArticleSlug(post);
+
+    let canonicalSlug = desiredSlug;
+    if (used.has(canonicalSlug)) {
+      const suffix = stableSlugSuffix(post);
+      const base = truncateSlug(desiredSlug, Math.max(20, 80 - suffix.length - 1));
+      canonicalSlug = `${base}-${suffix}`;
+    }
+
+    while (used.has(canonicalSlug)) {
+      const suffix = stableSlugSuffix({ ...post, title: `${post.title || ''}-${canonicalSlug}` });
+      const base = truncateSlug(desiredSlug, Math.max(20, 80 - suffix.length - 1));
+      canonicalSlug = `${base}-${suffix}`;
+    }
+
+    used.add(canonicalSlug);
+    usedByLanguage.set(language, used);
+
+    return {
+      ...post,
+      slug: legacySlug,
+      legacy_slug: legacySlug,
+      canonical_slug: canonicalSlug,
+    };
+  });
 }
 
 function fallbackPostImage(seed = 'post') {
@@ -263,11 +424,20 @@ function sanitizeArticleHtmlImages(html, seed = 'post') {
   });
 }
 
-function prerenderedPostData(post) {
+function articleAlternatesPayload(post, clusters) {
+  return articleSiblings(post, clusters).map(sibling => ({
+    language: sibling.language,
+    slug: sibling.canonical_slug || sibling.slug,
+    legacy_slug: sibling.legacy_slug || sibling.slug,
+  }));
+}
+
+function prerenderedPostData(post, clusters) {
   return {
     ...post,
     image_url: postImageUrl(post),
     content: sanitizeArticleHtmlImages(post.content, post.slug),
+    alternates: articleAlternatesPayload(post, clusters),
   };
 }
 
@@ -286,11 +456,19 @@ function postKeywords(post) {
 }
 
 function articlePath(post) {
-  return `/blog/${encodeURIComponent(post.language)}/${encodeURIComponent(post.slug)}/`;
+  return `/blog/${encodeURIComponent(post.language)}/${encodeURIComponent(post.canonical_slug || post.slug)}/`;
 }
 
 function articleUrl(post) {
   return `${BASE_URL}${articlePath(post)}`;
+}
+
+function legacyArticlePath(post) {
+  return `/blog/${encodeURIComponent(post.language)}/${encodeURIComponent(post.legacy_slug || post.slug)}/`;
+}
+
+function legacyArticleUrl(post) {
+  return `${BASE_URL}${legacyArticlePath(post)}`;
 }
 
 function blogIndexPath(language) {
@@ -310,11 +488,23 @@ function faqUrl(language) {
 }
 
 function postFilePath(post) {
-  if (post.slug.includes('/') || post.slug.includes('\\') || post.language.includes('/') || post.language.includes('\\')) {
-    throw new Error(`Unsafe blog post path: ${post.language}/${post.slug}`);
+  const publicSlug = post.canonical_slug || post.slug;
+
+  if (publicSlug.includes('/') || publicSlug.includes('\\') || post.language.includes('/') || post.language.includes('\\')) {
+    throw new Error(`Unsafe blog post path: ${post.language}/${publicSlug}`);
   }
 
-  return join(DIST_DIR, 'blog', post.language, post.slug, 'index.html');
+  return join(DIST_DIR, 'blog', post.language, publicSlug, 'index.html');
+}
+
+function legacyPostFilePath(post) {
+  const legacySlug = post.legacy_slug || post.slug;
+
+  if (legacySlug.includes('/') || legacySlug.includes('\\') || post.language.includes('/') || post.language.includes('\\')) {
+    throw new Error(`Unsafe legacy blog post path: ${post.language}/${legacySlug}`);
+  }
+
+  return join(DIST_DIR, 'blog', post.language, legacySlug, 'index.html');
 }
 
 function languagePosts(posts, language, { visibleOnly = false } = {}) {
@@ -324,8 +514,9 @@ function languagePosts(posts, language, { visibleOnly = false } = {}) {
 }
 
 function clusterKey(post) {
-  const match = post.slug.match(/^(.+)-(ru|en|de|uk|zh)$/);
-  return match ? `suffix:${match[1]}` : `single:${post.language}:${post.slug}`;
+  const clusterSlug = post.legacy_slug || post.slug;
+  const match = clusterSlug.match(/^(.+)-(ru|en|de|uk|zh)$/);
+  return match ? `suffix:${match[1]}` : `single:${post.language}:${clusterSlug}`;
 }
 
 function makeClusters(posts) {
@@ -476,7 +667,7 @@ function relatedPostsFor(post, posts) {
   const postTags = Array.isArray(post.tags) ? post.tags : [];
 
   return posts
-    .filter(candidate => candidate.language === post.language && candidate.slug !== post.slug)
+    .filter(candidate => candidate.language === post.language && candidate.id !== post.id)
     .map(candidate => {
       const candidateTags = Array.isArray(candidate.tags) ? candidate.tags : [];
       const tagScore = candidateTags.filter(tag => postTags.includes(tag)).length;
@@ -596,10 +787,40 @@ function articleHtml(template, post, posts, clusters) {
   html = replaceElementContentById(html, 'related-posts-grid', related.map(post => blogCard(post)).join(''));
   html = insertBeforeEntryScript(
     html,
-    `<script>window.__MAKETRADES_PRERENDERED_POST__=${escapeScriptJson(prerenderedPostData(post))};</script>`
+    `<script>window.__MAKETRADES_PRERENDERED_POST__=${escapeScriptJson(prerenderedPostData(post, clusters))};</script>`
   );
 
   return html;
+}
+
+function redirectHtml(post) {
+  const title = metaTitle(post);
+  const targetUrl = articleUrl(post);
+  const targetPath = articlePath(post);
+
+  return `<!DOCTYPE html>
+<html lang="${escapeHtml(post.language)}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${escapeHtml(title)}</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta http-equiv="refresh" content="0;url=${escapeHtml(targetUrl)}" />
+    <link rel="canonical" href="${escapeHtml(targetUrl)}" />
+    <script>
+      (function () {
+        var target = new URL(${JSON.stringify(targetPath)}, window.location.origin);
+        if (window.location.search) target.search = window.location.search;
+        if (window.location.hash) target.hash = window.location.hash;
+        window.location.replace(target.toString());
+      })();
+    </script>
+  </head>
+  <body>
+    <p>Moved to <a href="${escapeHtml(targetUrl)}">${escapeHtml(targetUrl)}</a></p>
+  </body>
+</html>
+`;
 }
 
 function blogStructuredData(language, posts) {
@@ -783,6 +1004,28 @@ ${urls.join('\n')}
 `;
 }
 
+function redirectEntries(posts) {
+  return posts
+    .filter(post => (post.legacy_slug || post.slug) !== (post.canonical_slug || post.slug))
+    .map(post => ({
+      language: post.language,
+      legacy_slug: post.legacy_slug || post.slug,
+      canonical_slug: post.canonical_slug || post.slug,
+      from_path: legacyArticlePath(post),
+      from_url: legacyArticleUrl(post),
+      to_path: articlePath(post),
+      to_url: articleUrl(post),
+      title: post.title,
+    }));
+}
+
+function netlifyRedirects(entries) {
+  return `${entries.flatMap(entry => [
+    `${entry.from_path.slice(0, -1)} ${entry.to_path} 301!`,
+    `${entry.from_path} ${entry.to_path} 301!`,
+  ]).join('\n')}\n`;
+}
+
 async function writeTextFile(filePath, content) {
   await mkdir(join(filePath, '..'), { recursive: true }).catch(() => {});
   await writeFile(filePath, content, 'utf8');
@@ -805,14 +1048,32 @@ async function writeSitemap(xml) {
   }
 }
 
+async function writeRedirectArtifacts(entries) {
+  const manifestJson = `${JSON.stringify(entries, null, 2)}\n`;
+
+  if (sitemapOnly) {
+    await writeFile(join(PUBLIC_DIR, 'blog-slug-redirects.json'), manifestJson, 'utf8');
+  }
+
+  try {
+    await writeFile(join(DIST_DIR, 'blog-slug-redirects.json'), manifestJson, 'utf8');
+    await writeFile(join(DIST_DIR, '_redirects'), netlifyRedirects(entries), 'utf8');
+  } catch (error) {
+    if (!sitemapOnly) throw error;
+  }
+}
+
 async function generateSeoFiles(data) {
   const { posts, publishedCount, faqItems } = data;
   const clusters = makeClusters(posts);
   const sitemap = generateSitemap(posts, clusters);
+  const redirects = redirectEntries(posts);
   await writeSitemap(sitemap);
+  await writeRedirectArtifacts(redirects);
 
   if (sitemapOnly) {
     console.log(`[seo-build] Generated sitemap with ${publishedCount} published article URLs.`);
+    console.log(`[seo-build] Generated ${redirects.length} legacy slug redirect mappings.`);
     return;
   }
 
@@ -841,11 +1102,18 @@ async function generateSeoFiles(data) {
     const outputPath = postFilePath(post);
     await mkdir(join(outputPath, '..'), { recursive: true }).catch(() => {});
     await writeFile(outputPath, html, 'utf8');
+
+    if ((post.legacy_slug || post.slug) !== (post.canonical_slug || post.slug)) {
+      const legacyOutputPath = legacyPostFilePath(post);
+      await mkdir(join(legacyOutputPath, '..'), { recursive: true }).catch(() => {});
+      await writeFile(legacyOutputPath, redirectHtml(post), 'utf8');
+    }
   }
 
   console.log(`[seo-build] Generated ${publishedCount} SEO-ready article pages.`);
   console.log(`[seo-build] Generated blog and FAQ indexes for ${LANGUAGES.length} languages.`);
   console.log(`[seo-build] Generated sitemap with ${publishedCount} published article URLs.`);
+  console.log(`[seo-build] Generated ${redirects.length} legacy slug redirects.`);
 }
 
 async function main() {

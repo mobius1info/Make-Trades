@@ -1,6 +1,8 @@
 import { supabase } from './supabase';
+import { articleAbsoluteUrl } from './seo-urls';
 
 interface BlogPost {
+  title: string;
   slug: string;
   language: string;
   updated_at: string;
@@ -9,7 +11,7 @@ interface BlogPost {
 export async function generateSitemap(): Promise<string> {
   const { data: posts, error } = await supabase
     .from('blog_posts')
-    .select('slug, language, updated_at')
+    .select('title, slug, language, updated_at')
     .eq('published', true)
     .order('updated_at', { ascending: false });
 
@@ -68,7 +70,7 @@ export async function generateSitemap(): Promise<string> {
 
   posts?.forEach((post: BlogPost) => {
     const lastmod = post.updated_at.split('T')[0];
-    const url = `${baseUrl}/blog/${post.language}/${post.slug}/`;
+    const url = articleAbsoluteUrl(post);
 
     xml += `  <url>
     <loc>${url}</loc>
