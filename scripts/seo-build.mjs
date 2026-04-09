@@ -6,9 +6,24 @@ const DIST_DIR = join(ROOT_DIR, 'dist');
 const PUBLIC_DIR = join(ROOT_DIR, 'public');
 const BASE_URL = 'https://maketrades.info';
 const LANGUAGES = ['ru', 'en', 'de', 'uk', 'zh'];
-const DEFAULT_ARTICLE_IMAGE = 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=800';
-const DEFAULT_CARD_IMAGE = 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=400';
 const sitemapOnly = process.argv.includes('--sitemap-only');
+
+const FALLBACK_POST_IMAGES = [
+  '/assets/market-analysis.png',
+  '/assets/hero-main.jpg',
+  '/assets/detail-bots.jpg',
+  '/assets/detail-portfolios.jpg',
+  '/assets/detail-solution.jpg',
+];
+
+const KNOWN_BROKEN_REMOTE_IMAGE_REPLACEMENTS = [
+  ['/photos/6801653/pexels-photo-6801653.jpeg', '/assets/market-analysis.png'],
+  ['/photos/6801654/pexels-photo-6801654.jpeg', '/assets/hero-main.jpg'],
+  ['/photos/6801655/pexels-photo-6801655.jpeg', '/assets/detail-bots.jpg'],
+  ['/photos/6801656/pexels-photo-6801656.jpeg', '/assets/detail-portfolios.jpg'],
+  ['/photos/6801657/pexels-photo-6801657.jpeg', '/assets/detail-solution.jpg'],
+  ['/photos/6801658/pexels-photo-6801658.jpeg', '/assets/market-analysis.png'],
+];
 
 const blogIndexCopy = {
   ru: {
@@ -209,6 +224,53 @@ function truncate(value, maxLength) {
   return `${text.slice(0, maxLength - 1).trimEnd()}...`;
 }
 
+function hashString(value) {
+  let hash = 0;
+  for (const char of String(value || 'post')) {
+    hash = ((hash << 5) - hash + char.charCodeAt(0)) | 0;
+  }
+  return Math.abs(hash);
+}
+
+function fallbackPostImage(seed = 'post') {
+  return FALLBACK_POST_IMAGES[hashString(seed) % FALLBACK_POST_IMAGES.length];
+}
+
+function normalizePostImageUrl(imageUrl, seed = 'post') {
+  const trimmedUrl = String(imageUrl || '').trim();
+  if (!trimmedUrl) return fallbackPostImage(seed);
+
+  const comparableUrl = trimmedUrl.replaceAll('&amp;', '&');
+  const replacement = KNOWN_BROKEN_REMOTE_IMAGE_REPLACEMENTS.find(([needle]) => comparableUrl.includes(needle))?.[1];
+  return replacement || trimmedUrl;
+}
+
+function absoluteImageUrl(imageUrl) {
+  return imageUrl.startsWith('/') ? `${BASE_URL}${imageUrl}` : imageUrl;
+}
+
+function postImageUrl(post) {
+  return normalizePostImageUrl(post.image_url, post.slug);
+}
+
+function postImageAbsoluteUrl(post) {
+  return absoluteImageUrl(postImageUrl(post));
+}
+
+function sanitizeArticleHtmlImages(html, seed = 'post') {
+  return String(html || '').replace(/(<img\b[^>]*\bsrc=["'])([^"']+)(["'][^>]*>)/gi, (_match, prefix, src, suffix) => {
+    return `${prefix}${normalizePostImageUrl(src, seed)}${suffix}`;
+  });
+}
+
+function prerenderedPostData(post) {
+  return {
+    ...post,
+    image_url: postImageUrl(post),
+    content: sanitizeArticleHtmlImages(post.content, post.slug),
+  };
+}
+
 function metaTitle(post) {
   return truncate(post.meta_title || `${post.title} | MakeTrades`, 70);
 }
@@ -373,7 +435,7 @@ function articleStructuredData(post) {
     '@type': 'BlogPosting',
     headline: post.title,
     description: metaDescription(post),
-    image: post.image_url || `${BASE_URL}/og-image.jpg`,
+    image: postImageAbsoluteUrl(post),
     keywords: postKeywords(post),
     articleBody: plainTextFromHtml(post.content),
     inLanguage: post.language,
@@ -386,7 +448,7 @@ function articleStructuredData(post) {
       name: 'MakeTrades',
       logo: {
         '@type': 'ImageObject',
-        url: `${BASE_URL}/logo.svg`,
+        url: `${BASE_URL}/assets/logo.svg`,
       },
     },
     datePublished: post.created_at,
@@ -430,10 +492,11 @@ function relatedPostsFor(post, posts) {
 function blogCard(post, language = post.language) {
   return `
       <a href="${articlePath(post)}" class="blog-card fade-in" itemscope itemtype="https://schema.org/BlogPosting">
-        <img src="${escapeHtml(post.image_url || DEFAULT_CARD_IMAGE)}"
+        <img src="${escapeHtml(postImageUrl(post))}"
              alt="${escapeHtml(post.title)}"
              class="blog-card-image"
              itemprop="image"
+             data-fallback-image="${escapeHtml(fallbackPostImage(post.slug))}"
              loading="lazy">
         <div class="blog-card-content">
           <div class="blog-card-category">${escapeHtml(post.category || '')}</div>
@@ -497,11 +560,11 @@ function articleHtml(template, post, posts, clusters) {
   html = setAttributeById(html, 'og-url', 'content', articleUrl(post));
   html = setAttributeById(html, 'og-title', 'content', post.title);
   html = setAttributeById(html, 'og-description', 'content', description);
-  html = setAttributeById(html, 'og-image', 'content', post.image_url || `${BASE_URL}/og-image.jpg`);
+  html = setAttributeById(html, 'og-image', 'content', postImageAbsoluteUrl(post));
   html = setAttributeById(html, 'twitter-url', 'content', articleUrl(post));
   html = setAttributeById(html, 'twitter-title', 'content', post.title);
   html = setAttributeById(html, 'twitter-description', 'content', description);
-  html = setAttributeById(html, 'twitter-image', 'content', post.image_url || `${BASE_URL}/twitter-image.jpg`);
+  html = setAttributeById(html, 'twitter-image', 'content', postImageAbsoluteUrl(post));
   html = replaceAlternateLinks(html, articleAlternateLinks(post, clusters));
   html = replaceJsonLdById(html, 'structured-data', articleStructuredData(post));
   html = replaceJsonLdById(html, 'breadcrumb-data', breadcrumbData(post));
@@ -515,9 +578,14 @@ function articleHtml(template, post, posts, clusters) {
   html = replaceElementContentById(html, 'post-title', escapeHtml(post.title));
   html = replaceElementContentById(html, 'post-excerpt', escapeHtml(post.excerpt || description));
   html = replaceElementContentById(html, 'post-author', escapeHtml(post.author || 'MakeTrades Team'));
-  html = setAttributeById(html, 'post-image', 'src', post.image_url || DEFAULT_ARTICLE_IMAGE);
+  html = setAttributeById(html, 'post-image', 'src', postImageUrl(post));
   html = setAttributeById(html, 'post-image', 'alt', post.title);
-  html = replaceElementContentById(html, 'post-text', post.content || `<p>${escapeHtml(post.excerpt || description)}</p>`);
+  html = setAttributeById(html, 'post-image', 'data-fallback-image', fallbackPostImage(post.slug));
+  html = replaceElementContentById(
+    html,
+    'post-text',
+    sanitizeArticleHtmlImages(post.content || `<p>${escapeHtml(post.excerpt || description)}</p>`, post.slug)
+  );
   html = replaceElementContentById(
     html,
     'post-tags',
@@ -528,7 +596,7 @@ function articleHtml(template, post, posts, clusters) {
   html = replaceElementContentById(html, 'related-posts-grid', related.map(post => blogCard(post)).join(''));
   html = insertBeforeEntryScript(
     html,
-    `<script>window.__MAKETRADES_PRERENDERED_POST__=${escapeScriptJson(post)};</script>`
+    `<script>window.__MAKETRADES_PRERENDERED_POST__=${escapeScriptJson(prerenderedPostData(post))};</script>`
   );
 
   return html;
@@ -547,7 +615,7 @@ function blogStructuredData(language, posts) {
       url: BASE_URL,
       logo: {
         '@type': 'ImageObject',
-        url: `${BASE_URL}/logo.svg`,
+        url: `${BASE_URL}/assets/logo.svg`,
       },
     },
     blogPost: posts.slice(0, 30).map(post => ({

@@ -1,4 +1,5 @@
 import { loadTranslations, loadImages } from './content-loader';
+import { normalizePostImageUrl, setupImageFallbacks } from './image-fallbacks';
 import { articleHref, blogIndexHref, faqHref } from './seo-urls';
 import { supabase, supabaseUrl, supabaseAnonKey } from './supabase';
 
@@ -195,9 +196,10 @@ async function loadBlogPosts(limit: number = 3) {
 
     blogGrid.innerHTML = posts.map(post => `
       <a href="${articleHref(post.slug, currentLanguage)}" class="blog-card fade-in">
-        <img src="${post.image_url || 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=400'}"
+        <img src="${normalizePostImageUrl(post.image_url, post.slug)}"
              alt="${post.title}"
              class="blog-card-image"
+             data-fallback-image="${normalizePostImageUrl(null, post.slug)}"
              loading="lazy">
         <div class="blog-card-content">
           <h3>${post.title}</h3>
@@ -216,6 +218,7 @@ async function loadBlogPosts(limit: number = 3) {
         </div>
       </a>
     `).join('');
+    setupImageFallbacks(blogGrid);
   } catch (error) {
     console.error('Error loading blog posts:', error);
     blogGrid.innerHTML = `<p style="text-align: center; color: var(--error-500);">${t('blog.error', 'Error loading articles')}</p>`;
@@ -881,6 +884,7 @@ async function init() {
   trackUserActivity();
   setupLanguageSwitcher();
   setupModal();
+  setupImageFallbacks();
 
   const demoForm = document.getElementById('demoForm');
   const contactForm = document.getElementById('contactForm');

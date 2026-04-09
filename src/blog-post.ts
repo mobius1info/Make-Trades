@@ -1,5 +1,11 @@
 import { loadTranslations } from './content-loader';
 import {
+  absoluteImageUrl,
+  normalizePostImageUrl,
+  sanitizeArticleHtmlImages,
+  setupImageFallbacks,
+} from './image-fallbacks';
+import {
   articleAbsoluteUrl,
   articleHref,
   articlePath,
@@ -131,7 +137,10 @@ function updateMetaTags(post: BlogPost) {
   if (ogDescription) ogDescription.content = post.excerpt;
 
   const ogImage = document.getElementById('og-image') as HTMLMetaElement;
-  if (ogImage) ogImage.content = post.image_url || 'https://maketrades.info/og-image.jpg';
+  const postImageUrl = normalizePostImageUrl(post.image_url, post.slug);
+  const postImageAbsoluteUrl = absoluteImageUrl(postImageUrl);
+
+  if (ogImage) ogImage.content = postImageAbsoluteUrl;
 
   const ogUrl = document.getElementById('og-url') as HTMLMetaElement;
   if (ogUrl) ogUrl.content = postUrl;
@@ -146,19 +155,19 @@ function updateMetaTags(post: BlogPost) {
   if (twitterDescription) twitterDescription.content = post.excerpt;
 
   const twitterImage = document.getElementById('twitter-image') as HTMLMetaElement;
-  if (twitterImage) twitterImage.content = post.image_url || 'https://maketrades.info/twitter-image.jpg';
+  if (twitterImage) twitterImage.content = postImageAbsoluteUrl;
 
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": post.title,
     "description": post.excerpt,
-    "image": post.image_url,
+    "image": postImageAbsoluteUrl,
     "author": { "@type": "Person", "name": post.author },
     "publisher": {
       "@type": "Organization",
       "name": "MakeTrades",
-      "logo": { "@type": "ImageObject", "url": "https://maketrades.info/logo.svg" }
+      "logo": { "@type": "ImageObject", "url": "https://maketrades.info/assets/logo.svg" }
     },
     "datePublished": post.created_at,
     "dateModified": post.updated_at,
@@ -226,12 +235,13 @@ function renderBlogPost(post: BlogPost) {
 
   const imageEl = document.getElementById('post-image') as HTMLImageElement;
   if (imageEl) {
-    imageEl.src = post.image_url || 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=800';
+    imageEl.src = normalizePostImageUrl(post.image_url, post.slug);
     imageEl.alt = post.title;
+    imageEl.dataset.fallbackImage = normalizePostImageUrl(null, post.slug);
   }
 
   const textEl = document.getElementById('post-text');
-  if (textEl) textEl.innerHTML = post.content;
+  if (textEl) textEl.innerHTML = sanitizeArticleHtmlImages(post.content, post.slug);
 
   const tagsEl = document.getElementById('post-tags');
   if (tagsEl && post.tags && post.tags.length > 0) {
@@ -246,6 +256,8 @@ function renderBlogPost(post: BlogPost) {
   if (loadingEl) loadingEl.style.display = 'none';
   if (errorEl) errorEl.style.display = 'none';
   if (contentEl) contentEl.style.display = 'block';
+
+  setupImageFallbacks(contentEl || document);
 
   loadRelatedPosts(post.category, post.id);
   addInternalLinks(post.tags);
@@ -354,9 +366,10 @@ async function loadRelatedPosts(category: string, currentPostId: string) {
 
     gridEl.innerHTML = posts.map((post: BlogPost) => `
       <a href="${articleHref(post.slug, currentLanguage)}" class="blog-card fade-in">
-        <img src="${post.image_url || 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=400'}"
+        <img src="${normalizePostImageUrl(post.image_url, post.slug)}"
              alt="${post.title}"
              class="blog-card-image"
+             data-fallback-image="${normalizePostImageUrl(null, post.slug)}"
              loading="lazy">
         <div class="blog-card-content">
           <h3>${post.title}</h3>
@@ -371,6 +384,7 @@ async function loadRelatedPosts(category: string, currentPostId: string) {
         </div>
       </a>
     `).join('');
+    setupImageFallbacks(gridEl);
   } catch (error) {
     console.error('Error loading related posts:', error);
   }
@@ -649,6 +663,7 @@ async function init() {
   updatePageContent();
   updateDemoFormContent();
   setupModal();
+  setupImageFallbacks();
 
   const prerenderedPost = window.__MAKETRADES_PRERENDERED_POST__;
   const slug = getSlugFromUrl();
