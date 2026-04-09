@@ -2,16 +2,16 @@ import { supabase } from './supabase';
 
 interface Translation {
   key: string;
-  language: string;
+  language?: string;
   value: string;
-  category: string;
+  category?: string;
 }
 
 interface SiteImage {
   key: string;
   url: string;
   alt_text: string;
-  category: string;
+  category?: string;
 }
 
 const translationsCache: Record<string, Translation[]> = {};

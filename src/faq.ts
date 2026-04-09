@@ -1,7 +1,11 @@
 import { loadTranslations } from './content-loader';
+import { faqPath, getFaqLanguageFromPath, isProductionBuild, legacyFaqPath } from './seo-urls';
 import { supabase } from './supabase';
 
-let currentLanguage = new URLSearchParams(window.location.search).get('lang') || 'ru';
+let currentLanguage =
+  getFaqLanguageFromPath(window.location.pathname) ||
+  new URLSearchParams(window.location.search).get('lang') ||
+  'ru';
 let currentCategory = 'all';
 let translations: Record<string, string> = {};
 
@@ -25,8 +29,11 @@ async function setLanguage(lang: string) {
   document.querySelector(`[data-lang="${lang}"]`)?.classList.add('active');
 
   const url = new URL(window.location.href);
-  url.searchParams.set('lang', lang);
-  window.history.replaceState({}, '', url.toString());
+  if (getFaqLanguageFromPath(url.pathname) || isProductionBuild()) {
+    window.history.replaceState({}, '', faqPath(lang));
+  } else {
+    window.history.replaceState({}, '', legacyFaqPath(lang));
+  }
 
   translations = await loadTranslations(lang);
   updatePageContent();
@@ -52,7 +59,7 @@ function updatePageContent() {
   setById('backHomeBtn', 'button.back_home', 'Home');
 
   const backHomeLink = document.getElementById('backHomeBtn') as HTMLAnchorElement;
-  if (backHomeLink) backHomeLink.href = `/?lang=${currentLanguage}`;
+  if (backHomeLink) backHomeLink.href = currentLanguage === 'ru' ? '/' : `/?lang=${currentLanguage}`;
 }
 
 function setCategory(category: string) {

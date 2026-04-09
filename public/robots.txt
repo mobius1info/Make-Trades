@@ -1,5 +1,13 @@
 User-agent: *
 Allow: /
+Allow: /blog/
+Allow: /blog.html
+Allow: /blog-post.html
+Allow: /faq/
+Allow: /faq.html
+Allow: /index.html
+
+Crawl-delay: 0.5
 
 Disallow: /api/
 Disallow: /admin
@@ -8,3 +16,15 @@ Disallow: /dist/assets/
 Disallow: /src/
 
 Sitemap: https://maketrades.info/sitemap.xml
+
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Yandex
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0

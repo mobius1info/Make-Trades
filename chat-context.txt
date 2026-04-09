@@ -1,0 +1,114 @@
+# SEO audit context
+
+## 2026-04-09
+- Started SEO audit for D:\Programming\Make-Trades.
+- User requested analysis only: do not change HTML/TS/CSS/configs yet.
+- Requested deliverable: detailed SEO audit split into good/problem/missing/recommendations plus indexing and zero-traffic analysis.
+- Repository root confirmed: D:\Programming\Make-Trades.
+- Root folders seen: dist, public, src, supabase.
+- Root HTML files seen: index.html, blog.html, blog-post.html, faq.html, admin.html.
+- Git status was clean before audit.
+- Tried `rg --files`; failed in this environment with Access denied. Using PowerShell file listings instead.
+
+## Checked so far
+- Root directory listing.
+- Git status.
+- package.json: Vite + TypeScript + @supabase/supabase-js. Scripts: dev/build/preview.
+- vite.config.ts: multi-page build entries for index, blog, blog-post, faq, admin; shared supabase chunk.
+- tsconfig.json.
+- Root HTML files: index.html, blog.html, blog-post.html, faq.html, admin.html.
+- src/main.ts, blog.ts, blog-post.ts, faq.ts, content-loader.ts, supabase.ts.
+- public/robots.txt, public/sitemap.xml, dist/robots.txt, dist/sitemap.xml.
+- src/sitemap-generator.ts.
+- README.md and BLOG_SEO_MANAGEMENT.md.
+- Key Supabase migrations for blog_posts schema, SEO fields, scheduling, hidden_from_users.
+- Supabase Edge Function auto-publish-posts.
+- Read-only live checks: maketrades.info homepage/blog/blog-post/robots/sitemap/og-image/twitter-image; Supabase REST samples.
+
+## Findings so far
+- Encoding note: PowerShell `Get-Content` without `-Encoding UTF8` displayed UTF-8 files as mojibake. Live HTTPS HTML and Supabase API return normal Russian. Do not treat this as source corruption; use `-Encoding UTF8` for further text reads.
+- Project is not pure SPA: Vite multi-page app with separate HTML for home/blog/list/post/faq/admin.
+- Blog list, FAQ list, homepage blog preview and homepage FAQ preview are loaded from Supabase on the client.
+- Blog-post.html starts with placeholder title/description/content and loads article/meta tags from Supabase client-side by `?slug=...&lang=...`.
+- Languages are represented by query parameter `?lang=...`; JS updates visible text after loading translations from Supabase.
+- Public Supabase URL and anon key have hardcoded fallbacks in src/supabase.ts.
+- Admin HTML is a build entry and currently has a normal title but no SEO review completed yet.
+- Live Supabase check: published blog_posts = 436. Published by language: ru 87, en 87, de 87, uk 88, zh 87.
+- Live Supabase check: 368 published posts are hidden_from_users=true; 68 are user-visible.
+- Live Supabase text/translations/FAQ samples returned with correct Russian encoding.
+- public/dist sitemap check: 140 URLs total, 137 blog-post URLs. Live published blog URLs = 436, so 299 published blog post URLs are missing from public sitemap.
+- All 68 user-visible published blog posts are currently missing from public sitemap; sitemap appears focused on older/hidden SEO article URLs.
+- Live HTML check: homepage and blog titles are correct on HTTPS; live blog-post URL with slug still returns initial `<title>Загрузка... | MakeTrades</title>` in server response.
+- Live robots.txt matches public/robots.txt (minimal rules), not the more detailed dist/robots.txt.
+- Live sitemap.xml matches public sitemap shape: 140 loc entries / 137 blog-post entries.
+- src/sitemap-generator.ts exists and can build DB-driven XML, but it is a browser-oriented download helper and is not wired into `npm run build` or deployment.
+- blog-post.ts updates title/description/schema/client content after Supabase request; source HTML/meta remain placeholders.
+- blog-post.ts canonical/OG URL update currently omits `lang`, so non-RU article canonical URLs can point to an URL that cannot load the non-RU article with the default language.
+- Local/public og-image.jpg and twitter-image.jpg are 87-byte placeholder comments with .jpg extension. Live HTTPS returns image/jpeg with ~86 bytes, so OG/Twitter preview images are effectively invalid.
+- public/robots.txt is present and does not block blog/blog-post/faq; it does block /admin.html and /src/.
+- dist/robots.txt has extra explicit Allow /blog-post.html, but deployed/live robots and source public robots do not.
+- package has no SEO/sitemap/prerender/build hook beyond Vite build.
+
+## Next
+- Finish final SEO audit.
+- Emphasize main bottleneck: article pages are CSR-only; initial article HTML/meta are placeholders; sitemap is stale/incomplete; post URLs are query-based and article URLs have weak internal discovery.
+- Recommend concrete next work: prerender/static article pages or SSR, generate sitemap at build/deploy from Supabase, fix per-language canonical/hreflang, replace social preview images, put visible article links into crawlable HTML.
+
+## 2026-04-09 SEO implementation
+- Implementation started after audit. Goal changed from analysis-only to technical SEO fixes.
+- Current git status at implementation start: branch main; `chat-context.txt` is untracked in this worktree.
+- `rg --files` still fails with Access denied; using `git ls-files`, `Select-String`, PowerShell and Node checks.
+- Confirmed stack: Vite multi-page static build; no SSR server in the project; Node 22.19.0 / npm 10.9.3 are available.
+- Confirmed live data via Supabase REST during implementation: 436 published `blog_posts`; sample article `content` is trusted HTML; RU FAQ items are readable.
+- Priority plan chosen:
+  1. Generate SEO-ready static article pages after `vite build` at clean URLs `/blog/{lang}/{slug}/`.
+  2. Keep legacy `/blog-post.html?slug=...&lang=...` as a client-side compatibility fallback, but stop promoting it in sitemap/canonical/blog cards for production.
+  3. Generate a complete `dist/sitemap.xml` from Supabase and fail build if generated article count does not match published DB count.
+  4. Inject crawlable visible blog cards and FAQ items into built HTML as fallback.
+  5. Update client article/blog/home code to understand clean article URLs in production and avoid overwriting prerendered article HTML.
+  6. Add `noindex,nofollow` for generic/admin pages where indexing is unsafe.
+  7. Replace invalid social preview image placeholders with real image files.
+- Important architecture decision: true SEO-ready HTML for per-article query URLs is not possible on a plain static host because `/blog-post.html?slug=...` maps to one physical file. The implementable fix is static clean article pages + clean canonical URLs + sitemap/blog links pointing to those pages.
+- Implemented first SEO layer in source:
+  - Added `src/seo-urls.ts` with clean production paths and legacy dev/query fallback.
+  - Updated `src/main.ts`, `src/blog.ts`, `src/faq.ts`, `src/blog-post.ts` to use clean production blog/article/FAQ URLs.
+  - Updated `src/blog-post.ts` to detect `/blog/{lang}/{slug}/`, hydrate from `window.__MAKETRADES_PRERENDERED_POST__`, render without initial Supabase dependency when prerender data exists, and use clean article URLs for canonical/OG/Twitter/schema.
+  - Changed source `blog-post.html` generic fallback to `noindex, follow` and removed the fake article `FAQPage` placeholder.
+  - Added `scripts/seo-build.mjs`: postbuild generator that fetches published Supabase posts + FAQ, generates clean article HTML, blog indexes, FAQ indexes, injected home fallbacks and complete sitemap.
+  - Updated `package.json`: `npm run build` is now `vite build && npm run generate:seo`; added `generate:seo` and `generate:sitemap`.
+  - Updated old `src/sitemap-generator.ts` URL model from query article URLs to clean blog/FAQ/article URLs.
+  - Added `noindex, nofollow, noarchive` meta to `admin.html`.
+  - Removed risky SoftwareApplication `aggregateRating` from `index.html`.
+  - Updated `public/robots.txt` to explicitly allow clean `/blog/` and `/faq/` paths and keep admin/src blocked.
+- Compatibility note: `/blog-post.html?slug=...&lang=...` still loads on the client, but is no longer the intended canonical/indexable URL.
+- `npm run generate:sitemap` passed after refactoring `scripts/seo-build.mjs` to direct Supabase REST/fetch. Output: generated sitemap with 436 published article URLs.
+- `public/sitemap.xml` was regenerated by `npm run generate:sitemap`; it now targets clean article URLs instead of `/blog-post.html?slug=...`.
+- Replaced invalid 87-byte `public/og-image.jpg` and `public/twitter-image.jpg` with valid 1200x630 JPEG files generated from the existing hero image plus MakeTrades social-card text. New size: ~134 KB each.
+- `npm ci` completed; npm reported 3 vulnerability advisories but no audit fix was run because dependency upgrades are outside this SEO task.
+- `npm run build` completed successfully. Build ran Vite and `generate:seo`; output reported 436 SEO-ready article pages, blog/FAQ indexes for 5 languages, sitemap with 436 published article URLs.
+- `npx tsc --noEmit` now passes. Added `src/vite-env.d.ts` and small type-only cleanups around partial Supabase selects / optional loader fields while preserving runtime behavior.
+- Dist smoke results after build:
+  - `dist/blog/{lang}/{slug}/index.html` pages on disk: 436.
+  - `dist/sitemap.xml` article URLs: 436; query article URLs: 0.
+  - Sample `dist/blog/ru/post-1-ru/index.html` has non-placeholder title, clean canonical, `index, follow`, real H1, real article HTML and BlogPosting schema.
+  - Sample article now embeds `window.__MAKETRADES_PRERENDERED_POST__` in `<head>` before Vite module script.
+  - Generic `dist/blog-post.html` remains fallback/noindex.
+  - `dist/blog.html` canonical is `https://maketrades.info/blog/ru/` and has static article links.
+  - `dist/faq.html` canonical is `https://maketrades.info/faq/ru/` and has static FAQ items/schema.
+  - `dist/index.html` has static blog/FAQ preview fallbacks.
+  - `dist/admin.html` has `noindex, nofollow, noarchive`.
+- Final smoke after the last build:
+  - `distArticleFiles=436`, `sitemapLocs=447`, `sitemapArticleLocs=436`, `sitemapQueryArticleLocs=0`.
+  - Sample title/H1/canonical/robots/body/prerender global all passed for `post-1-ru`.
+  - `dist/blog.html` has 27 clean RU article hrefs in source.
+  - `dist/faq.html` has 15 RU static question microdata occurrences.
+  - HTTP preview started at `http://127.0.0.1:4173/`.
+  - HTTP GET `http://127.0.0.1:4173/blog/ru/post-1-ru/` returned 200 with title `Топ 10 торговых стратегий для начинающих | MakeTrades`, canonical `https://maketrades.info/blog/ru/post-1-ru/`, robots `index, follow`, prerender data and body.
+
+## Remaining limitations / next recommendations
+- Static SSG output is generated in `dist` by the build; deployment must run `npm run build` or publish the regenerated `dist` output. Deploying the old static files would keep old SEO issues.
+- Legacy `/blog-post.html?slug=...&lang=...` is a client fallback and generic server response. It is intentionally `noindex, follow`; sitemap/blog cards/canonicals now promote `/blog/{lang}/{slug}/`.
+- Main homepage language variants still use `?lang=...`; this implementation does not generate `/en/`, `/de/`, `/uk/`, `/zh/` home pages. They are omitted from sitemap to avoid canonical/query conflicts.
+- Article hreflang is conservative: full clusters are emitted only where slugs have a recognizable `-{lang}` sibling pattern; otherwise page gets self + x-default. This avoids fake hreflang clusters.
+- Hidden SEO articles are not put into user-facing blog indexes; they are discoverable via static article pages and sitemap.
+- After deployment: submit the new sitemap in Google Search Console / Yandex Webmaster and request recrawl for `/`, `/blog/ru/`, `/faq/ru/` and priority `/blog/{lang}/{slug}/` articles.

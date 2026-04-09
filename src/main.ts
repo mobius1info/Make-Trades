@@ -1,4 +1,5 @@
 import { loadTranslations, loadImages } from './content-loader';
+import { articleHref, blogIndexHref, faqHref } from './seo-urls';
 import { supabase, supabaseUrl, supabaseAnonKey } from './supabase';
 
 const params = new URLSearchParams(window.location.search);
@@ -29,28 +30,6 @@ function trackEvent(eventName: string, eventParams?: Record<string, any>) {
   if (typeof window.ym === 'function') {
     window.ym(parseInt('XXXXXXXX'), 'reachGoal', eventName, eventParams);
   }
-}
-
-interface BlogPost {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  content: string;
-  image_url: string;
-  language: string;
-  published: boolean;
-  created_at: string;
-  author: string;
-}
-
-interface FAQItem {
-  id: string;
-  question: string;
-  answer: string;
-  language: string;
-  order: number;
-  category: string;
 }
 
 async function setLanguage(lang: string) {
@@ -187,10 +166,10 @@ function updateModalsAndForms() {
   if (loginSubmitBtn) loginSubmitBtn.textContent = t('login.button', 'Log In');
 
   const allArticlesLink = document.getElementById('allArticlesBtn') as HTMLAnchorElement;
-  if (allArticlesLink) allArticlesLink.href = `/blog.html?lang=${currentLanguage}`;
+  if (allArticlesLink) allArticlesLink.href = blogIndexHref(currentLanguage);
 
   const allFaqLink = document.getElementById('allFaqBtn') as HTMLAnchorElement;
-  if (allFaqLink) allFaqLink.href = `/faq.html?lang=${currentLanguage}`;
+  if (allFaqLink) allFaqLink.href = faqHref(currentLanguage);
 }
 
 async function loadBlogPosts(limit: number = 3) {
@@ -203,6 +182,7 @@ async function loadBlogPosts(limit: number = 3) {
       .select('id, title, slug, excerpt, image_url, author, created_at')
       .eq('language', currentLanguage)
       .eq('published', true)
+      .eq('hidden_from_users', false)
       .order('created_at', { ascending: false })
       .limit(limit);
 
@@ -213,8 +193,8 @@ async function loadBlogPosts(limit: number = 3) {
       return;
     }
 
-    blogGrid.innerHTML = posts.map((post: BlogPost) => `
-      <a href="/blog-post.html?slug=${post.slug}&lang=${currentLanguage}" class="blog-card fade-in">
+    blogGrid.innerHTML = posts.map(post => `
+      <a href="${articleHref(post.slug, currentLanguage)}" class="blog-card fade-in">
         <img src="${post.image_url || 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=400'}"
              alt="${post.title}"
              class="blog-card-image"
@@ -261,7 +241,7 @@ async function loadFAQItems(limit: number = 4) {
       return;
     }
 
-    faqList.innerHTML = items.map((item: FAQItem) => `
+    faqList.innerHTML = items.map(item => `
       <div class="faq-item fade-in" data-faq-id="${item.id}">
         <div class="faq-question">
           <span>${item.question}</span>
@@ -574,7 +554,6 @@ async function handleDemoRequest(e: Event) {
 
   const nameInput = form.querySelector<HTMLInputElement>('input[name="name"]')!;
   const emailInput = form.querySelector<HTMLInputElement>('input[name="email"]')!;
-  const telegramInput = form.querySelector<HTMLInputElement>('input[name="telegram"]')!;
   const referralHidden = form.querySelector<HTMLInputElement>('input[name="referral_source"]')!;
   const customSelect = form.querySelector<HTMLElement>('.custom-select');
   const selectGroup = form.querySelector<HTMLElement>('.custom-select-group');
@@ -963,6 +942,7 @@ async function init() {
     ]);
     translations = translationsData;
     images = imagesData;
+    void images;
     await updateContent();
     setupLazyContentLoading();
   } catch (e) {

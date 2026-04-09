@@ -1,9 +1,26 @@
 import { loadTranslations } from './content-loader';
+import {
+  articleAbsoluteUrl,
+  articleHref,
+  articlePath,
+  blogIndexAbsoluteUrl,
+  blogIndexHref,
+  getArticleSlugFromPath,
+  getBlogLanguageFromPath,
+  isProductionBuild,
+  legacyArticlePath,
+} from './seo-urls';
 import { supabase, supabaseUrl, supabaseAnonKey } from './supabase';
 
 const params = new URLSearchParams(window.location.search);
-let currentLanguage = params.get('lang') || 'ru';
+let currentLanguage = getBlogLanguageFromPath(window.location.pathname) || params.get('lang') || 'ru';
 let translations: Record<string, string> = {};
+
+declare global {
+  interface Window {
+    __MAKETRADES_PRERENDERED_POST__?: BlogPost;
+  }
+}
 
 interface BlogPost {
   id: string;
@@ -38,7 +55,7 @@ function getLocale(): string {
 }
 
 function getSlugFromUrl(): string | null {
-  return params.get('slug');
+  return getArticleSlugFromPath(window.location.pathname) || new URLSearchParams(window.location.search).get('slug');
 }
 
 function updatePageContent() {
@@ -60,10 +77,10 @@ function updatePageContent() {
   setById('postCopyright', 'footer.copyright', '© 2026 MakeTrades. All rights reserved.');
 
   const backBlogLink = document.getElementById('backBlogBtn') as HTMLAnchorElement;
-  if (backBlogLink) backBlogLink.href = `/blog.html?lang=${currentLanguage}`;
+  if (backBlogLink) backBlogLink.href = blogIndexHref(currentLanguage);
 
   const errorBackLink = document.getElementById('errorBackBtn') as HTMLAnchorElement;
-  if (errorBackLink) errorBackLink.href = `/blog.html?lang=${currentLanguage}`;
+  if (errorBackLink) errorBackLink.href = blogIndexHref(currentLanguage);
 }
 
 async function setLanguage(lang: string) {
@@ -73,17 +90,18 @@ async function setLanguage(lang: string) {
   document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
   document.querySelector(`[data-lang="${lang}"]`)?.classList.add('active');
 
-  const url = new URL(window.location.href);
-  url.searchParams.set('lang', lang);
-
   let slug = getSlugFromUrl();
   if (slug) {
     const newSlug = slug.replace(new RegExp(`-${oldLang}$`), `-${lang}`);
-    url.searchParams.set('slug', newSlug);
     slug = newSlug;
   }
 
-  window.history.replaceState({}, '', url.toString());
+  if (slug) {
+    const nextPath = getArticleSlugFromPath(window.location.pathname) || isProductionBuild()
+      ? articlePath(slug, lang)
+      : legacyArticlePath(slug, lang);
+    window.history.replaceState({}, '', nextPath);
+  }
 
   translations = await loadTranslations(lang);
   updatePageContent();
@@ -93,6 +111,8 @@ async function setLanguage(lang: string) {
 }
 
 function updateMetaTags(post: BlogPost) {
+  const postUrl = articleAbsoluteUrl(post.slug, post.language || currentLanguage);
+
   document.title = post.meta_title || `${post.title} | MakeTrades`;
 
   const metaDescription = document.getElementById('page-description') as HTMLMetaElement;
@@ -102,7 +122,7 @@ function updateMetaTags(post: BlogPost) {
   if (metaKeywords && post.tags) metaKeywords.content = post.tags.join(', ');
 
   const canonical = document.getElementById('page-canonical') as HTMLLinkElement;
-  if (canonical) canonical.href = `https://maketrades.info/blog-post.html?slug=${post.slug}`;
+  if (canonical) canonical.href = postUrl;
 
   const ogTitle = document.getElementById('og-title') as HTMLMetaElement;
   if (ogTitle) ogTitle.content = post.title;
@@ -114,7 +134,10 @@ function updateMetaTags(post: BlogPost) {
   if (ogImage) ogImage.content = post.image_url || 'https://maketrades.info/og-image.jpg';
 
   const ogUrl = document.getElementById('og-url') as HTMLMetaElement;
-  if (ogUrl) ogUrl.content = `https://maketrades.info/blog-post.html?slug=${post.slug}`;
+  if (ogUrl) ogUrl.content = postUrl;
+
+  const twitterUrl = document.getElementById('twitter-url') as HTMLMetaElement;
+  if (twitterUrl) twitterUrl.content = postUrl;
 
   const twitterTitle = document.getElementById('twitter-title') as HTMLMetaElement;
   if (twitterTitle) twitterTitle.content = post.title;
@@ -141,7 +164,7 @@ function updateMetaTags(post: BlogPost) {
     "dateModified": post.updated_at,
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://maketrades.info/blog-post.html?slug=${post.slug}`
+      "@id": postUrl
     }
   };
 
@@ -153,29 +176,14 @@ function updateMetaTags(post: BlogPost) {
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "MakeTrades", "item": "https://maketrades.info" },
-      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://maketrades.info/blog.html" },
-      { "@type": "ListItem", "position": 3, "name": post.title }
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": blogIndexAbsoluteUrl(post.language || currentLanguage) },
+      { "@type": "ListItem", "position": 3, "name": post.title, "item": postUrl }
     ]
   };
   const breadcrumbTag = document.getElementById('breadcrumb-data');
   if (breadcrumbTag) breadcrumbTag.textContent = JSON.stringify(breadcrumbData);
 
-  const faqData = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": post.meta_title || post.title,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": post.excerpt
-        }
-      }
-    ]
-  };
-  const faqTag = document.getElementById('faq-data');
-  if (faqTag) faqTag.textContent = JSON.stringify(faqData);
+  document.getElementById('faq-data')?.remove();
 }
 
 async function incrementViews(postId: string) {
@@ -184,6 +192,63 @@ async function incrementViews(postId: string) {
   } catch (error) {
     console.error('Error incrementing views:', error);
   }
+}
+
+function renderBlogPost(post: BlogPost) {
+  currentLanguage = post.language || currentLanguage;
+  document.documentElement.lang = currentLanguage;
+  updateMetaTags(post);
+
+  const titleEl = document.getElementById('post-title');
+  if (titleEl) titleEl.textContent = post.title;
+
+  const excerptEl = document.getElementById('post-excerpt');
+  if (excerptEl) excerptEl.textContent = post.excerpt;
+
+  const categoryEl = document.getElementById('post-category');
+  if (categoryEl) categoryEl.textContent = post.category || '';
+
+  const dateEl = document.getElementById('post-date');
+  if (dateEl) {
+    dateEl.textContent = new Date(post.created_at).toLocaleDateString(
+      getLocale(), { year: 'numeric', month: 'long', day: 'numeric' }
+    );
+    dateEl.setAttribute('datetime', post.created_at);
+  }
+
+  const readingTimeEl = document.getElementById('post-reading-time');
+  if (readingTimeEl) {
+    readingTimeEl.textContent = `${post.reading_time || 5} ${t('blog_post.min_read', 'min read')}`;
+  }
+
+  const authorEl = document.getElementById('post-author');
+  if (authorEl) authorEl.textContent = post.author;
+
+  const imageEl = document.getElementById('post-image') as HTMLImageElement;
+  if (imageEl) {
+    imageEl.src = post.image_url || 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=800';
+    imageEl.alt = post.title;
+  }
+
+  const textEl = document.getElementById('post-text');
+  if (textEl) textEl.innerHTML = post.content;
+
+  const tagsEl = document.getElementById('post-tags');
+  if (tagsEl && post.tags && post.tags.length > 0) {
+    tagsEl.innerHTML = `<strong>${t('blog_post.tags', 'Tags:')}</strong> ` + post.tags.map(tag =>
+      `<span class="tag">${tag}</span>`
+    ).join('');
+  }
+
+  const loadingEl = document.getElementById('loading');
+  const errorEl = document.getElementById('error');
+  const contentEl = document.getElementById('post-content');
+  if (loadingEl) loadingEl.style.display = 'none';
+  if (errorEl) errorEl.style.display = 'none';
+  if (contentEl) contentEl.style.display = 'block';
+
+  loadRelatedPosts(post.category, post.id);
+  addInternalLinks(post.tags);
 }
 
 async function loadBlogPost(slug: string) {
@@ -212,55 +277,8 @@ async function loadBlogPost(slug: string) {
       return;
     }
 
-    updateMetaTags(post);
+    renderBlogPost(post);
     incrementViews(post.id);
-
-    const titleEl = document.getElementById('post-title');
-    if (titleEl) titleEl.textContent = post.title;
-
-    const excerptEl = document.getElementById('post-excerpt');
-    if (excerptEl) excerptEl.textContent = post.excerpt;
-
-    const categoryEl = document.getElementById('post-category');
-    if (categoryEl) categoryEl.textContent = post.category || '';
-
-    const dateEl = document.getElementById('post-date');
-    if (dateEl) {
-      dateEl.textContent = new Date(post.created_at).toLocaleDateString(
-        getLocale(), { year: 'numeric', month: 'long', day: 'numeric' }
-      );
-      dateEl.setAttribute('datetime', post.created_at);
-    }
-
-    const readingTimeEl = document.getElementById('post-reading-time');
-    if (readingTimeEl) {
-      readingTimeEl.textContent = `${post.reading_time || 5} ${t('blog_post.min_read', 'min read')}`;
-    }
-
-    const authorEl = document.getElementById('post-author');
-    if (authorEl) authorEl.textContent = post.author;
-
-    const imageEl = document.getElementById('post-image') as HTMLImageElement;
-    if (imageEl) {
-      imageEl.src = post.image_url || 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=800';
-      imageEl.alt = post.title;
-    }
-
-    const textEl = document.getElementById('post-text');
-    if (textEl) textEl.innerHTML = post.content;
-
-    const tagsEl = document.getElementById('post-tags');
-    if (tagsEl && post.tags && post.tags.length > 0) {
-      tagsEl.innerHTML = `<strong>${t('blog_post.tags', 'Tags:')}</strong> ` + post.tags.map(tag =>
-        `<span class="tag">${tag}</span>`
-      ).join('');
-    }
-
-    loadRelatedPosts(post.category, post.id);
-    addInternalLinks(post.tags);
-
-    if (loadingEl) loadingEl.style.display = 'none';
-    if (contentEl) contentEl.style.display = 'block';
 
   } catch (error) {
     console.error('Error loading blog post:', error);
@@ -288,14 +306,14 @@ async function addInternalLinks(tags: string[]) {
     if (error || !posts) return;
 
     const relatedByTags = posts
-      .filter((post: BlogPost) => post.tags && post.tags.some((tag: string) => tags.includes(tag)))
+      .filter(post => post.tags && post.tags.some((tag: string) => tags.includes(tag)))
       .slice(0, 5);
 
     if (relatedByTags.length > 0) {
       const linksList = document.createElement('ul');
-      relatedByTags.forEach((post: BlogPost) => {
+      relatedByTags.forEach(post => {
         const li = document.createElement('li');
-        li.innerHTML = `<a href="/blog-post.html?slug=${post.slug}&lang=${currentLanguage}">${post.title}</a>`;
+        li.innerHTML = `<a href="${articleHref(post.slug, currentLanguage)}">${post.title}</a>`;
         linksList.appendChild(li);
       });
       linksContainer.appendChild(linksList);
@@ -335,7 +353,7 @@ async function loadRelatedPosts(category: string, currentPostId: string) {
     }
 
     gridEl.innerHTML = posts.map((post: BlogPost) => `
-      <a href="/blog-post.html?slug=${post.slug}&lang=${currentLanguage}" class="blog-card fade-in">
+      <a href="${articleHref(post.slug, currentLanguage)}" class="blog-card fade-in">
         <img src="${post.image_url || 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=400'}"
              alt="${post.title}"
              class="blog-card-image"
@@ -386,33 +404,6 @@ function clearFieldError(input: HTMLInputElement) {
   field.querySelector('.field-error')?.remove();
 }
 
-function showFormMessage(form: HTMLFormElement, text: string, type: 'success' | 'error') {
-  form.querySelectorAll('.form-message').forEach(el => el.remove());
-  const el = document.createElement('div');
-  el.className = `form-message form-message--${type}`;
-  const icon = type === 'success'
-    ? '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="currentColor" opacity="0.15"/><path d="M6 10.5l2.5 2.5 5.5-5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
-    : '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="currentColor" opacity="0.15"/><path d="M10 6v5M10 13.5v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
-  el.innerHTML = `${icon}<span>${text}</span>`;
-  form.appendChild(el);
-  requestAnimationFrame(() => el.classList.add('visible'));
-
-  if (type === 'success') {
-    setTimeout(() => {
-      el.classList.remove('visible');
-      setTimeout(() => {
-        el.remove();
-        form.closest('.modal')?.classList.remove('active');
-      }, 300);
-    }, 3000);
-  } else {
-    setTimeout(() => {
-      el.classList.remove('visible');
-      setTimeout(() => el.remove(), 300);
-    }, 5000);
-  }
-}
-
 function validateEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
@@ -439,7 +430,6 @@ async function handleDemoRequest(e: Event) {
 
   const nameInput = form.querySelector<HTMLInputElement>('input[name="name"]')!;
   const emailInput = form.querySelector<HTMLInputElement>('input[name="email"]')!;
-  const telegramInput = form.querySelector<HTMLInputElement>('input[name="telegram"]')!;
   const brokerRadio = form.querySelector<HTMLInputElement>('input[name="broker_experience"]:checked');
   const radioGroup = form.querySelector<HTMLElement>('.radio-group');
   const checkbox = form.querySelector<HTMLInputElement>('input[name="not_robot"]');
@@ -660,8 +650,12 @@ async function init() {
   updateDemoFormContent();
   setupModal();
 
+  const prerenderedPost = window.__MAKETRADES_PRERENDERED_POST__;
   const slug = getSlugFromUrl();
-  if (slug) {
+  if (prerenderedPost && (!slug || prerenderedPost.slug === slug)) {
+    renderBlogPost(prerenderedPost);
+    incrementViews(prerenderedPost.id);
+  } else if (slug) {
     loadBlogPost(slug);
   } else {
     const errorEl = document.getElementById('error');

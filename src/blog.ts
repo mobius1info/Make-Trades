@@ -1,7 +1,18 @@
 import { loadTranslations } from './content-loader';
+import {
+  articleAbsoluteUrl,
+  articleHref,
+  blogIndexPath,
+  getBlogLanguageFromPath,
+  isProductionBuild,
+  legacyBlogIndexPath,
+} from './seo-urls';
 import { supabase } from './supabase';
 
-let currentLanguage = new URLSearchParams(window.location.search).get('lang') || 'ru';
+let currentLanguage =
+  getBlogLanguageFromPath(window.location.pathname) ||
+  new URLSearchParams(window.location.search).get('lang') ||
+  'ru';
 let translations: Record<string, string> = {};
 
 interface BlogPost {
@@ -32,8 +43,11 @@ async function setLanguage(lang: string) {
   document.querySelector(`[data-lang="${lang}"]`)?.classList.add('active');
 
   const url = new URL(window.location.href);
-  url.searchParams.set('lang', lang);
-  window.history.replaceState({}, '', url.toString());
+  if (getBlogLanguageFromPath(url.pathname) || isProductionBuild()) {
+    window.history.replaceState({}, '', blogIndexPath(lang));
+  } else {
+    window.history.replaceState({}, '', legacyBlogIndexPath(lang));
+  }
 
   translations = await loadTranslations(lang);
   updatePageContent();
@@ -52,7 +66,7 @@ function updatePageContent() {
   setById('backHomeBtn', 'button.back_home', 'Home');
 
   const backHomeLink = document.getElementById('backHomeBtn') as HTMLAnchorElement;
-  if (backHomeLink) backHomeLink.href = `/?lang=${currentLanguage}`;
+  if (backHomeLink) backHomeLink.href = currentLanguage === 'ru' ? '/' : `/?lang=${currentLanguage}`;
 }
 
 function getLocale(): string {
@@ -87,7 +101,7 @@ async function loadAllBlogPosts() {
     const minLabel = t('blog_page.min_read', 'min');
 
     blogGrid.innerHTML = posts.map((post: BlogPost) => `
-      <a href="/blog-post.html?slug=${post.slug}&lang=${currentLanguage}" class="blog-card fade-in" itemscope itemtype="https://schema.org/BlogPosting">
+      <a href="${articleHref(post.slug, currentLanguage)}" class="blog-card fade-in" itemscope itemtype="https://schema.org/BlogPosting">
         <img src="${post.image_url || 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=400'}"
              alt="${post.title}"
              class="blog-card-image"
@@ -109,7 +123,7 @@ async function loadAllBlogPosts() {
             <span>${post.reading_time || 5} ${minLabel}</span>
           </div>
         </div>
-        <meta itemprop="url" content="https://maketrades.info/blog-post.html?slug=${post.slug}">
+        <meta itemprop="url" content="${articleAbsoluteUrl(post.slug, currentLanguage)}">
       </a>
     `).join('');
   } catch (error) {

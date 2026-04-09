@@ -39,37 +39,36 @@ export async function generateSitemap(): Promise<string> {
   </url>
 
   <url>
-    <loc>${baseUrl}/blog.html</loc>
+    <loc>${baseUrl}/blog/ru/</loc>
     <lastmod>${today}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="${baseUrl}/blog.html" />
-    <xhtml:link rel="alternate" hreflang="en" href="${baseUrl}/blog.html?lang=en" />
-    <xhtml:link rel="alternate" hreflang="de" href="${baseUrl}/blog.html?lang=de" />
-    <xhtml:link rel="alternate" hreflang="uk" href="${baseUrl}/blog.html?lang=uk" />
-    <xhtml:link rel="alternate" hreflang="zh" href="${baseUrl}/blog.html?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${baseUrl}/blog.html" />
+    <xhtml:link rel="alternate" hreflang="ru" href="${baseUrl}/blog/ru/" />
+    <xhtml:link rel="alternate" hreflang="en" href="${baseUrl}/blog/en/" />
+    <xhtml:link rel="alternate" hreflang="de" href="${baseUrl}/blog/de/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="${baseUrl}/blog/uk/" />
+    <xhtml:link rel="alternate" hreflang="zh" href="${baseUrl}/blog/zh/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="${baseUrl}/blog/ru/" />
   </url>
 
   <url>
-    <loc>${baseUrl}/faq.html</loc>
+    <loc>${baseUrl}/faq/ru/</loc>
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="${baseUrl}/faq.html" />
-    <xhtml:link rel="alternate" hreflang="en" href="${baseUrl}/faq.html?lang=en" />
-    <xhtml:link rel="alternate" hreflang="de" href="${baseUrl}/faq.html?lang=de" />
-    <xhtml:link rel="alternate" hreflang="uk" href="${baseUrl}/faq.html?lang=uk" />
-    <xhtml:link rel="alternate" hreflang="zh" href="${baseUrl}/faq.html?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${baseUrl}/faq.html" />
+    <xhtml:link rel="alternate" hreflang="ru" href="${baseUrl}/faq/ru/" />
+    <xhtml:link rel="alternate" hreflang="en" href="${baseUrl}/faq/en/" />
+    <xhtml:link rel="alternate" hreflang="de" href="${baseUrl}/faq/de/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="${baseUrl}/faq/uk/" />
+    <xhtml:link rel="alternate" hreflang="zh" href="${baseUrl}/faq/zh/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="${baseUrl}/faq/ru/" />
   </url>
 
 `;
 
   posts?.forEach((post: BlogPost) => {
     const lastmod = post.updated_at.split('T')[0];
-    const langParam = post.language === 'ru' ? '' : `&lang=${post.language}`;
-    const url = `${baseUrl}/blog-post.html?slug=${post.slug}${langParam}`;
+    const url = `${baseUrl}/blog/${post.language}/${post.slug}/`;
 
     xml += `  <url>
     <loc>${url}</loc>
