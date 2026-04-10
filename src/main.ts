@@ -1,15 +1,16 @@
-import { loadTranslations, loadImages } from './content-loader';
+import { loadTranslations } from './content-loader';
+import { checkRecentSubmission, fetchFaqItems, fetchVisibleBlogPosts, insertPublicRow } from './public-api';
 import { normalizePostImageUrl, syncResolvedImageUrls } from './post-images';
 import { articleHref, blogIndexHref, faqHref } from './seo-urls';
-import { supabase, supabaseUrl, supabaseAnonKey } from './supabase';
+import { supabaseAnonKey, supabaseUrl } from './supabase-config';
 
 const params = new URLSearchParams(window.location.search);
 let currentLanguage = params.get('lang') || 'ru';
 let translations: Record<string, string> = {};
-let images: any = {};
 let demoFormOpenedAt = 0;
 let pageLoadedAt = Date.now();
 let currentCaptchaAnswer = 0;
+const isInitialServerLanguage = currentLanguage === 'ru' && !params.has('lang');
 let userActivity = {
   mouseMoved: false,
   scrolled: false,
@@ -33,6 +34,14 @@ function trackEvent(eventName: string, eventParams?: Record<string, any>) {
   }
 }
 
+function hasStaticBlogPreview(): boolean {
+  return Boolean(document.querySelector('#blogGrid .blog-card'));
+}
+
+function hasStaticFaqPreview(): boolean {
+  return Boolean(document.querySelector('#faqList .faq-item'));
+}
+
 async function setLanguage(lang: string) {
   currentLanguage = lang;
   document.documentElement.lang = lang;
@@ -49,8 +58,8 @@ async function setLanguage(lang: string) {
 
   translations = await loadTranslations(lang);
   await updateContent();
-  loadBlogPosts();
-  loadFAQItems();
+  loadBlogPosts(3, true);
+  loadFAQItems(4, true);
 }
 
 function t(key: string, fallback: string): string {
@@ -173,21 +182,17 @@ function updateModalsAndForms() {
   if (allFaqLink) allFaqLink.href = faqHref(currentLanguage);
 }
 
-async function loadBlogPosts(limit: number = 3) {
+async function loadBlogPosts(limit: number = 3, force: boolean = false) {
   const blogGrid = document.getElementById('blogGrid');
   if (!blogGrid) return;
 
-  try {
-    const { data: posts, error } = await supabase
-      .from('blog_posts')
-      .select('id, title, slug, excerpt, image_url, author, created_at')
-      .eq('language', currentLanguage)
-      .eq('published', true)
-      .eq('hidden_from_users', false)
-      .order('created_at', { ascending: false })
-      .limit(limit);
+  if (!force && hasStaticBlogPreview()) {
+    syncResolvedImageUrls(blogGrid);
+    return;
+  }
 
-    if (error) throw error;
+  try {
+    const posts = await fetchVisibleBlogPosts(currentLanguage, limit);
 
     if (!posts || posts.length === 0) {
       blogGrid.innerHTML = `<p style="text-align: center; color: var(--neutral-500);">${t('blog.empty', 'Articles coming soon')}</p>`;
@@ -195,7 +200,7 @@ async function loadBlogPosts(limit: number = 3) {
     }
 
     blogGrid.innerHTML = posts.map(post => `
-      <a href="${articleHref(post, currentLanguage)}" class="blog-card fade-in">
+      <a href="${articleHref(post, currentLanguage)}" class="blog-card">
         <img src="${normalizePostImageUrl(post.image_url, post.slug)}"
              alt="${post.title}"
              class="blog-card-image"
@@ -225,19 +230,16 @@ async function loadBlogPosts(limit: number = 3) {
   }
 }
 
-async function loadFAQItems(limit: number = 4) {
+async function loadFAQItems(limit: number = 4, force: boolean = false) {
   const faqList = document.getElementById('faqList');
   if (!faqList) return;
 
-  try {
-    const { data: items, error } = await supabase
-      .from('faq_items')
-      .select('id, question, answer')
-      .eq('language', currentLanguage)
-      .order('order', { ascending: true })
-      .limit(limit);
+  if (!force && hasStaticFaqPreview()) {
+    return;
+  }
 
-    if (error) throw error;
+  try {
+    const items = await fetchFaqItems(currentLanguage, 'all', limit);
 
     if (!items || items.length === 0) {
       faqList.innerHTML = `<p style="text-align: center; color: var(--neutral-500);">${t('faq.empty', 'FAQ coming soon')}</p>`;
@@ -245,7 +247,7 @@ async function loadFAQItems(limit: number = 4) {
     }
 
     faqList.innerHTML = items.map(item => `
-      <div class="faq-item fade-in" data-faq-id="${item.id}">
+      <div class="faq-item" data-faq-id="${item.id}">
         <div class="faq-question">
           <span>${item.question}</span>
           <span>+</span>
@@ -451,6 +453,7 @@ async function handleLogin(e: Event) {
   submitBtn.textContent = '...';
 
   try {
+    const { supabase } = await import('./supabase');
     const { data: signInData, error } = await supabase.auth.signInWithPassword({
       email: emailInput.value.trim(),
       password: passwordInput.value,
@@ -670,7 +673,6 @@ async function handleDemoRequest(e: Event) {
     referral_source: formData.get('referral_source') as string,
   };
 
-  const restUrl = `${supabaseUrl}/rest/v1/demo_requests`;
   const headers = {
     'Content-Type': 'application/json',
     'apikey': supabaseAnonKey,
@@ -679,11 +681,7 @@ async function handleDemoRequest(e: Event) {
   };
 
   try {
-    await fetch(restUrl, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(data),
-    });
+    await insertPublicRow('demo_requests', data);
 
     fetch(`${supabaseUrl}/rest/v1/leads`, {
       method: 'POST',
@@ -726,7 +724,6 @@ async function handleContactSubmission(e: Event) {
   submitBtn.disabled = true;
   submitBtn.textContent = '...';
 
-  const restUrl = `${supabaseUrl}/rest/v1/contact_submissions`;
   const headers = {
     'Content-Type': 'application/json',
     'apikey': supabaseAnonKey,
@@ -735,26 +732,14 @@ async function handleContactSubmission(e: Event) {
   };
 
   try {
-    const { data: dupCheck } = await supabase.rpc('check_recent_submission', {
-      p_email: data.email,
-      p_telegram: data.telegram,
-    });
+    const dupCheck = await checkRecentSubmission(data.email, data.telegram);
 
     if (dupCheck?.is_duplicate) {
       showFormMessage(form, t('error.duplicate_submission', 'You have already submitted a request. Please wait 24 hours before submitting again.'), 'error');
       return;
     }
 
-    const res = await fetch(restUrl, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(data),
-    });
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({ message: res.statusText }));
-      throw new Error(err.message || err.error || `HTTP ${res.status}`);
-    }
+    await insertPublicRow('contact_submissions', data);
 
     fetch(`${supabaseUrl}/rest/v1/leads`, {
       method: 'POST',
@@ -940,14 +925,13 @@ async function init() {
   });
 
   try {
-    const [translationsData, imagesData] = await Promise.all([
-      loadTranslations(currentLanguage),
-      loadImages()
-    ]);
-    translations = translationsData;
-    images = imagesData;
-    void images;
-    await updateContent();
+    if (!isInitialServerLanguage) {
+      translations = await loadTranslations(currentLanguage);
+      await updateContent();
+    } else {
+      updateModalsAndForms();
+    }
+
     setupLazyContentLoading();
   } catch (e) {
     console.error('Failed to load content:', e);
@@ -959,8 +943,8 @@ function setupLazyContentLoading() {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const id = entry.target.id;
-        if (id === 'blogGrid') loadBlogPosts();
-        if (id === 'faqList') loadFAQItems();
+        if (id === 'blogGrid') loadBlogPosts(3, true);
+        if (id === 'faqList') loadFAQItems(4, true);
         lazyObserver.unobserve(entry.target);
       }
     });
@@ -968,11 +952,18 @@ function setupLazyContentLoading() {
 
   const blogGrid = document.getElementById('blogGrid');
   const faqList = document.getElementById('faqList');
-  if (blogGrid) lazyObserver.observe(blogGrid);
-  if (faqList) lazyObserver.observe(faqList);
+  if (blogGrid && !hasStaticBlogPreview()) lazyObserver.observe(blogGrid);
+  if (faqList && !hasStaticFaqPreview()) lazyObserver.observe(faqList);
 }
 
 function setupScrollAnimations() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce), (hover: none) and (pointer: coarse)').matches) {
+    document.querySelectorAll<HTMLElement>('.reveal, .reveal-left, .reveal-right').forEach(el => {
+      el.classList.add('visible');
+    });
+    return;
+  }
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {

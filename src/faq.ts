@@ -1,6 +1,6 @@
 import { loadTranslations } from './content-loader';
+import { fetchFaqItems, type PublicFAQItem } from './public-api';
 import { faqPath, getFaqLanguageFromPath, isProductionBuild, legacyFaqPath } from './seo-urls';
-import { supabase } from './supabase';
 
 let currentLanguage =
   getFaqLanguageFromPath(window.location.pathname) ||
@@ -8,57 +8,53 @@ let currentLanguage =
   'ru';
 let currentCategory = 'all';
 let translations: Record<string, string> = {};
-
-interface FAQItem {
-  id: string;
-  question: string;
-  answer: string;
-  language: string;
-  order: number;
-  category: string;
-}
+let canReusePrerenderedFaqItems = true;
 
 function t(key: string, fallback: string): string {
   return translations[key] || fallback;
 }
 
+function hasPrerenderedFaqItems(): boolean {
+  return Boolean(document.querySelector('#allFAQItems .faq-item'));
+}
+
 async function setLanguage(lang: string) {
+  if (getFaqLanguageFromPath(window.location.pathname) || isProductionBuild()) {
+    window.location.assign(faqPath(lang));
+    return;
+  }
+
   currentLanguage = lang;
   document.documentElement.lang = lang;
   document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
   document.querySelector(`[data-lang="${lang}"]`)?.classList.add('active');
-
-  const url = new URL(window.location.href);
-  if (getFaqLanguageFromPath(url.pathname) || isProductionBuild()) {
-    window.history.replaceState({}, '', faqPath(lang));
-  } else {
-    window.history.replaceState({}, '', legacyFaqPath(lang));
-  }
+  window.history.replaceState({}, '', legacyFaqPath(lang));
 
   translations = await loadTranslations(lang);
   updatePageContent();
-  loadAllFAQItems();
+  await loadAllFAQItems(true);
 }
 
 function updatePageContent() {
   const setById = (id: string, key: string, fallback: string) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = t(key, fallback);
+    const element = document.getElementById(id);
+    if (element) element.textContent = t(key, fallback);
   };
 
   setById('faqPageTitle', 'faq_page.title', 'Frequently Asked Questions');
-  setById('faqPageSubtitle', 'faq_page.subtitle', 'Find answers to the most popular questions about the MakeTrades platform');
+  setById(
+    'faqPageSubtitle',
+    'faq_page.subtitle',
+    'Find answers to the most popular questions about the MakeTrades platform'
+  );
   setById('catAll', 'faq_page.cat_all', 'All questions');
   setById('catPricing', 'faq_page.cat_pricing', 'Pricing');
   setById('catFeatures', 'faq_page.cat_features', 'Features');
   setById('catSupport', 'faq_page.cat_support', 'Support');
-  setById('faqCtaTitle', 'faq_page.cta_title', 'Didn\'t find an answer?');
-  setById('faqCtaDesc', 'faq_page.cta_desc', 'Contact us and we will be happy to answer all your questions');
-  setById('faqCtaBtn', 'faq_page.cta_button', 'Contact us');
   setById('faqCopyright', 'footer.copyright', '© 2026 MakeTrades. All rights reserved.');
   setById('backHomeBtn', 'button.back_home', 'Home');
 
-  const backHomeLink = document.getElementById('backHomeBtn') as HTMLAnchorElement;
+  const backHomeLink = document.getElementById('backHomeBtn') as HTMLAnchorElement | null;
   if (backHomeLink) backHomeLink.href = currentLanguage === 'ru' ? '/' : `/?lang=${currentLanguage}`;
 }
 
@@ -66,38 +62,17 @@ function setCategory(category: string) {
   currentCategory = category;
   document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
   document.querySelector(`[data-category="${category}"]`)?.classList.add('active');
-  loadAllFAQItems();
+  if (category !== 'all') {
+    canReusePrerenderedFaqItems = false;
+  }
+  void loadAllFAQItems(category !== 'all' || !canReusePrerenderedFaqItems);
 }
 
-async function loadAllFAQItems() {
-  const faqList = document.getElementById('allFAQItems');
-  if (!faqList) return;
-
-  faqList.innerHTML = `<p style="text-align: center;">${t('faq_page.loading', 'Loading questions...')}</p>`;
-
-  try {
-    let query = supabase
-      .from('faq_items')
-      .select('*')
-      .eq('language', currentLanguage)
-      .order('order', { ascending: true });
-
-    if (currentCategory !== 'all') {
-      query = query.eq('category', currentCategory);
-    }
-
-    const { data: items, error } = await query;
-
-    if (error) throw error;
-
-    if (!items || items.length === 0) {
-      faqList.innerHTML = `<p style="text-align: center; color: var(--neutral-500);">${t('faq_page.empty', 'Questions coming soon')}</p>`;
-      updateFAQSchema([]);
-      return;
-    }
-
-    faqList.innerHTML = items.map((item: FAQItem) => `
-      <div class="faq-item fade-in" data-faq-id="${item.id}" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+function renderFaqItems(faqList: HTMLElement, items: PublicFAQItem[]) {
+  faqList.innerHTML = items
+    .map(
+      item => `
+      <div class="faq-item" data-faq-id="${item.id}" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
         <div class="faq-question" itemprop="name">
           <span>${item.question}</span>
           <span>+</span>
@@ -106,37 +81,68 @@ async function loadAllFAQItems() {
           <div itemprop="text">${item.answer}</div>
         </div>
       </div>
-    `).join('');
+    `
+    )
+    .join('');
 
-    document.querySelectorAll('.faq-item').forEach(item => {
-      item.addEventListener('click', () => {
-        item.classList.toggle('active');
-      });
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('active');
     });
+  });
+}
 
+async function loadAllFAQItems(force: boolean = false) {
+  const faqList = document.getElementById('allFAQItems');
+  if (!faqList) return;
+
+  if (!force && currentCategory === 'all' && canReusePrerenderedFaqItems && hasPrerenderedFaqItems()) {
+    return;
+  }
+
+  faqList.innerHTML = `<p style="text-align: center;">${t('faq_page.loading', 'Loading questions...')}</p>`;
+
+  try {
+    const items = await fetchFaqItems(currentLanguage, currentCategory);
+
+    if (!items || items.length === 0) {
+      faqList.innerHTML = `<p style="text-align: center; color: var(--neutral-500);">${t(
+        'faq_page.empty',
+        'Questions coming soon'
+      )}</p>`;
+      updateFAQSchema([]);
+      return;
+    }
+
+    renderFaqItems(faqList, items);
     updateFAQSchema(items);
+    canReusePrerenderedFaqItems = false;
   } catch (error) {
     console.error('Error loading FAQ items:', error);
-    faqList.innerHTML = `<p style="text-align: center; color: var(--error-500);">${t('faq.error', 'Error loading FAQ')}</p>`;
+    faqList.innerHTML = `<p style="text-align: center; color: var(--error-500);">${t(
+      'faq.error',
+      'Error loading FAQ'
+    )}</p>`;
     updateFAQSchema([]);
+    canReusePrerenderedFaqItems = false;
   }
 }
 
-function updateFAQSchema(items: FAQItem[]) {
+function updateFAQSchema(items: PublicFAQItem[]) {
   const schemaScript = document.getElementById('faqSchema');
   if (!schemaScript) return;
 
   const schema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": items.map(item => ({
-      "@type": "Question",
-      "name": item.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": item.answer
-      }
-    }))
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map(item => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
   };
 
   schemaScript.textContent = JSON.stringify(schema, null, 2);
@@ -148,7 +154,9 @@ async function init() {
     btn.classList.remove('active');
     btn.addEventListener('click', () => {
       const lang = btn.getAttribute('data-lang');
-      if (lang) setLanguage(lang);
+      if (lang) {
+        void setLanguage(lang);
+      }
     });
   });
   document.querySelector(`[data-lang="${currentLanguage}"]`)?.classList.add('active');
@@ -162,11 +170,13 @@ async function init() {
 
   translations = await loadTranslations(currentLanguage);
   updatePageContent();
-  loadAllFAQItems();
+  await loadAllFAQItems();
 }
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('DOMContentLoaded', () => {
+    void init();
+  });
 } else {
-  init();
+  void init();
 }

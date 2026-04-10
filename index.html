@@ -1,18 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1GHESLKW5P"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-
-      gtag('config', 'G-1GHESLKW5P');
-    </script>
-
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="yandex-verification" content="f783b7a64a4b4b2c" />
@@ -65,18 +53,8 @@
     <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://gknfzfxjaeuvrncgljyi.supabase.co" crossorigin />
-    <link rel="dns-prefetch" href="https://gknfzfxjaeuvrncgljyi.supabase.co" />
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-    <link rel="dns-prefetch" href="https://mc.yandex.ru" />
-    <link rel="preconnect" href="https://images.pexels.com" />
 
     <!-- Font loading (non-blocking with display=swap for faster text rendering) -->
-    <link
-      rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
-      as="style"
-      crossorigin />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
@@ -100,44 +78,6 @@
       fetchpriority="high"
       media="(min-width: 641px) and (max-width: 1024px)" />
     <link rel="preload" href="/assets/hero-main.jpg" as="image" fetchpriority="high" media="(min-width: 1025px)" />
-
-    <!-- Yandex.Metrika counter (deferred until idle) -->
-    <script>
-      function loadYM() {
-        (function (m, e, t, r, i, k, a) {
-          m[i] =
-            m[i] ||
-            function () {
-              (m[i].a = m[i].a || []).push(arguments);
-            };
-          m[i].l = 1 * new Date();
-          (k = e.createElement(t)),
-            (a = e.getElementsByTagName(t)[0]),
-            (k.async = 1),
-            (k.src = r),
-            a.parentNode.insertBefore(k, a);
-        })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=106721763', 'ym');
-        ym(106721763, 'init', {
-          ssr: true,
-          webvisor: true,
-          clickmap: true,
-          ecommerce: 'dataLayer',
-          referrer: document.referrer,
-          url: location.href,
-          accurateTrackBounce: true,
-          trackLinks: true,
-        });
-      }
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(function () {
-          setTimeout(loadYM, 1000);
-        });
-      } else {
-        window.addEventListener('load', function () {
-          setTimeout(loadYM, 3000);
-        });
-      }
-    </script>
 
     <!-- Schema.org structured data -->
     <script type="application/ld+json">
@@ -524,34 +464,9 @@
         }
       }
     </style>
-    <link rel="stylesheet" href="/src/styles/main.css" />
-
-    <!-- Google Ads Tag (deferred until idle) -->
-    <script>
-      function loadGtag() {
-        var s = document.createElement('script');
-        s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17949596244';
-        s.async = true;
-        document.head.appendChild(s);
-        s.onload = function () {
-          window.dataLayer = window.dataLayer || [];
-          function gtag() {
-            dataLayer.push(arguments);
-          }
-          gtag('js', new Date());
-          gtag('config', 'AW-17949596244');
-        };
-      }
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(function () {
-          setTimeout(loadGtag, 500);
-        });
-      } else {
-        window.addEventListener('load', function () {
-          setTimeout(loadGtag, 2500);
-        });
-      }
-    </script>
+    <link rel="stylesheet" href="/src/styles/main.css" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="/src/styles/main.css" /></noscript>
+    <script defer src="/analytics-loader.js" data-gtag-ids="G-1GHESLKW5P,AW-17949596244" data-ym-id="106721763"></script>
   </head>
   <body>
     <!-- Yandex.Metrika noscript -->

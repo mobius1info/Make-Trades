@@ -1,5 +1,13 @@
 import { loadTranslations } from './content-loader';
 import {
+  fetchPublishedBlogPost,
+  fetchRelatedBlogPosts,
+  fetchVisibleBlogPosts,
+  incrementPostViews,
+  insertPublicRow,
+  type PublicBlogPost,
+} from './public-api';
+import {
   absoluteImageUrl,
   fallbackPostImage,
   normalizePostImageUrl,
@@ -18,8 +26,8 @@ import {
   isProductionBuild,
   legacyArticlePath,
 } from './seo-urls';
-import { supabase, supabaseUrl, supabaseAnonKey } from './supabase';
 import { resolveLegacyArticleSlug, resolvePublicArticleSlug } from './article-slugs';
+import { supabaseAnonKey, supabaseUrl } from './supabase-config';
 
 const params = new URLSearchParams(window.location.search);
 let currentLanguage = getBlogLanguageFromPath(window.location.pathname) || params.get('lang') || 'ru';
@@ -32,25 +40,8 @@ declare global {
   }
 }
 
-interface BlogPost {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  content: string;
-  image_url: string;
-  language: string;
-  published: boolean;
-  hidden_from_users: boolean;
-  created_at: string;
-  updated_at: string;
-  author: string;
-  category: string;
-  tags: string[];
-  reading_time: number;
-  meta_title: string;
-  meta_description: string;
-  views: number;
+interface BlogPost extends PublicBlogPost {
+  views?: number;
   canonical_slug?: string;
   legacy_slug?: string;
   alternates?: Array<{
@@ -149,7 +140,7 @@ function updateMetaTags(post: BlogPost) {
   document.title = post.meta_title || `${post.title} | MakeTrades`;
 
   const metaDescription = document.getElementById('page-description') as HTMLMetaElement;
-  if (metaDescription) metaDescription.content = post.meta_description || post.excerpt;
+  if (metaDescription) metaDescription.content = post.meta_description || post.excerpt || '';
 
   const metaKeywords = document.getElementById('page-keywords') as HTMLMetaElement;
   if (metaKeywords && post.tags) metaKeywords.content = post.tags.join(', ');
@@ -161,7 +152,7 @@ function updateMetaTags(post: BlogPost) {
   if (ogTitle) ogTitle.content = post.title;
 
   const ogDescription = document.getElementById('og-description') as HTMLMetaElement;
-  if (ogDescription) ogDescription.content = post.excerpt;
+  if (ogDescription) ogDescription.content = post.excerpt || '';
 
   const ogImage = document.getElementById('og-image') as HTMLMetaElement;
   const postImageUrl = seoPostImageUrl(post.image_url, post.slug);
@@ -179,7 +170,7 @@ function updateMetaTags(post: BlogPost) {
   if (twitterTitle) twitterTitle.content = post.title;
 
   const twitterDescription = document.getElementById('twitter-description') as HTMLMetaElement;
-  if (twitterDescription) twitterDescription.content = post.excerpt;
+  if (twitterDescription) twitterDescription.content = post.excerpt || '';
 
   const twitterImage = document.getElementById('twitter-image') as HTMLMetaElement;
   if (twitterImage) twitterImage.content = postImageAbsoluteUrl;
@@ -188,16 +179,16 @@ function updateMetaTags(post: BlogPost) {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": post.title,
-    "description": post.excerpt,
+    "description": post.excerpt || '',
     "image": postImageAbsoluteUrl,
-    "author": { "@type": "Person", "name": post.author },
+    "author": { "@type": "Person", "name": post.author || 'MakeTrades Team' },
     "publisher": {
       "@type": "Organization",
       "name": "MakeTrades",
       "logo": { "@type": "ImageObject", "url": "https://maketrades.info/assets/logo.svg" }
     },
     "datePublished": post.created_at,
-    "dateModified": post.updated_at,
+    "dateModified": post.updated_at || post.created_at,
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": postUrl
@@ -222,9 +213,26 @@ function updateMetaTags(post: BlogPost) {
   document.getElementById('faq-data')?.remove();
 }
 
-async function incrementViews(postId: string) {
+function hasPrerenderedRelatedPosts(): boolean {
+  return Boolean(document.querySelector('#related-posts-grid .blog-card'));
+}
+
+function hasInternalLinks(): boolean {
+  return Boolean(document.querySelector('.internal-links'));
+}
+
+function runWhenIdle(task: () => void) {
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(() => task(), { timeout: 2500 });
+    return;
+  }
+
+  setTimeout(task, 300);
+}
+
+async function recordPostView(postId: string) {
   try {
-    await supabase.rpc('increment_post_views', { post_id: postId });
+    await incrementPostViews(postId);
   } catch (error) {
     console.error('Error incrementing views:', error);
   }
@@ -240,7 +248,7 @@ function renderBlogPost(post: BlogPost) {
   if (titleEl) titleEl.textContent = post.title;
 
   const excerptEl = document.getElementById('post-excerpt');
-  if (excerptEl) excerptEl.textContent = post.excerpt;
+  if (excerptEl) excerptEl.textContent = post.excerpt || '';
 
   const categoryEl = document.getElementById('post-category');
   if (categoryEl) categoryEl.textContent = post.category || '';
@@ -259,7 +267,7 @@ function renderBlogPost(post: BlogPost) {
   }
 
   const authorEl = document.getElementById('post-author');
-  if (authorEl) authorEl.textContent = post.author;
+  if (authorEl) authorEl.textContent = post.author || 'MakeTrades Team';
 
   const imageEl = document.getElementById('post-image') as HTMLImageElement;
   if (imageEl) {
@@ -267,11 +275,14 @@ function renderBlogPost(post: BlogPost) {
     imageEl.alt = post.title;
     imageEl.dataset.postSlug = post.slug;
     imageEl.dataset.fallbackImage = fallbackPostImage(post.slug);
+    imageEl.loading = 'eager';
+    imageEl.decoding = 'async';
+    imageEl.fetchPriority = 'high';
     delete imageEl.dataset.fallbackApplied;
   }
 
   const textEl = document.getElementById('post-text');
-  if (textEl) textEl.innerHTML = sanitizeArticleHtmlImages(post.content, post.slug);
+  if (textEl) textEl.innerHTML = sanitizeArticleHtmlImages(post.content || '', post.slug);
 
   const tagsEl = document.getElementById('post-tags');
   if (tagsEl && post.tags && post.tags.length > 0) {
@@ -289,8 +300,17 @@ function renderBlogPost(post: BlogPost) {
 
   syncResolvedImageUrls(contentEl || document);
 
-  loadRelatedPosts(post.category, post.id);
-  addInternalLinks(post.tags);
+  runWhenIdle(() => {
+    if (!hasPrerenderedRelatedPosts()) {
+      if (post.category) {
+        void loadRelatedPosts(post.category, post.id);
+      }
+    }
+
+    if (!hasInternalLinks()) {
+      void addInternalLinks(post.tags || []);
+    }
+  });
 }
 
 async function loadBlogPost(slug: string) {
@@ -303,15 +323,7 @@ async function loadBlogPost(slug: string) {
   if (contentEl) contentEl.style.display = 'none';
 
   try {
-    const { data: post, error } = await supabase
-      .from('blog_posts')
-      .select('*')
-      .eq('slug', slug)
-      .eq('language', currentLanguage)
-      .eq('published', true)
-      .maybeSingle();
-
-    if (error) throw error;
+    const post = await fetchPublishedBlogPost(slug, currentLanguage);
 
     if (!post) {
       if (loadingEl) loadingEl.style.display = 'none';
@@ -319,8 +331,8 @@ async function loadBlogPost(slug: string) {
       return;
     }
 
-    renderBlogPost(post);
-    incrementViews(post.id);
+    renderBlogPost(post as BlogPost);
+    void recordPostView(post.id);
 
   } catch (error) {
     console.error('Error loading blog post:', error);
@@ -330,25 +342,19 @@ async function loadBlogPost(slug: string) {
 }
 
 async function addInternalLinks(tags: string[]) {
-  if (!tags || tags.length === 0) return;
+  if (!tags || tags.length === 0 || hasInternalLinks()) return;
 
   const linksContainer = document.createElement('div');
   linksContainer.className = 'internal-links';
   linksContainer.innerHTML = `<h3>${t('blog_post.related_topics', 'Related topics:')}</h3>`;
 
   try {
-    const { data: posts, error } = await supabase
-      .from('blog_posts')
-      .select('slug, title, tags')
-      .eq('language', currentLanguage)
-      .eq('published', true)
-      .eq('hidden_from_users', false)
-      .limit(50);
-
-    if (error || !posts) return;
+    const posts = await fetchVisibleBlogPosts(currentLanguage, 50);
+    if (!posts) return;
 
     const relatedByTags = posts
       .filter(post => post.tags && post.tags.some((tag: string) => tags.includes(tag)))
+      .filter(post => post.id !== currentPost?.id)
       .slice(0, 5);
 
     if (relatedByTags.length > 0) {
@@ -375,18 +381,7 @@ async function loadRelatedPosts(category: string, currentPostId: string) {
   if (!gridEl) return;
 
   try {
-    const { data: posts, error } = await supabase
-      .from('blog_posts')
-      .select('*')
-      .eq('language', currentLanguage)
-      .eq('published', true)
-      .eq('hidden_from_users', false)
-      .eq('category', category)
-      .neq('id', currentPostId)
-      .order('created_at', { ascending: false })
-      .limit(3);
-
-    if (error) throw error;
+    const posts = await fetchRelatedBlogPosts(currentLanguage, category, currentPostId, 3);
 
     if (!posts || posts.length === 0) {
       const relatedSection = document.querySelector('.related-posts') as HTMLElement;
@@ -394,18 +389,19 @@ async function loadRelatedPosts(category: string, currentPostId: string) {
       return;
     }
 
-    gridEl.innerHTML = posts.map((post: BlogPost) => `
-      <a href="${articleHref(post, currentLanguage)}" class="blog-card fade-in">
+    gridEl.innerHTML = posts.map(post => `
+      <a href="${articleHref(post, currentLanguage)}" class="blog-card">
         <img src="${normalizePostImageUrl(post.image_url, post.slug)}"
              alt="${post.title}"
              class="blog-card-image"
              data-post-slug="${post.slug}"
-             loading="lazy">
+             loading="lazy"
+             decoding="async">
         <div class="blog-card-content">
           <h3>${post.title}</h3>
-          <p>${post.excerpt}</p>
+          <p>${post.excerpt || ''}</p>
           <div class="blog-card-meta">
-            <span>${post.author}</span>
+            <span>${post.author || 'MakeTrades Team'}</span>
             <span>&bull;</span>
             <time datetime="${post.created_at}">
               ${new Date(post.created_at).toLocaleDateString(getLocale())}
@@ -545,7 +541,6 @@ async function handleDemoRequest(e: Event) {
     broker_experience: formData.get('broker_experience') === 'yes',
   };
 
-  const restUrl = `${supabaseUrl}/rest/v1/demo_requests`;
   const headers = {
     'Content-Type': 'application/json',
     'apikey': supabaseAnonKey,
@@ -554,11 +549,7 @@ async function handleDemoRequest(e: Event) {
   };
 
   try {
-    await fetch(restUrl, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(data),
-    });
+    await insertPublicRow('demo_requests', data);
 
     fetch(`${supabaseUrl}/rest/v1/leads`, {
       method: 'POST',
@@ -701,9 +692,9 @@ async function init() {
   const prerenderedLegacySlug = prerenderedPost ? resolveLegacyArticleSlug(prerenderedPost) : null;
   if (prerenderedPost && (!slug || slug === prerenderedPublicSlug || slug === prerenderedLegacySlug)) {
     renderBlogPost(prerenderedPost);
-    incrementViews(prerenderedPost.id);
+    void recordPostView(prerenderedPost.id);
   } else if (slug) {
-    loadBlogPost(slug);
+    void loadBlogPost(slug);
   } else {
     const errorEl = document.getElementById('error');
     const loadingEl = document.getElementById('loading');

@@ -76,9 +76,9 @@ const faqIndexCopy = {
 };
 
 async function readSupabasePublicConfig() {
-  const source = await readFile(join(ROOT_DIR, 'src', 'supabase.ts'), 'utf8');
-  const defaultUrl = source.match(/supabaseUrl[^\n]*\|\| '([^']+)'/)?.[1];
-  const defaultAnonKey = source.match(/supabaseAnonKey[^\n]*\|\| '([^']+)'/)?.[1];
+  const source = await readFile(join(ROOT_DIR, 'src', 'supabase-config.ts'), 'utf8');
+  const defaultUrl = source.match(/supabaseUrl[\s\S]*?\|\|\s*'([^']+)'/)?.[1];
+  const defaultAnonKey = source.match(/supabaseAnonKey[\s\S]*?\|\|\s*'([^']+)'/)?.[1];
 
   const url = process.env.VITE_SUPABASE_URL || defaultUrl;
   const anonKey = process.env.VITE_SUPABASE_ANON_KEY || defaultAnonKey;
@@ -711,14 +711,15 @@ function relatedPostsFor(post, posts) {
 
 function blogCard(post, language = post.language) {
   return `
-      <a href="${articlePath(post)}" class="blog-card fade-in" itemscope itemtype="https://schema.org/BlogPosting">
+      <a href="${articlePath(post)}" class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
         <img src="${escapeHtml(postImageUrl(post))}"
              alt="${escapeHtml(post.title)}"
              class="blog-card-image"
              itemprop="image"
              data-post-slug="${escapeHtml(post.slug)}"
              data-fallback-image="${escapeHtml(fallbackPostImage(post.slug))}"
-             loading="lazy">
+             loading="lazy"
+             decoding="async">
         <div class="blog-card-content">
           <div class="blog-card-category">${escapeHtml(post.category || '')}</div>
           <h3 itemprop="headline">${escapeHtml(post.title)}</h3>
@@ -741,7 +742,7 @@ function blogCard(post, language = post.language) {
 
 function faqItem(item) {
   return `
-      <div class="faq-item fade-in" data-faq-id="${escapeHtml(item.id)}" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <div class="faq-item" data-faq-id="${escapeHtml(item.id)}" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
         <div class="faq-question" itemprop="name">
           <span>${escapeHtml(item.question)}</span>
           <span>+</span>
