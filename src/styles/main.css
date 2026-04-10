@@ -1724,11 +1724,6 @@ img {
   padding: 7rem 0;
 }
 
-body.blog-listing-page .blog-card {
-  content-visibility: auto;
-  contain-intrinsic-size: 360px 420px;
-}
-
 .blog-filters {
   display: flex;
   justify-content: center;
