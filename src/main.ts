@@ -869,7 +869,10 @@ async function init() {
   trackUserActivity();
   setupLanguageSwitcher();
   setupModal();
-  syncResolvedImageUrls();
+  const prerenderedBlogGrid = document.getElementById('blogGrid');
+  if (prerenderedBlogGrid) {
+    syncResolvedImageUrls(prerenderedBlogGrid);
+  }
 
   const demoForm = document.getElementById('demoForm');
   const contactForm = document.getElementById('contactForm');
@@ -894,7 +897,6 @@ async function init() {
     captchaField?.classList.remove('has-error');
   });
 
-  generateCaptcha();
   initCustomSelects(demoForm);
 
   demoForm?.querySelectorAll<HTMLInputElement>('input[name="broker_experience"]').forEach(radio => {

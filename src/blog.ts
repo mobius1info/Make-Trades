@@ -15,6 +15,7 @@ let currentLanguage =
   new URLSearchParams(window.location.search).get('lang') ||
   'ru';
 let translations: Record<string, string> = {};
+let translationsLoaded = false;
 
 function t(key: string, fallback: string): string {
   return translations[key] || fallback;
@@ -22,6 +23,18 @@ function t(key: string, fallback: string): string {
 
 function hasPrerenderedPosts(): boolean {
   return Boolean(document.querySelector('#allBlogPosts .blog-card'));
+}
+
+function canReusePrerenderedShell(): boolean {
+  return Boolean(getBlogLanguageFromPath(window.location.pathname)) && hasPrerenderedPosts();
+}
+
+async function ensureTranslationsLoaded() {
+  if (translationsLoaded) return;
+
+  translations = await loadTranslations(currentLanguage);
+  translationsLoaded = true;
+  updatePageContent();
 }
 
 async function setLanguage(lang: string) {
@@ -155,9 +168,15 @@ async function init() {
   });
   document.querySelector(`[data-lang="${currentLanguage}"]`)?.classList.add('active');
 
-  translations = await loadTranslations(currentLanguage);
-  updatePageContent();
-  syncResolvedImageUrls();
+  if (!canReusePrerenderedShell()) {
+    await ensureTranslationsLoaded();
+  }
+
+  const prerenderedGrid = document.getElementById('allBlogPosts');
+  if (prerenderedGrid && hasPrerenderedPosts()) {
+    syncResolvedImageUrls(prerenderedGrid);
+  }
+
   await loadAllBlogPosts();
 }
 

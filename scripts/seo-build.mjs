@@ -75,6 +75,29 @@ const faqIndexCopy = {
   },
 };
 
+function buildTranslationsIndex(rows = []) {
+  const index = new Map();
+
+  for (const row of rows) {
+    const language = String(row.language || '').trim();
+    const key = String(row.key || '').trim();
+    if (!language || !key) continue;
+
+    if (!index.has(language)) index.set(language, new Map());
+    index.get(language).set(key, String(row.value || ''));
+  }
+
+  return index;
+}
+
+function translate(index, language, key, fallback = '') {
+  return index.get(language)?.get(key) || fallback;
+}
+
+function homePath(language) {
+  return language === 'ru' ? '/' : `/?lang=${encodeURIComponent(language)}`;
+}
+
 async function readSupabasePublicConfig() {
   const source = await readFile(join(ROOT_DIR, 'src', 'supabase-config.ts'), 'utf8');
   const defaultUrl = source.match(/supabaseUrl[\s\S]*?\|\|\s*'([^']+)'/)?.[1];
@@ -178,7 +201,12 @@ async function fetchSeoData(config) {
     order: 'language.asc,order.asc',
   });
 
-  return { posts: ensureUniquePublicSlugs(posts), publishedCount, faqItems };
+  const { rows: translations } = await fetchAllRows(config, 'translations', {
+    select: 'language,key,value',
+    order: 'language.asc,key.asc',
+  });
+
+  return { posts: ensureUniquePublicSlugs(posts), publishedCount, faqItems, translations };
 }
 
 function escapeHtml(value) {
@@ -619,21 +647,24 @@ function setAttributeById(html, id, attribute, value) {
 
 function setMetaName(html, name, content) {
   const re = new RegExp(`(<meta\\s+name="${name}"[^>]*\\scontent=")[^"]*("[^>]*>)`, 'i');
-  return html.replace(re, `$1${escapeHtml(content)}$2`);
+  return html.replace(re, (_match, start, end) => `${start}${escapeHtml(content)}${end}`);
 }
 
 function setMetaProperty(html, property, content) {
   const re = new RegExp(`(<meta\\s+property="${property}"[^>]*\\scontent=")[^"]*("[^>]*>)`, 'i');
-  return html.replace(re, `$1${escapeHtml(content)}$2`);
+  return html.replace(re, (_match, start, end) => `${start}${escapeHtml(content)}${end}`);
 }
 
 function setCanonical(html, url) {
-  return html.replace(/(<link\s+rel="canonical"[^>]*\shref=")[^"]*("[^>]*>)/i, `$1${escapeHtml(url)}$2`);
+  return html.replace(
+    /(<link\s+rel="canonical"[^>]*\shref=")[^"]*("[^>]*>)/i,
+    (_match, start, end) => `${start}${escapeHtml(url)}${end}`
+  );
 }
 
 function replaceElementContentById(html, id, content) {
   const re = new RegExp(`(<([a-z0-9]+)\\b[^>]*\\bid="${id}"[^>]*>)[\\s\\S]*?(<\\/\\2>)`, 'i');
-  return html.replace(re, `$1${content}$3`);
+  return html.replace(re, (_match, start, _tagName, end) => `${start}${content}${end}`);
 }
 
 function replaceJsonLdById(html, id, data) {
@@ -680,6 +711,28 @@ function articleStructuredData(post) {
   };
 }
 
+function internalLinksHtml(post, posts, translationIndex) {
+  const postTags = Array.isArray(post.tags) ? post.tags : [];
+  if (postTags.length === 0) return '';
+
+  const relatedTopics = languagePosts(posts, post.language, { visibleOnly: true })
+    .filter(candidate => candidate.id !== post.id)
+    .filter(candidate => Array.isArray(candidate.tags) && candidate.tags.some(tag => postTags.includes(tag)))
+    .slice(0, 5);
+
+  if (relatedTopics.length === 0) return '';
+
+  const heading = translate(translationIndex, post.language, 'blog_post.related_topics', 'Related topics:');
+
+  return `
+              <div class="internal-links">
+                <h3>${escapeHtml(heading)}</h3>
+                <ul>
+                  ${relatedTopics.map(candidate => `<li><a href="${articlePath(candidate)}">${escapeHtml(candidate.title)}</a></li>`).join('')}
+                </ul>
+              </div>`;
+}
+
 function breadcrumbData(post) {
   return {
     '@context': 'https://schema.org',
@@ -709,7 +762,8 @@ function relatedPostsFor(post, posts) {
     .map(item => item.post);
 }
 
-function blogCard(post, language = post.language) {
+function blogCard(post, language = post.language, translationIndex = new Map()) {
+  const minLabel = translate(translationIndex, language, 'blog_page.min_read', 'min');
   return `
       <a href="${articlePath(post)}" class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
         <img src="${escapeHtml(postImageUrl(post))}"
@@ -733,7 +787,7 @@ function blogCard(post, language = post.language) {
               ${escapeHtml(formatDate(post.created_at, language))}
             </time>
             <span>&bull;</span>
-            <span>${escapeHtml(post.reading_time || 5)} min</span>
+            <span>${escapeHtml(post.reading_time || 5)} ${escapeHtml(minLabel)}</span>
           </div>
         </div>
         <meta itemprop="url" content="${escapeHtml(articleUrl(post))}">
@@ -765,12 +819,15 @@ function formatDate(value, language) {
   return new Date(value).toLocaleDateString(locales[language] || 'en-US');
 }
 
-function articleHtml(template, post, posts, clusters) {
+function articleHtml(template, post, posts, clusters, translationIndex) {
   const title = metaTitle(post);
   const description = metaDescription(post);
   const keywords = postKeywords(post);
   const tags = Array.isArray(post.tags) ? post.tags : [];
   const related = relatedPostsFor(post, posts);
+  const readTimeLabel = translate(translationIndex, post.language, 'blog_post.min_read', 'min');
+  const tagsLabel = translate(translationIndex, post.language, 'blog_post.tags', 'Tags:');
+  const internalLinks = internalLinksHtml(post, posts, translationIndex);
 
   let html = template;
   html = replaceHtmlLang(html, post.language);
@@ -790,13 +847,66 @@ function articleHtml(template, post, posts, clusters) {
   html = replaceAlternateLinks(html, articleAlternateLinks(post, clusters));
   html = replaceJsonLdById(html, 'structured-data', articleStructuredData(post));
   html = replaceJsonLdById(html, 'breadcrumb-data', breadcrumbData(post));
+  html = replaceElementContentById(
+    html,
+    'loadingText',
+    escapeHtml(translate(translationIndex, post.language, 'blog_post.loading', 'Loading article...'))
+  );
+  html = replaceElementContentById(
+    html,
+    'errorTitle',
+    escapeHtml(translate(translationIndex, post.language, 'blog_post.not_found_title', 'Article not found'))
+  );
+  html = replaceElementContentById(
+    html,
+    'errorDesc',
+    escapeHtml(translate(translationIndex, post.language, 'blog_post.not_found_desc', 'Unfortunately, the requested article was not found.'))
+  );
+  html = replaceElementContentById(
+    html,
+    'errorBackBtn',
+    escapeHtml(translate(translationIndex, post.language, 'blog_post.back_to_blog', 'Back to blog'))
+  );
+  html = setAttributeById(html, 'errorBackBtn', 'href', blogIndexPath(post.language));
+  html = replaceElementContentById(html, 'backBlogBtn', escapeHtml(translate(translationIndex, post.language, 'button.blog', 'Blog')));
+  html = setAttributeById(html, 'backBlogBtn', 'href', blogIndexPath(post.language));
+  html = replaceElementContentById(
+    html,
+    'authorRole',
+    escapeHtml(translate(translationIndex, post.language, 'blog_post.author_role', 'MakeTrades Expert'))
+  );
+  html = replaceElementContentById(
+    html,
+    'postCtaTitle',
+    escapeHtml(translate(translationIndex, post.language, 'blog_post.cta_title', 'Ready to launch your brokerage platform?'))
+  );
+  html = replaceElementContentById(
+    html,
+    'postCtaDesc',
+    escapeHtml(translate(translationIndex, post.language, 'blog_post.cta_desc', 'MakeTrades provides all the tools you need for a successful start'))
+  );
+  html = replaceElementContentById(
+    html,
+    'postCtaBtn',
+    escapeHtml(translate(translationIndex, post.language, 'blog_post.cta_button', 'Request demo'))
+  );
+  html = replaceElementContentById(
+    html,
+    'relatedTitle',
+    escapeHtml(translate(translationIndex, post.language, 'blog_post.related', 'Related articles'))
+  );
+  html = replaceElementContentById(
+    html,
+    'postCopyright',
+    escapeHtml(translate(translationIndex, post.language, 'footer.copyright', '© 2026 MakeTrades. All rights reserved.'))
+  );
 
   html = html.replace(/<div id="loading" style="([^"]*)">/i, '<div id="loading" style="display: none; $1">');
   html = setAttributeById(html, 'post-content', 'style', 'display: block');
   html = replaceElementContentById(html, 'post-category', escapeHtml(post.category || ''));
   html = replaceElementContentById(html, 'post-date', escapeHtml(formatDate(post.created_at, post.language)));
   html = setAttributeById(html, 'post-date', 'datetime', post.created_at);
-  html = replaceElementContentById(html, 'post-reading-time', `${escapeHtml(post.reading_time || 5)} min`);
+  html = replaceElementContentById(html, 'post-reading-time', `${escapeHtml(post.reading_time || 5)} ${escapeHtml(readTimeLabel)}`);
   html = replaceElementContentById(html, 'post-title', escapeHtml(post.title));
   html = replaceElementContentById(html, 'post-excerpt', escapeHtml(post.excerpt || description));
   html = replaceElementContentById(html, 'post-author', escapeHtml(post.author || 'MakeTrades Team'));
@@ -807,16 +917,16 @@ function articleHtml(template, post, posts, clusters) {
   html = replaceElementContentById(
     html,
     'post-text',
-    sanitizeArticleHtmlImages(post.content || `<p>${escapeHtml(post.excerpt || description)}</p>`, post.slug)
+    `${sanitizeArticleHtmlImages(post.content || `<p>${escapeHtml(post.excerpt || description)}</p>`, post.slug)}${internalLinks}`
   );
   html = replaceElementContentById(
     html,
     'post-tags',
     tags.length > 0
-      ? `<strong>Tags:</strong> ${tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}`
+      ? `<strong>${escapeHtml(tagsLabel)}</strong> ${tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}`
       : ''
   );
-  html = replaceElementContentById(html, 'related-posts-grid', related.map(post => blogCard(post)).join(''));
+  html = replaceElementContentById(html, 'related-posts-grid', related.map(candidate => blogCard(candidate, candidate.language, translationIndex)).join(''));
   html = insertBeforeEntryScript(
     html,
     `<script>window.__MAKETRADES_PRERENDERED_POST__=${escapeScriptJson(prerenderedPostData(post, clusters))};</script>`
@@ -896,7 +1006,7 @@ function faqStructuredData(items) {
   };
 }
 
-function blogIndexHtml(template, language, posts) {
+function blogIndexHtml(template, language, posts, translationIndex) {
   const copy = blogIndexCopy[language] || blogIndexCopy.en;
   const visiblePosts = languagePosts(posts, language, { visibleOnly: true });
   const description = copy.subtitle;
@@ -916,11 +1026,18 @@ function blogIndexHtml(template, language, posts) {
   html = replaceJsonLdByType(html, 'Blog', blogStructuredData(language, visiblePosts));
   html = replaceElementContentById(html, 'blogPageTitle', escapeHtml(copy.heading));
   html = replaceElementContentById(html, 'blogPageSubtitle', escapeHtml(copy.subtitle));
-  html = replaceElementContentById(html, 'allBlogPosts', visiblePosts.map(post => blogCard(post, language)).join(''));
+  html = replaceElementContentById(html, 'backHomeBtn', escapeHtml(translate(translationIndex, language, 'button.back_home', 'Home')));
+  html = setAttributeById(html, 'backHomeBtn', 'href', homePath(language));
+  html = replaceElementContentById(
+    html,
+    'blogCopyright',
+    escapeHtml(translate(translationIndex, language, 'footer.copyright', '© 2026 MakeTrades. All rights reserved.'))
+  );
+  html = replaceElementContentById(html, 'allBlogPosts', visiblePosts.map(post => blogCard(post, language, translationIndex)).join(''));
   return html;
 }
 
-function faqIndexHtml(template, language, faqItems) {
+function faqIndexHtml(template, language, faqItems, translationIndex) {
   const copy = faqIndexCopy[language] || faqIndexCopy.en;
   const items = faqItems.filter(item => item.language === language).sort((a, b) => Number(a.order) - Number(b.order));
   const description = copy.subtitle;
@@ -940,23 +1057,48 @@ function faqIndexHtml(template, language, faqItems) {
   html = replaceJsonLdById(html, 'faqSchema', faqStructuredData(items));
   html = replaceElementContentById(html, 'faqPageTitle', escapeHtml(copy.heading));
   html = replaceElementContentById(html, 'faqPageSubtitle', escapeHtml(copy.subtitle));
+  html = replaceElementContentById(html, 'catAll', escapeHtml(translate(translationIndex, language, 'faq_page.cat_all', 'All questions')));
+  html = replaceElementContentById(html, 'catPricing', escapeHtml(translate(translationIndex, language, 'faq_page.cat_pricing', 'Pricing')));
+  html = replaceElementContentById(html, 'catFeatures', escapeHtml(translate(translationIndex, language, 'faq_page.cat_features', 'Features')));
+  html = replaceElementContentById(html, 'catSupport', escapeHtml(translate(translationIndex, language, 'faq_page.cat_support', 'Support')));
+  html = replaceElementContentById(html, 'backHomeBtn', escapeHtml(translate(translationIndex, language, 'button.back_home', 'Home')));
+  html = setAttributeById(html, 'backHomeBtn', 'href', homePath(language));
+  html = replaceElementContentById(
+    html,
+    'faqCopyright',
+    escapeHtml(translate(translationIndex, language, 'footer.copyright', '© 2026 MakeTrades. All rights reserved.'))
+  );
   html = replaceElementContentById(html, 'allFAQItems', items.map(faqItem).join(''));
   return html;
 }
 
 function replaceJsonLdByType(html, type, data) {
   const re = new RegExp(`(<script type="application\\/ld\\+json">\\s*\\{[\\s\\S]*?"@type"\\s*:\\s*"${type}"[\\s\\S]*?\\}\\s*<\\/script>)`, 'i');
-  return html.replace(re, `<script type="application/ld+json">\n${escapeScriptJson(data)}\n    </script>`);
+  return html.replace(re, () => `<script type="application/ld+json">\n${escapeScriptJson(data)}\n    </script>`);
 }
 
-function patchHomeHtml(template, posts, faqItems) {
+function optimizeHomeStylesheetLoading(html) {
+  const nonCriticalStylesheetRe =
+    /\s*<link rel="stylesheet" href="\/assets\/[^"]+\.css" media="print" onload="this\.media='all'" \/>\s*<noscript><\/noscript>/i;
+
+  let nextHtml = html.replace(nonCriticalStylesheetRe, '');
+  nextHtml = nextHtml.replace(
+    /<link rel="stylesheet" crossorigin href="(\/assets\/[^"]+\.css)">/i,
+    (_match, href) =>
+      `<link rel="stylesheet" crossorigin href="${href}" media="print" onload="this.media='all'" />\n    <noscript><link rel="stylesheet" crossorigin href="${href}" /></noscript>`
+  );
+
+  return nextHtml;
+}
+
+function patchHomeHtml(template, posts, faqItems, translationIndex) {
   const visiblePosts = languagePosts(posts, 'ru', { visibleOnly: true }).slice(0, 3);
   const faq = faqItems.filter(item => item.language === 'ru').slice(0, 4);
 
-  let html = template;
+  let html = optimizeHomeStylesheetLoading(template);
   html = html.replace(/href="\/blog\.html" class="btn btn-secondary" id="allArticlesBtn"/, 'href="/blog/ru/" class="btn btn-secondary" id="allArticlesBtn"');
   html = html.replace(/href="\/faq\.html" class="btn btn-secondary" id="allFaqBtn"/, 'href="/faq/ru/" class="btn btn-secondary" id="allFaqBtn"');
-  html = replaceElementContentById(html, 'blogGrid', visiblePosts.map(post => blogCard(post, 'ru')).join(''));
+  html = replaceElementContentById(html, 'blogGrid', visiblePosts.map(post => blogCard(post, 'ru', translationIndex)).join(''));
   html = replaceElementContentById(html, 'faqList', faq.map(faqItem).join(''));
   return html;
 }
@@ -1096,8 +1238,9 @@ async function writeRedirectArtifacts(entries) {
 }
 
 async function generateSeoFiles(data) {
-  const { posts, publishedCount, faqItems } = data;
+  const { posts, publishedCount, faqItems, translations } = data;
   const clusters = makeClusters(posts);
+  const translationIndex = buildTranslationsIndex(translations);
   const sitemap = generateSitemap(posts, clusters);
   const redirects = redirectEntries(posts);
   await writeSitemap(sitemap);
@@ -1114,11 +1257,11 @@ async function generateSeoFiles(data) {
   const faqTemplate = await readFile(join(DIST_DIR, 'faq.html'), 'utf8');
   const homeTemplate = await readFile(join(DIST_DIR, 'index.html'), 'utf8');
 
-  await writeFile(join(DIST_DIR, 'index.html'), patchHomeHtml(homeTemplate, posts, faqItems), 'utf8');
+  await writeFile(join(DIST_DIR, 'index.html'), patchHomeHtml(homeTemplate, posts, faqItems, translationIndex), 'utf8');
 
   for (const language of LANGUAGES) {
-    const blogHtml = blogIndexHtml(blogTemplate, language, posts);
-    const faqHtml = faqIndexHtml(faqTemplate, language, faqItems);
+    const blogHtml = blogIndexHtml(blogTemplate, language, posts, translationIndex);
+    const faqHtml = faqIndexHtml(faqTemplate, language, faqItems, translationIndex);
 
     await writeIndexHtml(join(DIST_DIR, 'blog', language), blogHtml);
     await writeIndexHtml(join(DIST_DIR, 'faq', language), faqHtml);
@@ -1130,7 +1273,7 @@ async function generateSeoFiles(data) {
   }
 
   for (const post of posts) {
-    const html = articleHtml(articleTemplate, post, posts, clusters);
+    const html = articleHtml(articleTemplate, post, posts, clusters, translationIndex);
     const outputPath = postFilePath(post);
     await mkdir(join(outputPath, '..'), { recursive: true }).catch(() => {});
     await writeFile(outputPath, html, 'utf8');

@@ -9,6 +9,7 @@ let currentLanguage =
 let currentCategory = 'all';
 let translations: Record<string, string> = {};
 let canReusePrerenderedFaqItems = true;
+let translationsLoaded = false;
 
 function t(key: string, fallback: string): string {
   return translations[key] || fallback;
@@ -16,6 +17,18 @@ function t(key: string, fallback: string): string {
 
 function hasPrerenderedFaqItems(): boolean {
   return Boolean(document.querySelector('#allFAQItems .faq-item'));
+}
+
+function canReusePrerenderedShell(): boolean {
+  return Boolean(getFaqLanguageFromPath(window.location.pathname)) && hasPrerenderedFaqItems();
+}
+
+async function ensureTranslationsLoaded() {
+  if (translationsLoaded) return;
+
+  translations = await loadTranslations(currentLanguage);
+  translationsLoaded = true;
+  updatePageContent();
 }
 
 async function setLanguage(lang: string) {
@@ -58,14 +71,19 @@ function updatePageContent() {
   if (backHomeLink) backHomeLink.href = currentLanguage === 'ru' ? '/' : `/?lang=${currentLanguage}`;
 }
 
-function setCategory(category: string) {
+async function setCategory(category: string) {
   currentCategory = category;
   document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
   document.querySelector(`[data-category="${category}"]`)?.classList.add('active');
   if (category !== 'all') {
     canReusePrerenderedFaqItems = false;
   }
-  void loadAllFAQItems(category !== 'all' || !canReusePrerenderedFaqItems);
+
+  if (!translationsLoaded) {
+    await ensureTranslationsLoaded();
+  }
+
+  await loadAllFAQItems(category !== 'all' || !canReusePrerenderedFaqItems);
 }
 
 function renderFaqItems(faqList: HTMLElement, items: PublicFAQItem[]) {
@@ -164,12 +182,14 @@ async function init() {
   document.querySelectorAll('.category-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const category = btn.getAttribute('data-category');
-      if (category) setCategory(category);
+      if (category) void setCategory(category);
     });
   });
 
-  translations = await loadTranslations(currentLanguage);
-  updatePageContent();
+  if (!canReusePrerenderedShell()) {
+    await ensureTranslationsLoaded();
+  }
+
   await loadAllFAQItems();
 }
 

@@ -33,6 +33,7 @@ const params = new URLSearchParams(window.location.search);
 let currentLanguage = getBlogLanguageFromPath(window.location.pathname) || params.get('lang') || 'ru';
 let translations: Record<string, string> = {};
 let currentPost: BlogPost | null = null;
+let translationsLoaded = false;
 
 declare global {
   interface Window {
@@ -230,12 +231,67 @@ function runWhenIdle(task: () => void) {
   setTimeout(task, 300);
 }
 
+function canReusePrerenderedShell(): boolean {
+  return Boolean(getBlogLanguageFromPath(window.location.pathname)) && Boolean(window.__MAKETRADES_PRERENDERED_POST__);
+}
+
+async function ensureTranslationsLoaded() {
+  if (translationsLoaded) return;
+
+  translations = await loadTranslations(currentLanguage);
+  translationsLoaded = true;
+  updatePageContent();
+  updateDemoFormContent();
+}
+
+function schedulePostView(postId: string) {
+  runWhenIdle(() => {
+    void recordPostView(postId);
+  });
+}
+
 async function recordPostView(postId: string) {
   try {
     await incrementPostViews(postId);
   } catch (error) {
     console.error('Error incrementing views:', error);
   }
+}
+
+function hydratePrerenderedPost(post: BlogPost) {
+  currentPost = post;
+  currentLanguage = post.language || currentLanguage;
+  document.documentElement.lang = currentLanguage;
+  updateMetaTags(post);
+
+  const imageEl = document.getElementById('post-image') as HTMLImageElement | null;
+  if (imageEl) {
+    imageEl.dataset.postSlug = post.slug;
+    imageEl.dataset.fallbackImage = fallbackPostImage(post.slug);
+    imageEl.loading = 'eager';
+    imageEl.decoding = 'async';
+    imageEl.fetchPriority = 'high';
+    delete imageEl.dataset.fallbackApplied;
+  }
+
+  const loadingEl = document.getElementById('loading');
+  const errorEl = document.getElementById('error');
+  const contentEl = document.getElementById('post-content');
+  if (loadingEl) loadingEl.style.display = 'none';
+  if (errorEl) errorEl.style.display = 'none';
+  if (contentEl) contentEl.style.display = 'block';
+
+  syncResolvedImageUrls(contentEl || document);
+
+  runWhenIdle(() => {
+    if (!hasPrerenderedRelatedPosts() && post.category) {
+      void loadRelatedPosts(post.category, post.id);
+    }
+
+    if (!hasInternalLinks()) {
+      void addInternalLinks(post.tags || []);
+    }
+  });
 }
 
 function renderBlogPost(post: BlogPost) {
@@ -332,7 +388,7 @@ async function loadBlogPost(slug: string) {
     }
 
     renderBlogPost(post as BlogPost);
-    void recordPostView(post.id);
+    schedulePostView(post.id);
 
   } catch (error) {
     console.error('Error loading blog post:', error);
@@ -577,8 +633,16 @@ function setupModal() {
   const demoModal = document.getElementById('demoModal');
   const ctaBtn = document.getElementById('postCtaBtn');
 
-  ctaBtn?.addEventListener('click', () => {
+  const openDemoRequestModal = async () => {
+    if (canReusePrerenderedShell() && !translationsLoaded) {
+      await ensureTranslationsLoaded();
+    }
+
     if (demoModal) openModal(demoModal);
+  };
+
+  ctaBtn?.addEventListener('click', () => {
+    void openDemoRequestModal();
   });
 
   document.querySelectorAll('.modal-close').forEach(btn => {
@@ -680,19 +744,19 @@ async function init() {
   });
   document.querySelector(`[data-lang="${currentLanguage}"]`)?.classList.add('active');
 
-  translations = await loadTranslations(currentLanguage);
-  updatePageContent();
-  updateDemoFormContent();
+  if (!canReusePrerenderedShell()) {
+    await ensureTranslationsLoaded();
+  }
+
   setupModal();
-  syncResolvedImageUrls();
 
   const prerenderedPost = window.__MAKETRADES_PRERENDERED_POST__;
   const slug = getSlugFromUrl();
   const prerenderedPublicSlug = prerenderedPost ? resolvePublicArticleSlug(prerenderedPost) : null;
   const prerenderedLegacySlug = prerenderedPost ? resolveLegacyArticleSlug(prerenderedPost) : null;
   if (prerenderedPost && (!slug || slug === prerenderedPublicSlug || slug === prerenderedLegacySlug)) {
-    renderBlogPost(prerenderedPost);
-    void recordPostView(prerenderedPost.id);
+    hydratePrerenderedPost(prerenderedPost);
+    schedulePostView(prerenderedPost.id);
   } else if (slug) {
     void loadBlogPost(slug);
   } else {
