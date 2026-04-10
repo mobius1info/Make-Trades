@@ -1,6 +1,7 @@
 import { loadTranslations } from './content-loader';
 import {
   absoluteImageUrl,
+  fallbackPostImage,
   normalizePostImageUrl,
   seoPostImageUrl,
   sanitizeArticleHtmlImages,
@@ -265,6 +266,8 @@ function renderBlogPost(post: BlogPost) {
     imageEl.src = normalizePostImageUrl(post.image_url, post.slug);
     imageEl.alt = post.title;
     imageEl.dataset.postSlug = post.slug;
+    imageEl.dataset.fallbackImage = fallbackPostImage(post.slug);
+    delete imageEl.dataset.fallbackApplied;
   }
 
   const textEl = document.getElementById('post-text');

@@ -434,9 +434,20 @@ function postImageAbsoluteUrl(post) {
 }
 
 function sanitizeArticleHtmlImages(html, seed = 'post') {
+  const fallbackImage = fallbackPostImage(seed);
   return String(html || '').replace(/(<img\b[^>]*\bsrc=["'])([^"']*)(["'][^>]*>)/gi, (_match, prefix, src, suffix) => {
     const normalizedSrc = String(src || '').trim();
-    return `${prefix}${normalizedSrc || fallbackPostImage(seed)}${suffix}`;
+    let nextSuffix = suffix;
+
+    if (seed && !/\sdata-post-slug=/i.test(nextSuffix)) {
+      nextSuffix = nextSuffix.replace(/>/, ` data-post-slug="${seed}">`);
+    }
+
+    if (!/\sdata-fallback-image=/i.test(nextSuffix)) {
+      nextSuffix = nextSuffix.replace(/>/, ` data-fallback-image="${fallbackImage}">`);
+    }
+
+    return `${prefix}${normalizedSrc || fallbackImage}${nextSuffix}`;
   });
 }
 

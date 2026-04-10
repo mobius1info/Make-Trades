@@ -65,24 +65,39 @@ export function absoluteImageUrl(imageUrl: string): string {
 }
 
 export function sanitizeArticleHtmlImages(html: string, seed: string = ''): string {
+  const fallbackImage = fallbackPostImage(seed);
   return String(html || '').replace(/(<img\b[^>]*\bsrc=["'])([^"']*)(["'][^>]*>)/gi, (_match, prefix, src, suffix) => {
     const normalizedSrc = String(src || '').trim();
-    return `${prefix}${normalizedSrc || fallbackPostImage(seed)}${suffix}`;
+    let nextSuffix = suffix;
+
+    if (seed && !/\sdata-post-slug=/i.test(nextSuffix)) {
+      nextSuffix = nextSuffix.replace(/>/, ` data-post-slug="${seed}">`);
+    }
+
+    if (!/\sdata-fallback-image=/i.test(nextSuffix)) {
+      nextSuffix = nextSuffix.replace(/>/, ` data-fallback-image="${fallbackImage}">`);
+    }
+
+    return `${prefix}${normalizedSrc || fallbackImage}${nextSuffix}`;
   });
 }
 
 export function syncResolvedImageUrls(root: ParentNode = document): void {
   root.querySelectorAll<HTMLImageElement>('img').forEach((img, index) => {
     const seed = img.dataset.postSlug || img.alt || img.id || `${index}`;
-    const fallbackImage = img.dataset.fallbackImage || fallbackPostImage(seed);
+    const fallbackImage = fallbackPostImage(seed);
     const currentSrc = img.getAttribute('src');
     const normalizedSrc = normalizePostImageUrl(currentSrc, seed);
+
+    img.dataset.fallbackImage = fallbackImage;
+
+    if (currentSrc && currentSrc !== fallbackImage && img.dataset.fallbackApplied === 'true') {
+      delete img.dataset.fallbackApplied;
+    }
 
     if (normalizedSrc && currentSrc !== normalizedSrc) {
       img.src = normalizedSrc;
     }
-
-    img.dataset.fallbackImage = fallbackImage;
 
     if (img.dataset.fallbackBound !== 'true') {
       img.dataset.fallbackBound = 'true';
@@ -90,13 +105,13 @@ export function syncResolvedImageUrls(root: ParentNode = document): void {
         if (img.dataset.fallbackApplied === 'true') return;
 
         img.dataset.fallbackApplied = 'true';
-        img.src = fallbackImage;
+        img.src = img.dataset.fallbackImage || fallbackPostImage(img.dataset.postSlug || img.alt || img.id || `${index}`);
       });
     }
 
     if (currentSrc && img.complete && img.naturalWidth === 0) {
       img.dataset.fallbackApplied = 'true';
-      img.src = fallbackImage;
+      img.src = img.dataset.fallbackImage || fallbackImage;
     }
   });
 }
