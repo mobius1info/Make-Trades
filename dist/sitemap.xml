@@ -3800,19 +3800,19 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/kak-sozdat-brokerskuyu-kompaniyu/" />
   </url>
   <url>
-    <loc>https://maketrades.info/blog/en/how-to-start-brokerage-company/</loc>
-    <lastmod>2026-02-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/how-to-start-brokerage-company/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/en/how-to-start-brokerage-company/" />
-  </url>
-  <url>
     <loc>https://maketrades.info/blog/ru/preimuschestva-torgovyh-botov/</loc>
     <lastmod>2026-02-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
     <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/preimuschestva-torgovyh-botov/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/preimuschestva-torgovyh-botov/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/blog/en/how-to-start-brokerage-company/</loc>
+    <lastmod>2026-02-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/how-to-start-brokerage-company/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/en/how-to-start-brokerage-company/" />
   </url>
 </urlset>

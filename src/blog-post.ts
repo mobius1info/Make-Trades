@@ -2,6 +2,7 @@ import { loadTranslations } from './content-loader';
 import {
   absoluteImageUrl,
   normalizePostImageUrl,
+  seoPostImageUrl,
   sanitizeArticleHtmlImages,
   syncResolvedImageUrls,
 } from './post-images';
@@ -162,7 +163,7 @@ function updateMetaTags(post: BlogPost) {
   if (ogDescription) ogDescription.content = post.excerpt;
 
   const ogImage = document.getElementById('og-image') as HTMLMetaElement;
-  const postImageUrl = normalizePostImageUrl(post.image_url, post.slug);
+  const postImageUrl = seoPostImageUrl(post.image_url, post.slug);
   const postImageAbsoluteUrl = absoluteImageUrl(postImageUrl);
 
   if (ogImage) ogImage.content = postImageAbsoluteUrl;

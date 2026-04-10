@@ -7,6 +7,13 @@ const PUBLIC_DIR = join(ROOT_DIR, 'public');
 const BASE_URL = 'https://maketrades.info';
 const LANGUAGES = ['ru', 'en', 'de', 'uk', 'zh'];
 const sitemapOnly = process.argv.includes('--sitemap-only');
+const FALLBACK_POST_IMAGES = [
+  '/assets/market-analysis.png',
+  '/assets/hero-main.jpg',
+  '/assets/detail-bots.jpg',
+  '/assets/detail-portfolios.jpg',
+  '/assets/detail-solution.jpg',
+];
 const postImageCatalog = JSON.parse(await readFile(join(ROOT_DIR, 'src', 'post-image-catalog.json'), 'utf8'));
 const generatedPostImagesBySlug = new Map(
   postImageCatalog.flatMap(entry => entry.slugs.map(slug => [slug, entry.asset]))
@@ -387,11 +394,27 @@ function resolveGeneratedPostImage(seed = '') {
   return generatedPostImagesBySlug.get(normalizedSeed) || '';
 }
 
+function fallbackPostImage(seed = 'post') {
+  const normalizedSeed = String(seed || 'post').trim() || 'post';
+  const generatedImage = resolveGeneratedPostImage(normalizedSeed);
+
+  if (generatedImage) return generatedImage;
+
+  return FALLBACK_POST_IMAGES[hashString(normalizedSeed) % FALLBACK_POST_IMAGES.length];
+}
+
 function normalizePostImageUrl(imageUrl, seed = '') {
+  const normalizedImageUrl = String(imageUrl || '').trim();
+  if (normalizedImageUrl) return normalizedImageUrl;
+
+  return fallbackPostImage(seed);
+}
+
+function seoPostImageUrl(imageUrl, seed = '') {
   const generatedImage = resolveGeneratedPostImage(seed);
   if (generatedImage) return generatedImage;
 
-  return String(imageUrl || '').trim();
+  return normalizePostImageUrl(imageUrl, seed);
 }
 
 function absoluteImageUrl(imageUrl) {
@@ -402,13 +425,18 @@ function postImageUrl(post) {
   return normalizePostImageUrl(post.image_url, post.slug);
 }
 
+function postSeoImageUrl(post) {
+  return seoPostImageUrl(post.image_url, post.slug);
+}
+
 function postImageAbsoluteUrl(post) {
-  return absoluteImageUrl(postImageUrl(post));
+  return absoluteImageUrl(postSeoImageUrl(post));
 }
 
 function sanitizeArticleHtmlImages(html, seed = 'post') {
-  return String(html || '').replace(/(<img\b[^>]*\bsrc=["'])([^"']+)(["'][^>]*>)/gi, (_match, prefix, src, suffix) => {
-    return `${prefix}${normalizePostImageUrl(src, seed)}${suffix}`;
+  return String(html || '').replace(/(<img\b[^>]*\bsrc=["'])([^"']*)(["'][^>]*>)/gi, (_match, prefix, src, suffix) => {
+    const normalizedSrc = String(src || '').trim();
+    return `${prefix}${normalizedSrc || fallbackPostImage(seed)}${suffix}`;
   });
 }
 
@@ -678,6 +706,7 @@ function blogCard(post, language = post.language) {
              class="blog-card-image"
              itemprop="image"
              data-post-slug="${escapeHtml(post.slug)}"
+             data-fallback-image="${escapeHtml(fallbackPostImage(post.slug))}"
              loading="lazy">
         <div class="blog-card-content">
           <div class="blog-card-category">${escapeHtml(post.category || '')}</div>
@@ -762,6 +791,7 @@ function articleHtml(template, post, posts, clusters) {
   html = setAttributeById(html, 'post-image', 'src', postImageUrl(post));
   html = setAttributeById(html, 'post-image', 'alt', post.title);
   html = setAttributeById(html, 'post-image', 'data-post-slug', post.slug);
+  html = setAttributeById(html, 'post-image', 'data-fallback-image', fallbackPostImage(post.slug));
   html = replaceElementContentById(
     html,
     'post-text',
