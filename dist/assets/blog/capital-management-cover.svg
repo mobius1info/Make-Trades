@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#254C5A" />
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)" />
+  <circle cx="1290" cy="150" r="310" fill="rgba(125, 227, 192, 0.18)" />
+  <circle cx="130" cy="770" r="220" fill="rgba(250, 204, 21, 0.12)" />
+  <path d="M -120 150 L 240 30 L 1180 900 L 820 900 Z" fill="rgba(255,255,255,0.04)" />
+  <g stroke="rgba(125, 227, 192, 0.1)" stroke-width="1">
+    <line x1="0" y1="0" x2="0" y2="900" /><line x1="88" y1="0" x2="88" y2="900" /><line x1="176" y1="0" x2="176" y2="900" /><line x1="264" y1="0" x2="264" y2="900" /><line x1="352" y1="0" x2="352" y2="900" /><line x1="440" y1="0" x2="440" y2="900" /><line x1="528" y1="0" x2="528" y2="900" /><line x1="616" y1="0" x2="616" y2="900" /><line x1="704" y1="0" x2="704" y2="900" /><line x1="792" y1="0" x2="792" y2="900" /><line x1="880" y1="0" x2="880" y2="900" /><line x1="968" y1="0" x2="968" y2="900" /><line x1="1056" y1="0" x2="1056" y2="900" /><line x1="1144" y1="0" x2="1144" y2="900" /><line x1="1232" y1="0" x2="1232" y2="900" /><line x1="1320" y1="0" x2="1320" y2="900" /><line x1="1408" y1="0" x2="1408" y2="900" /><line x1="1496" y1="0" x2="1496" y2="900" />
+    <line x1="0" y1="0" x2="1600" y2="0" /><line x1="0" y1="88" x2="1600" y2="88" /><line x1="0" y1="176" x2="1600" y2="176" /><line x1="0" y1="264" x2="1600" y2="264" /><line x1="0" y1="352" x2="1600" y2="352" /><line x1="0" y1="440" x2="1600" y2="440" /><line x1="0" y1="528" x2="1600" y2="528" /><line x1="0" y1="616" x2="1600" y2="616" /><line x1="0" y1="704" x2="1600" y2="704" /><line x1="0" y1="792" x2="1600" y2="792" /><line x1="0" y1="880" x2="1600" y2="880" /><line x1="0" y1="968" x2="1600" y2="968" />
+  </g>
+  <rect x="88" y="84" width="360" height="58" rx="28" fill="rgba(255,255,255,0.08)" />
+  <rect x="88" y="162" width="284" height="26" rx="13" fill="rgba(255,255,255,0.08)" />
+  <rect x="88" y="204" width="232" height="18" rx="9" fill="rgba(255,255,255,0.08)" />
+  
+    
+    <rect x="214" y="394" width="300" height="220" rx="42" fill="rgba(125, 227, 192, 0.86)" stroke="rgba(255, 255, 255, 0.62)" stroke-width="4" />
+    <rect x="240" y="442" width="248" height="110" rx="28" fill="#FACC15" />
+    <circle cx="442" cy="492" r="14" fill="rgba(255, 255, 255, 0.74)" />
+  
+    
+    <path d="M 1014 362 A 170 170 0 0 1 1354 362" fill="none" stroke="rgba(255, 255, 255, 0.12)" stroke-width="18" />
+    <path d="M 1014 362 A 170 170 0 0 1 1214.6 205.6" fill="none" stroke="#7DE3C0" stroke-width="18" stroke-linecap="round" />
+    <path d="M 1036 362 A 148 148 0 0 1 1240.24 258.4" fill="none" stroke="#FACC15" stroke-width="10" stroke-linecap="round" />
+  
+    
+    
+    <rect x="812" y="534" width="586" height="180" rx="28" fill="rgba(255,255,255,0.08)" stroke="rgba(125, 227, 192, 0.45)" stroke-width="2" />
+  
+    <g stroke="rgba(255, 255, 255, 0.14)" stroke-width="1">
+      <line x1="836" y1="579" x2="1374" y2="579" />
+      <line x1="836" y1="624" x2="1374" y2="624" />
+      <line x1="836" y1="669" x2="1374" y2="669" />
+    </g>
+    <polyline points="854,632 944,566 1062,594 1174,496 1282,536 1350,606" fill="none" stroke="#7DE3C0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"  />
+    <g fill="#FACC15">
+      <circle cx="944" cy="566" r="7" />
+      <circle cx="1062" cy="594" r="7" />
+      <circle cx="1174" cy="496" r="7" />
+      <circle cx="1282" cy="536" r="7" />
+      <circle cx="1350" cy="606" r="7" />
+    </g>
+  
+    <text x="1092" y="360" fill="#FACC15" font-family="Segoe UI, Arial, sans-serif" font-size="44" font-weight="700">1-2%</text>
+  
+</svg>

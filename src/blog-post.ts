@@ -3,8 +3,8 @@ import {
   absoluteImageUrl,
   normalizePostImageUrl,
   sanitizeArticleHtmlImages,
-  setupImageFallbacks,
-} from './image-fallbacks';
+  syncResolvedImageUrls,
+} from './post-images';
 import {
   articleAbsoluteUrl,
   articleHref,
@@ -263,7 +263,7 @@ function renderBlogPost(post: BlogPost) {
   if (imageEl) {
     imageEl.src = normalizePostImageUrl(post.image_url, post.slug);
     imageEl.alt = post.title;
-    imageEl.dataset.fallbackImage = normalizePostImageUrl(null, post.slug);
+    imageEl.dataset.postSlug = post.slug;
   }
 
   const textEl = document.getElementById('post-text');
@@ -283,7 +283,7 @@ function renderBlogPost(post: BlogPost) {
   if (errorEl) errorEl.style.display = 'none';
   if (contentEl) contentEl.style.display = 'block';
 
-  setupImageFallbacks(contentEl || document);
+  syncResolvedImageUrls(contentEl || document);
 
   loadRelatedPosts(post.category, post.id);
   addInternalLinks(post.tags);
@@ -395,7 +395,7 @@ async function loadRelatedPosts(category: string, currentPostId: string) {
         <img src="${normalizePostImageUrl(post.image_url, post.slug)}"
              alt="${post.title}"
              class="blog-card-image"
-             data-fallback-image="${normalizePostImageUrl(null, post.slug)}"
+             data-post-slug="${post.slug}"
              loading="lazy">
         <div class="blog-card-content">
           <h3>${post.title}</h3>
@@ -410,7 +410,7 @@ async function loadRelatedPosts(category: string, currentPostId: string) {
         </div>
       </a>
     `).join('');
-    setupImageFallbacks(gridEl);
+    syncResolvedImageUrls(gridEl);
   } catch (error) {
     console.error('Error loading related posts:', error);
   }
@@ -689,7 +689,7 @@ async function init() {
   updatePageContent();
   updateDemoFormContent();
   setupModal();
-  setupImageFallbacks();
+  syncResolvedImageUrls();
 
   const prerenderedPost = window.__MAKETRADES_PRERENDERED_POST__;
   const slug = getSlugFromUrl();

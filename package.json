@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && npm run generate:seo",
+    "build": "npm run generate:blog-images && vite build && npm run generate:seo",
+    "generate:blog-images": "node scripts/generate-blog-cover-assets.mjs",
     "generate:seo": "node scripts/seo-build.mjs",
     "generate:sitemap": "node scripts/seo-build.mjs --sitemap-only",
     "preview": "vite preview"

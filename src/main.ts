@@ -1,5 +1,5 @@
 import { loadTranslations, loadImages } from './content-loader';
-import { normalizePostImageUrl, setupImageFallbacks } from './image-fallbacks';
+import { normalizePostImageUrl, syncResolvedImageUrls } from './post-images';
 import { articleHref, blogIndexHref, faqHref } from './seo-urls';
 import { supabase, supabaseUrl, supabaseAnonKey } from './supabase';
 
@@ -199,7 +199,7 @@ async function loadBlogPosts(limit: number = 3) {
         <img src="${normalizePostImageUrl(post.image_url, post.slug)}"
              alt="${post.title}"
              class="blog-card-image"
-             data-fallback-image="${normalizePostImageUrl(null, post.slug)}"
+             data-post-slug="${post.slug}"
              loading="lazy">
         <div class="blog-card-content">
           <h3>${post.title}</h3>
@@ -218,7 +218,7 @@ async function loadBlogPosts(limit: number = 3) {
         </div>
       </a>
     `).join('');
-    setupImageFallbacks(blogGrid);
+    syncResolvedImageUrls(blogGrid);
   } catch (error) {
     console.error('Error loading blog posts:', error);
     blogGrid.innerHTML = `<p style="text-align: center; color: var(--error-500);">${t('blog.error', 'Error loading articles')}</p>`;
@@ -884,7 +884,7 @@ async function init() {
   trackUserActivity();
   setupLanguageSwitcher();
   setupModal();
-  setupImageFallbacks();
+  syncResolvedImageUrls();
 
   const demoForm = document.getElementById('demoForm');
   const contactForm = document.getElementById('contactForm');

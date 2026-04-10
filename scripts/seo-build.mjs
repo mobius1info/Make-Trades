@@ -7,23 +7,10 @@ const PUBLIC_DIR = join(ROOT_DIR, 'public');
 const BASE_URL = 'https://maketrades.info';
 const LANGUAGES = ['ru', 'en', 'de', 'uk', 'zh'];
 const sitemapOnly = process.argv.includes('--sitemap-only');
-
-const FALLBACK_POST_IMAGES = [
-  '/assets/market-analysis.png',
-  '/assets/hero-main.jpg',
-  '/assets/detail-bots.jpg',
-  '/assets/detail-portfolios.jpg',
-  '/assets/detail-solution.jpg',
-];
-
-const KNOWN_BROKEN_REMOTE_IMAGE_REPLACEMENTS = [
-  ['/photos/6801653/pexels-photo-6801653.jpeg', '/assets/market-analysis.png'],
-  ['/photos/6801654/pexels-photo-6801654.jpeg', '/assets/hero-main.jpg'],
-  ['/photos/6801655/pexels-photo-6801655.jpeg', '/assets/detail-bots.jpg'],
-  ['/photos/6801656/pexels-photo-6801656.jpeg', '/assets/detail-portfolios.jpg'],
-  ['/photos/6801657/pexels-photo-6801657.jpeg', '/assets/detail-solution.jpg'],
-  ['/photos/6801658/pexels-photo-6801658.jpeg', '/assets/market-analysis.png'],
-];
+const postImageCatalog = JSON.parse(await readFile(join(ROOT_DIR, 'src', 'post-image-catalog.json'), 'utf8'));
+const generatedPostImagesBySlug = new Map(
+  postImageCatalog.flatMap(entry => entry.slugs.map(slug => [slug, entry.asset]))
+);
 
 const blogIndexCopy = {
   ru: {
@@ -393,17 +380,18 @@ function ensureUniquePublicSlugs(posts) {
   });
 }
 
-function fallbackPostImage(seed = 'post') {
-  return FALLBACK_POST_IMAGES[hashString(seed) % FALLBACK_POST_IMAGES.length];
+function resolveGeneratedPostImage(seed = '') {
+  const normalizedSeed = String(seed || '').trim();
+  if (!normalizedSeed) return '';
+
+  return generatedPostImagesBySlug.get(normalizedSeed) || '';
 }
 
-function normalizePostImageUrl(imageUrl, seed = 'post') {
-  const trimmedUrl = String(imageUrl || '').trim();
-  if (!trimmedUrl) return fallbackPostImage(seed);
+function normalizePostImageUrl(imageUrl, seed = '') {
+  const generatedImage = resolveGeneratedPostImage(seed);
+  if (generatedImage) return generatedImage;
 
-  const comparableUrl = trimmedUrl.replaceAll('&amp;', '&');
-  const replacement = KNOWN_BROKEN_REMOTE_IMAGE_REPLACEMENTS.find(([needle]) => comparableUrl.includes(needle))?.[1];
-  return replacement || trimmedUrl;
+  return String(imageUrl || '').trim();
 }
 
 function absoluteImageUrl(imageUrl) {
@@ -579,12 +567,14 @@ function replaceTitle(html, title) {
 function setAttributeById(html, id, attribute, value) {
   const tagRe = new RegExp(`<([^\\s>/]+)([^>]*\\bid="${id}"[^>]*)>`, 'i');
   return html.replace(tagRe, (full, tagName, attrs) => {
+    const selfClosing = /\/\s*$/.test(attrs);
+    const normalizedAttrs = selfClosing ? attrs.replace(/\/\s*$/, '') : attrs;
     const attrRe = new RegExp(`\\s${attribute}="[^"]*"`, 'i');
     const nextAttr = ` ${attribute}="${escapeHtml(value)}"`;
-    const nextAttrs = attrRe.test(attrs)
-      ? attrs.replace(attrRe, nextAttr)
-      : `${attrs}${nextAttr}`;
-    return `<${tagName}${nextAttrs}>`;
+    const nextAttrs = attrRe.test(normalizedAttrs)
+      ? normalizedAttrs.replace(attrRe, nextAttr)
+      : `${normalizedAttrs}${nextAttr}`;
+    return `<${tagName}${nextAttrs}${selfClosing ? ' /' : ''}>`;
   });
 }
 
@@ -687,7 +677,7 @@ function blogCard(post, language = post.language) {
              alt="${escapeHtml(post.title)}"
              class="blog-card-image"
              itemprop="image"
-             data-fallback-image="${escapeHtml(fallbackPostImage(post.slug))}"
+             data-post-slug="${escapeHtml(post.slug)}"
              loading="lazy">
         <div class="blog-card-content">
           <div class="blog-card-category">${escapeHtml(post.category || '')}</div>
@@ -771,7 +761,7 @@ function articleHtml(template, post, posts, clusters) {
   html = replaceElementContentById(html, 'post-author', escapeHtml(post.author || 'MakeTrades Team'));
   html = setAttributeById(html, 'post-image', 'src', postImageUrl(post));
   html = setAttributeById(html, 'post-image', 'alt', post.title);
-  html = setAttributeById(html, 'post-image', 'data-fallback-image', fallbackPostImage(post.slug));
+  html = setAttributeById(html, 'post-image', 'data-post-slug', post.slug);
   html = replaceElementContentById(
     html,
     'post-text',

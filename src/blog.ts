@@ -1,5 +1,5 @@
 import { loadTranslations } from './content-loader';
-import { normalizePostImageUrl, setupImageFallbacks } from './image-fallbacks';
+import { normalizePostImageUrl, syncResolvedImageUrls } from './post-images';
 import {
   articleAbsoluteUrl,
   articleHref,
@@ -107,7 +107,7 @@ async function loadAllBlogPosts() {
              alt="${post.title}"
              class="blog-card-image"
              itemprop="image"
-             data-fallback-image="${normalizePostImageUrl(null, post.slug)}"
+             data-post-slug="${post.slug}"
              loading="lazy">
         <div class="blog-card-content">
           <div class="blog-card-category">${post.category || ''}</div>
@@ -128,7 +128,7 @@ async function loadAllBlogPosts() {
         <meta itemprop="url" content="${articleAbsoluteUrl(post, currentLanguage)}">
       </a>
     `).join('');
-    setupImageFallbacks(blogGrid);
+    syncResolvedImageUrls(blogGrid);
   } catch (error) {
     console.error('Error loading blog posts:', error);
     blogGrid.innerHTML = `<p style="text-align: center; color: var(--error-500);">${t('blog.error', 'Error loading articles')}</p>`;
@@ -148,7 +148,7 @@ async function init() {
 
   translations = await loadTranslations(currentLanguage);
   updatePageContent();
-  setupImageFallbacks();
+  syncResolvedImageUrls();
   loadAllBlogPosts();
 }
 

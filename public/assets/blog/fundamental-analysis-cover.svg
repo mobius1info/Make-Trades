@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0D1724" />
+      <stop offset="100%" stop-color="#32506F" />
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)" />
+  <circle cx="1290" cy="150" r="310" fill="rgba(147, 197, 253, 0.18)" />
+  <circle cx="130" cy="770" r="220" fill="rgba(253, 230, 138, 0.12)" />
+  <path d="M -120 150 L 240 30 L 1180 900 L 820 900 Z" fill="rgba(255,255,255,0.04)" />
+  <g stroke="rgba(147, 197, 253, 0.1)" stroke-width="1">
+    <line x1="0" y1="0" x2="0" y2="900" /><line x1="88" y1="0" x2="88" y2="900" /><line x1="176" y1="0" x2="176" y2="900" /><line x1="264" y1="0" x2="264" y2="900" /><line x1="352" y1="0" x2="352" y2="900" /><line x1="440" y1="0" x2="440" y2="900" /><line x1="528" y1="0" x2="528" y2="900" /><line x1="616" y1="0" x2="616" y2="900" /><line x1="704" y1="0" x2="704" y2="900" /><line x1="792" y1="0" x2="792" y2="900" /><line x1="880" y1="0" x2="880" y2="900" /><line x1="968" y1="0" x2="968" y2="900" /><line x1="1056" y1="0" x2="1056" y2="900" /><line x1="1144" y1="0" x2="1144" y2="900" /><line x1="1232" y1="0" x2="1232" y2="900" /><line x1="1320" y1="0" x2="1320" y2="900" /><line x1="1408" y1="0" x2="1408" y2="900" /><line x1="1496" y1="0" x2="1496" y2="900" />
+    <line x1="0" y1="0" x2="1600" y2="0" /><line x1="0" y1="88" x2="1600" y2="88" /><line x1="0" y1="176" x2="1600" y2="176" /><line x1="0" y1="264" x2="1600" y2="264" /><line x1="0" y1="352" x2="1600" y2="352" /><line x1="0" y1="440" x2="1600" y2="440" /><line x1="0" y1="528" x2="1600" y2="528" /><line x1="0" y1="616" x2="1600" y2="616" /><line x1="0" y1="704" x2="1600" y2="704" /><line x1="0" y1="792" x2="1600" y2="792" /><line x1="0" y1="880" x2="1600" y2="880" /><line x1="0" y1="968" x2="1600" y2="968" />
+  </g>
+  <rect x="88" y="84" width="360" height="58" rx="28" fill="rgba(255,255,255,0.08)" />
+  <rect x="88" y="162" width="284" height="26" rx="13" fill="rgba(255,255,255,0.08)" />
+  <rect x="88" y="204" width="232" height="18" rx="9" fill="rgba(255,255,255,0.08)" />
+  
+    
+    <rect x="216" y="214" width="292" height="386" rx="24" fill="rgba(244, 247, 251, 0.92)" stroke="rgba(147, 197, 253, 0.72)" stroke-width="4" />
+    <line x1="258" y1="272" x2="460" y2="272" stroke="rgba(147, 197, 253, 0.42)" stroke-width="6" stroke-linecap="round" />
+    <line x1="258" y1="312" x2="460" y2="312" stroke="rgba(147, 197, 253, 0.42)" stroke-width="6" stroke-linecap="round" />
+    <line x1="258" y1="352" x2="460" y2="352" stroke="rgba(147, 197, 253, 0.42)" stroke-width="6" stroke-linecap="round" />
+    <line x1="258" y1="392" x2="460" y2="392" stroke="rgba(147, 197, 253, 0.42)" stroke-width="6" stroke-linecap="round" />
+    <circle cx="436" cy="526" r="36" fill="#FDE68A" />
+    <circle cx="436" cy="526" r="16" fill="rgba(255, 255, 255, 0.68)" />
+  
+    
+    
+    <rect x="822" y="182" width="624" height="318" rx="28" fill="rgba(255,255,255,0.08)" stroke="rgba(147, 197, 253, 0.45)" stroke-width="2" />
+  
+    <g stroke="rgba(255, 255, 255, 0.14)" stroke-width="1">
+      <line x1="846" y1="261.5" x2="1422" y2="261.5" />
+      <line x1="846" y1="341" x2="1422" y2="341" />
+      <line x1="846" y1="420.5" x2="1422" y2="420.5" />
+    </g>
+    <polyline points="864,418 954,352 1072,380 1184,282 1292,322 1398,254" fill="none" stroke="#93C5FD" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"  />
+    <g fill="#FDE68A">
+      <circle cx="954" cy="352" r="7" />
+      <circle cx="1072" cy="380" r="7" />
+      <circle cx="1184" cy="282" r="7" />
+      <circle cx="1292" cy="322" r="7" />
+      <circle cx="1398" cy="254" r="7" />
+    </g>
+  
+    
+    <circle cx="540" cy="548" r="92" fill="rgba(253, 230, 138, 0.18)" stroke="rgba(255, 255, 255, 0.68)" stroke-width="6" />
+    <ellipse cx="540" cy="548" rx="57.04" ry="92" fill="none" stroke="#93C5FD" stroke-width="4" opacity="0.9" />
+    <ellipse cx="540" cy="548" rx="23.92" ry="92" fill="none" stroke="#93C5FD" stroke-width="4" opacity="0.9" />
+    <path d="M 448 548 Q 540 498.32 632 548" fill="none" stroke="#93C5FD" stroke-width="4" opacity="0.9" />
+    <path d="M 448 573.76 Q 540 605.04 632 573.76" fill="none" stroke="#93C5FD" stroke-width="4" opacity="0.9" />
+  
+  
+</svg>

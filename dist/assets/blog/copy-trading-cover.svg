@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0B1323" />
+      <stop offset="100%" stop-color="#1C3F72" />
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)" />
+  <circle cx="1290" cy="150" r="310" fill="rgba(143, 211, 255, 0.18)" />
+  <circle cx="130" cy="770" r="220" fill="rgba(196, 181, 253, 0.12)" />
+  <path d="M -120 150 L 240 30 L 1180 900 L 820 900 Z" fill="rgba(255,255,255,0.04)" />
+  <g stroke="rgba(143, 211, 255, 0.1)" stroke-width="1">
+    <line x1="0" y1="0" x2="0" y2="900" /><line x1="88" y1="0" x2="88" y2="900" /><line x1="176" y1="0" x2="176" y2="900" /><line x1="264" y1="0" x2="264" y2="900" /><line x1="352" y1="0" x2="352" y2="900" /><line x1="440" y1="0" x2="440" y2="900" /><line x1="528" y1="0" x2="528" y2="900" /><line x1="616" y1="0" x2="616" y2="900" /><line x1="704" y1="0" x2="704" y2="900" /><line x1="792" y1="0" x2="792" y2="900" /><line x1="880" y1="0" x2="880" y2="900" /><line x1="968" y1="0" x2="968" y2="900" /><line x1="1056" y1="0" x2="1056" y2="900" /><line x1="1144" y1="0" x2="1144" y2="900" /><line x1="1232" y1="0" x2="1232" y2="900" /><line x1="1320" y1="0" x2="1320" y2="900" /><line x1="1408" y1="0" x2="1408" y2="900" /><line x1="1496" y1="0" x2="1496" y2="900" />
+    <line x1="0" y1="0" x2="1600" y2="0" /><line x1="0" y1="88" x2="1600" y2="88" /><line x1="0" y1="176" x2="1600" y2="176" /><line x1="0" y1="264" x2="1600" y2="264" /><line x1="0" y1="352" x2="1600" y2="352" /><line x1="0" y1="440" x2="1600" y2="440" /><line x1="0" y1="528" x2="1600" y2="528" /><line x1="0" y1="616" x2="1600" y2="616" /><line x1="0" y1="704" x2="1600" y2="704" /><line x1="0" y1="792" x2="1600" y2="792" /><line x1="0" y1="880" x2="1600" y2="880" /><line x1="0" y1="968" x2="1600" y2="968" />
+  </g>
+  <rect x="88" y="84" width="360" height="58" rx="28" fill="rgba(255,255,255,0.08)" />
+  <rect x="88" y="162" width="284" height="26" rx="13" fill="rgba(255,255,255,0.08)" />
+  <rect x="88" y="204" width="232" height="18" rx="9" fill="rgba(255,255,255,0.08)" />
+  
+    
+    <circle cx="336" cy="302" r="46" fill="#8FD3FF" />
+    <circle cx="234" cy="324" r="36" fill="#C4B5FD" />
+    <circle cx="438" cy="324" r="36" fill="#C4B5FD" />
+    <rect x="250" y="362" width="172" height="94" rx="36" fill="#8FD3FF" />
+    <rect x="168" y="378" width="106" height="70" rx="30" fill="#C4B5FD" />
+    <rect x="398" y="378" width="106" height="70" rx="30" fill="#C4B5FD" />
+  
+    
+    <circle cx="680" cy="302" r="46" fill="#C4B5FD" />
+    <circle cx="578" cy="324" r="36" fill="#8FD3FF" />
+    <circle cx="782" cy="324" r="36" fill="#8FD3FF" />
+    <rect x="594" y="362" width="172" height="94" rx="36" fill="#C4B5FD" />
+    <rect x="512" y="378" width="106" height="70" rx="30" fill="#8FD3FF" />
+    <rect x="742" y="378" width="106" height="70" rx="30" fill="#8FD3FF" />
+  
+    
+    <polyline points="470,238 530,208 590,238" fill="none" stroke="#8FD3FF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"  />
+    <polygon points="590,238 562,220 572,192" fill="#8FD3FF" />
+  
+    
+    <polyline points="590,498 530,528 470,498" fill="none" stroke="#C4B5FD" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"  />
+    <polygon points="470,498 442,480 452,452" fill="#C4B5FD" />
+  
+    
+    
+    <rect x="906" y="182" width="520" height="340" rx="28" fill="rgba(255,255,255,0.08)" stroke="rgba(143, 211, 255, 0.45)" stroke-width="2" />
+  
+    <g stroke="rgba(255, 255, 255, 0.14)" stroke-width="1">
+      <line x1="930" y1="267" x2="1402" y2="267" />
+      <line x1="930" y1="352" x2="1402" y2="352" />
+      <line x1="930" y1="437" x2="1402" y2="437" />
+    </g>
+    <polyline points="948,440 1038,374 1156,402 1268,304 1376,344 1378,254" fill="none" stroke="#8FD3FF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"  />
+    <g fill="#C4B5FD">
+      <circle cx="1038" cy="374" r="7" />
+      <circle cx="1156" cy="402" r="7" />
+      <circle cx="1268" cy="304" r="7" />
+      <circle cx="1376" cy="344" r="7" />
+      <circle cx="1378" cy="254" r="7" />
+    </g>
+  
+  
+</svg>

@@ -390,16 +390,6 @@
     "title": "Управление рисками в трейдинге"
   },
   {
-    "language": "ru",
-    "legacy_slug": "post-5-ru",
-    "canonical_slug": "kriptovalyutnaya-torgovlya-dlya-nachinayushchih",
-    "from_path": "/blog/ru/post-5-ru/",
-    "from_url": "https://maketrades.info/blog/ru/post-5-ru/",
-    "to_path": "/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
-    "to_url": "https://maketrades.info/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
-    "title": "Криптовалютная торговля для начинающих"
-  },
-  {
     "language": "zh",
     "legacy_slug": "post-5-zh",
     "canonical_slug": "cryptocurrency-trading-for-beginners",
@@ -437,6 +427,16 @@
     "from_url": "https://maketrades.info/blog/uk/post-5-uk/",
     "to_path": "/blog/uk/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
     "to_url": "https://maketrades.info/blog/uk/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
+    "title": "Криптовалютная торговля для начинающих"
+  },
+  {
+    "language": "ru",
+    "legacy_slug": "post-5-ru",
+    "canonical_slug": "kriptovalyutnaya-torgovlya-dlya-nachinayushchih",
+    "from_path": "/blog/ru/post-5-ru/",
+    "from_url": "https://maketrades.info/blog/ru/post-5-ru/",
+    "to_path": "/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
+    "to_url": "https://maketrades.info/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
     "title": "Криптовалютная торговля для начинающих"
   },
   {
