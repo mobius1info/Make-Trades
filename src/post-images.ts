@@ -1,56 +1,20 @@
-import postImageCatalog from './post-image-catalog.json';
+import generatedPostImageManifest from './generated-post-image-manifest.json';
 
 const SITE_ORIGIN = 'https://maketrades.info';
-const FALLBACK_POST_IMAGES = [
-  '/assets/market-analysis.png',
-  '/assets/hero-main.jpg',
-  '/assets/detail-bots.jpg',
-  '/assets/detail-portfolios.jpg',
-  '/assets/detail-solution.jpg',
-] as const;
-
-interface PostImageCatalogEntry {
-  asset: string;
-  slugs: string[];
-}
-
-const generatedPostImagesBySlug = new Map<string, string>();
-
-for (const entry of postImageCatalog as PostImageCatalogEntry[]) {
-  for (const slug of entry.slugs) {
-    generatedPostImagesBySlug.set(slug, entry.asset);
-  }
-}
-
-function hashString(value: string): number {
-  let hash = 0;
-  for (const char of value) {
-    hash = ((hash << 5) - hash + char.charCodeAt(0)) | 0;
-  }
-  return Math.abs(hash);
-}
+const generatedPostImagesBySlug = new Set<string>(generatedPostImageManifest as string[]);
 
 export function resolveGeneratedPostImage(seed: string | null | undefined): string {
   const normalizedSeed = String(seed || '').trim();
   if (!normalizedSeed) return '';
 
-  return generatedPostImagesBySlug.get(normalizedSeed) || '';
-}
-
-export function fallbackPostImage(seed: string | null | undefined = 'post'): string {
-  const normalizedSeed = String(seed || 'post').trim() || 'post';
-  const generatedImage = resolveGeneratedPostImage(normalizedSeed);
-
-  if (generatedImage) return generatedImage;
-
-  return FALLBACK_POST_IMAGES[hashString(normalizedSeed) % FALLBACK_POST_IMAGES.length];
+  return generatedPostImagesBySlug.has(normalizedSeed) ? `/assets/blog/${normalizedSeed}.jpg` : '';
 }
 
 export function normalizePostImageUrl(imageUrl: string | null | undefined, seed: string = ''): string {
-  const normalizedImageUrl = String(imageUrl || '').trim();
-  if (normalizedImageUrl) return normalizedImageUrl;
+  const generatedImage = resolveGeneratedPostImage(seed);
+  if (generatedImage) return generatedImage;
 
-  return fallbackPostImage(seed);
+  return String(imageUrl || '').trim();
 }
 
 export function seoPostImageUrl(imageUrl: string | null | undefined, seed: string = ''): string {
@@ -65,53 +29,28 @@ export function absoluteImageUrl(imageUrl: string): string {
 }
 
 export function sanitizeArticleHtmlImages(html: string, seed: string = ''): string {
-  const fallbackImage = fallbackPostImage(seed);
-  return String(html || '').replace(/(<img\b[^>]*\bsrc=["'])([^"']*)(["'][^>]*>)/gi, (_match, prefix, src, suffix) => {
-    const normalizedSrc = String(src || '').trim();
+  const generatedImage = resolveGeneratedPostImage(seed);
+  if (!generatedImage) return String(html || '');
+
+  return String(html || '').replace(/(<img\b[^>]*\bsrc=["'])([^"']*)(["'][^>]*>)/gi, (_match, prefix, _src, suffix) => {
     let nextSuffix = suffix;
 
     if (seed && !/\sdata-post-slug=/i.test(nextSuffix)) {
       nextSuffix = nextSuffix.replace(/>/, ` data-post-slug="${seed}">`);
     }
 
-    if (!/\sdata-fallback-image=/i.test(nextSuffix)) {
-      nextSuffix = nextSuffix.replace(/>/, ` data-fallback-image="${fallbackImage}">`);
-    }
-
-    return `${prefix}${normalizedSrc || fallbackImage}${nextSuffix}`;
+    return `${prefix}${generatedImage}${nextSuffix}`;
   });
 }
 
 export function syncResolvedImageUrls(root: ParentNode = document): void {
-  root.querySelectorAll<HTMLImageElement>('img').forEach((img, index) => {
-    const seed = img.dataset.postSlug || img.alt || img.id || `${index}`;
-    const fallbackImage = fallbackPostImage(seed);
+  root.querySelectorAll<HTMLImageElement>('img[data-post-slug]').forEach(img => {
+    const seed = img.dataset.postSlug || img.alt || img.id || '';
     const currentSrc = img.getAttribute('src');
-    const normalizedSrc = normalizePostImageUrl(currentSrc, seed);
-
-    img.dataset.fallbackImage = fallbackImage;
-
-    if (currentSrc && currentSrc !== fallbackImage && img.dataset.fallbackApplied === 'true') {
-      delete img.dataset.fallbackApplied;
-    }
+    const normalizedSrc = resolveGeneratedPostImage(seed);
 
     if (normalizedSrc && currentSrc !== normalizedSrc) {
       img.src = normalizedSrc;
-    }
-
-    if (img.dataset.fallbackBound !== 'true') {
-      img.dataset.fallbackBound = 'true';
-      img.addEventListener('error', () => {
-        if (img.dataset.fallbackApplied === 'true') return;
-
-        img.dataset.fallbackApplied = 'true';
-        img.src = img.dataset.fallbackImage || fallbackPostImage(img.dataset.postSlug || img.alt || img.id || `${index}`);
-      });
-    }
-
-    if (currentSrc && img.complete && img.naturalWidth === 0) {
-      img.dataset.fallbackApplied = 'true';
-      img.src = img.dataset.fallbackImage || fallbackImage;
     }
   });
 }

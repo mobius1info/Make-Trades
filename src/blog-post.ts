@@ -9,7 +9,6 @@ import {
 } from './public-api';
 import {
   absoluteImageUrl,
-  fallbackPostImage,
   normalizePostImageUrl,
   seoPostImageUrl,
   sanitizeArticleHtmlImages,
@@ -267,11 +266,9 @@ function hydratePrerenderedPost(post: BlogPost) {
   const imageEl = document.getElementById('post-image') as HTMLImageElement | null;
   if (imageEl) {
     imageEl.dataset.postSlug = post.slug;
-    imageEl.dataset.fallbackImage = fallbackPostImage(post.slug);
     imageEl.loading = 'eager';
     imageEl.decoding = 'async';
     imageEl.fetchPriority = 'high';
-    delete imageEl.dataset.fallbackApplied;
   }
 
   const loadingEl = document.getElementById('loading');
@@ -330,11 +327,9 @@ function renderBlogPost(post: BlogPost) {
     imageEl.src = normalizePostImageUrl(post.image_url, post.slug);
     imageEl.alt = post.title;
     imageEl.dataset.postSlug = post.slug;
-    imageEl.dataset.fallbackImage = fallbackPostImage(post.slug);
     imageEl.loading = 'eager';
     imageEl.decoding = 'async';
     imageEl.fetchPriority = 'high';
-    delete imageEl.dataset.fallbackApplied;
   }
 
   const textEl = document.getElementById('post-text');

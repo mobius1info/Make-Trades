@@ -1,12 +1,219 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { basename, dirname, join } from 'node:path';
+import { dirname, join } from 'node:path';
+import sharp from 'sharp';
 
 const ROOT_DIR = process.cwd();
+const SRC_DIR = join(ROOT_DIR, 'src');
+const PUBLIC_DIR = join(ROOT_DIR, 'public');
 const WIDTH = 1600;
 const HEIGHT = 900;
-const catalogPath = join(ROOT_DIR, 'src', 'post-image-catalog.json');
+const OUTPUT_WIDTH = 1280;
+const OUTPUT_HEIGHT = 720;
+const catalogPath = join(SRC_DIR, 'post-image-catalog.json');
+const generatedManifestPath = join(SRC_DIR, 'generated-post-image-manifest.json');
 
 const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
+const curatedEntriesBySlug = new Map(
+  catalog.flatMap(entry => entry.slugs.map(slug => [slug, entry]))
+);
+const palettePresets = catalog.map(({ backgroundStart, backgroundEnd, accent, accentSoft }) => ({
+  backgroundStart,
+  backgroundEnd,
+  accent,
+  accentSoft,
+}));
+
+function hashString(value) {
+  let hash = 0;
+  for (const char of String(value || '')) {
+    hash = ((hash << 5) - hash + char.charCodeAt(0)) | 0;
+  }
+  return Math.abs(hash);
+}
+
+function sanitizeSlug(slug) {
+  return String(slug || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9-]+/g, '-')
+    .replace(/-{2,}/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+async function readSupabasePublicConfig() {
+  const source = await readFile(join(SRC_DIR, 'supabase-config.ts'), 'utf8');
+  const defaultUrl = source.match(/supabaseUrl[\s\S]*?\|\|\s*'([^']+)'/)?.[1];
+  const defaultAnonKey = source.match(/supabaseAnonKey[\s\S]*?\|\|\s*'([^']+)'/)?.[1];
+
+  const url = process.env.VITE_SUPABASE_URL || defaultUrl;
+  const anonKey = process.env.VITE_SUPABASE_ANON_KEY || defaultAnonKey;
+
+  if (!url || !anonKey) {
+    throw new Error('Missing Supabase public config. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
+  }
+
+  return { url, anonKey };
+}
+
+async function fetchRestRows(config, tableName, params) {
+  const url = new URL(`${config.url}/rest/v1/${tableName}`);
+  for (const [key, value] of Object.entries(params)) {
+    url.searchParams.set(key, String(value));
+  }
+
+  const response = await fetch(url, {
+    headers: {
+      apikey: config.anonKey,
+      Authorization: `Bearer ${config.anonKey}`,
+      Prefer: 'count=exact',
+    },
+  });
+
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`Supabase REST request failed for ${tableName}: ${response.status} ${body}`);
+  }
+
+  const rows = await response.json();
+  const contentRange = response.headers.get('content-range');
+  const count = contentRange?.match(/\/(\d+)$/)?.[1];
+
+  return {
+    rows,
+    count: count ? Number(count) : null,
+  };
+}
+
+async function fetchAllRows(config, tableName, params) {
+  const pageSize = 1000;
+  let offset = 0;
+  const rows = [];
+
+  while (true) {
+    const { rows: data } = await fetchRestRows(config, tableName, {
+      ...params,
+      limit: pageSize,
+      offset,
+    });
+
+    if (data?.length) rows.push(...data);
+    if (!data || data.length < pageSize) break;
+    offset += pageSize;
+  }
+
+  return rows;
+}
+
+async function fetchPublishedBlogPosts() {
+  const config = await readSupabasePublicConfig();
+  const rows = await fetchAllRows(config, 'blog_posts', {
+    select: 'slug,title,category,language',
+    published: 'eq.true',
+    order: 'updated_at.desc,created_at.desc',
+  });
+
+  const uniquePosts = new Map();
+  for (const row of rows) {
+    const slug = sanitizeSlug(row.slug);
+    if (!slug || uniquePosts.has(slug)) continue;
+
+    uniquePosts.set(slug, {
+      slug,
+      title: String(row.title || '').trim(),
+      category: String(row.category || '').trim(),
+      language: String(row.language || '').trim(),
+    });
+  }
+
+  return [...uniquePosts.values()];
+}
+
+function pickPalette(seed) {
+  return palettePresets[hashString(seed) % palettePresets.length];
+}
+
+function pickMotif(post) {
+  const haystack = `${post.slug} ${post.title} ${post.category}`.toLowerCase();
+
+  if (/(copy[-\s]?trading|social[-\s]?trading)/.test(haystack)) return 'copy';
+  if (/(checklist|choose|selection|how-to|how to|guide|steps)/.test(haystack)) return 'checklist';
+  if (/(capital|money[-\s]?management|funding|allocation|budget)/.test(haystack)) return 'capital';
+  if (/(comparison|\bvs\b|versus|compare)/.test(haystack)) return 'comparison';
+  if (/(marketing|seo|lead|acquisition|conversion|retention)/.test(haystack)) return 'marketing';
+  if (/(crm|migration|onboarding|clients|customer|segment)/.test(haystack)) return 'crm';
+  if (/(legal|license|licensing|regulation|compliance|kyc|aml|audit)/.test(haystack)) return 'legal';
+  if (/(a-book|b-book|dealing|risk book)/.test(haystack)) return 'book-risk';
+  if (/(psychology|emotion|discipline|mindset)/.test(haystack)) return 'psychology';
+  if (/(trend|forecast|future)/.test(haystack)) return 'trends';
+  if (/(indicator|oscillator|rsi|macd|bollinger)/.test(haystack)) return 'indicators';
+  if (/(candlestick|candle|price action)/.test(haystack)) return 'candles';
+  if (/(fundamental|macro|economy|news)/.test(haystack)) return 'fundamentals';
+  if (/(algorithm|algo|automation|bot|robot|ai)/.test(haystack)) return haystack.includes('benefit') ? 'bot-benefits' : 'algo';
+  if (/(crypto|blockchain|token|digital asset|web3)/.test(haystack)) return /broker|brokerage/.test(haystack) ? 'crypto-brokerage' : 'crypto';
+  if (/(forex|fx|currency|eurusd|usdjpy)/.test(haystack)) return 'forex';
+  if (/(technical|chart|pattern|support|resistance|analysis)/.test(haystack)) return 'analysis';
+  if (/(platform|metatrader|mt4|mt5|terminal)/.test(haystack)) return 'platform';
+  if (/(brokerage|broker|liquidity|launch|startup|company)/.test(haystack)) return /reliable|trust|safe|security/.test(haystack)
+    ? 'broker'
+    : 'brokerage';
+  if (/(risk|loss|drawdown|hedge|protection|security|fraud)/.test(haystack)) return 'risk';
+
+  return 'strategies';
+}
+
+function createSlugCoverEntry(post) {
+  const curatedEntry = curatedEntriesBySlug.get(post.slug);
+  if (curatedEntry) {
+    return {
+      ...curatedEntry,
+      id: post.slug,
+      asset: `/assets/blog/${post.slug}.svg`,
+    };
+  }
+
+  const palette = pickPalette(`${post.slug}:${post.category}:${post.language}`);
+  return {
+    id: post.slug,
+    asset: `/assets/blog/${post.slug}.svg`,
+    motif: pickMotif(post),
+    ...palette,
+    slugs: [post.slug],
+  };
+}
+
+async function writeSvgAndJpgCover(svgOutputPath, svgMarkup) {
+  const jpgOutputPath = svgOutputPath.replace(/\.svg$/i, '.jpg');
+
+  await mkdir(dirname(svgOutputPath), { recursive: true });
+  await writeFile(svgOutputPath, svgMarkup, 'utf8');
+  await sharp(Buffer.from(svgMarkup))
+    .resize(OUTPUT_WIDTH, OUTPUT_HEIGHT, { fit: 'cover' })
+    .jpeg({
+      quality: 84,
+      progressive: true,
+      mozjpeg: true,
+      chromaSubsampling: '4:4:4',
+    })
+    .toFile(jpgOutputPath);
+
+  console.log(`Generated ${svgOutputPath}`);
+  console.log(`Generated ${jpgOutputPath}`);
+}
+
+async function writeJpgCover(jpgOutputPath, svgMarkup) {
+  await mkdir(dirname(jpgOutputPath), { recursive: true });
+  await sharp(Buffer.from(svgMarkup))
+    .resize(OUTPUT_WIDTH, OUTPUT_HEIGHT, { fit: 'cover' })
+    .jpeg({
+      quality: 84,
+      progressive: true,
+      mozjpeg: true,
+      chromaSubsampling: '4:4:4',
+    })
+    .toFile(jpgOutputPath);
+
+  console.log(`Generated ${jpgOutputPath}`);
+}
 
 function rgba(hex, alpha) {
   const value = hex.replace('#', '');
@@ -403,8 +610,26 @@ function renderCover(entry) {
 
 for (const entry of catalog) {
   const assetRelativePath = entry.asset.replace(/^\/+/, '');
-  const outputPath = join(ROOT_DIR, 'public', assetRelativePath);
-  await mkdir(dirname(outputPath), { recursive: true });
-  await writeFile(outputPath, renderCover(entry), 'utf8');
-  console.log(`Generated ${outputPath}`);
+  const svgOutputPath = join(PUBLIC_DIR, assetRelativePath);
+  await writeSvgAndJpgCover(svgOutputPath, renderCover(entry));
 }
+
+const publishedPosts = await fetchPublishedBlogPosts();
+const generatedManifest = [];
+
+for (const post of publishedPosts) {
+  const coverEntry = createSlugCoverEntry(post);
+  const jpgRelativePath = `assets/blog/${post.slug}.jpg`;
+  const jpgOutputPath = join(PUBLIC_DIR, jpgRelativePath);
+
+  generatedManifest.push(post.slug);
+  await writeJpgCover(jpgOutputPath, renderCover(coverEntry));
+}
+
+await writeFile(
+  generatedManifestPath,
+  `${JSON.stringify(generatedManifest.sort((left, right) => left.localeCompare(right)), null, 2)}\n`,
+  'utf8'
+);
+
+console.log(`Generated ${generatedManifestPath}`);
