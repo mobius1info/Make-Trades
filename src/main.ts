@@ -1,6 +1,6 @@
 import { loadTranslations } from './content-loader';
 import { checkRecentSubmission, fetchFaqItems, fetchVisibleBlogPosts, insertPublicRow } from './public-api';
-import { normalizePostImageUrl, syncResolvedImageUrls } from './post-images';
+import { getPostImageAttributes, syncResolvedImageUrls } from './post-images';
 import { articleHref, blogIndexHref, faqHref } from './seo-urls';
 import { supabaseAnonKey, supabaseUrl } from './supabase-config';
 
@@ -74,6 +74,26 @@ function setText(selector: string, key: string, fallback: string) {
 function setById(id: string, key: string, fallback: string) {
   const el = document.getElementById(id);
   if (el) el.textContent = t(key, fallback);
+}
+
+function renderPreviewCardImage(post: {
+  image_url?: string | null;
+  slug: string;
+  title: string;
+}): string {
+  const image = getPostImageAttributes(post.image_url, post.slug, 'card');
+
+  return `<img src="${image.src}"
+             alt="${post.title}"
+             class="blog-card-image"
+             data-post-slug="${post.slug}"
+             data-image-kind="card"
+             width="${image.width}"
+             height="${image.height}"
+             ${image.srcset ? `srcset="${image.srcset}"` : ''}
+             ${image.sizes ? `sizes="${image.sizes}"` : ''}
+             loading="lazy"
+             decoding="async">`;
 }
 
 async function updateContent() {
@@ -201,11 +221,7 @@ async function loadBlogPosts(limit: number = 3, force: boolean = false) {
 
     blogGrid.innerHTML = posts.map(post => `
       <a href="${articleHref(post, currentLanguage)}" class="blog-card">
-        <img src="${normalizePostImageUrl(post.image_url, post.slug)}"
-             alt="${post.title}"
-             class="blog-card-image"
-             data-post-slug="${post.slug}"
-             loading="lazy">
+        ${renderPreviewCardImage(post)}
         <div class="blog-card-content">
           <h3>${post.title}</h3>
           <p>${post.excerpt}</p>

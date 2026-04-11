@@ -9,7 +9,7 @@ import {
 } from './public-api';
 import {
   absoluteImageUrl,
-  normalizePostImageUrl,
+  getPostImageAttributes,
   seoPostImageUrl,
   sanitizeArticleHtmlImages,
   syncResolvedImageUrls,
@@ -64,6 +64,48 @@ function getLocale(): string {
 
 function getSlugFromUrl(): string | null {
   return getArticleSlugFromPath(window.location.pathname) || new URLSearchParams(window.location.search).get('slug');
+}
+
+function applyHeroImageAttributes(imageEl: HTMLImageElement, post: BlogPost) {
+  const image = getPostImageAttributes(post.image_url, post.slug, 'hero');
+
+  imageEl.src = image.src;
+  imageEl.alt = post.title;
+  imageEl.dataset.postSlug = post.slug;
+  imageEl.dataset.imageKind = 'hero';
+  imageEl.loading = 'eager';
+  imageEl.decoding = 'async';
+  imageEl.fetchPriority = 'high';
+  imageEl.width = image.width;
+  imageEl.height = image.height;
+
+  if (image.srcset) {
+    imageEl.srcset = image.srcset;
+  } else {
+    imageEl.removeAttribute('srcset');
+  }
+
+  if (image.sizes) {
+    imageEl.sizes = image.sizes;
+  } else {
+    imageEl.removeAttribute('sizes');
+  }
+}
+
+function renderRelatedCardImage(post: PublicBlogPost): string {
+  const image = getPostImageAttributes(post.image_url, post.slug, 'card');
+
+  return `<img src="${image.src}"
+             alt="${post.title}"
+             class="blog-card-image"
+             data-post-slug="${post.slug}"
+             data-image-kind="card"
+             width="${image.width}"
+             height="${image.height}"
+             ${image.srcset ? `srcset="${image.srcset}"` : ''}
+             ${image.sizes ? `sizes="${image.sizes}"` : ''}
+             loading="lazy"
+             decoding="async">`;
 }
 
 function updatePageContent() {
@@ -265,10 +307,7 @@ function hydratePrerenderedPost(post: BlogPost) {
 
   const imageEl = document.getElementById('post-image') as HTMLImageElement | null;
   if (imageEl) {
-    imageEl.dataset.postSlug = post.slug;
-    imageEl.loading = 'eager';
-    imageEl.decoding = 'async';
-    imageEl.fetchPriority = 'high';
+    applyHeroImageAttributes(imageEl, post);
   }
 
   const loadingEl = document.getElementById('loading');
@@ -324,12 +363,7 @@ function renderBlogPost(post: BlogPost) {
 
   const imageEl = document.getElementById('post-image') as HTMLImageElement;
   if (imageEl) {
-    imageEl.src = normalizePostImageUrl(post.image_url, post.slug);
-    imageEl.alt = post.title;
-    imageEl.dataset.postSlug = post.slug;
-    imageEl.loading = 'eager';
-    imageEl.decoding = 'async';
-    imageEl.fetchPriority = 'high';
+    applyHeroImageAttributes(imageEl, post);
   }
 
   const textEl = document.getElementById('post-text');
@@ -442,12 +476,7 @@ async function loadRelatedPosts(category: string, currentPostId: string) {
 
     gridEl.innerHTML = posts.map(post => `
       <a href="${articleHref(post, currentLanguage)}" class="blog-card">
-        <img src="${normalizePostImageUrl(post.image_url, post.slug)}"
-             alt="${post.title}"
-             class="blog-card-image"
-             data-post-slug="${post.slug}"
-             loading="lazy"
-             decoding="async">
+        ${renderRelatedCardImage(post)}
         <div class="blog-card-content">
           <h3>${post.title}</h3>
           <p>${post.excerpt || ''}</p>

@@ -2,13 +2,19 @@
   var currentScript = document.currentScript;
   if (!currentScript) return;
 
-  var gtagIds = (currentScript.getAttribute('data-gtag-ids') || '')
-    .split(',')
-    .map(function (value) {
-      return value.trim();
-    })
-    .filter(Boolean);
+  var gtagIds = Array.from(
+    new Set(
+      (currentScript.getAttribute('data-gtag-ids') || '')
+        .split(',')
+        .map(function (value) {
+          return value.trim();
+        })
+        .filter(Boolean)
+    )
+  );
   var yandexId = currentScript.getAttribute('data-ym-id');
+  var googleIdleDelay = Number(currentScript.getAttribute('data-google-idle-delay') || 12000);
+  var yandexIdleDelay = Number(currentScript.getAttribute('data-yandex-idle-delay') || 20000);
 
   window.dataLayer = window.dataLayer || [];
   window.gtag =
@@ -17,10 +23,12 @@
       window.dataLayer.push(arguments);
     };
 
-  var analyticsLoaded = false;
+  var googleLoaded = false;
+  var yandexLoaded = false;
 
   function loadGoogleTags() {
-    if (!gtagIds.length) return;
+    if (googleLoaded || !gtagIds.length) return;
+    googleLoaded = true;
 
     var script = document.createElement('script');
     script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(gtagIds[0]);
@@ -35,7 +43,8 @@
   }
 
   function loadYandexMetrika() {
-    if (!yandexId) return;
+    if (yandexLoaded || !yandexId) return;
+    yandexLoaded = true;
 
     (function (m, e, t, r, i, k, a) {
       m[i] =
@@ -63,39 +72,44 @@
     });
   }
 
-  function loadAnalytics() {
-    if (analyticsLoaded) return;
-    analyticsLoaded = true;
+  function loadAllAnalytics() {
     loadGoogleTags();
     loadYandexMetrika();
   }
 
-  function scheduleIdleLoad() {
+  function scheduleIdleTask(task, delay) {
+    var scheduleTimeout = function () {
+      window.setTimeout(task, delay);
+    };
+
     if ('requestIdleCallback' in window) {
-      window.requestIdleCallback(
-        function () {
-          window.setTimeout(loadAnalytics, 800);
-        },
-        { timeout: 4000 }
-      );
+      window.requestIdleCallback(scheduleTimeout, { timeout: delay + 3000 });
       return;
     }
 
-    window.addEventListener(
-      'load',
-      function () {
-        window.setTimeout(loadAnalytics, 2000);
-      },
-      { once: true }
-    );
+    scheduleTimeout();
+  }
+
+  function scheduleDeferredAnalytics() {
+    var start = function () {
+      scheduleIdleTask(loadGoogleTags, googleIdleDelay);
+      scheduleIdleTask(loadYandexMetrika, yandexIdleDelay);
+    };
+
+    if (document.readyState === 'complete') {
+      start();
+      return;
+    }
+
+    window.addEventListener('load', start, { once: true });
   }
 
   ['pointerdown', 'keydown', 'scroll'].forEach(function (eventName) {
-    window.addEventListener(eventName, loadAnalytics, {
+    window.addEventListener(eventName, loadAllAnalytics, {
       once: true,
       passive: eventName === 'scroll',
     });
   });
 
-  scheduleIdleLoad();
+  scheduleDeferredAnalytics();
 })();

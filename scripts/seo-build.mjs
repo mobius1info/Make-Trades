@@ -9,6 +9,9 @@ const LANGUAGES = ['ru', 'en', 'de', 'uk', 'zh'];
 const sitemapOnly = process.argv.includes('--sitemap-only');
 const generatedPostImageManifest = JSON.parse(await readFile(join(ROOT_DIR, 'src', 'generated-post-image-manifest.json'), 'utf8'));
 const generatedPostImagesBySlug = new Set(generatedPostImageManifest);
+const POST_IMAGE_VARIANT_WIDTHS = [480, 768, 1280];
+const POST_IMAGE_BASE_WIDTH = 1280;
+const POST_IMAGE_BASE_HEIGHT = 720;
 
 const blogIndexCopy = {
   ru: {
@@ -413,6 +416,41 @@ function resolveGeneratedPostImage(seed = '') {
   return generatedPostImagesBySlug.has(normalizedSeed) ? `/assets/blog/${normalizedSeed}.jpg` : '';
 }
 
+function generatedPostImagePath(seed, width = POST_IMAGE_BASE_WIDTH) {
+  return width === POST_IMAGE_BASE_WIDTH ? `/assets/blog/${seed}.jpg` : `/assets/blog/${seed}-${width}.jpg`;
+}
+
+function generatedPostImageSrcSet(seed = '') {
+  const normalizedSeed = String(seed || '').trim();
+  if (!normalizedSeed || !generatedPostImagesBySlug.has(normalizedSeed)) return '';
+
+  return POST_IMAGE_VARIANT_WIDTHS.map(width => `${generatedPostImagePath(normalizedSeed, width)} ${width}w`).join(', ');
+}
+
+function generatedPostImageSizes(kind = 'card') {
+  if (kind === 'hero') {
+    return '(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) calc(100vw - 4rem), 1200px';
+  }
+
+  if (kind === 'content') {
+    return '(max-width: 767px) calc(100vw - 2rem), 800px';
+  }
+
+  return '(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) calc((100vw - 6rem) / 2), 400px';
+}
+
+function postImageAttributes(post, kind = 'card') {
+  const srcset = generatedPostImageSrcSet(post.slug);
+
+  return {
+    src: postImageUrl(post),
+    srcset,
+    sizes: srcset ? generatedPostImageSizes(kind) : '',
+    width: POST_IMAGE_BASE_WIDTH,
+    height: POST_IMAGE_BASE_HEIGHT,
+  };
+}
+
 function normalizePostImageUrl(imageUrl, seed = '') {
   const generatedImage = resolveGeneratedPostImage(seed);
   if (generatedImage) return generatedImage;
@@ -446,12 +484,22 @@ function postImageAbsoluteUrl(post) {
 function sanitizeArticleHtmlImages(html, seed = 'post') {
   const generatedImage = resolveGeneratedPostImage(seed);
   if (!generatedImage) return String(html || '');
+  const srcset = generatedPostImageSrcSet(seed);
+  const sizes = generatedPostImageSizes('content');
 
   return String(html || '').replace(/(<img\b[^>]*\bsrc=["'])([^"']*)(["'][^>]*>)/gi, (_match, prefix, _src, suffix) => {
     let nextSuffix = suffix;
 
     if (seed && !/\sdata-post-slug=/i.test(nextSuffix)) {
-      nextSuffix = nextSuffix.replace(/>/, ` data-post-slug="${seed}">`);
+      nextSuffix = nextSuffix.replace(/\s*\/?>$/, match => ` data-post-slug="${seed}" data-image-kind="content"${match}`);
+    }
+
+    if (srcset && !/\ssrcset=/i.test(nextSuffix)) {
+      nextSuffix = nextSuffix.replace(
+        /\s*\/?>$/,
+        match =>
+          ` srcset="${srcset}" sizes="${sizes}" width="${POST_IMAGE_BASE_WIDTH}" height="${POST_IMAGE_BASE_HEIGHT}"${match}`
+      );
     }
 
     return `${prefix}${generatedImage}${nextSuffix}`;
@@ -741,16 +789,25 @@ function relatedPostsFor(post, posts) {
     .map(item => item.post);
 }
 
-function blogCard(post, language = post.language, translationIndex = new Map()) {
+function blogCard(post, language = post.language, translationIndex = new Map(), options = {}) {
   const minLabel = translate(translationIndex, language, 'blog_page.min_read', 'min');
+  const image = postImageAttributes(post, 'card');
+  const prioritizeImage = options.prioritizeImage === true;
+
   return `
       <a href="${articlePath(post)}" class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
-        <img src="${escapeHtml(postImageUrl(post))}"
+        <img src="${escapeHtml(image.src)}"
              alt="${escapeHtml(post.title)}"
              class="blog-card-image"
              itemprop="image"
              data-post-slug="${escapeHtml(post.slug)}"
-             loading="lazy"
+             data-image-kind="card"
+             width="${image.width}"
+             height="${image.height}"
+             ${image.srcset ? `srcset="${escapeHtml(image.srcset)}"` : ''}
+             ${image.sizes ? `sizes="${escapeHtml(image.sizes)}"` : ''}
+             loading="${prioritizeImage ? 'eager' : 'lazy'}"
+             ${prioritizeImage ? 'fetchpriority="high"' : ''}
              decoding="async">
         <div class="blog-card-content">
           <div class="blog-card-category">${escapeHtml(post.category || '')}</div>
@@ -806,6 +863,7 @@ function articleHtml(template, post, posts, clusters, translationIndex) {
   const readTimeLabel = translate(translationIndex, post.language, 'blog_post.min_read', 'min');
   const tagsLabel = translate(translationIndex, post.language, 'blog_post.tags', 'Tags:');
   const internalLinks = internalLinksHtml(post, posts, translationIndex);
+  const heroImage = postImageAttributes(post, 'hero');
 
   let html = template;
   html = replaceHtmlLang(html, post.language);
@@ -888,9 +946,18 @@ function articleHtml(template, post, posts, clusters, translationIndex) {
   html = replaceElementContentById(html, 'post-title', escapeHtml(post.title));
   html = replaceElementContentById(html, 'post-excerpt', escapeHtml(post.excerpt || description));
   html = replaceElementContentById(html, 'post-author', escapeHtml(post.author || 'MakeTrades Team'));
-  html = setAttributeById(html, 'post-image', 'src', postImageUrl(post));
+  html = setAttributeById(html, 'post-image', 'src', heroImage.src);
   html = setAttributeById(html, 'post-image', 'alt', post.title);
   html = setAttributeById(html, 'post-image', 'data-post-slug', post.slug);
+  html = setAttributeById(html, 'post-image', 'data-image-kind', 'hero');
+  html = setAttributeById(html, 'post-image', 'width', String(heroImage.width));
+  html = setAttributeById(html, 'post-image', 'height', String(heroImage.height));
+  if (heroImage.srcset) {
+    html = setAttributeById(html, 'post-image', 'srcset', heroImage.srcset);
+  }
+  if (heroImage.sizes) {
+    html = setAttributeById(html, 'post-image', 'sizes', heroImage.sizes);
+  }
   html = replaceElementContentById(
     html,
     'post-text',
@@ -903,7 +970,11 @@ function articleHtml(template, post, posts, clusters, translationIndex) {
       ? `<strong>${escapeHtml(tagsLabel)}</strong> ${tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}`
       : ''
   );
-  html = replaceElementContentById(html, 'related-posts-grid', related.map(candidate => blogCard(candidate, candidate.language, translationIndex)).join(''));
+  html = replaceElementContentById(
+    html,
+    'related-posts-grid',
+    related.map(candidate => blogCard(candidate, candidate.language, translationIndex)).join('')
+  );
   html = insertBeforeEntryScript(
     html,
     `<script>window.__MAKETRADES_PRERENDERED_POST__=${escapeScriptJson(prerenderedPostData(post, clusters))};</script>`
@@ -1010,7 +1081,11 @@ function blogIndexHtml(template, language, posts, translationIndex) {
     'blogCopyright',
     escapeHtml(translate(translationIndex, language, 'footer.copyright', '© 2026 MakeTrades. All rights reserved.'))
   );
-  html = replaceElementContentById(html, 'allBlogPosts', visiblePosts.map(post => blogCard(post, language, translationIndex)).join(''));
+  html = replaceElementContentById(
+    html,
+    'allBlogPosts',
+    visiblePosts.map((post, index) => blogCard(post, language, translationIndex, { prioritizeImage: index === 0 })).join('')
+  );
   return html;
 }
 

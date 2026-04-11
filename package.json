@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run generate:blog-images && vite build && npm run generate:seo",
+    "build": "npm run generate:static-images && npm run generate:blog-images && vite build && npm run generate:seo",
+    "typecheck": "tsc --noEmit",
+    "generate:static-images": "node scripts/generate-static-image-variants.mjs",
     "generate:blog-images": "node scripts/generate-blog-cover-assets.mjs",
     "generate:seo": "node scripts/seo-build.mjs",
     "generate:sitemap": "node scripts/seo-build.mjs --sitemap-only",

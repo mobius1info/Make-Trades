@@ -39,11 +39,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=optional"
-      as="style"
-      crossorigin />
-    <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=optional"
       media="print"
@@ -166,7 +161,17 @@
             </div>
 
             <div class="blog-post-image-wrapper">
-              <img id="post-image" src="" alt="" class="blog-post-image" loading="eager" fetchpriority="high" decoding="async" />
+              <img
+                id="post-image"
+                src=""
+                alt=""
+                class="blog-post-image"
+                data-image-kind="hero"
+                width="1280"
+                height="720"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async" />
             </div>
 
             <div class="blog-post-content" id="post-text"></div>

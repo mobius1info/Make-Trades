@@ -1,6 +1,6 @@
 import { loadTranslations } from './content-loader';
 import { fetchVisibleBlogPosts, type PublicBlogPost } from './public-api';
-import { normalizePostImageUrl, syncResolvedImageUrls } from './post-images';
+import { getPostImageAttributes, syncResolvedImageUrls } from './post-images';
 import {
   articleAbsoluteUrl,
   articleHref,
@@ -84,20 +84,32 @@ function getLocale(): string {
   return locales[currentLanguage] || 'en-US';
 }
 
+function renderCardImage(post: PublicBlogPost, prioritize: boolean = false): string {
+  const image = getPostImageAttributes(post.image_url, post.slug, 'card');
+
+  return `<img src="${image.src}"
+             alt="${post.title}"
+             class="blog-card-image"
+             itemprop="image"
+             data-post-slug="${post.slug}"
+             data-image-kind="card"
+             width="${image.width}"
+             height="${image.height}"
+             ${image.srcset ? `srcset="${image.srcset}"` : ''}
+             ${image.sizes ? `sizes="${image.sizes}"` : ''}
+             loading="${prioritize ? 'eager' : 'lazy'}"
+             ${prioritize ? 'fetchpriority="high"' : ''}
+             decoding="async">`;
+}
+
 function renderBlogPosts(blogGrid: HTMLElement, posts: PublicBlogPost[]) {
   const minLabel = t('blog_page.min_read', 'min');
 
   blogGrid.innerHTML = posts
     .map(
-      post => `
+      (post, index) => `
       <a href="${articleHref(post, currentLanguage)}" class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
-        <img src="${normalizePostImageUrl(post.image_url, post.slug)}"
-             alt="${post.title}"
-             class="blog-card-image"
-             itemprop="image"
-             data-post-slug="${post.slug}"
-             loading="lazy"
-             decoding="async">
+        ${renderCardImage(post, index === 0)}
         <div class="blog-card-content">
           <div class="blog-card-category">${post.category || ''}</div>
           <h3 itemprop="headline">${post.title}</h3>

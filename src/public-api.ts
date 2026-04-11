@@ -163,7 +163,13 @@ function createHeaders(contentType?: string): HeadersInit {
   };
 }
 
-async function fetchJson<T>(input: RequestInfo | URL, init: RequestInit, cacheKey?: string, ttlMs?: number): Promise<T> {
+async function fetchJson<T>(
+  input: RequestInfo | URL,
+  init: RequestInit,
+  cacheKey?: string,
+  ttlMs?: number,
+  allowEmptyResponse: boolean = false
+): Promise<T> {
   if (cacheKey) {
     const cachedValue = readCache<T>(cacheKey);
     if (cachedValue !== null) return cachedValue;
@@ -175,7 +181,16 @@ async function fetchJson<T>(input: RequestInfo | URL, init: RequestInit, cacheKe
     throw new Error(`Public API request failed: ${response.status} ${errorText}`);
   }
 
-  const value = (await response.json()) as T;
+  if (allowEmptyResponse && response.status === 204) {
+    return undefined as T;
+  }
+
+  const rawValue = await response.text();
+  if (allowEmptyResponse && !rawValue.trim()) {
+    return undefined as T;
+  }
+
+  const value = JSON.parse(rawValue) as T;
   if (cacheKey) {
     return writeCache(cacheKey, value, ttlMs);
   }
@@ -203,7 +218,13 @@ async function maybeSingleRow<T>(tableName: string, options: QueryOptions): Prom
   return rows[0] || null;
 }
 
-async function callRpc<T>(functionName: string, body: Record<string, unknown>, cacheKey?: string, ttlMs?: number): Promise<T> {
+async function callRpc<T>(
+  functionName: string,
+  body: Record<string, unknown>,
+  cacheKey?: string,
+  ttlMs?: number,
+  allowEmptyResponse: boolean = false
+): Promise<T> {
   return fetchJson<T>(
     `${supabaseUrl}/rest/v1/rpc/${functionName}`,
     {
@@ -212,7 +233,8 @@ async function callRpc<T>(functionName: string, body: Record<string, unknown>, c
       body: JSON.stringify(body),
     },
     cacheKey,
-    ttlMs
+    ttlMs,
+    allowEmptyResponse
   );
 }
 
@@ -295,7 +317,7 @@ export async function fetchFaqItems(language: string, category: string = 'all', 
 }
 
 export async function incrementPostViews(postId: string): Promise<void> {
-  await callRpc<unknown>('increment_post_views', { post_id: postId });
+  await callRpc<unknown>('increment_post_views', { post_id: postId }, undefined, undefined, true);
 }
 
 export async function checkRecentSubmission(email: string, telegram: string | null): Promise<CheckRecentSubmissionResponse | null> {

@@ -9,6 +9,7 @@ const WIDTH = 1600;
 const HEIGHT = 900;
 const OUTPUT_WIDTH = 1280;
 const OUTPUT_HEIGHT = 720;
+const RESPONSIVE_WIDTHS = [480, 768];
 const catalogPath = join(SRC_DIR, 'post-image-catalog.json');
 const generatedManifestPath = join(SRC_DIR, 'generated-post-image-manifest.json');
 
@@ -183,26 +184,26 @@ function createSlugCoverEntry(post) {
 
 async function writeSvgAndJpgCover(svgOutputPath, svgMarkup) {
   const jpgOutputPath = svgOutputPath.replace(/\.svg$/i, '.jpg');
+  const svgBuffer = Buffer.from(svgMarkup);
 
   await mkdir(dirname(svgOutputPath), { recursive: true });
   await writeFile(svgOutputPath, svgMarkup, 'utf8');
-  await sharp(Buffer.from(svgMarkup))
-    .resize(OUTPUT_WIDTH, OUTPUT_HEIGHT, { fit: 'cover' })
-    .jpeg({
-      quality: 84,
-      progressive: true,
-      mozjpeg: true,
-      chromaSubsampling: '4:4:4',
-    })
-    .toFile(jpgOutputPath);
+  await writeResponsiveJpgSet(jpgOutputPath, svgBuffer);
 
   console.log(`Generated ${svgOutputPath}`);
   console.log(`Generated ${jpgOutputPath}`);
 }
 
 async function writeJpgCover(jpgOutputPath, svgMarkup) {
+  const svgBuffer = Buffer.from(svgMarkup);
+
+  await writeResponsiveJpgSet(jpgOutputPath, svgBuffer);
+  console.log(`Generated ${jpgOutputPath}`);
+}
+
+async function writeResponsiveJpgSet(jpgOutputPath, sourceBuffer) {
   await mkdir(dirname(jpgOutputPath), { recursive: true });
-  await sharp(Buffer.from(svgMarkup))
+  await sharp(sourceBuffer)
     .resize(OUTPUT_WIDTH, OUTPUT_HEIGHT, { fit: 'cover' })
     .jpeg({
       quality: 84,
@@ -212,7 +213,20 @@ async function writeJpgCover(jpgOutputPath, svgMarkup) {
     })
     .toFile(jpgOutputPath);
 
-  console.log(`Generated ${jpgOutputPath}`);
+  for (const width of RESPONSIVE_WIDTHS) {
+    const height = Math.round((width / OUTPUT_WIDTH) * OUTPUT_HEIGHT);
+    const variantOutputPath = jpgOutputPath.replace(/\.jpg$/i, `-${width}.jpg`);
+
+    await sharp(sourceBuffer)
+      .resize(width, height, { fit: 'cover' })
+      .jpeg({
+        quality: width <= 480 ? 80 : 82,
+        progressive: true,
+        mozjpeg: true,
+        chromaSubsampling: '4:4:4',
+      })
+      .toFile(variantOutputPath);
+  }
 }
 
 function rgba(hex, alpha) {
