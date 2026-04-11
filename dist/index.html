@@ -141,8 +141,8 @@
         "logo": {
           "@type": "ImageObject",
           "url": "https://maketrades.info/assets/logo.svg",
-          "width": 160,
-          "height": 40
+          "width": 226,
+          "height": 37
         },
         "description": "Создание брокеров, криптобирж и дилинговых центров под ключ",
         "address": {
@@ -425,10 +425,23 @@
       @media (max-width: 1024px) {
         .hero .container {
           grid-template-columns: 1fr;
+          text-align: center;
         }
         .hero {
           min-height: auto;
           padding: 8rem 0 4rem;
+        }
+        .hero-subtitle {
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .hero-features {
+          justify-content: center;
+        }
+        .hero-image {
+          max-width: 700px;
+          margin: 0 auto;
+          margin-right: 0;
         }
       }
       @media (max-width: 768px) {
@@ -462,6 +475,15 @@
         .hero-subtitle {
           font-size: 1rem;
         }
+        .pricing-badge {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 0.25rem;
+        }
+        .price {
+          font-size: 1.75rem;
+        }
       }
     </style>
     <script defer src="/analytics-loader.js" data-gtag-ids="G-1GHESLKW5P,AW-17949596244" data-ym-id="106721763"></script>
@@ -486,8 +508,8 @@
             <img
               src="/assets/logo.svg"
               alt="MakeTrades логотип - платформа для создания брокеров"
-              width="160"
-              height="40" />
+              width="226"
+              height="37" />
           </a>
 
           <div class="nav-actions">
@@ -686,8 +708,8 @@
                 srcset="/assets/detail-solution-640.jpg 640w, /assets/detail-solution-960.jpg 960w, /assets/detail-solution.jpg 1242w"
                 sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) calc(100vw - 4rem), 600px"
                 alt="Торговый терминал с графиками и аналитическими инструментами"
-                width="600"
-                height="400"
+                width="1242"
+                height="882"
                 loading="lazy"
                 decoding="async" />
             </div>
@@ -700,8 +722,8 @@
                 srcset="/assets/detail-bots-640.jpg 640w, /assets/detail-bots-960.jpg 960w, /assets/detail-bots.jpg 1161w"
                 sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) calc(100vw - 4rem), 600px"
                 alt="Магазин торговых ботов с различными стратегиями"
-                width="600"
-                height="400"
+                width="1161"
+                height="882"
                 loading="lazy"
                 decoding="async" />
             </div>
@@ -761,8 +783,8 @@
                 srcset="/assets/detail-portfolios-640.jpg 640w, /assets/detail-portfolios-960.jpg 960w, /assets/detail-portfolios.jpg 1242w"
                 sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) calc(100vw - 4rem), 600px"
                 alt="Инвестиционные портфели с графиками доходности"
-                width="600"
-                height="400"
+                width="1242"
+                height="882"
                 loading="lazy"
                 decoding="async" />
             </div>
@@ -999,7 +1021,7 @@
 
         <div class="footer-bottom">
           <a href="/" class="footer-logo" aria-label="MakeTrades Home">
-            <img src="/assets/logo.svg" alt="MakeTrades" width="160" height="40" />
+            <img src="/assets/logo.svg" alt="MakeTrades" width="226" height="37" />
           </a>
           <p id="copyrightText">&copy; 2026 MakeTrades. Все права защищены.</p>
         </div>
