@@ -3672,12 +3672,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/torgovye-boty-avtomatizatsiya-strategiy/" />
   </url>
   <url>
-    <loc>https://maketrades.info/blog/ru/forex-vs-akcii-vs-kriptovalyuty/</loc>
+    <loc>https://maketrades.info/blog/ru/fundamentalny-analiz-novosti-rynki/</loc>
     <lastmod>2026-02-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/forex-vs-akcii-vs-kriptovalyuty/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/forex-vs-akcii-vs-kriptovalyuty/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/fundamentalny-analiz-novosti-rynki/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/fundamentalny-analiz-novosti-rynki/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/blog/ru/tehnicheskiy-analiz-dlya-nachinayuschih/</loc>
+    <lastmod>2026-02-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/tehnicheskiy-analiz-dlya-nachinayuschih/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/tehnicheskiy-analiz-dlya-nachinayuschih/" />
   </url>
   <url>
     <loc>https://maketrades.info/blog/ru/kak-vybrat-torgovuyu-platformu-dlya-brokera/</loc>
@@ -3712,12 +3720,12 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/top-10-trendov-brokerskogo-biznesa-2024/" />
   </url>
   <url>
-    <loc>https://maketrades.info/blog/ru/tehnicheskiy-analiz-dlya-nachinayuschih/</loc>
+    <loc>https://maketrades.info/blog/ru/forex-vs-akcii-vs-kriptovalyuty/</loc>
     <lastmod>2026-02-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/tehnicheskiy-analiz-dlya-nachinayuschih/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/tehnicheskiy-analiz-dlya-nachinayuschih/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/forex-vs-akcii-vs-kriptovalyuty/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/forex-vs-akcii-vs-kriptovalyuty/" />
   </url>
   <url>
     <loc>https://maketrades.info/blog/ru/copy-trading-kak-zarabatyvat/</loc>
@@ -3742,14 +3750,6 @@
     <priority>0.75</priority>
     <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/upravlenie-kapitalom-trejding-pravilo-1-2/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/upravlenie-kapitalom-trejding-pravilo-1-2/" />
-  </url>
-  <url>
-    <loc>https://maketrades.info/blog/ru/fundamentalny-analiz-novosti-rynki/</loc>
-    <lastmod>2026-02-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/fundamentalny-analiz-novosti-rynki/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/fundamentalny-analiz-novosti-rynki/" />
   </url>
   <url>
     <loc>https://maketrades.info/blog/ru/kriptovalyutny-brokeridg-osobennosti/</loc>
@@ -3800,19 +3800,19 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/kak-sozdat-brokerskuyu-kompaniyu/" />
   </url>
   <url>
-    <loc>https://maketrades.info/blog/en/how-to-start-brokerage-company/</loc>
-    <lastmod>2026-02-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/how-to-start-brokerage-company/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/en/how-to-start-brokerage-company/" />
-  </url>
-  <url>
     <loc>https://maketrades.info/blog/ru/preimuschestva-torgovyh-botov/</loc>
     <lastmod>2026-02-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
     <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/preimuschestva-torgovyh-botov/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/preimuschestva-torgovyh-botov/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/blog/en/how-to-start-brokerage-company/</loc>
+    <lastmod>2026-02-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/how-to-start-brokerage-company/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/en/how-to-start-brokerage-company/" />
   </url>
 </urlset>

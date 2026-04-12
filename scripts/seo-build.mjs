@@ -724,7 +724,11 @@ function replaceAlternateLinks(html, linksHtml) {
 }
 
 function insertBeforeEntryScript(html, scriptHtml) {
-  return html.replace(/(\s+<script type="module"[^>]+><\/script>)/i, `\n    ${scriptHtml}$1`);
+  return html.replace(/(\s+<script type="module"[^>]+><\/script>)/i, (_match, entryScript) => {
+    // Use a replacement callback so article text like "$10,000" is kept literally
+    // and does not trigger "$1" backreference interpolation inside the payload.
+    return `\n    ${scriptHtml}${entryScript}`;
+  });
 }
 
 function articleStructuredData(post) {
