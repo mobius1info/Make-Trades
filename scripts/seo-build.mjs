@@ -240,6 +240,24 @@ function truncate(value, maxLength) {
   return `${text.slice(0, maxLength - 1).trimEnd()}...`;
 }
 
+async function inlineDeferredHomeBootstrap(html) {
+  const scriptMatch = html.match(/<script type="module" crossorigin src="(\/assets\/main-[^"]+\.js)"><\/script>/);
+  if (!scriptMatch) return html;
+
+  const assetRelativePath = scriptMatch[1].replace(/^\//, '');
+  const assetPath = join(DIST_DIR, assetRelativePath);
+  const bootstrapCode = (await readFile(assetPath, 'utf8')).replace(/import\("\.\//g, 'import("/assets/');
+
+  if (!bootstrapCode.includes('requestIdleCallback') || !bootstrapCode.includes('Failed to load main app bundle:')) {
+    return html;
+  }
+
+  return html.replace(
+    scriptMatch[0],
+    `<script type="module">\n${bootstrapCode.replace(/<\/script/gi, '<\\/script')}\n</script>`
+  );
+}
+
 const TECHNICAL_SLUG_PATTERNS = [
   /^(?:post|article|blog|news|entry|page)-\d+(?:-(?:ru|en|de|uk|zh))?$/i,
   /^(?:draft|temp|test|untitled)(?:-\d+)?$/i,
@@ -1308,8 +1326,13 @@ async function generateSeoFiles(data) {
   const blogTemplate = await readFile(join(DIST_DIR, 'blog.html'), 'utf8');
   const faqTemplate = await readFile(join(DIST_DIR, 'faq.html'), 'utf8');
   const homeTemplate = await readFile(join(DIST_DIR, 'index.html'), 'utf8');
+  const optimizedHomeTemplate = await inlineDeferredHomeBootstrap(homeTemplate);
 
-  await writeFile(join(DIST_DIR, 'index.html'), patchHomeHtml(homeTemplate, posts, faqItems, translationIndex), 'utf8');
+  await writeFile(
+    join(DIST_DIR, 'index.html'),
+    patchHomeHtml(optimizedHomeTemplate, posts, faqItems, translationIndex),
+    'utf8'
+  );
 
   for (const language of LANGUAGES) {
     const blogHtml = blogIndexHtml(blogTemplate, language, posts, translationIndex);

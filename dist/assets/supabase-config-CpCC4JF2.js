@@ -1,0 +1,1 @@
+const s="https://gknfzfxjaeuvrncgljyi.supabase.co",I="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdrbmZ6ZnhqYWV1dnJuY2dsanlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA1NzMwNjEsImV4cCI6MjA4NjE0OTA2MX0.rZoKwEl9nbE4KLh3J5MZM5FfbdtCxOJGXTSTCe9VEds";export{I as a,s};

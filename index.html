@@ -50,16 +50,36 @@
     <link rel="apple-touch-icon" href="/icon.png" />
     <meta name="theme-color" content="#0F172A" />
 
-    <!-- Preconnect to external domains -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Load web fonts after the initial page load to keep them out of the critical path -->
+    <script>
+      (() => {
+        const fontHref = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=optional';
 
-    <!-- Font loading (non-blocking with optional display to avoid late metric swaps) -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=optional"
-      media="print"
-      onload="this.media='all'" />
+        const loadFonts = () => {
+          if (document.querySelector('link[data-font-loader="inter"]')) return;
+
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = fontHref;
+          link.setAttribute('data-font-loader', 'inter');
+          document.head.appendChild(link);
+        };
+
+        const scheduleFontLoad = () => {
+          if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(loadFonts, { timeout: 1500 });
+          } else {
+            window.setTimeout(loadFonts, 0);
+          }
+        };
+
+        if (document.readyState === 'complete') {
+          scheduleFontLoad();
+        } else {
+          window.addEventListener('load', scheduleFontLoad, { once: true });
+        }
+      })();
+    </script>
     <noscript
       ><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=optional"
     /></noscript>
@@ -1152,6 +1172,34 @@
       </a>
     </div>
 
-    <script type="module" src="/src/main.ts"></script>
+    <script type="module">
+      const params = new URLSearchParams(window.location.search);
+      const shouldLoadMainAppImmediately = params.has('lang');
+
+      const loadMainApp = () =>
+        import('/src/main.ts').catch(error => {
+          console.error('Failed to load main app bundle:', error);
+        });
+
+      const scheduleMainAppLoad = () => {
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(() => {
+            void loadMainApp();
+          }, { timeout: 1500 });
+        } else {
+          window.setTimeout(() => {
+            void loadMainApp();
+          }, 0);
+        }
+      };
+
+      if (shouldLoadMainAppImmediately) {
+        void loadMainApp();
+      } else if (document.readyState === 'complete') {
+        scheduleMainAppLoad();
+      } else {
+        window.addEventListener('load', scheduleMainAppLoad, { once: true });
+      }
+    </script>
   </body>
 </html>
