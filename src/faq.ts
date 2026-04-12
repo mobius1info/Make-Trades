@@ -95,19 +95,15 @@ function renderFaqItems(faqList: HTMLElement, items: PublicFAQItem[]) {
           <span>${item.question}</span>
           <span>+</span>
         </div>
-        <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-          <div itemprop="text">${item.answer}</div>
+        <div class="faq-answer">
+          <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">${item.answer}</div>
+          </div>
         </div>
       </div>
-    `
+      `
     )
     .join('');
-
-  document.querySelectorAll('.faq-item').forEach(item => {
-    item.addEventListener('click', () => {
-      item.classList.toggle('active');
-    });
-  });
 }
 
 async function loadAllFAQItems(force: boolean = false) {

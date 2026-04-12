@@ -1,3 +1,4 @@
+import { FAQ_ACCORDION_OPEN_EVENT } from './faq-accordion';
 import { loadTranslations } from './content-loader';
 import { checkRecentSubmission, fetchFaqItems, fetchVisibleBlogPosts, insertPublicRow } from './public-api';
 import { getPostImageAttributes, syncResolvedImageUrls } from './post-images';
@@ -291,21 +292,11 @@ async function loadFAQItems(limit: number = 4, force: boolean = false) {
           <span>${item.question}</span>
           <span>+</span>
         </div>
-        <div class="faq-answer">${item.answer}</div>
+        <div class="faq-answer">
+          <div>${item.answer}</div>
+        </div>
       </div>
     `).join('');
-
-    document.querySelectorAll('.faq-item').forEach(item => {
-      item.addEventListener('click', () => {
-        const wasActive = item.classList.contains('active');
-        item.classList.toggle('active');
-
-        if (!wasActive) {
-          const faqId = item.getAttribute('data-faq-id');
-          trackEvent('faq_item_opened', { faq_id: faqId, language: currentLanguage });
-        }
-      });
-    });
   } catch (error) {
     console.error('Error loading FAQ items:', error);
     faqList.innerHTML = `<p style="text-align: center; color: var(--error-500);">${t('faq.error', 'Error loading FAQ')}</p>`;
@@ -821,6 +812,17 @@ function setupLanguageSwitcher() {
   });
 }
 
+function setupFaqOpenTracking() {
+  document.addEventListener(FAQ_ACCORDION_OPEN_EVENT, event => {
+    const detail = (event as CustomEvent<{ faqId: string | null }>).detail;
+
+    trackEvent('faq_item_opened', {
+      faq_id: detail?.faqId || undefined,
+      language: currentLanguage,
+    });
+  });
+}
+
 function handleTelegramClick() {
   const timeOnPage = Date.now() - pageLoadedAt;
   const hasActivity = userActivity.mouseMoved || userActivity.scrolled;
@@ -907,6 +909,7 @@ async function init() {
 
   trackUserActivity();
   setupLanguageSwitcher();
+  setupFaqOpenTracking();
   setupModal();
   const prerenderedBlogGrid = document.getElementById('blogGrid');
   if (prerenderedBlogGrid) {

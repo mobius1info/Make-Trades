@@ -246,7 +246,9 @@ async function inlineDeferredHomeBootstrap(html) {
 
   const assetRelativePath = scriptMatch[1].replace(/^\//, '');
   const assetPath = join(DIST_DIR, assetRelativePath);
-  const bootstrapCode = (await readFile(assetPath, 'utf8')).replace(/import\("\.\//g, 'import("/assets/');
+  const bootstrapCode = (await readFile(assetPath, 'utf8'))
+    .replace(/\bimport(\s*\(\s*["']|\s*["'])\.\/+/g, (_match, prefix) => `import${prefix}/assets/`)
+    .replace(/\bfrom(\s*["'])\.\/+/g, (_match, prefix) => `from${prefix}/assets/`);
 
   if (!bootstrapCode.includes('requestIdleCallback') || !bootstrapCode.includes('Failed to load main app bundle:')) {
     return html;
@@ -854,8 +856,10 @@ function faqItem(item) {
           <span>${escapeHtml(item.question)}</span>
           <span>+</span>
         </div>
-        <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-          <div itemprop="text">${escapeHtml(item.answer)}</div>
+        <div class="faq-answer">
+          <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">${escapeHtml(item.answer)}</div>
+          </div>
         </div>
       </div>`;
 }

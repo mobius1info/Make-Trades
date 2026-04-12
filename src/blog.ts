@@ -1,9 +1,8 @@
+import { renderBlogCard } from './blog-card';
 import { loadTranslations } from './content-loader';
 import { fetchVisibleBlogPosts, type PublicBlogPost } from './public-api';
-import { getPostImageAttributes, syncResolvedImageUrls } from './post-images';
+import { syncResolvedImageUrls } from './post-images';
 import {
-  articleAbsoluteUrl,
-  articleHref,
   blogIndexPath,
   getBlogLanguageFromPath,
   isProductionBuild,
@@ -73,62 +72,16 @@ function updatePageContent() {
   if (backHomeLink) backHomeLink.href = currentLanguage === 'ru' ? '/' : `/?lang=${currentLanguage}`;
 }
 
-function getLocale(): string {
-  const locales: Record<string, string> = {
-    ru: 'ru-RU',
-    en: 'en-US',
-    de: 'de-DE',
-    uk: 'uk-UA',
-    zh: 'zh-CN',
-  };
-  return locales[currentLanguage] || 'en-US';
-}
-
-function renderCardImage(post: PublicBlogPost, prioritize: boolean = false): string {
-  const image = getPostImageAttributes(post.image_url, post.slug, 'card');
-
-  return `<img src="${image.src}"
-             alt="${post.title}"
-             class="blog-card-image"
-             itemprop="image"
-             data-post-slug="${post.slug}"
-             data-image-kind="card"
-             width="${image.width}"
-             height="${image.height}"
-             ${image.srcset ? `srcset="${image.srcset}"` : ''}
-             ${image.sizes ? `sizes="${image.sizes}"` : ''}
-             loading="${prioritize ? 'eager' : 'lazy'}"
-             ${prioritize ? 'fetchpriority="high"' : ''}
-             decoding="async">`;
-}
-
 function renderBlogPosts(blogGrid: HTMLElement, posts: PublicBlogPost[]) {
   const minLabel = t('blog_page.min_read', 'min');
 
   blogGrid.innerHTML = posts
     .map(
-      (post, index) => `
-      <a href="${articleHref(post, currentLanguage)}" class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
-        ${renderCardImage(post, index === 0)}
-        <div class="blog-card-content">
-          <div class="blog-card-category">${post.category || ''}</div>
-          <h3 itemprop="headline">${post.title}</h3>
-          <p itemprop="description">${post.excerpt}</p>
-          <div class="blog-card-meta">
-            <span itemprop="author" itemscope itemtype="https://schema.org/Person">
-              <span itemprop="name">${post.author}</span>
-            </span>
-            <span>&bull;</span>
-            <time itemprop="datePublished" datetime="${post.created_at}">
-              ${new Date(post.created_at).toLocaleDateString(getLocale())}
-            </time>
-            <span>&bull;</span>
-            <span>${post.reading_time || 5} ${minLabel}</span>
-          </div>
-        </div>
-        <meta itemprop="url" content="${articleAbsoluteUrl(post, currentLanguage)}">
-      </a>
-    `
+      (post, index) =>
+        renderBlogCard(post, currentLanguage, {
+          minReadLabel: minLabel,
+          prioritizeImage: index === 0,
+        })
     )
     .join('');
 

@@ -1,3 +1,4 @@
+import { getBlogLocale, renderBlogCard } from './blog-card';
 import { loadTranslations } from './content-loader';
 import {
   fetchPublishedBlogPost,
@@ -56,10 +57,7 @@ function t(key: string, fallback: string): string {
 }
 
 function getLocale(): string {
-  const locales: Record<string, string> = {
-    ru: 'ru-RU', en: 'en-US', de: 'de-DE', uk: 'uk-UA', zh: 'zh-CN'
-  };
-  return locales[currentLanguage] || 'en-US';
+  return getBlogLocale(currentLanguage);
 }
 
 function getSlugFromUrl(): string | null {
@@ -90,22 +88,6 @@ function applyHeroImageAttributes(imageEl: HTMLImageElement, post: BlogPost) {
   } else {
     imageEl.removeAttribute('sizes');
   }
-}
-
-function renderRelatedCardImage(post: PublicBlogPost): string {
-  const image = getPostImageAttributes(post.image_url, post.slug, 'card');
-
-  return `<img src="${image.src}"
-             alt="${post.title}"
-             class="blog-card-image"
-             data-post-slug="${post.slug}"
-             data-image-kind="card"
-             width="${image.width}"
-             height="${image.height}"
-             ${image.srcset ? `srcset="${image.srcset}"` : ''}
-             ${image.sizes ? `sizes="${image.sizes}"` : ''}
-             loading="lazy"
-             decoding="async">`;
 }
 
 function updatePageContent() {
@@ -474,22 +456,13 @@ async function loadRelatedPosts(category: string, currentPostId: string) {
       return;
     }
 
-    gridEl.innerHTML = posts.map(post => `
-      <a href="${articleHref(post, currentLanguage)}" class="blog-card">
-        ${renderRelatedCardImage(post)}
-        <div class="blog-card-content">
-          <h3>${post.title}</h3>
-          <p>${post.excerpt || ''}</p>
-          <div class="blog-card-meta">
-            <span>${post.author || 'MakeTrades Team'}</span>
-            <span>&bull;</span>
-            <time datetime="${post.created_at}">
-              ${new Date(post.created_at).toLocaleDateString(getLocale())}
-            </time>
-          </div>
-        </div>
-      </a>
-    `).join('');
+    gridEl.innerHTML = posts
+      .map(post =>
+        renderBlogCard(post, currentLanguage, {
+          minReadLabel: t('blog_page.min_read', 'min'),
+        })
+      )
+      .join('');
     syncResolvedImageUrls(gridEl);
   } catch (error) {
     console.error('Error loading related posts:', error);

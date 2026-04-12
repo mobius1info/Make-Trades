@@ -3108,7 +3108,7 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/psihologiya-treydinga-kak-kontrolirovat-emotsii/" />
   </url>
   <url>
-    <loc>https://maketrades.info/blog/ru/svechnoy-analiz-yaponskie-svechi/</loc>
+    <loc>https://maketrades.info/blog/en/candlestick-analysis-japanese-candles/</loc>
     <lastmod>2026-02-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -3228,7 +3228,7 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/svechnoy-analiz-yaponskie-svechi/" />
   </url>
   <url>
-    <loc>https://maketrades.info/blog/en/candlestick-analysis-japanese-candles/</loc>
+    <loc>https://maketrades.info/blog/ru/svechnoy-analiz-yaponskie-svechi/</loc>
     <lastmod>2026-02-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -3238,6 +3238,18 @@
     <xhtml:link rel="alternate" hreflang="uk" href="https://maketrades.info/blog/uk/svechnoy-analiz-yaponskie-svechi/" />
     <xhtml:link rel="alternate" hreflang="zh" href="https://maketrades.info/blog/zh/candlestick-analysis-japanese-candles/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/svechnoy-analiz-yaponskie-svechi/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/blog/ru/indikatory-tehnicheskogo-analiza/</loc>
+    <lastmod>2026-02-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/indikatory-tehnicheskogo-analiza/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/technical-analysis-indicators/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://maketrades.info/blog/de/technical-analysis-indicators/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://maketrades.info/blog/uk/indikatory-tehnicheskogo-analiza/" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://maketrades.info/blog/zh/technical-analysis-indicators/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/indikatory-tehnicheskogo-analiza/" />
   </url>
   <url>
     <loc>https://maketrades.info/blog/uk/indikatory-tehnicheskogo-analiza/</loc>
@@ -3277,18 +3289,6 @@
   </url>
   <url>
     <loc>https://maketrades.info/blog/en/technical-analysis-indicators/</loc>
-    <lastmod>2026-02-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/indikatory-tehnicheskogo-analiza/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/technical-analysis-indicators/" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://maketrades.info/blog/de/technical-analysis-indicators/" />
-    <xhtml:link rel="alternate" hreflang="uk" href="https://maketrades.info/blog/uk/indikatory-tehnicheskogo-analiza/" />
-    <xhtml:link rel="alternate" hreflang="zh" href="https://maketrades.info/blog/zh/technical-analysis-indicators/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/indikatory-tehnicheskogo-analiza/" />
-  </url>
-  <url>
-    <loc>https://maketrades.info/blog/ru/indikatory-tehnicheskogo-analiza/</loc>
     <lastmod>2026-02-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
