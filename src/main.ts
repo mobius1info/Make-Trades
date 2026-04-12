@@ -21,7 +21,29 @@ declare global {
   interface Window {
     gtag?: (...args: any[]) => void;
     ym?: (...args: any[]) => void;
+    __makeTradesAnalytics?: {
+      yandexCounterId?: number;
+    };
   }
+}
+
+let cachedYandexCounterId: number | null = null;
+
+function resolveYandexCounterId(): number | null {
+  const globalCounterId = window.__makeTradesAnalytics?.yandexCounterId;
+  if (typeof globalCounterId === 'number' && Number.isFinite(globalCounterId) && globalCounterId > 0) {
+    return globalCounterId;
+  }
+
+  if (cachedYandexCounterId !== null) {
+    return cachedYandexCounterId;
+  }
+
+  const analyticsLoader = document.querySelector<HTMLScriptElement>('script[src="/analytics-loader.js"][data-ym-id]');
+  const parsedCounterId = Number(analyticsLoader?.dataset.ymId || analyticsLoader?.getAttribute('data-ym-id') || '');
+
+  cachedYandexCounterId = Number.isFinite(parsedCounterId) && parsedCounterId > 0 ? parsedCounterId : null;
+  return cachedYandexCounterId;
 }
 
 function trackEvent(eventName: string, eventParams?: Record<string, any>) {
@@ -29,8 +51,9 @@ function trackEvent(eventName: string, eventParams?: Record<string, any>) {
     window.gtag('event', eventName, eventParams);
   }
 
-  if (typeof window.ym === 'function') {
-    window.ym(parseInt('XXXXXXXX'), 'reachGoal', eventName, eventParams);
+  const yandexCounterId = resolveYandexCounterId();
+  if (typeof window.ym === 'function' && yandexCounterId) {
+    window.ym(yandexCounterId, 'reachGoal', eventName, eventParams);
   }
 }
 
