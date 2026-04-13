@@ -1,17 +1,20 @@
 import { supabase } from './supabase';
 import { articleAbsoluteUrl } from './seo-urls';
+import { enrichBlogArticle, isIndexableBlogArticle } from './blog-article-groups';
 
 interface BlogPost {
   title: string;
   slug: string;
   language: string;
   updated_at: string;
+  created_at: string;
+  hidden_from_users?: boolean;
 }
 
 export async function generateSitemap(): Promise<string> {
   const { data: posts, error } = await supabase
     .from('blog_posts')
-    .select('title, slug, language, updated_at')
+    .select('title, slug, language, updated_at, created_at, hidden_from_users')
     .eq('published', true)
     .order('updated_at', { ascending: false });
 
@@ -22,6 +25,7 @@ export async function generateSitemap(): Promise<string> {
 
   const today = new Date().toISOString().split('T')[0];
   const baseUrl = 'https://maketrades.info';
+  const indexablePosts = (posts || []).map(post => enrichBlogArticle(post)).filter(isIndexableBlogArticle);
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -68,15 +72,23 @@ export async function generateSitemap(): Promise<string> {
 
 `;
 
-  posts?.forEach((post: BlogPost) => {
-    const lastmod = post.updated_at.split('T')[0];
+  indexablePosts.forEach((post: BlogPost & { alternates?: Array<{ language: string; slug: string }> }) => {
+    const lastmod = (post.updated_at || post.created_at).split('T')[0];
     const url = articleAbsoluteUrl(post);
+    const alternates = (post.alternates || [])
+      .map(alternate => `    <xhtml:link rel="alternate" hreflang="${alternate.language}" href="${articleAbsoluteUrl({ ...post, language: alternate.language, slug: alternate.slug, canonical_slug: alternate.slug }, alternate.language)}" />`)
+      .join('\n');
+    const defaultAlternate = post.alternates?.find(alternate => alternate.language === 'ru') || post.alternates?.[0];
+    const xDefault = defaultAlternate
+      ? `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${articleAbsoluteUrl({ ...post, language: defaultAlternate.language, slug: defaultAlternate.slug, canonical_slug: defaultAlternate.slug }, defaultAlternate.language)}" />`
+      : '';
 
     xml += `  <url>
     <loc>${url}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+${alternates ? `${alternates}` : ''}${xDefault}
   </url>
 `;
   });

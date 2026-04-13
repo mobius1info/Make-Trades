@@ -1,4 +1,5 @@
 import { getBlogLocale, renderBlogCard } from './blog-card';
+import { getBlogArticleState } from './blog-article-groups';
 import { loadTranslations } from './content-loader';
 import {
   fetchPublishedBlogPost,
@@ -52,6 +53,14 @@ interface BlogPost extends PublicBlogPost {
   }>;
 }
 
+const OG_LOCALES: Record<string, string> = {
+  ru: 'ru_RU',
+  en: 'en_US',
+  de: 'de_DE',
+  uk: 'uk_UA',
+  zh: 'zh_CN',
+};
+
 function t(key: string, fallback: string): string {
   return translations[key] || fallback;
 }
@@ -60,8 +69,107 @@ function getLocale(): string {
   return getBlogLocale(currentLanguage);
 }
 
+function getOgLocale(language: string): string {
+  return OG_LOCALES[language] || 'en_US';
+}
+
 function getSlugFromUrl(): string | null {
   return getArticleSlugFromPath(window.location.pathname) || new URLSearchParams(window.location.search).get('slug');
+}
+
+function getCanonicalTargetUrl(post: BlogPost): string {
+  if (!post.canonical_target_slug || post.canonical_target_slug === post.slug) {
+    return articleAbsoluteUrl(post, post.language || currentLanguage);
+  }
+
+  return articleAbsoluteUrl(
+    {
+      ...post,
+      slug: post.canonical_target_slug,
+      canonical_slug: post.canonical_target_slug,
+      legacy_slug: post.canonical_target_slug,
+    },
+    post.language || currentLanguage
+  );
+}
+
+function buildPostAlternates(post: BlogPost): Array<{ language: string; slug: string; legacy_slug?: string }> {
+  if (post.alternates && post.alternates.length > 0) {
+    return post.alternates;
+  }
+
+  const state = getBlogArticleState(post);
+  return (state.alternates || []).map(alternate => ({
+    language: alternate.language,
+    slug: alternate.slug,
+    legacy_slug: alternate.slug,
+  }));
+}
+
+function normalizePost(post: BlogPost): BlogPost {
+  const state = getBlogArticleState(post);
+
+  return {
+    ...post,
+    ...state,
+    alternates: buildPostAlternates(post),
+  };
+}
+
+function replaceAlternateLinks(post: BlogPost, pageUrl: string) {
+  document.querySelectorAll<HTMLLinkElement>('link[rel="alternate"][hreflang]').forEach(link => link.remove());
+
+  const alternates = buildPostAlternates(post);
+  const normalizedAlternates =
+    alternates.length > 0
+      ? alternates
+      : [
+          {
+            language: post.language || currentLanguage,
+            slug: resolvePublicArticleSlug(post),
+          },
+        ];
+
+  const defaultAlternate =
+    normalizedAlternates.find(alternate => alternate.language === 'ru') || normalizedAlternates[0] || null;
+
+  const fragment = document.createDocumentFragment();
+
+  normalizedAlternates.forEach(alternate => {
+    const link = document.createElement('link');
+    link.rel = 'alternate';
+    link.hreflang = alternate.language;
+    link.href = articleAbsoluteUrl(
+      {
+        ...post,
+        language: alternate.language,
+        slug: alternate.slug,
+        canonical_slug: alternate.slug,
+        legacy_slug: alternate.legacy_slug || alternate.slug,
+      },
+      alternate.language
+    );
+    fragment.appendChild(link);
+  });
+
+  const defaultLink = document.createElement('link');
+  defaultLink.rel = 'alternate';
+  defaultLink.hreflang = 'x-default';
+  defaultLink.href = defaultAlternate
+    ? articleAbsoluteUrl(
+        {
+          ...post,
+          language: defaultAlternate.language,
+          slug: defaultAlternate.slug,
+          canonical_slug: defaultAlternate.slug,
+          legacy_slug: defaultAlternate.legacy_slug || defaultAlternate.slug,
+        },
+        defaultAlternate.language
+      )
+    : pageUrl;
+  fragment.appendChild(defaultLink);
+
+  document.head.appendChild(fragment);
 }
 
 function applyHeroImageAttributes(imageEl: HTMLImageElement, post: BlogPost) {
@@ -138,6 +246,11 @@ async function setLanguage(lang: string) {
     return;
   }
 
+  if (currentPost?.content_status && currentPost.content_status !== 'core') {
+    window.location.assign(blogIndexHref(lang));
+    return;
+  }
+
   let slug = getSlugFromUrl();
   if (slug) {
     const newSlug = slug.replace(new RegExp(`-${oldLang}$`), `-${lang}`);
@@ -160,6 +273,7 @@ async function setLanguage(lang: string) {
 
 function updateMetaTags(post: BlogPost) {
   const postUrl = articleAbsoluteUrl(post, post.language || currentLanguage);
+  const canonicalUrl = getCanonicalTargetUrl(post);
 
   document.title = post.meta_title || `${post.title} | MakeTrades`;
 
@@ -170,7 +284,12 @@ function updateMetaTags(post: BlogPost) {
   if (metaKeywords && post.tags) metaKeywords.content = post.tags.join(', ');
 
   const canonical = document.getElementById('page-canonical') as HTMLLinkElement;
-  if (canonical) canonical.href = postUrl;
+  if (canonical) canonical.href = canonicalUrl;
+
+  const robots = document.getElementById('page-robots') as HTMLMetaElement | null;
+  if (robots) {
+    robots.content = post.indexable ? 'index, follow' : 'noindex, follow';
+  }
 
   const ogTitle = document.getElementById('og-title') as HTMLMetaElement;
   if (ogTitle) ogTitle.content = post.title;
@@ -186,6 +305,9 @@ function updateMetaTags(post: BlogPost) {
 
   const ogUrl = document.getElementById('og-url') as HTMLMetaElement;
   if (ogUrl) ogUrl.content = postUrl;
+
+  const ogLocale = document.querySelector('meta[property="og:locale"]') as HTMLMetaElement | null;
+  if (ogLocale) ogLocale.content = getOgLocale(post.language || currentLanguage);
 
   const twitterUrl = document.getElementById('twitter-url') as HTMLMetaElement;
   if (twitterUrl) twitterUrl.content = postUrl;
@@ -215,7 +337,7 @@ function updateMetaTags(post: BlogPost) {
     "dateModified": post.updated_at || post.created_at,
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": postUrl
+      "@id": canonicalUrl
     }
   };
 
@@ -228,13 +350,14 @@ function updateMetaTags(post: BlogPost) {
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "MakeTrades", "item": "https://maketrades.info" },
       { "@type": "ListItem", "position": 2, "name": "Blog", "item": blogIndexAbsoluteUrl(post.language || currentLanguage) },
-      { "@type": "ListItem", "position": 3, "name": post.title, "item": postUrl }
+      { "@type": "ListItem", "position": 3, "name": post.title, "item": canonicalUrl }
     ]
   };
   const breadcrumbTag = document.getElementById('breadcrumb-data');
   if (breadcrumbTag) breadcrumbTag.textContent = JSON.stringify(breadcrumbData);
 
   document.getElementById('faq-data')?.remove();
+  replaceAlternateLinks(post, postUrl);
 }
 
 function hasPrerenderedRelatedPosts(): boolean {
@@ -282,14 +405,15 @@ async function recordPostView(postId: string) {
 }
 
 function hydratePrerenderedPost(post: BlogPost) {
-  currentPost = post;
-  currentLanguage = post.language || currentLanguage;
+  const normalizedPost = normalizePost(post);
+  currentPost = normalizedPost;
+  currentLanguage = normalizedPost.language || currentLanguage;
   document.documentElement.lang = currentLanguage;
-  updateMetaTags(post);
+  updateMetaTags(normalizedPost);
 
   const imageEl = document.getElementById('post-image') as HTMLImageElement | null;
   if (imageEl) {
-    applyHeroImageAttributes(imageEl, post);
+    applyHeroImageAttributes(imageEl, normalizedPost);
   }
 
   const loadingEl = document.getElementById('loading');
@@ -302,58 +426,59 @@ function hydratePrerenderedPost(post: BlogPost) {
   syncResolvedImageUrls(contentEl || document);
 
   runWhenIdle(() => {
-    if (!hasPrerenderedRelatedPosts() && post.category) {
-      void loadRelatedPosts(post.category, post.id);
+    if (!hasPrerenderedRelatedPosts() && normalizedPost.category) {
+      void loadRelatedPosts(normalizedPost.category, normalizedPost.id);
     }
 
     if (!hasInternalLinks()) {
-      void addInternalLinks(post.tags || []);
+      void addInternalLinks(normalizedPost.tags || []);
     }
   });
 }
 
 function renderBlogPost(post: BlogPost) {
-  currentPost = post;
-  currentLanguage = post.language || currentLanguage;
+  const normalizedPost = normalizePost(post);
+  currentPost = normalizedPost;
+  currentLanguage = normalizedPost.language || currentLanguage;
   document.documentElement.lang = currentLanguage;
-  updateMetaTags(post);
+  updateMetaTags(normalizedPost);
 
   const titleEl = document.getElementById('post-title');
-  if (titleEl) titleEl.textContent = post.title;
+  if (titleEl) titleEl.textContent = normalizedPost.title;
 
   const excerptEl = document.getElementById('post-excerpt');
-  if (excerptEl) excerptEl.textContent = post.excerpt || '';
+  if (excerptEl) excerptEl.textContent = normalizedPost.excerpt || '';
 
   const categoryEl = document.getElementById('post-category');
-  if (categoryEl) categoryEl.textContent = post.category || '';
+  if (categoryEl) categoryEl.textContent = normalizedPost.category || '';
 
   const dateEl = document.getElementById('post-date');
   if (dateEl) {
-    dateEl.textContent = new Date(post.created_at).toLocaleDateString(
+    dateEl.textContent = new Date(normalizedPost.created_at).toLocaleDateString(
       getLocale(), { year: 'numeric', month: 'long', day: 'numeric' }
     );
-    dateEl.setAttribute('datetime', post.created_at);
+    dateEl.setAttribute('datetime', normalizedPost.created_at);
   }
 
   const readingTimeEl = document.getElementById('post-reading-time');
   if (readingTimeEl) {
-    readingTimeEl.textContent = `${post.reading_time || 5} ${t('blog_post.min_read', 'min read')}`;
+    readingTimeEl.textContent = `${normalizedPost.reading_time || 5} ${t('blog_post.min_read', 'min read')}`;
   }
 
   const authorEl = document.getElementById('post-author');
-  if (authorEl) authorEl.textContent = post.author || 'MakeTrades Team';
+  if (authorEl) authorEl.textContent = normalizedPost.author || 'MakeTrades Team';
 
   const imageEl = document.getElementById('post-image') as HTMLImageElement;
   if (imageEl) {
-    applyHeroImageAttributes(imageEl, post);
+    applyHeroImageAttributes(imageEl, normalizedPost);
   }
 
   const textEl = document.getElementById('post-text');
-  if (textEl) textEl.innerHTML = sanitizeArticleHtmlImages(post.content || '', post.slug);
+  if (textEl) textEl.innerHTML = sanitizeArticleHtmlImages(normalizedPost.content || '', normalizedPost.slug);
 
   const tagsEl = document.getElementById('post-tags');
-  if (tagsEl && post.tags && post.tags.length > 0) {
-    tagsEl.innerHTML = `<strong>${t('blog_post.tags', 'Tags:')}</strong> ` + post.tags.map(tag =>
+  if (tagsEl && normalizedPost.tags && normalizedPost.tags.length > 0) {
+    tagsEl.innerHTML = `<strong>${t('blog_post.tags', 'Tags:')}</strong> ` + normalizedPost.tags.map(tag =>
       `<span class="tag">${tag}</span>`
     ).join('');
   }
@@ -369,13 +494,13 @@ function renderBlogPost(post: BlogPost) {
 
   runWhenIdle(() => {
     if (!hasPrerenderedRelatedPosts()) {
-      if (post.category) {
-        void loadRelatedPosts(post.category, post.id);
+      if (normalizedPost.category) {
+        void loadRelatedPosts(normalizedPost.category, normalizedPost.id);
       }
     }
 
     if (!hasInternalLinks()) {
-      void addInternalLinks(post.tags || []);
+      void addInternalLinks(normalizedPost.tags || []);
     }
   });
 }

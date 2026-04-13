@@ -8,10 +8,19 @@ const BASE_URL = 'https://maketrades.info';
 const LANGUAGES = ['ru', 'en', 'de', 'uk', 'zh'];
 const sitemapOnly = process.argv.includes('--sitemap-only');
 const generatedPostImageManifest = JSON.parse(await readFile(join(ROOT_DIR, 'src', 'generated-post-image-manifest.json'), 'utf8'));
+const blogArticleGroupsManifest = JSON.parse(await readFile(join(ROOT_DIR, 'src', 'blog-article-groups.json'), 'utf8'));
 const generatedPostImagesBySlug = new Set(generatedPostImageManifest);
 const POST_IMAGE_VARIANT_WIDTHS = [480, 768, 1280];
 const POST_IMAGE_BASE_WIDTH = 1280;
 const POST_IMAGE_BASE_HEIGHT = 720;
+const groupOrderByKey = new Map(blogArticleGroupsManifest.coreOrder.map((key, index) => [key, index]));
+const OG_LOCALES = {
+  ru: 'ru_RU',
+  en: 'en_US',
+  de: 'de_DE',
+  uk: 'uk_UA',
+  zh: 'zh_CN',
+};
 
 const blogIndexCopy = {
   ru: {
@@ -68,6 +77,64 @@ const faqIndexCopy = {
     subtitle: '查找有关 MakeTrades 平台的常见问题答案',
   },
 };
+
+function findGroupMatch(slug, language) {
+  for (const group of blogArticleGroupsManifest.groups) {
+    const translation = group.translations?.[language];
+    if (!translation) continue;
+
+    if (translation.primary === slug) {
+      return { group, translation, role: 'primary' };
+    }
+
+    if (Array.isArray(translation.merge) && translation.merge.includes(slug)) {
+      return { group, translation, role: 'merged' };
+    }
+  }
+
+  return null;
+}
+
+function articleArchitecture(post) {
+  const language = String(post.language || '').trim();
+  const slug = String(post.legacy_slug || post.slug || '').trim();
+  const match = findGroupMatch(slug, language);
+
+  if (!match) {
+    return {
+      article_group_key: null,
+      content_status: 'archived',
+      indexable: false,
+      canonical_target_slug: post.canonical_slug || slug,
+      listing_order: Number.MAX_SAFE_INTEGER,
+      alternates: [],
+    };
+  }
+
+  return {
+    article_group_key: match.group.key,
+    content_status: match.role === 'primary' ? 'core' : 'merged',
+    indexable: match.role === 'primary',
+    canonical_target_slug: match.translation.primary,
+    listing_order: groupOrderByKey.get(match.group.key) ?? Number.MAX_SAFE_INTEGER,
+    alternates: LANGUAGES.map(alternateLanguage => ({
+      language: alternateLanguage,
+      slug: match.group.translations[alternateLanguage].primary,
+      legacy_slug: match.group.translations[alternateLanguage].primary,
+    })),
+  };
+}
+
+function applyContentArchitecture(posts) {
+  return posts.map(post => ({
+    ...post,
+    ...articleArchitecture(post),
+  }));
+}
+
+function ogLocale(language) {
+  return OG_LOCALES[language] || 'en_US';
+}
 
 function buildTranslationsIndex(rows = []) {
   const index = new Map();
@@ -200,7 +267,7 @@ async function fetchSeoData(config) {
     order: 'language.asc,key.asc',
   });
 
-  return { posts: ensureUniquePublicSlugs(posts), publishedCount, faqItems, translations };
+  return { posts: applyContentArchitecture(ensureUniquePublicSlugs(posts)), publishedCount, faqItems, translations };
 }
 
 function escapeHtml(value) {
@@ -561,8 +628,21 @@ function articlePath(post) {
   return `/blog/${encodeURIComponent(post.language)}/${encodeURIComponent(post.canonical_slug || post.slug)}/`;
 }
 
+function articlePathBySlug(language, slug) {
+  return `/blog/${encodeURIComponent(language)}/${encodeURIComponent(slug)}/`;
+}
+
 function articleUrl(post) {
   return `${BASE_URL}${articlePath(post)}`;
+}
+
+function articleUrlBySlug(language, slug) {
+  return `${BASE_URL}${articlePathBySlug(language, slug)}`;
+}
+
+function canonicalArticleUrl(post) {
+  const canonicalSlug = post.canonical_target_slug || post.canonical_slug || post.slug;
+  return articleUrlBySlug(post.language, canonicalSlug);
 }
 
 function legacyArticlePath(post) {
@@ -611,14 +691,26 @@ function legacyPostFilePath(post) {
 
 function languagePosts(posts, language, { visibleOnly = false } = {}) {
   return posts
-    .filter(post => post.language === language && (!visibleOnly || !post.hidden_from_users))
-    .sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
+    .filter(post => post.language === language && (!visibleOnly || post.indexable))
+    .sort((a, b) => {
+      const leftOrder = Number.isFinite(a.listing_order) ? a.listing_order : Number.MAX_SAFE_INTEGER;
+      const rightOrder = Number.isFinite(b.listing_order) ? b.listing_order : Number.MAX_SAFE_INTEGER;
+
+      if (leftOrder !== rightOrder) {
+        return leftOrder - rightOrder;
+      }
+
+      return String(b.created_at).localeCompare(String(a.created_at));
+    });
 }
 
 function clusterKey(post) {
+  if (post.article_group_key) {
+    return `group:${post.article_group_key}`;
+  }
+
   const clusterSlug = post.legacy_slug || post.slug;
-  const match = clusterSlug.match(/^(.+)-(ru|en|de|uk|zh)$/);
-  return match ? `suffix:${match[1]}` : `single:${post.language}:${clusterSlug}`;
+  return `single:${post.language}:${clusterSlug}`;
 }
 
 function makeClusters(posts) {
@@ -627,6 +719,14 @@ function makeClusters(posts) {
   for (const post of posts) {
     const key = clusterKey(post);
     if (!clusters.has(key)) clusters.set(key, new Map());
+
+    if (post.article_group_key) {
+      if (post.content_status === 'core') {
+        clusters.get(key).set(post.language, post);
+      }
+      continue;
+    }
+
     clusters.get(key).set(post.language, post);
   }
 
@@ -641,9 +741,7 @@ function articleSiblings(post, clusters) {
     .map(language => group.get(language))
     .filter(Boolean);
 
-  return siblings.some(sibling => sibling.slug === post.slug && sibling.language === post.language)
-    ? siblings
-    : [post];
+  return siblings.length > 0 ? siblings : [post];
 }
 
 function articleAlternateLinks(post, clusters, indent = '    ') {
@@ -757,7 +855,7 @@ function articleStructuredData(post) {
     dateModified: post.updated_at || post.created_at,
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': articleUrl(post),
+      '@id': canonicalArticleUrl(post),
     },
   };
 }
@@ -791,7 +889,7 @@ function breadcrumbData(post) {
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'MakeTrades', item: BASE_URL },
       { '@type': 'ListItem', position: 2, name: 'Blog', item: blogIndexUrl(post.language) },
-      { '@type': 'ListItem', position: 3, name: post.title, item: articleUrl(post) },
+      { '@type': 'ListItem', position: 3, name: post.title, item: canonicalArticleUrl(post) },
     ],
   };
 }
@@ -800,7 +898,7 @@ function relatedPostsFor(post, posts) {
   const postTags = Array.isArray(post.tags) ? post.tags : [];
 
   return posts
-    .filter(candidate => candidate.language === post.language && candidate.id !== post.id)
+    .filter(candidate => candidate.language === post.language && candidate.id !== post.id && candidate.indexable)
     .map(candidate => {
       const candidateTags = Array.isArray(candidate.tags) ? candidate.tags : [];
       const tagScore = candidateTags.filter(tag => postTags.includes(tag)).length;
@@ -890,19 +988,22 @@ function articleHtml(template, post, posts, clusters, translationIndex) {
   const tagsLabel = translate(translationIndex, post.language, 'blog_post.tags', 'Tags:');
   const internalLinks = internalLinksHtml(post, posts, translationIndex);
   const heroImage = postImageAttributes(post, 'hero');
+  const currentUrl = articleUrl(post);
+  const canonicalUrl = canonicalArticleUrl(post);
 
   let html = template;
   html = replaceHtmlLang(html, post.language);
   html = replaceTitle(html, title);
   html = setAttributeById(html, 'page-description', 'content', description);
   html = setAttributeById(html, 'page-keywords', 'content', keywords);
-  html = setAttributeById(html, 'page-robots', 'content', 'index, follow');
-  html = setAttributeById(html, 'page-canonical', 'href', articleUrl(post));
-  html = setAttributeById(html, 'og-url', 'content', articleUrl(post));
+  html = setAttributeById(html, 'page-robots', 'content', post.indexable ? 'index, follow' : 'noindex, follow');
+  html = setAttributeById(html, 'page-canonical', 'href', canonicalUrl);
+  html = setAttributeById(html, 'og-url', 'content', currentUrl);
   html = setAttributeById(html, 'og-title', 'content', post.title);
   html = setAttributeById(html, 'og-description', 'content', description);
   html = setAttributeById(html, 'og-image', 'content', postImageAbsoluteUrl(post));
-  html = setAttributeById(html, 'twitter-url', 'content', articleUrl(post));
+  html = setMetaProperty(html, 'og:locale', ogLocale(post.language));
+  html = setAttributeById(html, 'twitter-url', 'content', currentUrl);
   html = setAttributeById(html, 'twitter-title', 'content', post.title);
   html = setAttributeById(html, 'twitter-description', 'content', description);
   html = setAttributeById(html, 'twitter-image', 'content', postImageAbsoluteUrl(post));
@@ -1092,6 +1193,7 @@ function blogIndexHtml(template, language, posts, translationIndex) {
   html = setMetaProperty(html, 'og:url', blogIndexUrl(language));
   html = setMetaProperty(html, 'og:title', copy.title);
   html = setMetaProperty(html, 'og:description', description);
+  html = setMetaProperty(html, 'og:locale', ogLocale(language));
   html = setMetaName(html, 'twitter:url', blogIndexUrl(language));
   html = setMetaName(html, 'twitter:title', copy.title);
   html = setMetaName(html, 'twitter:description', description);
@@ -1127,6 +1229,7 @@ function faqIndexHtml(template, language, faqItems, translationIndex) {
   html = setMetaProperty(html, 'og:url', faqUrl(language));
   html = setMetaProperty(html, 'og:title', copy.title);
   html = setMetaProperty(html, 'og:description', description);
+  html = setMetaProperty(html, 'og:locale', ogLocale(language));
   html = setMetaName(html, 'twitter:url', faqUrl(language));
   html = setMetaName(html, 'twitter:title', copy.title);
   html = setMetaName(html, 'twitter:description', description);
@@ -1217,7 +1320,8 @@ function articleAlternates(post, clusters) {
 
 function generateSitemap(posts, clusters) {
   const today = isoDate(new Date().toISOString());
-  const newestPostDate = posts[0]?.updated_at ? isoDate(posts[0].updated_at) : today;
+  const indexablePosts = posts.filter(post => post.indexable);
+  const newestPostDate = indexablePosts[0]?.updated_at ? isoDate(indexablePosts[0].updated_at) : today;
   const urls = [
     sitemapUrlEntry({
       loc: BASE_URL,
@@ -1239,11 +1343,11 @@ function generateSitemap(posts, clusters) {
       priority: language === 'ru' ? '0.8' : '0.7',
       alternates: blogOrFaqAlternates('faq'),
     })),
-    ...posts.map(post => sitemapUrlEntry({
+    ...indexablePosts.map(post => sitemapUrlEntry({
       loc: articleUrl(post),
       lastmod: isoDate(post.updated_at || post.created_at),
       changefreq: 'monthly',
-      priority: post.hidden_from_users ? '0.6' : '0.75',
+      priority: '0.75',
       alternates: articleAlternates(post, clusters),
     })),
   ];
@@ -1321,11 +1425,13 @@ async function generateSeoFiles(data) {
   const translationIndex = buildTranslationsIndex(translations);
   const sitemap = generateSitemap(posts, clusters);
   const redirects = redirectEntries(posts);
+  const indexableCount = posts.filter(post => post.indexable).length;
+  const nonIndexableCount = posts.length - indexableCount;
   await writeSitemap(sitemap);
   await writeRedirectArtifacts(redirects);
 
   if (sitemapOnly) {
-    console.log(`[seo-build] Generated sitemap with ${publishedCount} published article URLs.`);
+    console.log(`[seo-build] Generated sitemap with ${indexableCount} indexable article URLs from ${publishedCount} published records.`);
     console.log(`[seo-build] Generated ${redirects.length} legacy slug redirect mappings.`);
     return;
   }
@@ -1368,9 +1474,9 @@ async function generateSeoFiles(data) {
     }
   }
 
-  console.log(`[seo-build] Generated ${publishedCount} SEO-ready article pages.`);
+  console.log(`[seo-build] Generated ${publishedCount} article pages (${indexableCount} indexable, ${nonIndexableCount} archived or merged).`);
   console.log(`[seo-build] Generated blog and FAQ indexes for ${LANGUAGES.length} languages.`);
-  console.log(`[seo-build] Generated sitemap with ${publishedCount} published article URLs.`);
+  console.log(`[seo-build] Generated sitemap with ${indexableCount} indexable article URLs.`);
   console.log(`[seo-build] Generated ${redirects.length} legacy slug redirects.`);
 }
 

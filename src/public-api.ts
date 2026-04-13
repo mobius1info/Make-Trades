@@ -1,4 +1,11 @@
 import { supabaseAnonKey, supabaseUrl } from './supabase-config';
+import { resolvePublicArticleSlug } from './article-slugs';
+import {
+  enrichBlogArticle,
+  getBlogArticleState,
+  isIndexableBlogArticle,
+  sortBlogArticlesForListing,
+} from './blog-article-groups';
 
 type Primitive = string | number | boolean;
 type FilterOperator = 'eq' | 'neq';
@@ -58,6 +65,12 @@ export interface PublicBlogPost {
     slug: string;
     legacy_slug?: string;
   }>;
+  article_group_key?: string;
+  content_status?: 'core' | 'merged' | 'archived';
+  indexable?: boolean;
+  canonical_target_slug?: string;
+  primary_slug?: string;
+  listing_order?: number;
 }
 
 export interface PublicFAQItem {
@@ -218,6 +231,30 @@ async function maybeSingleRow<T>(tableName: string, options: QueryOptions): Prom
   return rows[0] || null;
 }
 
+function enrichPublicBlogPost<T extends PublicBlogPost>(post: T): T {
+  return enrichBlogArticle(post) as T;
+}
+
+function enrichPublicBlogPosts<T extends PublicBlogPost>(posts: T[]): T[] {
+  return posts.map(post => enrichPublicBlogPost(post));
+}
+
+async function fetchPublishedBlogPostsByLanguage(language: string): Promise<PublicBlogPost[]> {
+  const posts = await selectRows<PublicBlogPost>('blog_posts', {
+    select:
+      'id,title,slug,excerpt,content,image_url,language,published,hidden_from_users,created_at,updated_at,author,category,tags,reading_time,meta_title,meta_description',
+    filters: [
+      { column: 'language', value: language },
+      { column: 'published', value: true },
+    ],
+    order: { column: 'created_at', ascending: false },
+    cacheKey: `published-blog-posts-by-language:${language}`,
+    ttlMs: 10 * 60 * 1000,
+  });
+
+  return enrichPublicBlogPosts(posts);
+}
+
 async function callRpc<T>(
   functionName: string,
   body: Record<string, unknown>,
@@ -248,19 +285,20 @@ export async function fetchTranslations(language: string): Promise<TranslationRo
 }
 
 export async function fetchVisibleBlogPosts(language: string, limit?: number): Promise<PublicBlogPost[]> {
-  return selectRows<PublicBlogPost>('blog_posts', {
+  const posts = await selectRows<PublicBlogPost>('blog_posts', {
     select:
       'id,title,slug,excerpt,image_url,language,published,hidden_from_users,created_at,updated_at,author,category,tags,reading_time',
     filters: [
       { column: 'language', value: language },
       { column: 'published', value: true },
-      { column: 'hidden_from_users', value: false },
     ],
     order: { column: 'created_at', ascending: false },
-    limit,
-    cacheKey: `visible-blog-posts:${language}:${limit || 'all'}`,
+    cacheKey: `visible-blog-posts:core:${language}:${limit || 'all'}`,
     ttlMs: 10 * 60 * 1000,
   });
+
+  const visiblePosts = sortBlogArticlesForListing(enrichPublicBlogPosts(posts).filter(isIndexableBlogArticle));
+  return typeof limit === 'number' ? visiblePosts.slice(0, limit) : visiblePosts;
 }
 
 export async function fetchRelatedBlogPosts(
@@ -269,24 +307,24 @@ export async function fetchRelatedBlogPosts(
   excludeId: string,
   limit: number = 3
 ): Promise<PublicBlogPost[]> {
-  return selectRows<PublicBlogPost>('blog_posts', {
+  const posts = await selectRows<PublicBlogPost>('blog_posts', {
     select: 'id,title,slug,excerpt,image_url,language,created_at,author,category,reading_time',
     filters: [
       { column: 'language', value: language },
       { column: 'published', value: true },
-      { column: 'hidden_from_users', value: false },
       { column: 'category', value: category },
       { column: 'id', operator: 'neq', value: excludeId },
     ],
     order: { column: 'created_at', ascending: false },
-    limit,
-    cacheKey: `related-posts:${language}:${category}:${excludeId}:${limit}`,
+    cacheKey: `related-posts:core:${language}:${category}:${excludeId}:${limit}`,
     ttlMs: 10 * 60 * 1000,
   });
+
+  return sortBlogArticlesForListing(enrichPublicBlogPosts(posts).filter(isIndexableBlogArticle)).slice(0, limit);
 }
 
 export async function fetchPublishedBlogPost(slug: string, language: string): Promise<PublicBlogPost | null> {
-  return maybeSingleRow<PublicBlogPost>('blog_posts', {
+  const exactMatch = await maybeSingleRow<PublicBlogPost>('blog_posts', {
     select:
       'id,title,slug,excerpt,content,image_url,language,published,hidden_from_users,created_at,updated_at,author,category,tags,reading_time,meta_title,meta_description',
     filters: [
@@ -297,6 +335,23 @@ export async function fetchPublishedBlogPost(slug: string, language: string): Pr
     cacheKey: `published-post:${language}:${slug}`,
     ttlMs: 10 * 60 * 1000,
   });
+
+  if (exactMatch) {
+    return enrichPublicBlogPost(exactMatch);
+  }
+
+  const languagePosts = await fetchPublishedBlogPostsByLanguage(language);
+  const fallbackMatch = languagePosts.find(post => {
+    if (post.slug === slug) return true;
+
+    const state = getBlogArticleState(post);
+    if (state.primary_slug === slug) return true;
+    if (state.canonical_target_slug === slug) return true;
+
+    return resolvePublicArticleSlug(post) === slug;
+  });
+
+  return fallbackMatch || null;
 }
 
 export async function fetchFaqItems(language: string, category: string = 'all', limit?: number): Promise<PublicFAQItem[]> {
