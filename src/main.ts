@@ -103,14 +103,16 @@ function setById(id: string, key: string, fallback: string) {
 function renderPreviewCardImage(post: {
   image_url?: string | null;
   slug: string;
+  shared_image_seed?: string;
   title: string;
 }): string {
-  const image = getPostImageAttributes(post.image_url, post.slug, 'card');
+  const imageSeed = post.shared_image_seed || post.slug;
+  const image = getPostImageAttributes(post.image_url, imageSeed, 'card');
 
   return `<img src="${image.src}"
              alt="${post.title}"
              class="blog-card-image"
-             data-post-slug="${post.slug}"
+             data-post-slug="${imageSeed}"
              data-image-kind="card"
              width="${image.width}"
              height="${image.height}"

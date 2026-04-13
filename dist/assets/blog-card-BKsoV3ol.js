@@ -1,8 +1,8 @@
-import{g as s}from"./post-images-Cr8VZ4Jy.js";import{s as n,o as c}from"./content-loader-DYlrd8Kk.js";const d={ru:"ru-RU",en:"en-US",de:"de-DE",uk:"uk-UA",zh:"zh-CN"};function o(e){return d[e]||"en-US"}function m(e,t){const a=s(e.image_url,e.slug,"card");return`<img src="${a.src}"
+import{g as s}from"./post-images-Cr8VZ4Jy.js";import{s as n,o as c}from"./content-loader-DvB8epkS.js";const d={ru:"ru-RU",en:"en-US",de:"de-DE",uk:"uk-UA",zh:"zh-CN"};function m(e){return d[e]||"en-US"}function o(e,t){const r=e.shared_image_seed||e.slug,a=s(e.image_url,r,"card");return`<img src="${a.src}"
              alt="${e.title}"
              class="blog-card-image"
              itemprop="image"
-             data-post-slug="${e.slug}"
+             data-post-slug="${r}"
              data-image-kind="card"
              width="${a.width}"
              height="${a.height}"
@@ -10,9 +10,9 @@ import{g as s}from"./post-images-Cr8VZ4Jy.js";import{s as n,o as c}from"./conten
              ${a.sizes?`sizes="${a.sizes}"`:""}
              loading="${t?"eager":"lazy"}"
              ${t?'fetchpriority="high"':""}
-             decoding="async">`}function p(e,t,a={}){const r=a.minReadLabel||"min",i=a.prioritizeImage===!0;return`
+             decoding="async">`}function p(e,t,r={}){const a=r.minReadLabel||"min",i=r.prioritizeImage===!0;return`
       <a href="${n(e,t)}" class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
-        ${m(e,i)}
+        ${o(e,i)}
         <div class="blog-card-content">
           <div class="blog-card-category">${e.category||""}</div>
           <h3 itemprop="headline">${e.title}</h3>
@@ -23,12 +23,12 @@ import{g as s}from"./post-images-Cr8VZ4Jy.js";import{s as n,o as c}from"./conten
             </span>
             <span>&bull;</span>
             <time itemprop="datePublished" datetime="${e.created_at}">
-              ${new Date(e.created_at).toLocaleDateString(o(t))}
+              ${new Date(e.created_at).toLocaleDateString(m(t))}
             </time>
             <span>&bull;</span>
-            <span>${e.reading_time||5} ${r}</span>
+            <span>${e.reading_time||5} ${a}</span>
           </div>
         </div>
         <meta itemprop="url" content="${c(e,t)}">
       </a>
-    `}export{o as g,p as r};
+    `}export{m as g,p as r};

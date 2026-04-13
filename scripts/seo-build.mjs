@@ -14,6 +14,7 @@ const POST_IMAGE_VARIANT_WIDTHS = [480, 768, 1280];
 const POST_IMAGE_BASE_WIDTH = 1280;
 const POST_IMAGE_BASE_HEIGHT = 720;
 const groupOrderByKey = new Map(blogArticleGroupsManifest.coreOrder.map((key, index) => [key, index]));
+const SHARED_IMAGE_LANGUAGE_PRIORITY = ['en', 'ru', 'de', 'uk', 'zh'];
 const OG_LOCALES = {
   ru: 'ru_RU',
   en: 'en_US',
@@ -106,16 +107,21 @@ function articleArchitecture(post) {
       content_status: 'archived',
       indexable: false,
       canonical_target_slug: post.canonical_slug || slug,
+      shared_image_seed: null,
       listing_order: Number.MAX_SAFE_INTEGER,
       alternates: [],
     };
   }
+
+  const sharedImageSeed =
+    SHARED_IMAGE_LANGUAGE_PRIORITY.map(languageKey => match.group.translations?.[languageKey]?.primary).find(Boolean) || null;
 
   return {
     article_group_key: match.group.key,
     content_status: match.role === 'primary' ? 'core' : 'merged',
     indexable: match.role === 'primary',
     canonical_target_slug: match.translation.primary,
+    shared_image_seed: sharedImageSeed,
     listing_order: groupOrderByKey.get(match.group.key) ?? Number.MAX_SAFE_INTEGER,
     alternates: LANGUAGES.map(alternateLanguage => ({
       language: alternateLanguage,
@@ -526,8 +532,12 @@ function generatedPostImageSizes(kind = 'card') {
   return '(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) calc((100vw - 6rem) / 2), 400px';
 }
 
+function postImageSeed(post) {
+  return post.shared_image_seed || post.slug;
+}
+
 function postImageAttributes(post, kind = 'card') {
-  const srcset = generatedPostImageSrcSet(post.slug);
+  const srcset = generatedPostImageSrcSet(postImageSeed(post));
 
   return {
     src: postImageUrl(post),
@@ -557,11 +567,11 @@ function absoluteImageUrl(imageUrl) {
 }
 
 function postImageUrl(post) {
-  return normalizePostImageUrl(post.image_url, post.slug);
+  return normalizePostImageUrl(post.image_url, postImageSeed(post));
 }
 
 function postSeoImageUrl(post) {
-  return seoPostImageUrl(post.image_url, post.slug);
+  return seoPostImageUrl(post.image_url, postImageSeed(post));
 }
 
 function postImageAbsoluteUrl(post) {
@@ -605,7 +615,7 @@ function prerenderedPostData(post, clusters) {
   return {
     ...post,
     image_url: postImageUrl(post),
-    content: sanitizeArticleHtmlImages(post.content, post.slug),
+    content: sanitizeArticleHtmlImages(post.content, postImageSeed(post)),
     alternates: articleAlternatesPayload(post, clusters),
   };
 }
@@ -1075,7 +1085,7 @@ function articleHtml(template, post, posts, clusters, translationIndex) {
   html = replaceElementContentById(html, 'post-author', escapeHtml(post.author || 'MakeTrades Team'));
   html = setAttributeById(html, 'post-image', 'src', heroImage.src);
   html = setAttributeById(html, 'post-image', 'alt', post.title);
-  html = setAttributeById(html, 'post-image', 'data-post-slug', post.slug);
+  html = setAttributeById(html, 'post-image', 'data-post-slug', postImageSeed(post));
   html = setAttributeById(html, 'post-image', 'data-image-kind', 'hero');
   html = setAttributeById(html, 'post-image', 'width', String(heroImage.width));
   html = setAttributeById(html, 'post-image', 'height', String(heroImage.height));
@@ -1088,7 +1098,7 @@ function articleHtml(template, post, posts, clusters, translationIndex) {
   html = replaceElementContentById(
     html,
     'post-text',
-    `${sanitizeArticleHtmlImages(post.content || `<p>${escapeHtml(post.excerpt || description)}</p>`, post.slug)}${internalLinks}`
+    `${sanitizeArticleHtmlImages(post.content || `<p>${escapeHtml(post.excerpt || description)}</p>`, postImageSeed(post))}${internalLinks}`
   );
   html = replaceElementContentById(
     html,

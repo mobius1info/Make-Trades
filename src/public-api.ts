@@ -70,6 +70,7 @@ export interface PublicBlogPost {
   indexable?: boolean;
   canonical_target_slug?: string;
   primary_slug?: string;
+  shared_image_seed?: string;
   listing_order?: number;
 }
 

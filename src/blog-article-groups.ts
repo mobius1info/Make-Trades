@@ -23,6 +23,7 @@ export interface BlogArticleState {
   indexable: boolean;
   primary_slug?: string;
   canonical_target_slug?: string;
+  shared_image_seed?: string;
   listing_order?: number;
   alternates?: Array<{
     language: BlogGroupLanguage;
@@ -43,6 +44,7 @@ export interface BlogArticleIdentity {
 const manifest = groupsManifest as ManifestShape;
 const groupOrderByKey = new Map(manifest.coreOrder.map((key, index) => [key, index]));
 const groupsByKey = new Map(manifest.groups.map(group => [group.key, group]));
+const SHARED_IMAGE_LANGUAGE_PRIORITY: BlogGroupLanguage[] = ['en', 'ru', 'de', 'uk', 'zh'];
 
 type GroupMatch =
   | {
@@ -81,6 +83,15 @@ export function getBlogArticleGroup(key: string): BlogArticleGroupDefinition | n
   return groupsByKey.get(key) || null;
 }
 
+function getSharedImageSeed(group: BlogArticleGroupDefinition): string {
+  for (const language of SHARED_IMAGE_LANGUAGE_PRIORITY) {
+    const seed = group.translations[language]?.primary;
+    if (seed) return seed;
+  }
+
+  return '';
+}
+
 export function getBlogArticleState(identity: BlogArticleIdentity): BlogArticleState {
   const slug = String(identity.slug || '').trim();
   const language = String(identity.language || '').trim();
@@ -113,6 +124,7 @@ export function getBlogArticleState(identity: BlogArticleIdentity): BlogArticleS
     indexable: match.role === 'primary',
     primary_slug: match.translation.primary,
     canonical_target_slug: match.translation.primary,
+    shared_image_seed: getSharedImageSeed(match.group) || undefined,
     listing_order: groupOrderByKey.get(match.group.key),
     alternates,
   };

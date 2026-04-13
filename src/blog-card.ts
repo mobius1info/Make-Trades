@@ -20,13 +20,14 @@ export function getBlogLocale(language: string): string {
 }
 
 function renderBlogCardImage(post: PublicBlogPost, prioritizeImage: boolean): string {
-  const image = getPostImageAttributes(post.image_url, post.slug, 'card');
+  const imageSeed = post.shared_image_seed || post.slug;
+  const image = getPostImageAttributes(post.image_url, imageSeed, 'card');
 
   return `<img src="${image.src}"
              alt="${post.title}"
              class="blog-card-image"
              itemprop="image"
-             data-post-slug="${post.slug}"
+             data-post-slug="${imageSeed}"
              data-image-kind="card"
              width="${image.width}"
              height="${image.height}"

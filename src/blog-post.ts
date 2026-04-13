@@ -172,12 +172,17 @@ function replaceAlternateLinks(post: BlogPost, pageUrl: string) {
   document.head.appendChild(fragment);
 }
 
+function getPostImageSeed(post: BlogPost): string {
+  return post.shared_image_seed || post.slug;
+}
+
 function applyHeroImageAttributes(imageEl: HTMLImageElement, post: BlogPost) {
-  const image = getPostImageAttributes(post.image_url, post.slug, 'hero');
+  const imageSeed = getPostImageSeed(post);
+  const image = getPostImageAttributes(post.image_url, imageSeed, 'hero');
 
   imageEl.src = image.src;
   imageEl.alt = post.title;
-  imageEl.dataset.postSlug = post.slug;
+  imageEl.dataset.postSlug = imageSeed;
   imageEl.dataset.imageKind = 'hero';
   imageEl.loading = 'eager';
   imageEl.decoding = 'async';
@@ -298,7 +303,7 @@ function updateMetaTags(post: BlogPost) {
   if (ogDescription) ogDescription.content = post.excerpt || '';
 
   const ogImage = document.getElementById('og-image') as HTMLMetaElement;
-  const postImageUrl = seoPostImageUrl(post.image_url, post.slug);
+  const postImageUrl = seoPostImageUrl(post.image_url, getPostImageSeed(post));
   const postImageAbsoluteUrl = absoluteImageUrl(postImageUrl);
 
   if (ogImage) ogImage.content = postImageAbsoluteUrl;
@@ -474,7 +479,7 @@ function renderBlogPost(post: BlogPost) {
   }
 
   const textEl = document.getElementById('post-text');
-  if (textEl) textEl.innerHTML = sanitizeArticleHtmlImages(normalizedPost.content || '', normalizedPost.slug);
+  if (textEl) textEl.innerHTML = sanitizeArticleHtmlImages(normalizedPost.content || '', getPostImageSeed(normalizedPost));
 
   const tagsEl = document.getElementById('post-tags');
   if (tagsEl && normalizedPost.tags && normalizedPost.tags.length > 0) {
