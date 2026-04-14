@@ -27,26 +27,68 @@ const blogIndexCopy = {
     title: 'Блог MakeTrades - статьи о трейдинге и брокерском бизнесе',
     heading: 'Блог MakeTrades',
     subtitle: 'Полезные статьи о создании брокерской компании, торговых стратегиях и управлении финансовыми платформами',
+    keywords: 'блог о запуске брокера, white label платформа, CRM для брокера, forex брокер, торговая платформа',
   },
   en: {
     title: 'MakeTrades Blog - trading and brokerage business articles',
     heading: 'MakeTrades Blog',
     subtitle: 'Useful articles about brokerage launch, trading strategies and financial platform management',
+    keywords: 'broker launch blog, white label platform, broker CRM, forex brokerage, trading platform provider',
   },
   de: {
     title: 'MakeTrades Blog - Artikel zu Trading und Brokerage',
     heading: 'MakeTrades Blog',
     subtitle: 'Praxisnahe Artikel zu Brokerage-Start, Handelsstrategien und Finanzplattformen',
+    keywords: 'Broker-Launch Blog, White-Label-Plattform, Broker CRM, Forex-Brokerage, Trading-Plattform-Anbieter',
   },
   uk: {
     title: 'Блог MakeTrades - статті про трейдинг і брокерський бізнес',
     heading: 'Блог MakeTrades',
     subtitle: 'Корисні статті про запуск брокера, торгові стратегії та керування фінансовими платформами',
+    keywords: 'блог про запуск брокера, white label платформа, CRM для брокера, forex брокер, торгова платформа',
   },
   zh: {
     title: 'MakeTrades Blog - 交易和经纪业务文章',
     heading: 'MakeTrades Blog',
     subtitle: '关于经纪业务启动、交易策略和金融平台管理的实用文章',
+    keywords: '经纪商启动博客, 白标平台, 经纪商CRM, 外汇经纪业务, 交易平台',
+  },
+};
+
+const homeSeoCopy = {
+  ru: {
+    title: 'MakeTrades - white label платформа для запуска forex брокера',
+    description:
+      'Платформа для запуска forex брокера под ключ: white label, CRM для брокера, торговая платформа, платежи и инфраструктура MakeTrades.',
+    keywords:
+      'запуск forex брокера, white label платформа, CRM для брокера, торговая платформа для брокера, инфраструктура брокера',
+  },
+  en: {
+    title: 'MakeTrades - White Label Platform for Forex Broker Launch',
+    description:
+      'Launch a forex brokerage with a white-label platform, broker CRM, trading platform, payments and operating infrastructure from MakeTrades.',
+    keywords:
+      'forex broker launch, white label platform, broker CRM, trading platform for brokers, brokerage infrastructure',
+  },
+  de: {
+    title: 'MakeTrades - White-Label-Plattform für den Forex-Broker-Start',
+    description:
+      'Starten Sie einen Forex-Broker mit White-Label-Plattform, Broker-CRM, Trading-Infrastruktur, Zahlungen und technischem Support von MakeTrades.',
+    keywords:
+      'Forex Broker starten, White-Label-Plattform, Broker CRM, Trading-Plattform für Broker, Broker-Infrastruktur',
+  },
+  uk: {
+    title: 'MakeTrades - white label платформа для запуску forex брокера',
+    description:
+      'Запускайте forex брокера на базі white-label платформи з CRM для брокера, торговою платформою, платежами та інфраструктурою MakeTrades.',
+    keywords:
+      'запуск forex брокера, white label платформа, CRM для брокера, торгова платформа для брокера, інфраструктура брокера',
+  },
+  zh: {
+    title: 'MakeTrades - 外汇经纪商白标平台与业务启动方案',
+    description:
+      '通过 MakeTrades 白标平台启动外汇经纪业务，获得经纪商 CRM、交易平台、支付集成与运营基础设施。',
+    keywords: '外汇经纪商搭建, 白标平台, 经纪商CRM, 经纪业务启动, 交易平台基础设施',
   },
 };
 
@@ -777,6 +819,11 @@ function replaceElementContentById(html, id, content) {
   return html.replace(re, (_match, start, _tagName, end) => `${start}${content}${end}`);
 }
 
+function removeElementById(html, id) {
+  const re = new RegExp(`\\s*<([a-z0-9]+)\\b[^>]*\\bid="${id}"[^>]*>[\\s\\S]*?<\\/\\1>`, 'i');
+  return html.replace(re, '');
+}
+
 function replaceJsonLdById(html, id, data) {
   return replaceElementContentById(html, id, `\n${escapeScriptJson(data)}\n    `);
 }
@@ -1041,6 +1088,16 @@ function articleHtml(template, post, posts, clusters, translationIndex) {
     'postCopyright',
     escapeHtml(translate(translationIndex, post.language, 'footer.copyright', '© 2026 MakeTrades. All rights reserved.'))
   );
+  html = replaceElementContentById(
+    html,
+    'demoModalTitle',
+    escapeHtml(translate(translationIndex, post.language, 'modal.demo_title', 'Request Demo Account'))
+  );
+  html = replaceElementContentById(
+    html,
+    'bonusModalTitle',
+    escapeHtml(translate(translationIndex, post.language, 'bonus.title', 'Get bonuses!'))
+  );
 
   html = html.replace(/<div id="loading" style="([^"]*)">/i, '<div id="loading" style="display: none; $1">');
   html = setAttributeById(html, 'post-content', 'style', 'display: block');
@@ -1080,6 +1137,8 @@ function articleHtml(template, post, posts, clusters, translationIndex) {
     'related-posts-grid',
     related.map(candidate => blogCard(candidate, candidate.language, translationIndex)).join('')
   );
+  html = removeElementById(html, 'loading');
+  html = removeElementById(html, 'error');
   html = insertBeforeEntryScript(
     html,
     `<script>window.__MAKETRADES_PRERENDERED_POST__=${escapeScriptJson(prerenderedPostData(post, clusters))};</script>`
@@ -1168,6 +1227,7 @@ function blogIndexHtml(template, language, posts, translationIndex) {
   html = replaceHtmlLang(html, language);
   html = replaceTitle(html, copy.title);
   html = setMetaName(html, 'description', description);
+  html = setMetaName(html, 'keywords', copy.keywords);
   html = setMetaProperty(html, 'og:url', blogIndexUrl(language));
   html = setMetaProperty(html, 'og:title', copy.title);
   html = setMetaProperty(html, 'og:description', description);
@@ -1374,11 +1434,13 @@ function localizeHomeContent(template, language, translationIndex) {
 }
 
 function homeSeo(language, translationIndex) {
+  const copy = homeSeoCopy[language] || homeSeoCopy.en;
   const heroTitle = translate(translationIndex, language, 'hero.title', 'MakeTrades');
   const heroSubtitle = translate(translationIndex, language, 'hero.subtitle', 'Turnkey platform for brokers and exchanges');
   return {
-    title: `MakeTrades - ${heroTitle}`,
-    description: heroSubtitle,
+    title: copy.title || `MakeTrades - ${heroTitle}`,
+    description: copy.description || heroSubtitle,
+    keywords: copy.keywords,
   };
 }
 
@@ -1416,6 +1478,7 @@ function homeHtml(template, language, posts, faqItems, translationIndex) {
   html = replaceTitle(html, seo.title);
   html = setMetaName(html, 'title', seo.title);
   html = setMetaName(html, 'description', seo.description);
+  html = setMetaName(html, 'keywords', seo.keywords);
   html = setMetaProperty(html, 'og:url', homeUrl(language));
   html = setMetaProperty(html, 'og:title', seo.title);
   html = setMetaProperty(html, 'og:description', seo.description);
