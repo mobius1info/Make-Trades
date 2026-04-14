@@ -1,18 +1,22 @@
-import { loadTranslations } from './content-loader';
+import { getFaqPageCopy, normalizeFaqCategory } from './faq-content';
 import { fetchFaqItems, type PublicFAQItem } from './public-api';
-import { faqPath, getFaqLanguageFromPath, homePath, isProductionBuild, legacyFaqPath } from './seo-urls';
+import {
+  faqPath,
+  getFaqLanguageFromPath,
+  homePath,
+  isProductionBuild,
+  legacyFaqPath,
+  normalizeLanguage,
+} from './seo-urls';
 
-let currentLanguage =
-  getFaqLanguageFromPath(window.location.pathname) ||
-  new URLSearchParams(window.location.search).get('lang') ||
-  'ru';
+let currentLanguage = normalizeLanguage(
+  getFaqLanguageFromPath(window.location.pathname) || new URLSearchParams(window.location.search).get('lang') || 'ru'
+);
 let currentCategory = 'all';
-let translations: Record<string, string> = {};
 let canReusePrerenderedFaqItems = true;
-let translationsLoaded = false;
 
-function t(key: string, fallback: string): string {
-  return translations[key] || fallback;
+function pageCopy() {
+  return getFaqPageCopy(currentLanguage);
 }
 
 function hasPrerenderedFaqItems(): boolean {
@@ -23,67 +27,54 @@ function canReusePrerenderedShell(): boolean {
   return Boolean(getFaqLanguageFromPath(window.location.pathname)) && hasPrerenderedFaqItems();
 }
 
-async function ensureTranslationsLoaded() {
-  if (translationsLoaded) return;
-
-  translations = await loadTranslations(currentLanguage);
-  translationsLoaded = true;
-  updatePageContent();
-}
-
 async function setLanguage(lang: string) {
+  const normalizedLanguage = normalizeLanguage(lang);
+
   if (getFaqLanguageFromPath(window.location.pathname) || isProductionBuild()) {
-    window.location.assign(faqPath(lang));
+    window.location.assign(faqPath(normalizedLanguage));
     return;
   }
 
-  currentLanguage = lang;
-  document.documentElement.lang = lang;
+  currentLanguage = normalizedLanguage;
+  document.documentElement.lang = currentLanguage;
   document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-  document.querySelector(`[data-lang="${lang}"]`)?.classList.add('active');
-  window.history.replaceState({}, '', legacyFaqPath(lang));
+  document.querySelector(`[data-lang="${currentLanguage}"]`)?.classList.add('active');
+  window.history.replaceState({}, '', legacyFaqPath(currentLanguage));
 
-  translations = await loadTranslations(lang);
   updatePageContent();
   await loadAllFAQItems(true);
 }
 
 function updatePageContent() {
-  const setById = (id: string, key: string, fallback: string) => {
+  const copy = pageCopy();
+  const setById = (id: string, value: string) => {
     const element = document.getElementById(id);
-    if (element) element.textContent = t(key, fallback);
+    if (element) element.textContent = value;
   };
 
-  setById('faqPageTitle', 'faq_page.title', 'Frequently Asked Questions');
-  setById(
-    'faqPageSubtitle',
-    'faq_page.subtitle',
-    'Find answers to the most popular questions about the MakeTrades platform'
-  );
-  setById('catAll', 'faq_page.cat_all', 'All questions');
-  setById('catPricing', 'faq_page.cat_pricing', 'Pricing');
-  setById('catFeatures', 'faq_page.cat_features', 'Features');
-  setById('catSupport', 'faq_page.cat_support', 'Support');
-  setById('faqCopyright', 'footer.copyright', '© 2026 MakeTrades. All rights reserved.');
-  setById('backHomeBtn', 'button.back_home', 'Home');
+  setById('faqPageTitle', copy.heading);
+  setById('faqPageSubtitle', copy.subtitle);
+  setById('catAll', copy.categories.all);
+  setById('catPricing', copy.categories.launch);
+  setById('catFeatures', copy.categories.platform);
+  setById('catSupport', copy.categories.operations);
+  setById('faqCopyright', copy.copyright);
+  setById('backHomeBtn', copy.backHome);
 
   const backHomeLink = document.getElementById('backHomeBtn') as HTMLAnchorElement | null;
   if (backHomeLink) backHomeLink.href = homePath(currentLanguage);
 }
 
 async function setCategory(category: string) {
-  currentCategory = category;
+  currentCategory = normalizeFaqCategory(category);
   document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-  document.querySelector(`[data-category="${category}"]`)?.classList.add('active');
-  if (category !== 'all') {
+  document.querySelector(`[data-category="${currentCategory}"]`)?.classList.add('active');
+
+  if (currentCategory !== 'all') {
     canReusePrerenderedFaqItems = false;
   }
 
-  if (!translationsLoaded) {
-    await ensureTranslationsLoaded();
-  }
-
-  await loadAllFAQItems(category !== 'all' || !canReusePrerenderedFaqItems);
+  await loadAllFAQItems(currentCategory !== 'all' || !canReusePrerenderedFaqItems);
 }
 
 function renderFaqItems(faqList: HTMLElement, items: PublicFAQItem[]) {
@@ -114,16 +105,14 @@ async function loadAllFAQItems(force: boolean = false) {
     return;
   }
 
-  faqList.innerHTML = `<p style="text-align: center;">${t('faq_page.loading', 'Loading questions...')}</p>`;
+  const copy = pageCopy();
+  faqList.innerHTML = `<p style="text-align: center;">${copy.loading}</p>`;
 
   try {
     const items = await fetchFaqItems(currentLanguage, currentCategory);
 
     if (!items || items.length === 0) {
-      faqList.innerHTML = `<p style="text-align: center; color: var(--neutral-500);">${t(
-        'faq_page.empty',
-        'Questions coming soon'
-      )}</p>`;
+      faqList.innerHTML = `<p style="text-align: center; color: var(--neutral-500);">${copy.empty}</p>`;
       updateFAQSchema([]);
       return;
     }
@@ -133,10 +122,7 @@ async function loadAllFAQItems(force: boolean = false) {
     canReusePrerenderedFaqItems = false;
   } catch (error) {
     console.error('Error loading FAQ items:', error);
-    faqList.innerHTML = `<p style="text-align: center; color: var(--error-500);">${t(
-      'faq.error',
-      'Error loading FAQ'
-    )}</p>`;
+    faqList.innerHTML = `<p style="text-align: center; color: var(--error-500);">${copy.error}</p>`;
     updateFAQSchema([]);
     canReusePrerenderedFaqItems = false;
   }
@@ -182,11 +168,14 @@ async function init() {
     });
   });
 
+  updatePageContent();
+
   if (!canReusePrerenderedShell()) {
-    await ensureTranslationsLoaded();
+    await loadAllFAQItems(true);
+    return;
   }
 
-  await loadAllFAQItems();
+  updateFAQSchema(await fetchFaqItems(currentLanguage, 'all'));
 }
 
 if (document.readyState === 'loading') {

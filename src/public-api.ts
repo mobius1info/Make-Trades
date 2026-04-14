@@ -6,6 +6,7 @@ import {
   isIndexableBlogArticle,
   sortBlogArticlesForListing,
 } from './blog-article-groups';
+import { getUnifiedFaqItems, normalizeFaqCategory } from './faq-content';
 
 type Primitive = string | number | boolean;
 type FilterOperator = 'eq' | 'neq';
@@ -356,20 +357,7 @@ export async function fetchPublishedBlogPost(slug: string, language: string): Pr
 }
 
 export async function fetchFaqItems(language: string, category: string = 'all', limit?: number): Promise<PublicFAQItem[]> {
-  const filters: QueryFilter[] = [{ column: 'language', value: language }];
-
-  if (category !== 'all') {
-    filters.push({ column: 'category', value: category });
-  }
-
-  return selectRows<PublicFAQItem>('faq_items', {
-    select: 'id,question,answer,language,order,category',
-    filters,
-    order: { column: 'order', ascending: true },
-    limit,
-    cacheKey: `faq-items:${language}:${category}:${limit || 'all'}`,
-    ttlMs: 10 * 60 * 1000,
-  });
+  return getUnifiedFaqItems(language, normalizeFaqCategory(category), limit);
 }
 
 export async function incrementPostViews(postId: string): Promise<void> {

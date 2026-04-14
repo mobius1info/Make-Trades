@@ -112,6 +112,46 @@ function renderPreviewCardImage(post: {
              decoding="async">`;
 }
 
+function renderFaqPreviewItems(items: Array<{ id: string; question: string; answer: string }>): string {
+  return items
+    .map(
+      item => `
+      <div class="faq-item" data-faq-id="${item.id}">
+        <div class="faq-question">
+          <span>${item.question}</span>
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <div>${item.answer}</div>
+        </div>
+      </div>
+    `
+    )
+    .join('');
+}
+
+function updateHomeFAQSchema(items: Array<{ question: string; answer: string }>) {
+  const schemaScript = document.getElementById('homeFaqSchema');
+  if (!schemaScript) return;
+
+  schemaScript.textContent = JSON.stringify(
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: items.map(item => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.answer,
+        },
+      })),
+    },
+    null,
+    2
+  );
+}
+
 async function updateContent() {
   setText('.hero-title', 'hero.title', 'Best solution for creating a broker');
   setText('.hero-subtitle', 'hero.subtitle', 'Turnkey creation of brokers, crypto exchanges and dealing centers with MakeTrades');
@@ -279,23 +319,16 @@ async function loadFAQItems(limit: number = 4, force: boolean = false) {
 
     if (!items || items.length === 0) {
       faqList.innerHTML = `<p style="text-align: center; color: var(--neutral-500);">${t('faq.empty', 'FAQ coming soon')}</p>`;
+      updateHomeFAQSchema([]);
       return;
     }
 
-    faqList.innerHTML = items.map(item => `
-      <div class="faq-item" data-faq-id="${item.id}">
-        <div class="faq-question">
-          <span>${item.question}</span>
-          <span>+</span>
-        </div>
-        <div class="faq-answer">
-          <div>${item.answer}</div>
-        </div>
-      </div>
-    `).join('');
+    faqList.innerHTML = renderFaqPreviewItems(items);
+    updateHomeFAQSchema(items);
   } catch (error) {
     console.error('Error loading FAQ items:', error);
     faqList.innerHTML = `<p style="text-align: center; color: var(--error-500);">${t('faq.error', 'Error loading FAQ')}</p>`;
+    updateHomeFAQSchema([]);
   }
 }
 

@@ -1,0 +1,366 @@
+{
+  "pageCopy": {
+    "ru": {
+      "title": "FAQ MakeTrades: запуск брокера, white label, CRM и лицензии",
+      "description": "Ответы о запуске forex брокера: white-label платформа, CRM для брокера, лицензии, платежи, инфраструктура и поддержка MakeTrades.",
+      "heading": "FAQ по запуску брокера и white-label платформе",
+      "subtitle": "Собрали практические ответы на вопросы о запуске forex брокера: white-label решение, CRM для брокера, лицензии, инфраструктура, платежи и техническая поддержка MakeTrades.",
+      "keywords": "запуск брокера, white label брокер, CRM для брокера, лицензия forex брокера, инфраструктура брокера",
+      "categories": {
+        "all": "Все вопросы",
+        "launch": "Запуск и лицензии",
+        "platform": "Платформа и CRM",
+        "operations": "Инфраструктура и поддержка"
+      },
+      "loading": "Загрузка вопросов...",
+      "empty": "FAQ обновляется. Вопросы скоро появятся.",
+      "error": "Не удалось загрузить FAQ",
+      "backHome": "На главную",
+      "copyright": "© 2026 MakeTrades. Все права защищены."
+    },
+    "en": {
+      "title": "MakeTrades FAQ: broker launch, white label, CRM and licensing",
+      "description": "Answers about launching a forex brokerage: white-label platform, broker CRM, licensing, payments, infrastructure and MakeTrades support.",
+      "heading": "FAQ About Broker Launch and White-Label Platform",
+      "subtitle": "Find practical answers about launching a forex brokerage: white-label setup, broker CRM, licensing, payments, infrastructure and support from MakeTrades.",
+      "keywords": "broker launch, white label broker, broker CRM, forex license, brokerage infrastructure",
+      "categories": {
+        "all": "All questions",
+        "launch": "Launch & Licensing",
+        "platform": "Platform & CRM",
+        "operations": "Infrastructure & Support"
+      },
+      "loading": "Loading questions...",
+      "empty": "The FAQ is being updated. Questions will appear soon.",
+      "error": "Unable to load FAQ",
+      "backHome": "Home",
+      "copyright": "© 2026 MakeTrades. All rights reserved."
+    },
+    "de": {
+      "title": "MakeTrades FAQ: Broker-Launch, White Label, CRM und Lizenzierung",
+      "description": "Antworten zum Start eines Forex-Brokers: White-Label-Plattform, Broker-CRM, Lizenzierung, Zahlungen, Infrastruktur und Support von MakeTrades.",
+      "heading": "FAQ zum Broker-Launch und zur White-Label-Plattform",
+      "subtitle": "Hier finden Sie praktische Antworten zum Start eines Forex-Brokers: White-Label-Lösung, Broker-CRM, Lizenzierung, Zahlungsinfrastruktur und Support von MakeTrades.",
+      "keywords": "Broker starten, White Label Broker, Broker CRM, Forex Lizenz, Broker Infrastruktur",
+      "categories": {
+        "all": "Alle Fragen",
+        "launch": "Start & Lizenzierung",
+        "platform": "Plattform & CRM",
+        "operations": "Infrastruktur & Support"
+      },
+      "loading": "Fragen werden geladen...",
+      "empty": "Das FAQ wird aktualisiert. Fragen folgen in Kürze.",
+      "error": "FAQ konnte nicht geladen werden",
+      "backHome": "Startseite",
+      "copyright": "© 2026 MakeTrades. Alle Rechte vorbehalten."
+    },
+    "uk": {
+      "title": "FAQ MakeTrades: запуск брокера, white label, CRM і ліцензування",
+      "description": "Відповіді про запуск forex брокера: white-label платформа, CRM для брокера, ліцензування, платежі, інфраструктура та підтримка MakeTrades.",
+      "heading": "FAQ про запуск брокера і white-label платформу",
+      "subtitle": "Зібрали практичні відповіді на запитання про запуск forex брокера: white-label рішення, CRM для брокера, ліцензування, інфраструктуру, платежі та технічну підтримку MakeTrades.",
+      "keywords": "запуск брокера, white label брокер, CRM для брокера, ліцензія forex брокера, інфраструктура брокера",
+      "categories": {
+        "all": "Усі запитання",
+        "launch": "Запуск і ліцензування",
+        "platform": "Платформа і CRM",
+        "operations": "Інфраструктура і підтримка"
+      },
+      "loading": "Завантаження запитань...",
+      "empty": "FAQ оновлюється. Запитання з'являться найближчим часом.",
+      "error": "Не вдалося завантажити FAQ",
+      "backHome": "На головну",
+      "copyright": "© 2026 MakeTrades. Усі права захищені."
+    },
+    "zh": {
+      "title": "MakeTrades FAQ：经纪商搭建、白标平台、CRM 与牌照",
+      "description": "查看关于外汇经纪商搭建的常见问题：白标平台、经纪商 CRM、牌照、支付、基础设施以及 MakeTrades 支持。",
+      "heading": "经纪商搭建与白标平台 FAQ",
+      "subtitle": "这里整理了关于外汇经纪商搭建的实用问答，涵盖白标平台、经纪商 CRM、牌照、基础设施、支付以及 MakeTrades 技术支持。",
+      "keywords": "经纪商搭建, 白标经纪商平台, 经纪商CRM, 外汇牌照, 经纪商基础设施",
+      "categories": {
+        "all": "所有问题",
+        "launch": "启动与牌照",
+        "platform": "平台与 CRM",
+        "operations": "基础设施与支持"
+      },
+      "loading": "正在加载问题...",
+      "empty": "FAQ 正在更新，问题将很快显示。",
+      "error": "无法加载 FAQ",
+      "backHome": "首页",
+      "copyright": "© 2026 MakeTrades. 版权所有。"
+    }
+  },
+  "items": [
+    {
+      "id": "launch-broker",
+      "order": 1,
+      "category": "launch",
+      "translations": {
+        "ru": {
+          "question": "Как запустить forex брокера на white-label платформе?",
+          "answer": "Запуск forex брокера на white-label платформе обычно быстрее, чем разработка собственного софта с нуля, потому что торговое ядро, личный кабинет и административные инструменты уже готовы. На старте важно определить бизнес-модель брокера, целевые рынки, юридическую схему, платежный контур и внутренние операционные процессы. MakeTrades помогает собрать технологический стек, адаптировать его под бренд компании и выстроить последовательность запуска с понятным объемом работ и бюджетом."
+        },
+        "en": {
+          "question": "How do I launch a forex brokerage with a white-label platform?",
+          "answer": "Launching a forex brokerage with a white-label platform is usually faster than building software from scratch because the trading core, client area and admin tools are already prepared. At the start, it is important to define the broker business model, target markets, legal structure, payment flow and internal operating processes. MakeTrades helps assemble the technology stack, adapt it to your brand and plan a launch sequence with a realistic scope and budget."
+        },
+        "de": {
+          "question": "Wie startet man einen Forex-Broker mit einer White-Label-Plattform?",
+          "answer": "Der Start eines Forex-Brokers mit einer White-Label-Plattform ist in der Regel schneller als eine komplette Eigenentwicklung, weil Handelskern, Kundenbereich und Admin-Tools bereits vorbereitet sind. Zu Beginn sollten Geschäftsmodell, Zielmärkte, rechtliche Struktur, Zahlungsfluss und interne Prozesse klar definiert werden. MakeTrades hilft dabei, den Technologie-Stack aufzubauen, unter Ihrer Marke anzupassen und einen realistischen Launch-Plan mit klarem Umfang und Budget zu erstellen."
+        },
+        "uk": {
+          "question": "Як запустити forex брокера на white-label платформі?",
+          "answer": "Запуск forex брокера на white-label платформі зазвичай швидший, ніж розробка власного софту з нуля, тому що торгове ядро, кабінет клієнта та адміністративні інструменти вже готові. На старті важливо визначити бізнес-модель брокера, цільові ринки, юридичну структуру, платіжний контур і внутрішні операційні процеси. MakeTrades допомагає зібрати технологічний стек, адаптувати його під бренд компанії та вибудувати послідовність запуску з зрозумілим обсягом робіт і бюджетом."
+        },
+        "zh": {
+          "question": "如何通过白标平台启动外汇经纪商业务？",
+          "answer": "使用白标平台启动外汇经纪商，通常比从零开发整套软件更快，因为交易核心、客户后台和管理工具已经准备好。项目启动阶段需要先明确经纪商的商业模式、目标市场、法律结构、支付流程以及内部运营规则。MakeTrades 可以帮助您搭建技术栈、完成品牌化配置，并制定一个范围清晰、预算可控的上线计划。"
+        }
+      }
+    },
+    {
+      "id": "white-label-solution",
+      "order": 2,
+      "category": "launch",
+      "translations": {
+        "ru": {
+          "question": "Что входит в white-label решение MakeTrades для запуска брокера?",
+          "answer": "White-label решение MakeTrades включает ключевые компоненты, которые нужны для запуска брокерской компании: торговую платформу, клиентский кабинет, back office, CRM для брокера и базовые интеграции. Система может настраиваться под бренд, роли сотрудников, платежную логику, продажи и мультиязычную работу с клиентами. Это позволяет запускать брокерский бизнес на единой инфраструктуре, а не собирать продукт из разрозненных сервисов."
+        },
+        "en": {
+          "question": "What is included in the MakeTrades white-label broker solution?",
+          "answer": "The MakeTrades white-label broker solution includes the core components needed to launch a brokerage company: trading platform, client area, back office, broker CRM and baseline integrations. The setup can be configured for branding, team roles, payment logic, sales operations and multilingual client work. This allows a brokerage business to launch on one consistent infrastructure instead of stitching together separate vendors for every critical function."
+        },
+        "de": {
+          "question": "Was ist in der White-Label-Lösung von MakeTrades für Broker enthalten?",
+          "answer": "Die White-Label-Lösung von MakeTrades umfasst die zentralen Bausteine für den Start eines Brokerunternehmens: Handelsplattform, Kundenbereich, Backoffice, Broker-CRM und grundlegende Integrationen. Das System kann für Branding, Mitarbeiterrollen, Zahlungslogik, Vertrieb und mehrsprachige Kundenarbeit angepasst werden. So startet das Brokerage auf einer einheitlichen Infrastruktur, statt aus vielen unverbundenen Einzellösungen zusammengesetzt zu werden."
+        },
+        "uk": {
+          "question": "Що входить у white-label рішення MakeTrades для запуску брокера?",
+          "answer": "White-label рішення MakeTrades включає ключові компоненти, потрібні для запуску брокерської компанії: торгову платформу, кабінет клієнта, back office, CRM для брокера та базові інтеграції. Система може налаштовуватися під бренд, ролі співробітників, платіжну логіку, продажі та мультимовну роботу з клієнтами. Це дає змогу запускати брокерський бізнес на єдиній інфраструктурі, а не збирати продукт з розрізнених сервісів."
+        },
+        "zh": {
+          "question": "MakeTrades 的白标经纪商解决方案包含哪些内容？",
+          "answer": "MakeTrades 的白标经纪商解决方案包含启动经纪公司所需的核心模块，包括交易平台、客户后台、运营后台、经纪商 CRM 以及基础集成。系统可以根据品牌、团队角色、支付流程、销售流程和多语言服务方式进行配置。这样，经纪商可以在统一基础设施上上线，而不必把关键功能拆分给多个不同供应商。"
+        }
+      }
+    },
+    {
+      "id": "broker-launch-cost",
+      "order": 3,
+      "category": "launch",
+      "translations": {
+        "ru": {
+          "question": "Сколько стоит запуск брокера с MakeTrades?",
+          "answer": "Стоимость программного слоя MakeTrades начинается от 1000 долларов в месяц, но полный бюджет запуска брокера зависит от выбранной инфраструктуры, брендинга, интеграций и требований compliance. Обычно бюджет white-label брокера включает платформу, подключение платежей и ликвидности, юридическую подготовку, маркетинг и операционную команду. MakeTrades помогает заранее разложить технические расходы по этапам, чтобы компания понимала, что нужно для быстрого старта и что можно добавить позже."
+        },
+        "en": {
+          "question": "How much does it cost to start a brokerage business with MakeTrades?",
+          "answer": "The MakeTrades software layer starts from 1000 USD per month, but the full brokerage launch budget depends on infrastructure, branding, integrations and compliance requirements. In practice, a white-label broker budget usually includes the platform, payment and liquidity connections, legal setup, marketing and the operational team. MakeTrades helps break down the technical cost structure early so founders can see what is required for a lean launch and what can be added later."
+        },
+        "de": {
+          "question": "Wie viel kostet der Start eines Brokers mit MakeTrades?",
+          "answer": "Die Software-Ebene von MakeTrades startet ab 1000 USD pro Monat, doch das gesamte Budget für den Broker-Launch hängt von Infrastruktur, Branding, Integrationen und Compliance-Anforderungen ab. In der Praxis umfasst das Budget eines White-Label-Brokers meist die Plattform, Zahlungs- und Liquiditätsanbindungen, rechtliche Vorbereitung, Marketing und das operative Team. MakeTrades hilft dabei, die technischen Kosten früh nach Phasen aufzuschlüsseln, damit Gründer den Minimalumfang und spätere Ausbaustufen sauber planen können."
+        },
+        "uk": {
+          "question": "Скільки коштує запуск брокера з MakeTrades?",
+          "answer": "Вартість програмного шару MakeTrades стартує від 1000 доларів на місяць, але повний бюджет запуску брокера залежить від інфраструктури, брендингу, інтеграцій і вимог compliance. Зазвичай бюджет white-label брокера включає платформу, підключення платежів і ліквідності, юридичну підготовку, маркетинг та операційну команду. MakeTrades допомагає заздалегідь розкласти технічні витрати по етапах, щоб компанія розуміла, що потрібно для швидкого старту і що можна додати пізніше."
+        },
+        "zh": {
+          "question": "通过 MakeTrades 启动经纪商业务需要多少预算？",
+          "answer": "MakeTrades 软件层的起步价格为每月 1000 美元，但完整的经纪商启动预算还取决于基础设施、品牌化深度、集成数量以及合规要求。实际预算通常包括平台费用、支付和流动性连接、法律准备、市场推广以及运营团队成本。MakeTrades 会帮助客户提前拆分技术成本结构，让创始团队清楚哪些投入是上线必需项，哪些可以在后续扩展。"
+        }
+      }
+    },
+    {
+      "id": "launch-timeline",
+      "order": 4,
+      "category": "launch",
+      "translations": {
+        "ru": {
+          "question": "Сколько времени занимает запуск брокерской платформы и выход в прод?",
+          "answer": "Базовый запуск white-label брокера обычно проходит быстрее, чем кастомная разработка, потому что основная платформа уже развернута. Реальный срок зависит от брендинга, подключения платежей, юридической модели, compliance-процессов и готовности команды к операционной работе. Часто техническое окружение можно подготовить за несколько дней, а полноценный коммерческий запуск занимает больше времени, потому что нужно завершить интеграции, тестирование и внутренние регламенты."
+        },
+        "en": {
+          "question": "How long does it take to launch a broker platform and go live?",
+          "answer": "A basic white-label broker launch usually moves faster than custom development because the core platform is already deployed. The real timeline depends on branding, payment connections, legal setup, compliance workflows and how ready your team is for daily operations. In many cases the technical environment can be prepared in days, while a full commercial launch takes longer because integrations, testing and internal procedures must be completed."
+        },
+        "de": {
+          "question": "Wie lange dauert der Start einer Broker-Plattform bis zum Live-Betrieb?",
+          "answer": "Ein grundlegender White-Label-Broker-Launch geht meist schneller als eine Individualentwicklung, weil die Kernplattform bereits bereitsteht. Der tatsächliche Zeitplan hängt von Branding, Zahlungsanbindungen, rechtlicher Struktur, Compliance-Prozessen und der operativen Bereitschaft Ihres Teams ab. Häufig kann die technische Umgebung in wenigen Tagen vorbereitet werden, während ein vollständiger kommerzieller Start mehr Zeit braucht, da Integrationen, Tests und interne Abläufe abgeschlossen werden müssen."
+        },
+        "uk": {
+          "question": "Скільки часу займає запуск брокерської платформи і вихід у продакшн?",
+          "answer": "Базовий запуск white-label брокера зазвичай відбувається швидше, ніж кастомна розробка, тому що основна платформа вже розгорнута. Реальний термін залежить від брендингу, підключення платежів, юридичної моделі, compliance-процесів і готовності команди до операційної роботи. Часто технічне середовище можна підготувати за кілька днів, а повноцінний комерційний запуск займає більше часу, тому що потрібно завершити інтеграції, тестування та внутрішні регламенти."
+        },
+        "zh": {
+          "question": "启动经纪商平台并正式上线通常需要多久？",
+          "answer": "基础版白标经纪商上线通常比定制开发更快，因为核心平台已经部署完成。实际周期取决于品牌配置、支付连接、法律结构、合规流程以及团队是否准备好进入日常运营。很多情况下技术环境可以在几天内准备好，但完整商业上线还需要更多时间，因为必须完成集成、测试和内部流程梳理。"
+        }
+      }
+    },
+    {
+      "id": "licensing-jurisdictions",
+      "order": 5,
+      "category": "launch",
+      "translations": {
+        "ru": {
+          "question": "Какие лицензии и юрисдикции нужно учитывать перед запуском брокера?",
+          "answer": "Универсальной брокерской лицензии не существует, потому что требования зависят от бизнес-модели, географии и типа клиентов. Обычно сравнивают юрисдикции по срокам получения лицензии, требованиям к капиталу, уровню контроля, доступу к банкам и долгосрочной репутации. MakeTrades отвечает за технологическую часть проекта, а финальный выбор лицензирования лучше делать вместе с юридическими и compliance-консультантами под ваши рынки."
+        },
+        "en": {
+          "question": "What licenses and jurisdictions should be considered before launching a broker?",
+          "answer": "There is no universal broker license because the right structure depends on the business model, target geography and client profile. Founders usually compare jurisdictions by licensing speed, capital requirements, compliance burden, banking access and long-term reputation. MakeTrades supports the technology side of the project, while the final licensing route should be chosen together with legal and compliance advisers for your target markets."
+        },
+        "de": {
+          "question": "Welche Lizenzen und Jurisdiktionen sollte man vor dem Broker-Start prüfen?",
+          "answer": "Eine universelle Broker-Lizenz gibt es nicht, weil die passende Struktur vom Geschäftsmodell, der Zielregion und dem Kundentyp abhängt. In der Regel werden Jurisdiktionen nach Tempo der Lizenzierung, Kapitalanforderungen, Compliance-Aufwand, Bankzugang und langfristiger Reputation verglichen. MakeTrades unterstützt die technologische Seite des Projekts, während die endgültige Lizenzierungsstrategie gemeinsam mit Rechts- und Compliance-Beratern für Ihre Zielmärkte festgelegt werden sollte."
+        },
+        "uk": {
+          "question": "Які ліцензії та юрисдикції потрібно враховувати перед запуском брокера?",
+          "answer": "Універсальної брокерської ліцензії не існує, тому що правильна структура залежить від бізнес-моделі, географії та типу клієнтів. Зазвичай юрисдикції порівнюють за швидкістю ліцензування, вимогами до капіталу, рівнем контролю, доступом до банків і довгостроковою репутацією. MakeTrades відповідає за технологічну частину проєкту, а фінальний шлях ліцензування краще визначати разом із юридичними та compliance-консультантами під ваші ринки."
+        },
+        "zh": {
+          "question": "启动经纪商之前应该考虑哪些牌照和司法辖区？",
+          "answer": "经纪商牌照不存在一套适用于所有公司的统一方案，因为正确路径取决于商业模式、目标地区和客户类型。创始团队通常会从牌照审批速度、资本要求、合规压力、银行和支付可接入性以及长期声誉等方面比较不同司法辖区。MakeTrades 负责项目的技术层面，而最终的牌照路线应当与熟悉目标市场的法律和合规顾问共同确定。"
+        }
+      }
+    },
+    {
+      "id": "broker-crm",
+      "order": 6,
+      "category": "platform",
+      "translations": {
+        "ru": {
+          "question": "Есть ли в MakeTrades CRM и back office для брокера?",
+          "answer": "Да, стек MakeTrades может включать CRM для брокера и back office, чтобы продажи, онбординг и операционные команды не работали в разрозненных системах. Это важно для управления лидами, статусами клиентов, действиями по счетам, партнерскими процессами и внутренним контролем из одного интерфейса. Единая CRM для брокера упрощает отчетность и помогает масштабировать сервис, когда растет объем трафика и торговой активности."
+        },
+        "en": {
+          "question": "Does MakeTrades include broker CRM and back-office software?",
+          "answer": "Yes, the MakeTrades stack can include broker CRM and back-office software so sales, onboarding and operational teams do not have to work in disconnected systems. This is important for handling leads, client statuses, account actions, partner workflows and internal control from one interface. A unified broker CRM also improves reporting and makes it easier to scale service processes as traffic and trading activity grow."
+        },
+        "de": {
+          "question": "Enthält MakeTrades ein Broker-CRM und Backoffice?",
+          "answer": "Ja, der MakeTrades-Stack kann ein Broker-CRM und Backoffice enthalten, damit Vertriebs-, Onboarding- und Operationsteams nicht in getrennten Systemen arbeiten müssen. Das ist wichtig für Leads, Kundenstatus, Kontoaktionen, Partnerprozesse und interne Kontrolle in einer Oberfläche. Ein einheitliches Broker-CRM verbessert zudem das Reporting und erleichtert die Skalierung der Serviceprozesse bei wachsendem Traffic und Handelsvolumen."
+        },
+        "uk": {
+          "question": "Чи є в MakeTrades CRM і back office для брокера?",
+          "answer": "Так, стек MakeTrades може включати CRM для брокера і back office, щоб команди продажів, онбордингу та операцій не працювали в розрізнених системах. Це важливо для управління лідами, статусами клієнтів, діями по рахунках, партнерськими процесами та внутрішнім контролем з одного інтерфейсу. Єдина CRM для брокера спрощує звітність і допомагає масштабувати сервіс, коли зростає обсяг трафіку та торгової активності."
+        },
+        "zh": {
+          "question": "MakeTrades 是否包含经纪商 CRM 和运营后台？",
+          "answer": "是的，MakeTrades 的产品栈可以包含经纪商 CRM 和运营后台，这样销售、开户和运营团队就不需要在彼此割裂的系统中工作。对于管理线索、客户状态、账户操作、伙伴流程以及内部控制来说，统一界面非常重要。统一的经纪商 CRM 还能提升报表能力，并在流量和交易量增长时更容易扩展服务流程。"
+        }
+      }
+    },
+    {
+      "id": "platform-integrations",
+      "order": 7,
+      "category": "platform",
+      "translations": {
+        "ru": {
+          "question": "Можно ли интегрировать платформу с MetaTrader, платежными системами и KYC-провайдерами?",
+          "answer": "Интеграции критичны для запуска брокера, потому что одной торговой платформы недостаточно для полноценной операционной модели. MakeTrades может разворачиваться с API-подключениями к MetaTrader, платежным шлюзам, crypto processing и внешним сервисам верификации или compliance. Это помогает выстроить целостный клиентский путь от регистрации и пополнения счета до торговли и внутренней проверки."
+        },
+        "en": {
+          "question": "Can the platform be integrated with MetaTrader, payment systems and KYC providers?",
+          "answer": "Integrations are critical for broker launch because trading software alone does not create a complete operating model. MakeTrades can be deployed with API-based connections to MetaTrader, payment gateways, crypto processing and external verification or compliance providers. This helps build a more complete client journey from registration and funding to trading and internal review."
+        },
+        "de": {
+          "question": "Kann die Plattform mit MetaTrader, Zahlungssystemen und KYC-Anbietern integriert werden?",
+          "answer": "Integrationen sind für den Broker-Start entscheidend, weil reine Handelssoftware noch kein vollständiges Betriebsmodell ergibt. MakeTrades kann mit API-basierten Verbindungen zu MetaTrader, Payment-Gateways, Krypto-Processing sowie externen Verifizierungs- oder Compliance-Anbietern eingesetzt werden. So entsteht ein vollständigerer Kundenprozess von der Registrierung und Einzahlung bis zum Trading und zur internen Prüfung."
+        },
+        "uk": {
+          "question": "Чи можна інтегрувати платформу з MetaTrader, платіжними системами та KYC-провайдерами?",
+          "answer": "Інтеграції критично важливі для запуску брокера, тому що однієї торгової платформи недостатньо для повноцінної операційної моделі. MakeTrades може розгортатися з API-підключеннями до MetaTrader, платіжних шлюзів, crypto processing і зовнішніх сервісів верифікації або compliance. Це допомагає побудувати цілісний шлях клієнта від реєстрації та поповнення рахунку до торгівлі та внутрішньої перевірки."
+        },
+        "zh": {
+          "question": "平台可以对接 MetaTrader、支付系统和 KYC 服务商吗？",
+          "answer": "对经纪商来说，集成能力非常关键，因为只有交易软件并不能构成完整的运营模型。MakeTrades 可以通过 API 对接 MetaTrader、支付网关、加密支付处理以及外部身份验证或合规服务商。这样，经纪商就能把注册、入金、交易和内部审核连接成更完整的客户流程。"
+        }
+      }
+    },
+    {
+      "id": "branding-customization",
+      "order": 8,
+      "category": "platform",
+      "translations": {
+        "ru": {
+          "question": "Можно ли адаптировать платформу под бренд, регион и бизнес-модель брокера?",
+          "answer": "White-label платформа не должна выглядеть как типовой арендный продукт, если брокер работает на конкретный рынок или нишу. MakeTrades можно адаптировать под ваш визуальный бренд, языки, пользовательские сценарии и продуктовую логику, чтобы веб-интерфейс и клиентский кабинет соответствовали позиционированию компании. Обычно кастомизация планируется по слоям, поэтому можно быстро запустить базовую версию и расширять ее без полной перестройки системы."
+        },
+        "en": {
+          "question": "Can the broker platform be customized for my brand, region and business model?",
+          "answer": "A white-label platform should not look like a generic rental product if the broker targets a specific market or niche. MakeTrades can be adapted to your visual brand, language set, user flows and product logic so the web interface and client area match the company positioning. Customization is usually planned in layers, which allows a broker to launch the core version quickly and extend it later without rebuilding the whole system."
+        },
+        "de": {
+          "question": "Kann die Broker-Plattform für Marke, Region und Geschäftsmodell angepasst werden?",
+          "answer": "Eine White-Label-Plattform sollte nicht wie ein generisches Mietprodukt aussehen, wenn der Broker einen bestimmten Markt oder eine Nische bedient. MakeTrades lässt sich an Ihr visuelles Branding, Sprachen, Nutzerabläufe und Produktlogik anpassen, sodass Web-Oberfläche und Kundenbereich zur Positionierung des Unternehmens passen. Die Anpassung wird meist in Schichten geplant, damit ein Broker schnell live gehen und die Lösung später ohne Komplettumbau erweitern kann."
+        },
+        "uk": {
+          "question": "Чи можна адаптувати платформу під бренд, регіон і бізнес-модель брокера?",
+          "answer": "White-label платформа не повинна виглядати як типовий орендний продукт, якщо брокер працює на конкретний ринок або нішу. MakeTrades можна адаптувати під ваш візуальний бренд, мови, користувацькі сценарії та продуктову логіку, щоб веб-інтерфейс і кабінет клієнта відповідали позиціонуванню компанії. Зазвичай кастомізація планується по шарах, тому можна швидко запустити базову версію і розширювати її без повної перебудови системи."
+        },
+        "zh": {
+          "question": "平台可以按照品牌、地区和业务模式进行定制吗？",
+          "answer": "如果经纪商面向特定市场或细分领域，白标平台就不应该看起来像通用租赁产品。MakeTrades 可以根据您的视觉品牌、语言方案、用户流程和产品逻辑进行调整，让网页界面和客户后台更符合公司的市场定位。定制通常会按层级推进，因此经纪商可以先快速上线核心版本，再在不重建整套系统的前提下继续扩展。"
+        }
+      }
+    },
+    {
+      "id": "broker-infrastructure-risk",
+      "order": 9,
+      "category": "operations",
+      "translations": {
+        "ru": {
+          "question": "Какая инфраструктура нужна для работы брокерской платформы и управления рисками?",
+          "answer": "Брокерской платформе нужен не только сайт, но и стабильные серверы, мониторинг, резервные копии, контроль доступа и точки интеграции для торговли и платежей. Архитектура должна планироваться вместе с подключением liquidity providers, логикой маршрутизации, резервированием и внутренним risk management под вашу модель работы. MakeTrades помогает подобрать практичную инфраструктуру, чтобы брокер не переплачивал за избыточный стек и не экономил на надежности."
+        },
+        "en": {
+          "question": "What infrastructure is required to run a brokerage platform and manage risk?",
+          "answer": "A brokerage platform needs more than a website because it relies on stable servers, monitoring, backups, access control and integration endpoints for trading and payments. The architecture should be planned together with liquidity provider connections, routing logic, redundancy and internal risk management rules that fit your operating model. MakeTrades helps define a practical infrastructure setup so the broker neither overpays for unnecessary complexity nor underinvests in reliability."
+        },
+        "de": {
+          "question": "Welche Infrastruktur wird für eine Broker-Plattform und das Risikomanagement benötigt?",
+          "answer": "Eine Broker-Plattform braucht mehr als nur eine Website, denn sie basiert auf stabilen Servern, Monitoring, Backups, Zugriffskontrolle und Integrationspunkten für Handel und Zahlungen. Die Architektur sollte gemeinsam mit Liquiditätsanbindungen, Routing-Logik, Redundanz und internem Risikomanagement geplant werden, das zu Ihrem Betriebsmodell passt. MakeTrades hilft dabei, eine praxisnahe Infrastruktur aufzubauen, damit der Broker weder für unnötige Komplexität überzahlt noch an Zuverlässigkeit spart."
+        },
+        "uk": {
+          "question": "Яка інфраструктура потрібна для роботи брокерської платформи та управління ризиками?",
+          "answer": "Брокерській платформі потрібен не лише сайт, адже вона спирається на стабільні сервери, моніторинг, резервні копії, контроль доступу та точки інтеграції для торгівлі й платежів. Архітектура має плануватися разом із підключенням liquidity providers, логікою маршрутизації, резервуванням і внутрішнім risk management під вашу модель роботи. MakeTrades допомагає підібрати практичну інфраструктуру, щоб брокер не переплачував за зайву складність і не економив на надійності."
+        },
+        "zh": {
+          "question": "运行经纪商平台并做好风险管理需要什么基础设施？",
+          "answer": "经纪商平台需要的不只是一个网站，它还依赖稳定服务器、监控、备份、访问控制以及交易和支付相关的集成接口。整体架构必须与流动性提供商连接、路由逻辑、冗余设计以及符合经营模式的内部风险管理一起规划。MakeTrades 会帮助客户设计务实的基础设施方案，避免在不必要的复杂度上过度投入，也避免在可靠性上投入不足。"
+        }
+      }
+    },
+    {
+      "id": "support-scaling",
+      "order": 10,
+      "category": "operations",
+      "translations": {
+        "ru": {
+          "question": "Какую поддержку вы даете после запуска и можно ли масштабировать платформу по мере роста брокера?",
+          "answer": "Запуск брокера — это только первый этап, поэтому пост-стартовая техническая поддержка не менее важна, чем первоначальное внедрение. MakeTrades помогает с rollout, текущей эксплуатацией, расширением интеграций и compliance-процессов, когда брокер выходит на новые рынки или увеличивает клиентскую базу. Компания может начать с сфокусированной конфигурации, запросить demo-среду до подписания контракта и затем наращивать платформу по мере роста бизнеса."
+        },
+        "en": {
+          "question": "What support do you provide after launch, and can the platform scale as the broker grows?",
+          "answer": "Broker launch is only the first stage, so post-launch technical support matters as much as the initial implementation. MakeTrades helps with rollout, ongoing operations, integration expansion and compliance processes when a broker enters new markets or grows its client base. A company can start with a focused configuration, request a demo environment before signing a contract and then expand the platform as the business grows."
+        },
+        "de": {
+          "question": "Welchen Support bieten Sie nach dem Launch, und kann die Plattform mit dem Broker wachsen?",
+          "answer": "Der Broker-Launch ist nur die erste Phase, deshalb ist technischer Support nach dem Go-live genauso wichtig wie die Erstimplementierung. MakeTrades unterstützt bei Rollout, laufendem Betrieb, Ausbau von Integrationen und Compliance-Prozessen, wenn ein Broker neue Märkte erschließt oder seine Kundenbasis vergrößert. Ein Unternehmen kann mit einer fokussierten Konfiguration starten, vor Vertragsabschluss eine Demo-Umgebung anfordern und die Plattform anschließend mit dem Geschäft ausbauen."
+        },
+        "uk": {
+          "question": "Яку підтримку ви надаєте після запуску і чи можна масштабувати платформу в міру росту брокера?",
+          "answer": "Запуск брокера — це лише перший етап, тому технічна підтримка після старту не менш важлива, ніж первинне впровадження. MakeTrades допомагає з rollout, поточною експлуатацією, розширенням інтеграцій і compliance-процесів, коли брокер виходить на нові ринки або збільшує клієнтську базу. Компанія може почати зі сфокусованої конфігурації, запросити demo-середовище до підписання контракту і потім розширювати платформу разом із бізнесом."
+        },
+        "zh": {
+          "question": "上线之后你们提供什么支持？平台能否随着经纪商增长而扩展？",
+          "answer": "经纪商上线只是第一阶段，因此上线后的技术支持和最初实施同样重要。MakeTrades 可以支持上线 rollout、日常运营、集成扩展以及在进入新市场或客户规模增长时推进合规流程。公司可以先从聚焦版配置开始，在签约前申请演示环境，然后随着业务增长逐步扩展平台能力。"
+        }
+      }
+    }
+  ]
+}

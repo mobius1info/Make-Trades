@@ -9,6 +9,7 @@ const LANGUAGES = ['ru', 'en', 'de', 'uk', 'zh'];
 const sitemapOnly = process.argv.includes('--sitemap-only');
 const generatedPostImageManifest = JSON.parse(await readFile(join(ROOT_DIR, 'src', 'generated-post-image-manifest.json'), 'utf8'));
 const blogArticleGroupsManifest = JSON.parse(await readFile(join(ROOT_DIR, 'src', 'blog-article-groups.json'), 'utf8'));
+const faqContentManifest = JSON.parse(await readFile(join(ROOT_DIR, 'src', 'faq-content.json'), 'utf8'));
 const generatedPostImagesBySeed = generatedPostImageManifest;
 const DEFAULT_POST_IMAGE_WIDTH = 1200;
 const DEFAULT_POST_IMAGE_HEIGHT = 675;
@@ -49,33 +50,20 @@ const blogIndexCopy = {
   },
 };
 
-const faqIndexCopy = {
-  ru: {
-    title: 'FAQ MakeTrades - вопросы и ответы о платформе для брокеров',
-    heading: 'Часто задаваемые вопросы',
-    subtitle: 'Найдите ответы на самые популярные вопросы о платформе MakeTrades',
-  },
-  en: {
-    title: 'MakeTrades FAQ - questions and answers about the broker platform',
-    heading: 'Frequently Asked Questions',
-    subtitle: 'Find answers to common questions about the MakeTrades platform',
-  },
-  de: {
-    title: 'MakeTrades FAQ - Fragen und Antworten zur Broker-Plattform',
-    heading: 'Haufig gestellte Fragen',
-    subtitle: 'Antworten auf haufige Fragen zur MakeTrades-Plattform',
-  },
-  uk: {
-    title: 'FAQ MakeTrades - питання та відповіді про платформу для брокерів',
-    heading: 'Часті запитання',
-    subtitle: 'Знайдіть відповіді на популярні запитання про платформу MakeTrades',
-  },
-  zh: {
-    title: 'MakeTrades FAQ - 经纪商平台常见问题',
-    heading: '常见问题',
-    subtitle: '查找有关 MakeTrades 平台的常见问题答案',
-  },
-};
+const faqIndexCopy = faqContentManifest.pageCopy;
+
+function buildFaqItemsFromManifest() {
+  return faqContentManifest.items.flatMap(item =>
+    LANGUAGES.map(language => ({
+      id: item.id,
+      question: item.translations[language].question,
+      answer: item.translations[language].answer,
+      language,
+      order: item.order,
+      category: item.category,
+    }))
+  );
+}
 
 function findGroupMatch(slug, language) {
   for (const group of blogArticleGroupsManifest.groups) {
@@ -262,15 +250,12 @@ async function fetchSeoData(config) {
     throw new Error(`Fetched ${posts.length} published posts, but Supabase reported ${publishedCount}.`);
   }
 
-  const { rows: faqItems } = await fetchAllRows(config, 'faq_items', {
-    select: 'id, question, answer, language, category, order',
-    order: 'language.asc,order.asc',
-  });
-
   const { rows: translations } = await fetchAllRows(config, 'translations', {
     select: 'language,key,value',
     order: 'language.asc,key.asc',
   });
+
+  const faqItems = buildFaqItemsFromManifest();
 
   return { posts: applyContentArchitecture(ensureUniquePublicSlugs(posts)), publishedCount, faqItems, translations };
 }
@@ -946,6 +931,19 @@ function faqItem(item) {
       </div>`;
 }
 
+function homeFaqPreviewItem(item) {
+  return `
+      <div class="faq-item" data-faq-id="${escapeHtml(item.id)}">
+        <div class="faq-question">
+          <span>${escapeHtml(item.question)}</span>
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <div>${escapeHtml(item.answer)}</div>
+        </div>
+      </div>`;
+}
+
 function formatDate(value, language) {
   const locales = {
     ru: 'ru-RU',
@@ -1197,15 +1195,16 @@ function blogIndexHtml(template, language, posts, translationIndex) {
   return html;
 }
 
-function faqIndexHtml(template, language, faqItems, translationIndex) {
+function faqIndexHtml(template, language, faqItems) {
   const copy = faqIndexCopy[language] || faqIndexCopy.en;
   const items = faqItems.filter(item => item.language === language).sort((a, b) => Number(a.order) - Number(b.order));
-  const description = copy.subtitle;
+  const description = copy.description;
 
   let html = template;
   html = replaceHtmlLang(html, language);
   html = replaceTitle(html, copy.title);
   html = setMetaName(html, 'description', description);
+  html = setMetaName(html, 'keywords', copy.keywords);
   html = setMetaProperty(html, 'og:url', faqUrl(language));
   html = setMetaProperty(html, 'og:title', copy.title);
   html = setMetaProperty(html, 'og:description', description);
@@ -1216,19 +1215,16 @@ function faqIndexHtml(template, language, faqItems, translationIndex) {
   html = setCanonical(html, faqUrl(language));
   html = replaceAlternateLinks(html, pageAlternateLinks('faq'));
   html = replaceJsonLdById(html, 'faqSchema', faqStructuredData(items));
+  html = replaceJsonLdByType(html, 'BreadcrumbList', faqBreadcrumbStructuredData(language, copy));
   html = replaceElementContentById(html, 'faqPageTitle', escapeHtml(copy.heading));
   html = replaceElementContentById(html, 'faqPageSubtitle', escapeHtml(copy.subtitle));
-  html = replaceElementContentById(html, 'catAll', escapeHtml(translate(translationIndex, language, 'faq_page.cat_all', 'All questions')));
-  html = replaceElementContentById(html, 'catPricing', escapeHtml(translate(translationIndex, language, 'faq_page.cat_pricing', 'Pricing')));
-  html = replaceElementContentById(html, 'catFeatures', escapeHtml(translate(translationIndex, language, 'faq_page.cat_features', 'Features')));
-  html = replaceElementContentById(html, 'catSupport', escapeHtml(translate(translationIndex, language, 'faq_page.cat_support', 'Support')));
-  html = replaceElementContentById(html, 'backHomeBtn', escapeHtml(translate(translationIndex, language, 'button.back_home', 'Home')));
+  html = replaceElementContentById(html, 'catAll', escapeHtml(copy.categories.all));
+  html = replaceElementContentById(html, 'catPricing', escapeHtml(copy.categories.launch));
+  html = replaceElementContentById(html, 'catFeatures', escapeHtml(copy.categories.platform));
+  html = replaceElementContentById(html, 'catSupport', escapeHtml(copy.categories.operations));
+  html = replaceElementContentById(html, 'backHomeBtn', escapeHtml(copy.backHome));
   html = setAttributeById(html, 'backHomeBtn', 'href', homePath(language));
-  html = replaceElementContentById(
-    html,
-    'faqCopyright',
-    escapeHtml(translate(translationIndex, language, 'footer.copyright', '© 2026 MakeTrades. All rights reserved.'))
-  );
+  html = replaceElementContentById(html, 'faqCopyright', escapeHtml(copy.copyright));
   html = replaceElementContentById(html, 'allFAQItems', items.map(faqItem).join(''));
   return html;
 }
@@ -1386,6 +1382,27 @@ function homeSeo(language, translationIndex) {
   };
 }
 
+function faqBreadcrumbStructuredData(language, copy) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'MakeTrades',
+        item: homeUrl(language),
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: copy.heading,
+        item: faqUrl(language),
+      },
+    ],
+  };
+}
+
 function homeHtml(template, language, posts, faqItems, translationIndex) {
   const visiblePosts = languagePosts(posts, language, { visibleOnly: true }).slice(0, 3);
   const faq = faqItems
@@ -1408,9 +1425,10 @@ function homeHtml(template, language, posts, faqItems, translationIndex) {
   html = setMetaName(html, 'twitter:description', seo.description);
   html = setCanonical(html, homeUrl(language));
   html = replaceAlternateLinks(html, pageAlternateLinks('home'));
+  html = replaceJsonLdById(html, 'homeFaqSchema', faqStructuredData(faq));
   html = localizeHomeContent(html, language, translationIndex);
   html = replaceElementContentById(html, 'blogGrid', visiblePosts.map(post => blogCard(post, language, translationIndex)).join(''));
-  html = replaceElementContentById(html, 'faqList', faq.map(faqItem).join(''));
+  html = replaceElementContentById(html, 'faqList', faq.map(homeFaqPreviewItem).join(''));
   return html;
 }
 
@@ -1615,7 +1633,7 @@ async function generateSeoFiles(data) {
     }
 
     const blogHtml = blogIndexHtml(blogTemplate, language, posts, translationIndex);
-    const faqHtml = faqIndexHtml(faqTemplate, language, faqItems, translationIndex);
+    const faqHtml = faqIndexHtml(faqTemplate, language, faqItems);
 
     await writeIndexHtml(join(DIST_DIR, 'blog', language), blogHtml);
     await writeIndexHtml(join(DIST_DIR, 'faq', language), faqHtml);
