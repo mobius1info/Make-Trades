@@ -15,11 +15,11 @@
       content="брокер, трейдинг, торговые боты, инвестиции, форекс платформа, криптобиржа, white label брокер, дилинговый центр, CRM для брокера, prop trading" />
     <meta name="author" content="MakeTrades" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://maketrades.info" />
+    <link rel="canonical" href="https://maketrades.info/" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://maketrades.info" />
+    <meta property="og:url" content="https://maketrades.info/" />
     <meta property="og:title" content="MakeTrades - Платформа для создания брокера под ключ" />
     <meta
       property="og:description"
@@ -30,7 +30,7 @@
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://maketrades.info" />
+    <meta name="twitter:url" content="https://maketrades.info/" />
     <meta name="twitter:title" content="MakeTrades - Платформа для создания брокера" />
     <meta
       name="twitter:description"
@@ -38,12 +38,12 @@
     <meta name="twitter:image" content="https://maketrades.info/twitter-image.jpg" />
 
     <!-- Hreflang Tags for Multilingual Support -->
-    <link rel="alternate" hreflang="ru" href="https://maketrades.info" />
-    <link rel="alternate" hreflang="en" href="https://maketrades.info?lang=en" />
-    <link rel="alternate" hreflang="de" href="https://maketrades.info?lang=de" />
-    <link rel="alternate" hreflang="uk" href="https://maketrades.info?lang=uk" />
-    <link rel="alternate" hreflang="zh" href="https://maketrades.info?lang=zh" />
-    <link rel="alternate" hreflang="x-default" href="https://maketrades.info" />
+    <link rel="alternate" hreflang="ru" href="https://maketrades.info/" />
+    <link rel="alternate" hreflang="en" href="https://maketrades.info/en/" />
+    <link rel="alternate" hreflang="de" href="https://maketrades.info/de/" />
+    <link rel="alternate" hreflang="uk" href="https://maketrades.info/uk/" />
+    <link rel="alternate" hreflang="zh" href="https://maketrades.info/zh/" />
+    <link rel="alternate" hreflang="x-default" href="https://maketrades.info/" />
 
     <!-- Favicon & Icons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -541,7 +541,7 @@
     <header class="header">
       <div class="container">
         <nav class="nav">
-          <a href="/" class="logo" aria-label="MakeTrades Home">
+          <a href="/" class="logo" id="siteLogoLink" aria-label="MakeTrades Home">
             <img
               src="/assets/logo.svg"
               alt="MakeTrades логотип - платформа для создания брокеров"
@@ -934,7 +934,7 @@
         </div>
 
         <div class="footer-bottom">
-          <a href="/" class="footer-logo" aria-label="MakeTrades Home">
+          <a href="/" class="footer-logo" id="footerLogoLink" aria-label="MakeTrades Home">
             <img src="/assets/logo.svg" alt="MakeTrades" width="226" height="37" />
           </a>
           <p id="copyrightText">&copy; 2026 MakeTrades. Все права защищены.</p>
@@ -1176,7 +1176,28 @@
     <script type="module" src="/src/faq-accordion-entry.ts"></script>
     <script type="module">
       const params = new URLSearchParams(window.location.search);
-      const shouldLoadMainAppImmediately = params.has('lang');
+      const supportedHomeLanguages = new Set(['ru', 'en', 'de', 'uk', 'zh']);
+      const requestedLanguage = params.get('lang');
+      const targetHomePath = requestedLanguage && supportedHomeLanguages.has(requestedLanguage)
+        ? (requestedLanguage === 'ru' ? '/' : `/${requestedLanguage}/`)
+        : null;
+
+      if (targetHomePath) {
+        const target = new URL(targetHomePath, window.location.origin);
+        params.delete('lang');
+        params.forEach((value, key) => {
+          target.searchParams.append(key, value);
+        });
+        if (window.location.hash) {
+          target.hash = window.location.hash;
+        }
+
+        const currentLocation = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+        const targetLocation = `${target.pathname}${target.search}${target.hash}`;
+        if (currentLocation !== targetLocation) {
+          window.location.replace(target.toString());
+        }
+      }
 
       const loadMainApp = () =>
         import('/src/main.ts').catch(error => {
@@ -1195,9 +1216,7 @@
         }
       };
 
-      if (shouldLoadMainAppImmediately) {
-        void loadMainApp();
-      } else if (document.readyState === 'complete') {
+      if (document.readyState === 'complete') {
         scheduleMainAppLoad();
       } else {
         window.addEventListener('load', scheduleMainAppLoad, { once: true });

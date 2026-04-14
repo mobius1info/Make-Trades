@@ -1,4 +1,4 @@
-import{g as s}from"./post-images-h7br9HLS.js";import{s as n,o as c}from"./content-loader-CmJPz1iK.js";const d={ru:"ru-RU",en:"en-US",de:"de-DE",uk:"uk-UA",zh:"zh-CN"};function m(e){return d[e]||"en-US"}function o(e,t){const r=e.shared_image_seed||e.slug,a=s(e.image_url,r,"card");return`<img src="${a.src}"
+import{g as s}from"./post-images-h7br9HLS.js";import{t as n,p as c}from"./content-loader-DIGxRNSv.js";const d={ru:"ru-RU",en:"en-US",de:"de-DE",uk:"uk-UA",zh:"zh-CN"};function m(e){return d[e]||"en-US"}function o(e,t){const r=e.shared_image_seed||e.slug,a=s(e.image_url,r,"card");return`<img src="${a.src}"
              alt="${e.title}"
              class="blog-card-image"
              itemprop="image"

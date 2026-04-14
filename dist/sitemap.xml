@@ -2,10 +2,64 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://maketrades.info</loc>
+    <loc>https://maketrades.info/</loc>
     <lastmod>2026-04-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/en/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://maketrades.info/de/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://maketrades.info/uk/" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://maketrades.info/zh/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/en/</loc>
+    <lastmod>2026-04-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/en/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://maketrades.info/de/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://maketrades.info/uk/" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://maketrades.info/zh/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/de/</loc>
+    <lastmod>2026-04-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/en/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://maketrades.info/de/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://maketrades.info/uk/" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://maketrades.info/zh/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/uk/</loc>
+    <lastmod>2026-04-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/en/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://maketrades.info/de/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://maketrades.info/uk/" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://maketrades.info/zh/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/zh/</loc>
+    <lastmod>2026-04-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/en/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://maketrades.info/de/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://maketrades.info/uk/" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://maketrades.info/zh/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/" />
   </url>
   <url>
     <loc>https://maketrades.info/blog/ru/</loc>
@@ -716,16 +770,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/vybor-postavshchika-torgovoj-platformy/" />
   </url>
   <url>
-    <loc>https://maketrades.info/blog/en/scaling-rented-trading-platform/</loc>
+    <loc>https://maketrades.info/blog/en/brokerage-business-plan-guide/</loc>
     <lastmod>2026-02-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/masshtabirovanie-arendovannoj-platformy/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/scaling-rented-trading-platform/" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://maketrades.info/blog/de/plattform-updates-support-de/" />
-    <xhtml:link rel="alternate" hreflang="uk" href="https://maketrades.info/blog/uk/masshtabuvannya-orendovanoyi-platformy/" />
-    <xhtml:link rel="alternate" hreflang="zh" href="https://maketrades.info/blog/zh/pingtai-kuozhan-cong-chuangye-dao-daxing/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/masshtabirovanie-arendovannoj-platformy/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/biznes-plan-brokerskoj-kompanii/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/brokerage-business-plan-guide/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://maketrades.info/blog/de/geschaeftsplan-brokerage-de/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://maketrades.info/blog/uk/biznes-plan-foreks-brokera-shablon/" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://maketrades.info/blog/zh/jingjishang-shangye-jihua-moban/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/biznes-plan-brokerskoj-kompanii/" />
   </url>
   <url>
     <loc>https://maketrades.info/blog/en/crm-metatrader-integration-guide/</loc>
@@ -740,16 +794,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/integratsiya-crm-s-metatrader/" />
   </url>
   <url>
-    <loc>https://maketrades.info/blog/en/brokerage-business-plan-guide/</loc>
+    <loc>https://maketrades.info/blog/en/scaling-rented-trading-platform/</loc>
     <lastmod>2026-02-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/biznes-plan-brokerskoj-kompanii/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/brokerage-business-plan-guide/" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://maketrades.info/blog/de/geschaeftsplan-brokerage-de/" />
-    <xhtml:link rel="alternate" hreflang="uk" href="https://maketrades.info/blog/uk/biznes-plan-foreks-brokera-shablon/" />
-    <xhtml:link rel="alternate" hreflang="zh" href="https://maketrades.info/blog/zh/jingjishang-shangye-jihua-moban/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/biznes-plan-brokerskoj-kompanii/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/masshtabirovanie-arendovannoj-platformy/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/scaling-rented-trading-platform/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://maketrades.info/blog/de/plattform-updates-support-de/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://maketrades.info/blog/uk/masshtabuvannya-orendovanoyi-platformy/" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://maketrades.info/blog/zh/pingtai-kuozhan-cong-chuangye-dao-daxing/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/masshtabirovanie-arendovannoj-platformy/" />
   </url>
   <url>
     <loc>https://maketrades.info/blog/en/broker-crm-analytics-conversion/</loc>

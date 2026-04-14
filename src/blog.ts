@@ -5,6 +5,7 @@ import { syncResolvedImageUrls } from './post-images';
 import {
   blogIndexPath,
   getBlogLanguageFromPath,
+  homePath,
   isProductionBuild,
   legacyBlogIndexPath,
 } from './seo-urls';
@@ -69,7 +70,7 @@ function updatePageContent() {
   setById('backHomeBtn', 'button.back_home', 'Home');
 
   const backHomeLink = document.getElementById('backHomeBtn') as HTMLAnchorElement | null;
-  if (backHomeLink) backHomeLink.href = currentLanguage === 'ru' ? '/' : `/?lang=${currentLanguage}`;
+  if (backHomeLink) backHomeLink.href = homePath(currentLanguage);
 }
 
 function renderBlogPosts(blogGrid: HTMLElement, posts: PublicBlogPost[]) {

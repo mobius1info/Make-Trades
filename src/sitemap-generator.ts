@@ -1,5 +1,5 @@
 import { supabase } from './supabase';
-import { articleAbsoluteUrl } from './seo-urls';
+import { articleAbsoluteUrl, homeAbsoluteUrl } from './seo-urls';
 import { enrichBlogArticle, isIndexableBlogArticle } from './blog-article-groups';
 
 interface BlogPost {
@@ -26,23 +26,30 @@ export async function generateSitemap(): Promise<string> {
   const today = new Date().toISOString().split('T')[0];
   const baseUrl = 'https://maketrades.info';
   const indexablePosts = (posts || []).map(post => enrichBlogArticle(post)).filter(isIndexableBlogArticle);
+  const homeLanguages = ['ru', 'en', 'de', 'uk', 'zh'] as const;
+  const homeAlternates = [
+    `    <xhtml:link rel="alternate" hreflang="ru" href="${homeAbsoluteUrl('ru')}" />`,
+    `    <xhtml:link rel="alternate" hreflang="en" href="${homeAbsoluteUrl('en')}" />`,
+    `    <xhtml:link rel="alternate" hreflang="de" href="${homeAbsoluteUrl('de')}" />`,
+    `    <xhtml:link rel="alternate" hreflang="uk" href="${homeAbsoluteUrl('uk')}" />`,
+    `    <xhtml:link rel="alternate" hreflang="zh" href="${homeAbsoluteUrl('zh')}" />`,
+    `    <xhtml:link rel="alternate" hreflang="x-default" href="${homeAbsoluteUrl('ru')}" />`,
+  ].join('\n');
+  const homeUrls = homeLanguages
+    .map((language, index) => `  <url>
+    <loc>${homeAbsoluteUrl(language)}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>${index === 0 ? '1.0' : '0.9'}</priority>
+${homeAlternates}
+  </url>`)
+    .join('\n\n');
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <url>
-    <loc>${baseUrl}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="${baseUrl}" />
-    <xhtml:link rel="alternate" hreflang="en" href="${baseUrl}?lang=en" />
-    <xhtml:link rel="alternate" hreflang="de" href="${baseUrl}?lang=de" />
-    <xhtml:link rel="alternate" hreflang="uk" href="${baseUrl}?lang=uk" />
-    <xhtml:link rel="alternate" hreflang="zh" href="${baseUrl}?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${baseUrl}" />
-  </url>
+${homeUrls}
 
   <url>
     <loc>${baseUrl}/blog/ru/</loc>

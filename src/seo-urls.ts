@@ -5,6 +5,7 @@ import {
 } from './article-slugs';
 
 export const SUPPORTED_LANGUAGES = ['ru', 'en', 'de', 'uk', 'zh'] as const;
+export const DEFAULT_LANGUAGE = 'ru' as const;
 
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 type ArticleSlugInput = string | ArticleSlugSource;
@@ -15,16 +16,25 @@ export function isSupportedLanguage(lang: string | null | undefined): lang is Su
   return !!lang && SUPPORTED_LANGUAGES.includes(lang as SupportedLanguage);
 }
 
+export function normalizeLanguage(lang: string | null | undefined): SupportedLanguage {
+  return isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
+}
+
 function pathParts(pathname: string): string[] {
   return pathname.split('/').filter(Boolean).map(part => decodeURIComponent(part));
 }
 
-export function getBlogLanguageFromPath(pathname: string): string | null {
+export function getHomeLanguageFromPath(pathname: string): SupportedLanguage | null {
+  const parts = pathParts(pathname);
+  return parts.length === 1 && isSupportedLanguage(parts[0]) ? parts[0] : null;
+}
+
+export function getBlogLanguageFromPath(pathname: string): SupportedLanguage | null {
   const parts = pathParts(pathname);
   return parts[0] === 'blog' && isSupportedLanguage(parts[1]) ? parts[1] : null;
 }
 
-export function getFaqLanguageFromPath(pathname: string): string | null {
+export function getFaqLanguageFromPath(pathname: string): SupportedLanguage | null {
   const parts = pathParts(pathname);
   return parts[0] === 'faq' && isSupportedLanguage(parts[1]) ? parts[1] : null;
 }
@@ -35,7 +45,12 @@ export function getArticleSlugFromPath(pathname: string): string | null {
 }
 
 function resolveArticleLanguage(article: ArticleSlugInput, language?: string): string {
-  return typeof article === 'string' ? String(language || '') : String(article.language || language || '');
+  return normalizeLanguage(typeof article === 'string' ? language : article.language || language);
+}
+
+export function homePath(language: string): string {
+  const resolvedLanguage = normalizeLanguage(language);
+  return resolvedLanguage === DEFAULT_LANGUAGE ? '/' : `/${encodeURIComponent(resolvedLanguage)}/`;
 }
 
 function resolvePublicSlug(article: ArticleSlugInput, language?: string): string {
@@ -61,11 +76,11 @@ export function articlePath(article: ArticleSlugInput, language?: string): strin
 }
 
 export function blogIndexPath(language: string): string {
-  return `/blog/${encodeURIComponent(language)}/`;
+  return `/blog/${encodeURIComponent(normalizeLanguage(language))}/`;
 }
 
 export function faqPath(language: string): string {
-  return `/faq/${encodeURIComponent(language)}/`;
+  return `/faq/${encodeURIComponent(normalizeLanguage(language))}/`;
 }
 
 export function legacyArticlePath(article: ArticleSlugInput, language?: string): string {
@@ -75,11 +90,11 @@ export function legacyArticlePath(article: ArticleSlugInput, language?: string):
 }
 
 export function legacyBlogIndexPath(language: string): string {
-  return `/blog.html?lang=${encodeURIComponent(language)}`;
+  return `/blog.html?lang=${encodeURIComponent(normalizeLanguage(language))}`;
 }
 
 export function legacyFaqPath(language: string): string {
-  return `/faq.html?lang=${encodeURIComponent(language)}`;
+  return `/faq.html?lang=${encodeURIComponent(normalizeLanguage(language))}`;
 }
 
 export function isProductionBuild(): boolean {
@@ -89,6 +104,10 @@ export function isProductionBuild(): boolean {
 
 export function articleHref(article: ArticleSlugInput, language?: string): string {
   return isProductionBuild() ? articlePath(article, language) : legacyArticlePath(article, language);
+}
+
+export function homeHref(language: string): string {
+  return homePath(language);
 }
 
 export function blogIndexHref(language: string): string {
@@ -101,6 +120,10 @@ export function faqHref(language: string): string {
 
 export function articleAbsoluteUrl(article: ArticleSlugInput, language?: string): string {
   return `${SITE_ORIGIN}${articlePath(article, language)}`;
+}
+
+export function homeAbsoluteUrl(language: string): string {
+  return `${SITE_ORIGIN}${homePath(language)}`;
 }
 
 export function blogIndexAbsoluteUrl(language: string): string {

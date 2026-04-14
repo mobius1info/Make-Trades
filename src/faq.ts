@@ -1,6 +1,6 @@
 import { loadTranslations } from './content-loader';
 import { fetchFaqItems, type PublicFAQItem } from './public-api';
-import { faqPath, getFaqLanguageFromPath, isProductionBuild, legacyFaqPath } from './seo-urls';
+import { faqPath, getFaqLanguageFromPath, homePath, isProductionBuild, legacyFaqPath } from './seo-urls';
 
 let currentLanguage =
   getFaqLanguageFromPath(window.location.pathname) ||
@@ -68,7 +68,7 @@ function updatePageContent() {
   setById('backHomeBtn', 'button.back_home', 'Home');
 
   const backHomeLink = document.getElementById('backHomeBtn') as HTMLAnchorElement | null;
-  if (backHomeLink) backHomeLink.href = currentLanguage === 'ru' ? '/' : `/?lang=${currentLanguage}`;
+  if (backHomeLink) backHomeLink.href = homePath(currentLanguage);
 }
 
 async function setCategory(category: string) {

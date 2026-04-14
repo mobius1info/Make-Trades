@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="yandex-verification" content="f783b7a64a4b4b2c" />
+    <!-- Primary Meta Tags -->
+    <title>MakeTrades - Найкраще рішення для створення брокера</title>
+    <meta name="title" content="MakeTrades - Найкраще рішення для створення брокера" />
+    <meta
+      name="description"
+      content="Створення Брокерів, Криптобірж та Дилінгових Центрів під ключ з MakeTrades" />
+    <meta
+      name="keywords"
+      content="брокер, трейдинг, торговые боты, инвестиции, форекс платформа, криптобиржа, white label брокер, дилинговый центр, CRM для брокера, prop trading" />
+    <meta name="author" content="MakeTrades" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://maketrades.info/uk/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://maketrades.info/uk/" />
+    <meta property="og:title" content="MakeTrades - Найкраще рішення для створення брокера" />
+    <meta
+      property="og:description"
+      content="Створення Брокерів, Криптобірж та Дилінгових Центрів під ключ з MakeTrades" />
+    <meta property="og:image" content="https://maketrades.info/og-image.jpg" />
+    <meta property="og:site_name" content="MakeTrades" />
+    <meta property="og:locale" content="uk_UA" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://maketrades.info/uk/" />
+    <meta name="twitter:title" content="MakeTrades - Найкраще рішення для створення брокера" />
+    <meta
+      name="twitter:description"
+      content="Створення Брокерів, Криптобірж та Дилінгових Центрів під ключ з MakeTrades" />
+    <meta name="twitter:image" content="https://maketrades.info/twitter-image.jpg" />
+
+    <!-- Hreflang Tags for Multilingual Support -->
+    <link rel="alternate" hreflang="ru" href="https://maketrades.info/" />
+    <link rel="alternate" hreflang="en" href="https://maketrades.info/en/" />
+    <link rel="alternate" hreflang="de" href="https://maketrades.info/de/" />
+    <link rel="alternate" hreflang="uk" href="https://maketrades.info/uk/" />
+    <link rel="alternate" hreflang="zh" href="https://maketrades.info/zh/" />
+    <link rel="alternate" hreflang="x-default" href="https://maketrades.info/" />
+<!-- Favicon & Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="120x120" href="/favicon-120.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/favicon-120.png" />
+    <meta name="theme-color" content="#0F172A" />
+
+    <!-- Load web fonts after the initial page load to keep them out of the critical path -->
+    <script>
+      (() => {
+        const fontHref = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=optional';
+
+        const loadFonts = () => {
+          if (document.querySelector('link[data-font-loader="inter"]')) return;
+
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = fontHref;
+          link.setAttribute('data-font-loader', 'inter');
+          document.head.appendChild(link);
+        };
+
+        const scheduleFontLoad = () => {
+          if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(loadFonts, { timeout: 1500 });
+          } else {
+            window.setTimeout(loadFonts, 0);
+          }
+        };
+
+        if (document.readyState === 'complete') {
+          scheduleFontLoad();
+        } else {
+          window.addEventListener('load', scheduleFontLoad, { once: true });
+        }
+      })();
+    </script>
+    <noscript
+      ><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=optional"
+    /></noscript>
+
+    <!-- Preload critical resources -->
+    <link
+      rel="preload"
+      href="/assets/hero-main-mobile.jpg"
+      as="image"
+      fetchpriority="high"
+      media="(max-width: 640px)" />
+    <link
+      rel="preload"
+      href="/assets/hero-main-tablet.jpg"
+      as="image"
+      fetchpriority="high"
+      media="(min-width: 641px) and (max-width: 1024px)" />
+    <link rel="preload" href="/assets/hero-main.jpg" as="image" fetchpriority="high" media="(min-width: 1025px)" />
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "MakeTrades",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web, iOS, Android",
+        "description": "Комплексная платформа для создания брокерской компании, криптобирж и дилинговых центров под ключ",
+        "offers": {
+          "@type": "Offer",
+          "price": "1000",
+          "priceCurrency": "USD",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "1000-3000",
+            "priceCurrency": "USD",
+            "unitText": "MONTH"
+          }
+        },
+        "featureList": [
+          "500+ торговых инструментов (forex, crypto, stocks, indices)",
+          "Магазин торговых ботов и индикаторов",
+          "Полнофункциональная CRM система",
+          "White label решение",
+          "Мобильные приложения iOS и Android",
+          "Встроенный процессинг криптовалют",
+          "Партнерская программа и IB-кабинет",
+          "API интеграции"
+        ],
+        "url": "https://maketrades.info",
+        "publisher": {
+          "@type": "Organization",
+          "name": "MakeTrades",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Geneva Place, Waterfront Drive",
+            "addressLocality": "Road Town",
+            "addressRegion": "Tortola",
+            "postalCode": "P.O. BOX 3469"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+1-855-635-6252",
+            "contactType": "customer service",
+            "email": "sales@maketrades.space",
+            "availableLanguage": ["Russian", "English", "German"]
+          }
+        }
+      }
+    </script>
+
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "MakeTrades",
+        "url": "https://maketrades.info",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://maketrades.info/assets/logo.svg",
+          "width": 226,
+          "height": 37
+        },
+        "description": "Создание брокеров, криптобирж и дилинговых центров под ключ",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Geneva Place, Waterfront Drive, Road Town, Tortola",
+          "postalCode": "P.O. BOX 3469"
+        },
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "telephone": "+1-855-635-6252",
+            "contactType": "sales",
+            "availableLanguage": ["en", "ru", "de", "uk", "zh"]
+          },
+          {
+            "@type": "ContactPoint",
+            "telephone": "+44-744-191-7770",
+            "contactType": "customer support",
+            "availableLanguage": ["en", "ru", "de", "uk", "zh"]
+          }
+        ]
+      }
+    </script>
+
+    <!-- WebSite Schema for Sitelinks -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "MakeTrades",
+        "url": "https://maketrades.info",
+        "description": "Комплексная платформа для создания брокерской компании, криптобирж и дилинговых центров под ключ",
+        "inLanguage": ["ru", "en", "de", "uk", "zh"],
+        "publisher": {
+          "@type": "Organization",
+          "name": "MakeTrades",
+          "url": "https://maketrades.info"
+        }
+      }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "MakeTrades",
+            "item": "https://maketrades.info"
+          }
+        ]
+      }
+    </script>
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg-primary: #0a0e17;
+        --bg-secondary: #111827;
+        --bg-glass: rgba(255, 255, 255, 0.03);
+        --bg-glass-hover: rgba(255, 255, 255, 0.06);
+        --accent-400: #34d399;
+        --accent-500: #10b981;
+        --accent-600: #059669;
+        --accent-glow: rgba(16, 185, 129, 0.15);
+        --accent-glow-strong: rgba(16, 185, 129, 0.3);
+        --blue-glow: rgba(59, 130, 246, 0.15);
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-muted: #64748b;
+        --border-subtle: rgba(255, 255, 255, 0.06);
+        --border-medium: rgba(255, 255, 255, 0.1);
+        --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        --radius-lg: 0.875rem;
+        --radius-xl: 1.25rem;
+        --radius-2xl: 1.5rem;
+        --radius-full: 9999px;
+        --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      body {
+        font-family: var(--font-sans);
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        background-color: var(--bg-primary);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      h1,
+      h2 {
+        line-height: 1.2;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 1rem 0;
+        background: rgba(10, 14, 23, 0.8);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border-bottom: 1px solid var(--border-subtle);
+      }
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+      }
+      .logo img {
+        height: 48px;
+        width: auto;
+      }
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      .language-selector {
+        display: flex;
+        gap: 0.25rem;
+        background: var(--bg-glass);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-full);
+        padding: 0.25rem;
+      }
+      .lang-btn {
+        padding: 0.375rem 0.75rem;
+        border: none;
+        background: transparent;
+        color: var(--text-muted);
+        border-radius: var(--radius-full);
+        cursor: pointer;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        font-family: var(--font-sans);
+      }
+      .lang-btn.active {
+        background: var(--accent-500);
+        color: white;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.75rem;
+        border: none;
+        border-radius: var(--radius-lg);
+        font-size: 0.9375rem;
+        font-weight: 600;
+        font-family: var(--font-sans);
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, var(--accent-500), var(--accent-600));
+        color: white;
+        box-shadow: 0 4px 16px var(--accent-glow);
+      }
+      .btn-secondary {
+        background: var(--bg-glass);
+        color: var(--text-primary);
+        border: 1px solid var(--border-medium);
+      }
+      .btn-large {
+        padding: 1rem 2.5rem;
+        font-size: 1.0625rem;
+        border-radius: var(--radius-xl);
+      }
+      .header-login-link {
+        min-inline-size: 13.25rem;
+        justify-content: center;
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
+      .hero-primary-cta {
+        min-inline-size: 18.5rem;
+        justify-content: center;
+        white-space: nowrap;
+      }
+      .hero {
+        padding: 10rem 0 6rem;
+        position: relative;
+        overflow: hidden;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+      }
+      .hero .container {
+        display: grid;
+        grid-template-columns: 5fr 7fr;
+        gap: 3rem;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+      }
+      .hero-content {
+        position: relative;
+      }
+      .hero-title {
+        font-size: clamp(2.5rem, 4vw, 3.5rem);
+        font-weight: 900;
+        letter-spacing: -0.03em;
+        line-height: 1.08;
+        margin-bottom: 1.25rem;
+        background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .hero-subtitle {
+        font-size: 1.0625rem;
+        color: var(--text-secondary);
+        margin-bottom: 1.75rem;
+        line-height: 1.6;
+        max-width: 440px;
+      }
+      .hero-features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.75rem;
+      }
+      .feature-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: var(--bg-glass);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-full);
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+      }
+      .feature-badge img {
+        width: 18px;
+        height: 18px;
+      }
+      .pricing-badge {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.5rem;
+        padding: 0.875rem 1.75rem;
+        background: linear-gradient(135deg, var(--accent-500), var(--accent-600));
+        color: white;
+        border-radius: var(--radius-xl);
+        margin-bottom: 1.75rem;
+      }
+      .price {
+        font-size: 2.25rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      .price-label,
+      .price-period {
+        font-size: 0.875rem;
+        opacity: 0.9;
+      }
+      .hero-image {
+        position: relative;
+        margin-right: -2rem;
+        width: 100%;
+        max-width: 100%;
+        aspect-ratio: 1864 / 957;
+      }
+      .hero-image picture {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--radius-2xl);
+      }
+      @media (max-width: 1024px) {
+        .hero .container {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+        .hero {
+          min-height: auto;
+          padding: 8rem 0 4rem;
+        }
+        .hero-subtitle {
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .hero-features {
+          justify-content: center;
+        }
+        .hero-image {
+          max-width: 700px;
+          margin: 0 auto;
+          margin-right: 0;
+        }
+      }
+      @media (max-width: 768px) {
+        .hero {
+          padding: 11rem 0 4rem;
+          min-height: auto;
+        }
+        .hero-title {
+          font-size: 2.25rem;
+        }
+        .nav {
+          flex-direction: column;
+          gap: 1rem;
+        }
+        .nav-actions {
+          width: 100%;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+        .header {
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+        }
+      }
+      @media (max-width: 480px) {
+        .container {
+          padding: 0 1.25rem;
+        }
+        .hero-title {
+          font-size: 1.875rem;
+        }
+        .hero-subtitle {
+          font-size: 1rem;
+        }
+        .pricing-badge {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 0.25rem;
+        }
+        .price {
+          font-size: 1.75rem;
+        }
+      }
+    </style>
+    <script defer src="/analytics-loader.js" data-gtag-ids="G-1GHESLKW5P,AW-17949596244" data-ym-id="108507944"></script>
+    <script type="module">
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/main-D3DY0e6f.js","assets/faq-accordion-entry-DvXaPWYZ.js","assets/content-loader-DIGxRNSv.js","assets/supabase-config-CpCC4JF2.js","assets/post-images-h7br9HLS.js","assets/main-xPABPkDz.css"])))=>i.map(i=>d[i]);
+/* empty css             */import"/assets/faq-accordion-entry-DvXaPWYZ.js";const v=function(){const r=typeof document<"u"&&document.createElement("link").relList;return r&&r.supports&&r.supports("modulepreload")?"modulepreload":"preload"}(),S=function(e){return"/"+e},m={},P=function(r,i,u){let c=Promise.resolve();if(i&&i.length>0){document.getElementsByTagName("link");const a=document.querySelector("meta[property=csp-nonce]"),t=a?.nonce||a?.getAttribute("nonce");c=Promise.allSettled(i.map(n=>{if(n=S(n),n in m)return;m[n]=!0;const s=n.endsWith(".css"),g=s?'[rel="stylesheet"]':"";if(document.querySelector(`link[href="${n}"]${g}`))return;const o=document.createElement("link");if(o.rel=s?"stylesheet":v,s||(o.as="script"),o.crossOrigin="",o.href=n,t&&o.setAttribute("nonce",t),document.head.appendChild(o),s)return new Promise((E,L)=>{o.addEventListener("load",E),o.addEventListener("error",()=>L(new Error(`Unable to preload CSS for ${n}`)))})}))}function h(a){const t=new Event("vite:preloadError",{cancelable:!0});if(t.payload=a,window.dispatchEvent(t),!t.defaultPrevented)throw a}return c.then(a=>{for(const t of a||[])t.status==="rejected"&&h(t.reason);return r().catch(h)})},d=new URLSearchParams(window.location.search),$=new Set(["ru","en","de","uk","zh"]),l=d.get("lang"),p=l&&$.has(l)?l==="ru"?"/":`/${l}/`:null;if(p){const e=new URL(p,window.location.origin);d.delete("lang"),d.forEach((u,c)=>{e.searchParams.append(c,u)}),window.location.hash&&(e.hash=window.location.hash);const r=`${window.location.pathname}${window.location.search}${window.location.hash}`,i=`${e.pathname}${e.search}${e.hash}`;r!==i&&window.location.replace(e.toString())}const w=()=>P(()=>import("/assets/main-D3DY0e6f.js"),__vite__mapDeps([0,1,2,3,4,5])).catch(e=>{console.error("Failed to load main app bundle:",e)}),f=()=>{"requestIdleCallback"in window?window.requestIdleCallback(()=>{w()},{timeout:1500}):window.setTimeout(()=>{w()},0)};document.readyState==="complete"?f():window.addEventListener("load",f,{once:!0});export{P as _};
+
+</script>
+    <link rel="modulepreload" crossorigin href="/assets/faq-accordion-entry-DvXaPWYZ.js">
+    <link rel="stylesheet" crossorigin href="/assets/main-xPABPkDz.css" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" crossorigin href="/assets/main-xPABPkDz.css" /></noscript>
+  </head>
+  <body>
+    <!-- Yandex.Metrika noscript -->
+    <noscript
+      ><div><img src="https://mc.yandex.ru/watch/108507944" style="position: absolute; left: -9999px" alt="" /></div
+    ></noscript>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <nav class="nav">
+          <a href="/uk/" class="logo" id="siteLogoLink" aria-label="MakeTrades Home">
+            <img
+              src="/assets/logo.svg"
+              alt="MakeTrades логотип - платформа для создания брокеров"
+              width="226"
+              height="37" />
+          </a>
+
+          <div class="nav-actions">
+            <div class="language-selector" role="navigation" aria-label="Выбор языка">
+              <button class="lang-btn active" data-lang="ru" aria-label="Русский язык">RU</button>
+              <button class="lang-btn" data-lang="en" aria-label="English language">EN</button>
+              <button class="lang-btn" data-lang="de" aria-label="Deutsche Sprache">DE</button>
+              <button class="lang-btn" data-lang="uk" aria-label="Українська мова">UK</button>
+              <button class="lang-btn" data-lang="zh" aria-label="中文">ZH</button>
+            </div>
+
+            <a href="#login" class="btn btn-secondary header-login-link" aria-label="Войти в личный кабинет">
+              <img src="/assets/icon-user.svg" alt="" width="20" height="20" aria-hidden="true" />
+              <span id="loginBtnText">Особистий кабiнет</span>
+            </a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <!-- Hero Section -->
+      <section class="hero" id="home">
+        <div class="container">
+          <div class="hero-content">
+            <h1 class="hero-title">Найкраще рішення для створення брокера</h1>
+            <p class="hero-subtitle">Створення Брокерів, Криптобірж та Дилінгових Центрів під ключ з MakeTrades</p>
+
+            <div class="hero-features">
+              <div class="feature-badge">
+                <img src="/assets/icon-check.svg" alt="" width="24" height="24" aria-hidden="true" />
+                <span>500+ торгових інструментів500+ торговых инструментов
+              <div class="feature-badge">
+                <img src="/assets/icon-check.svg" alt="" width="24" height="24" aria-hidden="true" />
+                <span>200+ компаній використовують200+ компаний используют
+              <div class="feature-badge">
+                <img src="/assets/icon-check.svg" alt="" width="24" height="24" aria-hidden="true" />
+                <span>White Label рішенняWhite Label решение
+            </div>
+
+            <div class="pricing-badge">
+              <span class="price-label" id="priceFrom">Вiд</span>
+              <span class="price" id="priceAmount">$1000-3000</span>
+              <span class="price-period" id="pricePeriod">на мiсяць</span>
+            </div>
+
+            <button
+              class="btn btn-primary btn-large hero-primary-cta"
+              id="requestDemoBtn"
+              aria-label="Запросить демо-аккаунт">Запросити демо-акаунт</button>
+          </div>
+
+          <div class="hero-image">
+            <picture>
+              <source
+                media="(max-width: 640px)"
+                srcset="/assets/hero-main-mobile.jpg"
+                type="image/jpeg"
+                width="800"
+                height="412" />
+              <source
+                media="(max-width: 1024px)"
+                srcset="/assets/hero-main-tablet.jpg"
+                type="image/jpeg"
+                width="1200"
+                height="617" />
+              <img
+                src="/assets/hero-main.jpg"
+                alt="Торговая платформа MakeTrades с графиками и инструментами анализа"
+                width="1864"
+                height="957"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async" />
+            </picture>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Grid Section -->
+      <section class="features-grid" id="features">
+        <div class="container">
+          <h2 class="section-title reveal">Повний функціонал для вашого брокераПолный функционал для вашего брокера
+
+          <div class="grid">
+            <article class="feature-card reveal stagger-1" data-feature="terminals">
+              <img src="/assets/feature-terminals.png" alt="" width="64" height="64" loading="lazy" />
+              <h3>Всі торгові термінали</h3>
+              <p>Віджети, сервер, котирування, CRM, кабінет трейдера - все в одній платформі</p>
+            </article>
+
+            <article class="feature-card reveal stagger-2" data-feature="apps">
+              <img src="/assets/feature-apps.png" alt="" width="64" height="64" loading="lazy" />
+              <h3>Додатки в сторах</h3>
+              <p>Реєстрація додатку з вашим логотипом в Apple Store та Google Play</p>
+            </article>
+
+            <article class="feature-card reveal stagger-3" data-feature="instruments">
+              <img src="/assets/feature-instruments.png" alt="" width="64" height="64" loading="lazy" />
+              <h3>500+ інструментів</h3>
+              <p>Котирування forex, криптовалют, акцій та індексів у реальному часі</p>
+            </article>
+
+            <article class="feature-card" data-feature="settings">
+              <img src="/assets/feature-settings.png" alt="" width="64" height="64" loading="lazy" />
+              <h3>Гнучкі налаштування</h3>
+              <p>Налаштовувані спреди, комісії та параметри для кожного інструменту</p>
+            </article>
+
+            <article class="feature-card" data-feature="investments">
+              <img src="/assets/feature-investments.png" alt="" width="64" height="64" loading="lazy" />
+              <h3>Інвестиції та копіювання</h3>
+              <p>Найфункціональніший термінал з інвестиціями та копіюванням угод</p>
+            </article>
+
+            <article class="feature-card" data-feature="prop">
+              <img src="/assets/feature-prop.png" alt="" width="64" height="64" loading="lazy" />
+              <h3>Prop-trading та бінарні опціони</h3>
+              <p>Можливість інтеграції prop-trading та бінарних опціонів</p>
+            </article>
+
+            <article class="feature-card" data-feature="store">
+              <img src="/assets/feature-store.png" alt="" width="64" height="64" loading="lazy" />
+              <h3>Store ботів та індикаторів</h3>
+              <p>Магазин ботів та індикаторів з підтримкою JavaScript розробки</p>
+            </article>
+
+            <article class="feature-card" data-feature="crypto">
+              <img src="/assets/feature-crypto.png" alt="" width="64" height="64" loading="lazy" />
+              <h3>Криптовалютний процесінг</h3>
+              <p>Вбудований процесінг для прийому та виводу криптовалюти</p>
+            </article>
+
+            <article class="feature-card" data-feature="api">
+              <img src="/assets/feature-api.png" alt="" width="64" height="64" loading="lazy" />
+              <h3>API інтеграції</h3>
+              <p>API для інтеграції платіжних систем та сторонніх сервісів</p>
+            </article>
+
+            <article class="feature-card" data-feature="companies">
+              <img src="/assets/feature-companies.png" alt="" width="64" height="64" loading="lazy" />
+              <h3>200+ компаній</h3>
+              <p>Понад 200 компаній у всьому світі використовують нашу платформу</p>
+            </article>
+
+            <article class="feature-card" data-feature="crm">
+              <img src="/assets/feature-crm.png" alt="" width="64" height="64" loading="lazy" />
+              <h3>Повнофункціональна CRM</h3>
+              <p>CRM з розподілом ролей, управлінням лідами та автоматизацією</p>
+            </article>
+
+            <article class="feature-card" data-feature="partner">
+              <img src="/assets/feature-partner.png" alt="" width="64" height="64" loading="lazy" />
+              <h3>Партнерська програма</h3>
+              <p>Автоматичний розподіл бонусів та партнерських комісій, IB-кабінет</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Detailed Features Section -->
+      <section class="detailed-features">
+        <div class="container">
+          <article class="feature-detail" data-detail="1">
+            <div class="feature-detail-content reveal-left">
+              <h2>Найкраще рішення для ваших клієнтів</h2>
+              <p>Надайте вашим клієнтам професійний інструмент для трейдингу з просунутими функціями аналізу, автоматизації та управління портфелем.</p>
+              <ul class="feature-list">
+                <li>
+                  <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true" />
+                  <span>Інтуїтивно зрозумілий інтерфейс</span>
+                </li>
+                <li>
+                  <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true" />
+                  <span>Просунуті графіки та індикатори</span>
+                </li>
+                <li>
+                  <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true" />
+                  <span>Мобільна торгівля 24/7</span>
+                </li>
+                <li>
+                  <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true" />
+                  <span>Автоматизація стратегій</span>
+                </li>
+              </ul>
+            </div>
+            <div class="feature-detail-image reveal-right">
+              <img
+                src="/assets/detail-solution.jpg"
+                srcset="/assets/detail-solution-640.jpg 640w, /assets/detail-solution-960.jpg 960w, /assets/detail-solution.jpg 1242w"
+                sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) calc(100vw - 4rem), 600px"
+                alt="Торговый терминал с графиками и аналитическими инструментами"
+                width="1242"
+                height="882"
+                loading="lazy"
+                decoding="async" />
+            </div>
+          </article>
+
+          <article class="feature-detail feature-detail-reverse" data-detail="2">
+            <div class="feature-detail-image reveal-left">
+              <img
+                src="/assets/detail-bots.jpg"
+                srcset="/assets/detail-bots-640.jpg 640w, /assets/detail-bots-960.jpg 960w, /assets/detail-bots.jpg 1161w"
+                sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) calc(100vw - 4rem), 600px"
+                alt="Магазин торговых ботов с различными стратегиями"
+                width="1161"
+                height="882"
+                loading="lazy"
+                decoding="async" />
+            </div>
+            <div class="feature-detail-content reveal-right">
+              <h2>Магазин торговельних ботів</h2>
+              <p>Надайте клієнтам доступ до маркетплейсу торговельних ботів і дозвольте розробникам створювати власні стратегії на JavaScript.</p>
+              <ul class="feature-list">
+                <li>
+                  <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true" />
+                  <span>Готові торговельні стратегії</span>
+                </li>
+                <li>
+                  <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true" />
+                  <span>Бектестинг та оптимізація</span>
+                </li>
+                <li>
+                  <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true" />
+                  <span>JavaScript API для розробки</span>
+                </li>
+                <li>
+                  <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true" />
+                  <span>Монетизація для розробників</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="feature-detail" data-detail="3">
+            <div class="feature-detail-content reveal-left">
+              <h2>Інвестиційні портфелі</h2>
+              <p>Дозвольте вашим клієнтам інвестувати в готові портфелі та копіювати угоди успішних трейдерів.</p>
+              <ul class="feature-list">
+                <li>
+                  <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true" />
+                  <span>PAMM та MAM рахунки</span>
+                </li>
+                <li>
+                  <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true" />
+                  <span>Social Trading</span>
+                </li>
+                <li>
+                  <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true" />
+                  <span>Детальна статистика прибутковості</span>
+                </li>
+                <li>
+                  <img src="/assets/icon-check-circle.svg" alt="" width="24" height="24" aria-hidden="true" />
+                  <span>Автоматичне копіювання угод</span>
+                </li>
+              </ul>
+            </div>
+            <div class="feature-detail-image reveal-right">
+              <img
+                src="/assets/detail-portfolios.jpg"
+                srcset="/assets/detail-portfolios-640.jpg 640w, /assets/detail-portfolios-960.jpg 960w, /assets/detail-portfolios.jpg 1242w"
+                sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) calc(100vw - 4rem), 600px"
+                alt="Инвестиционные портфели с графиками доходности"
+                width="1242"
+                height="882"
+                loading="lazy"
+                decoding="async" />
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Blog Preview Section -->
+      <section class="blog-preview" id="blog">
+        <div class="container">
+          <h2 class="section-title reveal">Корисні статтіПолезные статьи
+          <div class="blog-grid" id="blogGrid">
+      <a href="/blog/uk/yak-stvoryty-foreks-brokera-z-nulya/" class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
+        <img src="/assets/blog/broker-launch.webp"
+             alt="Як створити форекс-брокера з нуля: повна інструкція"
+             class="blog-card-image"
+             itemprop="image"
+             data-post-slug="broker-launch"
+             data-image-kind="card"
+             width="1200"
+             height="670"
+             
+             
+             loading="lazy"
+             
+             decoding="async">
+        <div class="blog-card-content">
+          <div class="blog-card-category">Створення брокера</div>
+          <h3 itemprop="headline">Як створити форекс-брокера з нуля: повна інструкція</h3>
+          <p itemprop="description">Покрокова інструкція зі створення форекс-брокерської компанії від ідеї до запуску.</p>
+          <div class="blog-card-meta">
+            <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+              <span itemprop="name">MakeTrades Team</span>
+            </span>
+            <span>&bull;</span>
+            <time itemprop="datePublished" datetime="2026-02-08T19:57:57.043283+00:00">
+              08.02.2026
+            </time>
+            <span>&bull;</span>
+            <span>9 хв</span>
+          </div>
+        </div>
+        <meta itemprop="url" content="https://maketrades.info/blog/uk/yak-stvoryty-foreks-brokera-z-nulya/">
+      </a>
+      <a href="/blog/uk/licenzuvannya-foreks-brokera-krayiny-ta-vymogy/" class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
+        <img src="/assets/blog/broker-licensing.webp"
+             alt="Ліцензування форекс-брокера: країни та вимоги"
+             class="blog-card-image"
+             itemprop="image"
+             data-post-slug="broker-licensing"
+             data-image-kind="card"
+             width="1200"
+             height="670"
+             
+             
+             loading="lazy"
+             
+             decoding="async">
+        <div class="blog-card-content">
+          <div class="blog-card-category">Створення брокера</div>
+          <h3 itemprop="headline">Ліцензування форекс-брокера: країни та вимоги</h3>
+          <p itemprop="description">Огляд юрисдикцій для ліцензування форекс-брокера та їх регуляторні вимоги.</p>
+          <div class="blog-card-meta">
+            <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+              <span itemprop="name">MakeTrades Team</span>
+            </span>
+            <span>&bull;</span>
+            <time itemprop="datePublished" datetime="2026-02-08T19:57:57.043283+00:00">
+              08.02.2026
+            </time>
+            <span>&bull;</span>
+            <span>9 хв</span>
+          </div>
+        </div>
+        <meta itemprop="url" content="https://maketrades.info/blog/uk/licenzuvannya-foreks-brokera-krayiny-ta-vymogy/">
+      </a>
+      <a href="/blog/uk/biznes-plan-foreks-brokera-shablon/" class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
+        <img src="/assets/blog/broker-business-plan.webp"
+             alt="Бізнес-план форекс-брокера: шаблон та рекомендації"
+             class="blog-card-image"
+             itemprop="image"
+             data-post-slug="broker-business-plan"
+             data-image-kind="card"
+             width="1200"
+             height="670"
+             
+             
+             loading="lazy"
+             
+             decoding="async">
+        <div class="blog-card-content">
+          <div class="blog-card-category">Створення брокера</div>
+          <h3 itemprop="headline">Бізнес-план форекс-брокера: шаблон та рекомендації</h3>
+          <p itemprop="description">Як скласти ефективний бізнес-план для запуску форекс-брокерської компанії.</p>
+          <div class="blog-card-meta">
+            <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+              <span itemprop="name">MakeTrades Team</span>
+            </span>
+            <span>&bull;</span>
+            <time itemprop="datePublished" datetime="2026-02-08T19:57:57.043283+00:00">
+              08.02.2026
+            </time>
+            <span>&bull;</span>
+            <span>8 хв</span>
+          </div>
+        </div>
+        <meta itemprop="url" content="https://maketrades.info/blog/uk/biznes-plan-foreks-brokera-shablon/">
+      </a></div>
+          <div class="text-center">
+            <a href="/blog/uk/" class="btn btn-secondary" id="allArticlesBtn">Всі статті</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="cta-section">
+        <div class="container">
+          <div class="cta-content reveal">
+            <h2>Готові почати?</h2>
+            <p>Отримайте демо-акаунт та протестуйте всі можливості платформи безкоштовно</p>
+            <button class="btn btn-primary btn-large hero-primary-cta" id="ctaRequestDemoBtn">Запросити демо-акаунт</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="faq-section" id="faq">
+        <div class="container">
+          <h2 class="section-title reveal">Часті питанняЧасто задаваемые вопросы
+          <div class="faq-list" id="faqList">
+      <div class="faq-item" data-faq-id="55b6730c-b8e6-49a1-9abb-2a43442e2037" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <div class="faq-question" itemprop="name">
+          <span>Скільки коштує платформа MakeTrades?</span>
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">Вартість платформи становить від $1000 до $3000 на місяць залежно від обраного пакету та додаткових функцій.</div>
+          </div>
+        </div>
+      </div>
+      <div class="faq-item" data-faq-id="bac7f2f7-cadc-4062-b9ca-af4d1a34a518" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <div class="faq-question" itemprop="name">
+          <span>Які торгові інструменти доступні?</span>
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">Платформа надає доступ до понад 500 інструментів, включаючи форекс, криптовалюти, акції та індекси.</div>
+          </div>
+        </div>
+      </div>
+      <div class="faq-item" data-faq-id="0b5c4d3b-7f44-425d-90a6-8608b1bfe420" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <div class="faq-question" itemprop="name">
+          <span>Чи надаєте ви технічну підтримку?</span>
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">Так, ми надаємо цілодобову технічну підтримку російською, англійською та німецькою мовами.</div>
+          </div>
+        </div>
+      </div>
+      <div class="faq-item" data-faq-id="58ed180a-4b66-4768-aefa-247c51992d57" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <div class="faq-question" itemprop="name">
+          <span>Чи можна кастомізувати платформу під свій бренд?</span>
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">Так, платформа повністю White Label - ви можете налаштувати дизайн, логотипи та брендинг під вашу компанію.</div>
+          </div>
+        </div>
+      </div></div>
+          <div class="text-center">
+            <a href="/faq/uk/" class="btn btn-secondary" id="allFaqBtn">Всі питання</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+      <div class="container">
+        <div class="footer-contacts">
+          <div class="footer-contact-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <div>
+              <span class="footer-contact-label" id="footerAddressLabel">Адреса</span>
+              <address>Geneva Place, Waterfront Drive<br />Road Town, Tortola, P.O. BOX 3469</address>
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            <div>
+              <span class="footer-contact-label" id="footerPhoneLabel">Телефон</span>
+              <a href="tel:+18556356252">+1 855 635 6252</a>
+              <a href="tel:+447441917770">+44 744 191 7770</a>
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+            <div>
+              <span class="footer-contact-label" id="footerEmailLabel">Email</span>
+              <a href="mailto:sales@maketrades.space">sales@maketrades.space</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <a href="/uk/" class="footer-logo" id="footerLogoLink" aria-label="MakeTrades Home">
+            <img src="/assets/logo.svg" alt="MakeTrades" width="226" height="37" />
+          </a>
+          <p id="copyrightText">© 2026 MakeTrades. Всі права захищені.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Demo Request Modal -->
+    <div id="demoModal" class="modal" role="dialog" aria-labelledby="demoModalTitle" aria-hidden="true">
+      <div class="modal-content">
+        <button class="modal-close" aria-label="Закрыть модальное окно">&times;</button>
+        <h2 id="demoModalTitle">Запросити демо-акаунт</h2>
+        <div class="form-notice" id="formNotice">
+          <div class="form-notice-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path
+                d="M10 2L2 18h16L10 2z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linejoin="round" />
+              <path d="M10 8v4M10 14.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </div>
+          <p data-translate="form.notice_text">Ми не брокер. MakeTrades — це технологічна платформа: ми надаємо професійний софт для запуску брокерського бізнесу в оренду з повним технічним супроводом та підтримкою 24/7.</p>
+        </div>
+        <form id="demoForm" novalidate>
+          <div class="form-field hp-field" aria-hidden="true">
+            <input type="text" name="website" autocomplete="off" tabindex="-1" />
+          </div>
+          <div class="form-field">
+            <input type="text" name="name" placeholder="Ваше ім&#39;я" aria-label="Ваше имя" />
+          </div>
+          <div class="form-field">
+            <input type="email" name="email" placeholder="Email" aria-label="Ваш email" />
+          </div>
+          <div class="form-field">
+            <input type="text" name="telegram" placeholder="Telegram (необов&#39;язково)" aria-label="Ваш Telegram" />
+          </div>
+          <div class="form-field custom-select-group">
+            <input type="hidden" name="referral_source" value="" />
+            <div class="custom-select" tabindex="0" aria-label="Откуда узнали о нас?">
+              <div class="custom-select-trigger">
+                <span class="custom-select-value" data-translate="form.referral_placeholder"
+                  >Звiдки дiзналися про нас? *</span>
+                <span class="radio-label" data-translate="form.yes">Так</span>
+              </label>
+              <label class="radio-field">
+                <input type="radio" name="broker_experience" value="no" />
+                <span class="radio-custom"></span>
+                <span class="radio-label" data-translate="form.no">Ні</span>
+              </label>
+            </div>
+          </div>
+          <div class="captcha-field" id="captchaField">
+            <label class="captcha-label" data-translate="form.captcha_label">Розв&#39;яжіть приклад:</label>
+            <div class="captcha-row">
+              <span class="captcha-question" id="captchaQuestion"></span>
+              <input
+                type="text"
+                name="captcha_answer"
+                id="captchaAnswer"
+                class="captcha-input"
+                autocomplete="off"
+                inputmode="numeric"
+                placeholder="?" />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-large">Запросити</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="loginModal" class="modal" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true">
+      <div class="modal-content">
+        <button class="modal-close" aria-label="Close">&times;</button>
+        <h2 id="loginModalTitle">Вхід до особистого кабінету</h2>
+        <form id="loginForm" novalidate>
+          <div class="form-field">
+            <input type="email" name="email" placeholder="Email" aria-label="Email" />
+          </div>
+          <div class="form-field">
+            <input type="password" name="password" placeholder="Пароль" aria-label="Password" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-large" id="loginSubmitBtn">Увійти</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Bonus Modal -->
+    <div id="bonusModal" class="modal" role="dialog" aria-labelledby="bonusModalTitle" aria-hidden="true">
+      <div class="modal-content" style="max-width: 480px; text-align: center">
+        <button class="modal-close" aria-label="Закрыть">&times;</button>
+        <div style="font-size: 48px; margin-bottom: 16px">&#127873;</div>
+        <h2 id="bonusModalTitle" data-translate="bonus.title">Отримайте бонуси!</h2>
+        <p style="margin-bottom: 24px; color: var(--neutral-600); line-height: 1.6" data-translate="bonus.text">Напишiть нам на пошту — ми дамо вам персональнi бонуси та допоможемо з налаштуванням!</p>
+        <a
+          href="mailto:sales@maketrades.space"
+          class="btn btn-primary btn-large"
+          style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+          </svg>
+          <span data-translate="bonus.email_btn">sales@maketrades.space</span>
+        </a>
+        <div style="margin-top: 16px">
+          <a
+            href="https://t.me/Make_Soft_Ltd"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-secondary"
+            style="
+              display: inline-flex;
+              align-items: center;
+              gap: 8px;
+              text-decoration: none;
+              background: var(--neutral-100);
+              color: var(--neutral-800);
+              border: 1px solid var(--neutral-300);
+            ">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.601 8.217l-2.031 9.57c-.153.687-.555.858-1.125.534l-3.108-2.289-1.5 1.443c-.165.165-.306.306-.627.306l.222-3.162 5.76-5.202c.252-.222-.054-.345-.39-.123l-7.122 4.488-3.066-.954c-.666-.21-.678-.666.144-.99l12.006-4.626c.555-.198 1.038.132.837 1.005z"
+                fill="currentColor" />
+            </svg>
+            <span data-translate="bonus.telegram_btn">Написати в Telegram</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Telegram Button -->
+    <div
+      id="verifyModal"
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="verifyModalTitle"
+      aria-hidden="true">
+      <div class="modal-content" style="max-width: 400px">
+        <button class="modal-close" aria-label="Закрыть">&times;</button>
+        <h2 id="verifyModalTitle" style="margin-bottom: 1rem">Подтвердите действие</h2>
+        <p style="margin-bottom: 1.5rem; color: var(--neutral-600)">
+          Пожалуйста, подтвердите, что вы хотите перейти в Telegram
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: flex-end">
+          <button
+            id="cancelVerify"
+            class="btn btn-secondary"
+            style="background: var(--neutral-200); color: var(--neutral-800)">
+            Отмена
+          </button>
+          <button id="confirmVerify" class="btn btn-primary" disabled>
+            Подтвердить (<span id="verifyTimer">3</span>)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="telegram-button" style="position: fixed; bottom: 30px; right: 30px; z-index: 1000">
+      <a
+        href="#telegram"
+        data-telegram-link="https://t.me/Make_Soft_Ltd"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 60px;
+          height: 60px;
+          background: linear-gradient(135deg, #0088cc 0%, #229ed9 100%);
+          border-radius: 50%;
+          box-shadow: 0 4px 12px rgba(0, 136, 204, 0.4);
+          transition: all 0.3s ease;
+          text-decoration: none;
+        "
+        aria-label="Связаться через Telegram"
+        onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 20px rgba(0, 136, 204, 0.6)'"
+        onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0, 136, 204, 0.4)'">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M16 0C7.164 0 0 7.164 0 16s7.164 16 16 16 16-7.164 16-16S24.836 0 16 0zm7.468 10.956l-2.708 12.76c-.204.916-.74 1.144-1.5.712l-4.144-3.052-2 1.924c-.22.22-.408.408-.836.408l.296-4.216L22.32 10.28c.324-.288-.068-.448-.504-.16l-11.496 7.236-4.944-1.548c-1.076-.336-1.096-.876.224-1.3l19.316-7.444c.896-.328 1.676.216 1.388 1.892z"
+            fill="white" />
+        </svg>
+      </a>
+    </div>
+
+  </body>
+</html>

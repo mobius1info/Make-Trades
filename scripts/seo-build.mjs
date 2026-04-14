@@ -157,7 +157,11 @@ function translate(index, language, key, fallback = '') {
 }
 
 function homePath(language) {
-  return language === 'ru' ? '/' : `/?lang=${encodeURIComponent(language)}`;
+  return language === 'ru' ? '/' : `/${encodeURIComponent(language)}/`;
+}
+
+function homeUrl(language) {
+  return `${BASE_URL}${homePath(language)}`;
 }
 
 async function readSupabasePublicConfig() {
@@ -729,7 +733,11 @@ function articleAlternateLinks(post, clusters, indent = '    ') {
 }
 
 function pageAlternateLinks(kind, indent = '    ') {
-  const urlFor = kind === 'faq' ? faqUrl : blogIndexUrl;
+  const urlFor = kind === 'home'
+    ? homeUrl
+    : kind === 'faq'
+      ? faqUrl
+      : blogIndexUrl;
   const links = LANGUAGES.map(language =>
     `${indent}<link rel="alternate" hreflang="${language}" href="${urlFor(language)}" />`
   );
@@ -1244,14 +1252,164 @@ function optimizeHomeStylesheetLoading(html) {
   return nextHtml;
 }
 
-function patchHomeHtml(template, posts, faqItems, translationIndex) {
-  const visiblePosts = languagePosts(posts, 'ru', { visibleOnly: true }).slice(0, 3);
-  const faq = faqItems.filter(item => item.language === 'ru').slice(0, 4);
+function replaceFormFieldAttribute(html, formId, fieldName, attribute, value) {
+  const re = new RegExp(`(<form\\b[^>]*id="${formId}"[\\s\\S]*?<input\\b[^>]*name="${fieldName}"[^>]*\\b${attribute}=")[^"]*(")`, 'i');
+  return html.replace(re, (_match, start, end) => `${start}${escapeHtml(value)}${end}`);
+}
+
+function replaceNthMatch(html, pattern, values) {
+  let index = 0;
+  return html.replace(pattern, (match, start, end) => {
+    const value = values[index++];
+    return value ? `${start}${escapeHtml(value)}${end}` : match;
+  });
+}
+
+function replaceDataTranslateElements(html, language, translationIndex) {
+  const htmlTranslateKeys = new Set(['form.promo_text']);
+  return html.replace(
+    /(<([a-z0-9]+)\b[^>]*\bdata-translate="([^"]+)"[^>]*>)([\s\S]*?)(<\/\2>)/gi,
+    (match, start, _tagName, key, _content, end) => {
+      const value = translate(translationIndex, language, key, '');
+      if (!value) return match;
+      const nextContent = htmlTranslateKeys.has(key) ? value : escapeHtml(value);
+      return `${start}${nextContent}${end}`;
+    }
+  );
+}
+
+function replaceFeatureCardCopy(html, language, translationIndex) {
+  return html.replace(
+    /(<article class="feature-card[^"]*" data-feature="([^"]+)"[^>]*>[\s\S]*?<h3>)([\s\S]*?)(<\/h3>[\s\S]*?<p>)([\s\S]*?)(<\/p>)/gi,
+    (match, titleStart, feature, _title, descStart, _desc, end) => {
+      const nextTitle = translate(translationIndex, language, `feature.${feature}.title`, '').trim();
+      const nextDesc = translate(translationIndex, language, `feature.${feature}.desc`, '').trim();
+      if (!nextTitle && !nextDesc) return match;
+      return `${titleStart}${escapeHtml(nextTitle || String(_title).trim())}${descStart}${escapeHtml(nextDesc || String(_desc).trim())}${end}`;
+    }
+  );
+}
+
+function replaceFeatureDetailCopy(html, language, translationIndex) {
+  return html.replace(
+    /(<article class="feature-detail[^"]*" data-detail="([^"]+)"[^>]*>[\s\S]*?<h2>)([\s\S]*?)(<\/h2>[\s\S]*?<p>)([\s\S]*?)(<\/p>[\s\S]*?<ul class="feature-list">)([\s\S]*?)(<\/ul>)/gi,
+    (match, titleStart, detail, _title, descStart, _desc, listStart, listHtml, listEnd) => {
+      const nextTitle = translate(translationIndex, language, `detail${detail}.title`, '').trim();
+      const nextDesc = translate(translationIndex, language, `detail${detail}.desc`, '').trim();
+      let itemIndex = 0;
+      const nextListHtml = String(listHtml).replace(
+        /(<li>[\s\S]*?<span>)([\s\S]*?)(<\/span>[\s\S]*?<\/li>)/gi,
+        (itemMatch, itemStart, itemContent, itemEnd) => {
+          itemIndex += 1;
+          const nextItem = translate(translationIndex, language, `detail${detail}.item${itemIndex}`, '').trim();
+          return nextItem ? `${itemStart}${escapeHtml(nextItem)}${itemEnd}` : itemMatch;
+        }
+      );
+
+      if (!nextTitle && !nextDesc && nextListHtml === listHtml) return match;
+      return `${titleStart}${escapeHtml(nextTitle || String(_title).trim())}${descStart}${escapeHtml(nextDesc || String(_desc).trim())}${listStart}${nextListHtml}${listEnd}`;
+    }
+  );
+}
+
+function localizeHomeContent(template, language, translationIndex) {
+  let html = template;
+  const heroTitle = translate(translationIndex, language, 'hero.title', 'MakeTrades');
+  const heroSubtitle = translate(translationIndex, language, 'hero.subtitle', 'Turnkey platform for brokers and exchanges');
+  const requestDemoLabel = translate(translationIndex, language, 'button.request_demo', 'Request Demo Account');
+
+  html = html.replace(/(<h1 class="hero-title">)([\s\S]*?)(<\/h1>)/i, (_match, start, _content, end) => `${start}${escapeHtml(heroTitle)}${end}`);
+  html = html.replace(/(<p class="hero-subtitle">)([\s\S]*?)(<\/p>)/i, (_match, start, _content, end) => `${start}${escapeHtml(heroSubtitle)}${end}`);
+  html = replaceNthMatch(
+    html,
+    /(<div class="feature-badge">[\s\S]*?<span>)([\s\S]*?)(<\/span>[\s\S]*?<\/div>)/g,
+    [1, 2, 3].map(index => translate(translationIndex, language, `hero.badge_${index}`, ''))
+  );
+  html = replaceNthMatch(
+    html,
+    /(<h2 class="section-title reveal">)([\s\S]*?)(<\/h2>)/g,
+    [
+      translate(translationIndex, language, 'section.features_title', 'Full functionality for your broker'),
+      translate(translationIndex, language, 'section.blog_title', 'Useful articles'),
+      translate(translationIndex, language, 'section.faq_title', 'Frequently asked questions'),
+    ]
+  );
+  html = html.replace(
+    /(<div class="cta-content reveal">\s*<h2>)([\s\S]*?)(<\/h2>\s*<p>)([\s\S]*?)(<\/p>)/i,
+    (_match, titleStart, _title, descStart, _desc, end) =>
+      `${titleStart}${escapeHtml(translate(translationIndex, language, 'cta.title', 'Ready to start?'))}${descStart}${escapeHtml(translate(translationIndex, language, 'cta.description', 'Get a demo account and test all platform features for free'))}${end}`
+  );
+
+  html = replaceFeatureCardCopy(html, language, translationIndex);
+  html = replaceFeatureDetailCopy(html, language, translationIndex);
+  html = replaceDataTranslateElements(html, language, translationIndex);
+
+  html = replaceElementContentById(html, 'loginBtnText', escapeHtml(translate(translationIndex, language, 'button.login', 'Personal Account')));
+  html = replaceElementContentById(html, 'priceFrom', escapeHtml(translate(translationIndex, language, 'pricing.from', 'From')));
+  html = replaceElementContentById(html, 'pricePeriod', escapeHtml(translate(translationIndex, language, 'pricing.period', 'per month')));
+  html = replaceElementContentById(html, 'requestDemoBtn', escapeHtml(requestDemoLabel));
+  html = replaceElementContentById(html, 'ctaRequestDemoBtn', escapeHtml(requestDemoLabel));
+  html = replaceElementContentById(html, 'allArticlesBtn', escapeHtml(translate(translationIndex, language, 'button.all_articles', 'All articles')));
+  html = replaceElementContentById(html, 'allFaqBtn', escapeHtml(translate(translationIndex, language, 'button.all_questions', 'All questions')));
+  html = replaceElementContentById(html, 'copyrightText', escapeHtml(translate(translationIndex, language, 'footer.copyright', '© 2026 MakeTrades. All rights reserved.')));
+  html = replaceElementContentById(html, 'footerAddressLabel', escapeHtml(translate(translationIndex, language, 'footer.address', 'Address')));
+  html = replaceElementContentById(html, 'footerPhoneLabel', escapeHtml(translate(translationIndex, language, 'footer.phone', 'Phone')));
+  html = replaceElementContentById(html, 'footerEmailLabel', escapeHtml(translate(translationIndex, language, 'footer.email_label', 'Email')));
+  html = replaceElementContentById(html, 'demoModalTitle', escapeHtml(translate(translationIndex, language, 'modal.demo_title', 'Request Demo Account')));
+  html = replaceElementContentById(html, 'loginModalTitle', escapeHtml(translate(translationIndex, language, 'login.title', 'Sign In')));
+  html = replaceElementContentById(html, 'loginSubmitBtn', escapeHtml(translate(translationIndex, language, 'login.button', 'Log In')));
+
+  html = setAttributeById(html, 'allArticlesBtn', 'href', blogIndexPath(language));
+  html = setAttributeById(html, 'allFaqBtn', 'href', faqPath(language));
+  html = setAttributeById(html, 'siteLogoLink', 'href', homePath(language));
+  html = setAttributeById(html, 'footerLogoLink', 'href', homePath(language));
+
+  html = replaceFormFieldAttribute(html, 'demoForm', 'name', 'placeholder', translate(translationIndex, language, 'form.name', 'Your name'));
+  html = replaceFormFieldAttribute(html, 'demoForm', 'email', 'placeholder', translate(translationIndex, language, 'form.email', 'Email'));
+  html = replaceFormFieldAttribute(html, 'demoForm', 'telegram', 'placeholder', translate(translationIndex, language, 'form.telegram', 'Telegram (optional)'));
+  html = replaceFormFieldAttribute(html, 'loginForm', 'email', 'placeholder', translate(translationIndex, language, 'login.email', 'Email'));
+  html = replaceFormFieldAttribute(html, 'loginForm', 'password', 'placeholder', translate(translationIndex, language, 'login.password', 'Password'));
+  html = html.replace(
+    /(<form id="demoForm"[\s\S]*?<button type="submit" class="btn btn-primary btn-large">)([\s\S]*?)(<\/button>)/i,
+    (_match, start, _content, end) => `${start}${escapeHtml(translate(translationIndex, language, 'form.request', 'Request'))}${end}`
+  );
+
+  return html;
+}
+
+function homeSeo(language, translationIndex) {
+  const heroTitle = translate(translationIndex, language, 'hero.title', 'MakeTrades');
+  const heroSubtitle = translate(translationIndex, language, 'hero.subtitle', 'Turnkey platform for brokers and exchanges');
+  return {
+    title: `MakeTrades - ${heroTitle}`,
+    description: heroSubtitle,
+  };
+}
+
+function homeHtml(template, language, posts, faqItems, translationIndex) {
+  const visiblePosts = languagePosts(posts, language, { visibleOnly: true }).slice(0, 3);
+  const faq = faqItems
+    .filter(item => item.language === language)
+    .sort((a, b) => Number(a.order) - Number(b.order))
+    .slice(0, 4);
+  const seo = homeSeo(language, translationIndex);
 
   let html = optimizeHomeStylesheetLoading(template);
-  html = html.replace(/href="\/blog\.html" class="btn btn-secondary" id="allArticlesBtn"/, 'href="/blog/ru/" class="btn btn-secondary" id="allArticlesBtn"');
-  html = html.replace(/href="\/faq\.html" class="btn btn-secondary" id="allFaqBtn"/, 'href="/faq/ru/" class="btn btn-secondary" id="allFaqBtn"');
-  html = replaceElementContentById(html, 'blogGrid', visiblePosts.map(post => blogCard(post, 'ru', translationIndex)).join(''));
+  html = replaceHtmlLang(html, language);
+  html = replaceTitle(html, seo.title);
+  html = setMetaName(html, 'title', seo.title);
+  html = setMetaName(html, 'description', seo.description);
+  html = setMetaProperty(html, 'og:url', homeUrl(language));
+  html = setMetaProperty(html, 'og:title', seo.title);
+  html = setMetaProperty(html, 'og:description', seo.description);
+  html = setMetaProperty(html, 'og:locale', ogLocale(language));
+  html = setMetaName(html, 'twitter:url', homeUrl(language));
+  html = setMetaName(html, 'twitter:title', seo.title);
+  html = setMetaName(html, 'twitter:description', seo.description);
+  html = setCanonical(html, homeUrl(language));
+  html = replaceAlternateLinks(html, pageAlternateLinks('home'));
+  html = localizeHomeContent(html, language, translationIndex);
+  html = replaceElementContentById(html, 'blogGrid', visiblePosts.map(post => blogCard(post, language, translationIndex)).join(''));
   html = replaceElementContentById(html, 'faqList', faq.map(faqItem).join(''));
   return html;
 }
@@ -1271,6 +1429,13 @@ function sitemapUrlEntry({ loc, lastmod, changefreq, priority, alternates = [] }
     <changefreq>${escapeXml(changefreq)}</changefreq>
     <priority>${escapeXml(priority)}</priority>${alternateXml ? `\n${alternateXml}` : ''}
   </url>`;
+}
+
+function homeAlternates() {
+  return [
+    ...LANGUAGES.map(language => ({ lang: language, href: homeUrl(language) })),
+    { lang: 'x-default', href: homeUrl('ru') },
+  ];
 }
 
 function blogOrFaqAlternates(kind) {
@@ -1295,12 +1460,13 @@ function generateSitemap(posts, clusters) {
   const indexablePosts = posts.filter(post => post.indexable);
   const newestPostDate = indexablePosts[0]?.updated_at ? isoDate(indexablePosts[0].updated_at) : today;
   const urls = [
-    sitemapUrlEntry({
-      loc: BASE_URL,
+    ...LANGUAGES.map(language => sitemapUrlEntry({
+      loc: homeUrl(language),
       lastmod: today,
       changefreq: 'weekly',
-      priority: '1.0',
-    }),
+      priority: language === 'ru' ? '1.0' : '0.9',
+      alternates: homeAlternates(),
+    })),
     ...LANGUAGES.map(language => sitemapUrlEntry({
       loc: blogIndexUrl(language),
       lastmod: newestPostDate,
@@ -1347,11 +1513,34 @@ function redirectEntries(posts) {
     }));
 }
 
+function legacyHomeRedirectRules() {
+  const rules = [
+    '/index.html / 301!',
+    '/ru / 301!',
+    '/ru/ / 301!',
+  ];
+
+  for (const language of LANGUAGES) {
+    const target = homePath(language);
+    rules.push(`/ lang=${language} ${target} 301!`);
+    rules.push(`/index.html lang=${language} ${target} 301!`);
+
+    if (language !== 'ru') {
+      rules.push(`/${language} ${target} 301!`);
+    }
+  }
+
+  return rules;
+}
+
 function netlifyRedirects(entries) {
-  return `${entries.flatMap(entry => [
+  return `${Array.from(new Set([
+    ...entries.flatMap(entry => [
     `${entry.from_path.slice(0, -1)} ${entry.to_path} 301!`,
     `${entry.from_path} ${entry.to_path} 301!`,
-  ]).join('\n')}\n`;
+    ]),
+    ...legacyHomeRedirectRules(),
+  ])).join('\n')}\n`;
 }
 
 async function writeTextFile(filePath, content) {
@@ -1416,11 +1605,15 @@ async function generateSeoFiles(data) {
 
   await writeFile(
     join(DIST_DIR, 'index.html'),
-    patchHomeHtml(optimizedHomeTemplate, posts, faqItems, translationIndex),
+    homeHtml(optimizedHomeTemplate, 'ru', posts, faqItems, translationIndex),
     'utf8'
   );
 
   for (const language of LANGUAGES) {
+    if (language !== 'ru') {
+      await writeIndexHtml(join(DIST_DIR, language), homeHtml(optimizedHomeTemplate, language, posts, faqItems, translationIndex));
+    }
+
     const blogHtml = blogIndexHtml(blogTemplate, language, posts, translationIndex);
     const faqHtml = faqIndexHtml(faqTemplate, language, faqItems, translationIndex);
 

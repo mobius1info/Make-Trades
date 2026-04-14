@@ -1,7 +1,53 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 
+const supportedLanguages = ['ru', 'en', 'de', 'uk', 'zh'];
+const supportedLanguagesPattern = supportedLanguages.join('|');
+
+function rewriteLocalizedRoute(url: string): string | null {
+  const pathname = url.split('?')[0];
+
+  if (new RegExp(`^/(?:${supportedLanguagesPattern})/?$`, 'i').test(pathname)) {
+    return '/index.html';
+  }
+
+  if (new RegExp(`^/blog/(?:${supportedLanguagesPattern})/?$`, 'i').test(pathname)) {
+    return '/blog.html';
+  }
+
+  if (new RegExp(`^/faq/(?:${supportedLanguagesPattern})/?$`, 'i').test(pathname)) {
+    return '/faq.html';
+  }
+
+  if (new RegExp(`^/blog/(?:${supportedLanguagesPattern})/[^/]+/?$`, 'i').test(pathname)) {
+    return '/blog-post.html';
+  }
+
+  return null;
+}
+
 export default defineConfig({
+  plugins: [
+    {
+      name: 'localized-dev-routes',
+      configureServer(server) {
+        server.middlewares.use((req, _res, next) => {
+          if (!req.url || req.method !== 'GET') {
+            next();
+            return;
+          }
+
+          const rewrittenPath = rewriteLocalizedRoute(req.url);
+          if (rewrittenPath) {
+            const query = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+            req.url = `${rewrittenPath}${query}`;
+          }
+
+          next();
+        });
+      },
+    },
+  ],
   server: {
     port: 3000,
   },

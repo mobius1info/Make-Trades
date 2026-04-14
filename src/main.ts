@@ -2,16 +2,16 @@ import { FAQ_ACCORDION_OPEN_EVENT } from './faq-accordion';
 import { loadTranslations } from './content-loader';
 import { checkRecentSubmission, fetchFaqItems, fetchVisibleBlogPosts, insertPublicRow } from './public-api';
 import { getPostImageAttributes, syncResolvedImageUrls } from './post-images';
-import { articleHref, blogIndexHref, faqHref } from './seo-urls';
+import { articleHref, blogIndexHref, faqHref, getHomeLanguageFromPath, homePath } from './seo-urls';
 import { supabaseAnonKey, supabaseUrl } from './supabase-config';
 
-const params = new URLSearchParams(window.location.search);
-let currentLanguage = params.get('lang') || 'ru';
+const initialDocumentLanguage = document.documentElement.lang || 'ru';
+let currentLanguage = getHomeLanguageFromPath(window.location.pathname) || 'ru';
 let translations: Record<string, string> = {};
 let demoFormOpenedAt = 0;
 let pageLoadedAt = Date.now();
 let currentCaptchaAnswer = 0;
-const isInitialServerLanguage = currentLanguage === 'ru' && !params.has('lang');
+const isInitialServerLanguage = initialDocumentLanguage === currentLanguage;
 let userActivity = {
   mouseMoved: false,
   scrolled: false,
@@ -67,23 +67,13 @@ function hasStaticFaqPreview(): boolean {
 }
 
 async function setLanguage(lang: string) {
-  currentLanguage = lang;
-  document.documentElement.lang = lang;
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.remove('active');
-  });
-  document.querySelector(`[data-lang="${lang}"]`)?.classList.add('active');
-
-  const url = new URL(window.location.href);
-  url.searchParams.set('lang', lang);
-  window.history.replaceState({}, '', url.toString());
+  const targetPath = homePath(lang);
+  if (currentLanguage === lang && window.location.pathname === targetPath) {
+    return;
+  }
 
   trackEvent('language_changed', { language: lang });
-
-  translations = await loadTranslations(lang);
-  await updateContent();
-  loadBlogPosts(3, true);
-  loadFAQItems(4, true);
+  window.location.assign(targetPath);
 }
 
 function t(key: string, fallback: string): string {
@@ -221,6 +211,10 @@ function updateModalsAndForms() {
   const loginSubmitBtn = document.getElementById('loginSubmitBtn');
   if (loginSubmitBtn) loginSubmitBtn.textContent = t('login.button', 'Log In');
 
+  updatePageLinks();
+}
+
+function updatePageLinks() {
   const allArticlesLink = document.getElementById('allArticlesBtn') as HTMLAnchorElement;
   if (allArticlesLink) allArticlesLink.href = blogIndexHref(currentLanguage);
 
@@ -975,7 +969,7 @@ async function init() {
       translations = await loadTranslations(currentLanguage);
       await updateContent();
     } else {
-      updateModalsAndForms();
+      updatePageLinks();
     }
 
     setupLazyContentLoading();
