@@ -1259,7 +1259,7 @@ function replaceFormFieldAttribute(html, formId, fieldName, attribute, value) {
 
 function replaceNthMatch(html, pattern, values) {
   let index = 0;
-  return html.replace(pattern, (match, start, end) => {
+  return html.replace(pattern, (match, start, _content, end) => {
     const value = values[index++];
     return value ? `${start}${escapeHtml(value)}${end}` : match;
   });
