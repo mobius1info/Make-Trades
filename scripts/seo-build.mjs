@@ -9,12 +9,10 @@ const LANGUAGES = ['ru', 'en', 'de', 'uk', 'zh'];
 const sitemapOnly = process.argv.includes('--sitemap-only');
 const generatedPostImageManifest = JSON.parse(await readFile(join(ROOT_DIR, 'src', 'generated-post-image-manifest.json'), 'utf8'));
 const blogArticleGroupsManifest = JSON.parse(await readFile(join(ROOT_DIR, 'src', 'blog-article-groups.json'), 'utf8'));
-const generatedPostImagesBySlug = new Set(generatedPostImageManifest);
-const POST_IMAGE_VARIANT_WIDTHS = [480, 768, 1280];
-const POST_IMAGE_BASE_WIDTH = 1280;
-const POST_IMAGE_BASE_HEIGHT = 720;
+const generatedPostImagesBySeed = generatedPostImageManifest;
+const DEFAULT_POST_IMAGE_WIDTH = 1200;
+const DEFAULT_POST_IMAGE_HEIGHT = 675;
 const groupOrderByKey = new Map(blogArticleGroupsManifest.coreOrder.map((key, index) => [key, index]));
-const SHARED_IMAGE_LANGUAGE_PRIORITY = ['en', 'ru', 'de', 'uk', 'zh'];
 const OG_LOCALES = {
   ru: 'ru_RU',
   en: 'en_US',
@@ -113,15 +111,12 @@ function articleArchitecture(post) {
     };
   }
 
-  const sharedImageSeed =
-    SHARED_IMAGE_LANGUAGE_PRIORITY.map(languageKey => match.group.translations?.[languageKey]?.primary).find(Boolean) || null;
-
   return {
     article_group_key: match.group.key,
     content_status: match.role === 'primary' ? 'core' : 'merged',
     indexable: match.role === 'primary',
     canonical_target_slug: match.translation.primary,
-    shared_image_seed: sharedImageSeed,
+    shared_image_seed: match.group.key,
     listing_order: groupOrderByKey.get(match.group.key) ?? Number.MAX_SAFE_INTEGER,
     alternates: LANGUAGES.map(alternateLanguage => ({
       language: alternateLanguage,
@@ -506,45 +501,27 @@ function resolveGeneratedPostImage(seed = '') {
   const normalizedSeed = String(seed || '').trim();
   if (!normalizedSeed) return '';
 
-  return generatedPostImagesBySlug.has(normalizedSeed) ? `/assets/blog/${normalizedSeed}.jpg` : '';
-}
-
-function generatedPostImagePath(seed, width = POST_IMAGE_BASE_WIDTH) {
-  return width === POST_IMAGE_BASE_WIDTH ? `/assets/blog/${seed}.jpg` : `/assets/blog/${seed}-${width}.jpg`;
-}
-
-function generatedPostImageSrcSet(seed = '') {
-  const normalizedSeed = String(seed || '').trim();
-  if (!normalizedSeed || !generatedPostImagesBySlug.has(normalizedSeed)) return '';
-
-  return POST_IMAGE_VARIANT_WIDTHS.map(width => `${generatedPostImagePath(normalizedSeed, width)} ${width}w`).join(', ');
-}
-
-function generatedPostImageSizes(kind = 'card') {
-  if (kind === 'hero') {
-    return '(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) calc(100vw - 4rem), 1200px';
-  }
-
-  if (kind === 'content') {
-    return '(max-width: 767px) calc(100vw - 2rem), 800px';
-  }
-
-  return '(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) calc((100vw - 6rem) / 2), 400px';
+  return generatedPostImagesBySeed[normalizedSeed]?.src || '';
 }
 
 function postImageSeed(post) {
   return post.shared_image_seed || post.slug;
 }
 
-function postImageAttributes(post, kind = 'card') {
-  const srcset = generatedPostImageSrcSet(postImageSeed(post));
+function postImageAttributes(post, _kind = 'card') {
+  const generatedImage = generatedPostImagesBySeed[postImageSeed(post)];
+  if (generatedImage) {
+    return {
+      src: generatedImage.src,
+      width: generatedImage.width,
+      height: generatedImage.height,
+    };
+  }
 
   return {
     src: postImageUrl(post),
-    srcset,
-    sizes: srcset ? generatedPostImageSizes(kind) : '',
-    width: POST_IMAGE_BASE_WIDTH,
-    height: POST_IMAGE_BASE_HEIGHT,
+    width: DEFAULT_POST_IMAGE_WIDTH,
+    height: DEFAULT_POST_IMAGE_HEIGHT,
   };
 }
 
@@ -579,28 +556,13 @@ function postImageAbsoluteUrl(post) {
 }
 
 function sanitizeArticleHtmlImages(html, seed = 'post') {
-  const generatedImage = resolveGeneratedPostImage(seed);
-  if (!generatedImage) return String(html || '');
-  const srcset = generatedPostImageSrcSet(seed);
-  const sizes = generatedPostImageSizes('content');
-
-  return String(html || '').replace(/(<img\b[^>]*\bsrc=["'])([^"']*)(["'][^>]*>)/gi, (_match, prefix, _src, suffix) => {
-    let nextSuffix = suffix;
-
-    if (seed && !/\sdata-post-slug=/i.test(nextSuffix)) {
-      nextSuffix = nextSuffix.replace(/\s*\/?>$/, match => ` data-post-slug="${seed}" data-image-kind="content"${match}`);
-    }
-
-    if (srcset && !/\ssrcset=/i.test(nextSuffix)) {
-      nextSuffix = nextSuffix.replace(
-        /\s*\/?>$/,
-        match =>
-          ` srcset="${srcset}" sizes="${sizes}" width="${POST_IMAGE_BASE_WIDTH}" height="${POST_IMAGE_BASE_HEIGHT}"${match}`
-      );
-    }
-
-    return `${prefix}${generatedImage}${nextSuffix}`;
-  });
+  return String(html || '')
+    .replace(/<figure\b[^>]*>[\s\S]*?(?:<picture\b[^>]*>[\s\S]*?<\/picture>|<img\b[^>]*>)[\s\S]*?<\/figure>/gi, '')
+    .replace(/<picture\b[^>]*>[\s\S]*?<\/picture>/gi, '')
+    .replace(/<img\b[^>]*>/gi, '')
+    .replace(/<a\b[^>]*>\s*(?:&nbsp;|\s|<br\s*\/?>)*<\/a>/gi, '')
+    .replace(/<(p|div)>\s*(?:&nbsp;|\s|<br\s*\/?>)*<\/\1>/gi, '')
+    .trim();
 }
 
 function articleAlternatesPayload(post, clusters) {
@@ -932,7 +894,7 @@ function blogCard(post, language = post.language, translationIndex = new Map(), 
              alt="${escapeHtml(post.title)}"
              class="blog-card-image"
              itemprop="image"
-             data-post-slug="${escapeHtml(post.slug)}"
+             data-post-slug="${escapeHtml(postImageSeed(post))}"
              data-image-kind="card"
              width="${image.width}"
              height="${image.height}"

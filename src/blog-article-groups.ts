@@ -44,8 +44,6 @@ export interface BlogArticleIdentity {
 const manifest = groupsManifest as ManifestShape;
 const groupOrderByKey = new Map(manifest.coreOrder.map((key, index) => [key, index]));
 const groupsByKey = new Map(manifest.groups.map(group => [group.key, group]));
-const SHARED_IMAGE_LANGUAGE_PRIORITY: BlogGroupLanguage[] = ['en', 'ru', 'de', 'uk', 'zh'];
-
 type GroupMatch =
   | {
       group: BlogArticleGroupDefinition;
@@ -84,12 +82,7 @@ export function getBlogArticleGroup(key: string): BlogArticleGroupDefinition | n
 }
 
 function getSharedImageSeed(group: BlogArticleGroupDefinition): string {
-  for (const language of SHARED_IMAGE_LANGUAGE_PRIORITY) {
-    const seed = group.translations[language]?.primary;
-    if (seed) return seed;
-  }
-
-  return '';
+  return group.key;
 }
 
 export function getBlogArticleState(identity: BlogArticleIdentity): BlogArticleState {

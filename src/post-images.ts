@@ -1,28 +1,24 @@
 import generatedPostImageManifest from './generated-post-image-manifest.json';
 
 const SITE_ORIGIN = 'https://maketrades.info';
-const generatedPostImagesBySlug = new Set<string>(generatedPostImageManifest as string[]);
-const POST_IMAGE_VARIANT_WIDTHS = [480, 768, 1280] as const;
-const POST_IMAGE_BASE_WIDTH = 1280;
-const POST_IMAGE_BASE_HEIGHT = 720;
+const DEFAULT_POST_IMAGE_WIDTH = 1200;
+const DEFAULT_POST_IMAGE_HEIGHT = 675;
 
 export type PostImageKind = 'card' | 'hero' | 'content';
 
-function hasGeneratedPostImage(seed: string | null | undefined): boolean {
-  return generatedPostImagesBySlug.has(String(seed || '').trim());
+interface GeneratedPostImageEntry {
+  src: string;
+  width: number;
+  height: number;
 }
 
-function generatedPostImagePath(seed: string, width: number = POST_IMAGE_BASE_WIDTH): string {
-  return width === POST_IMAGE_BASE_WIDTH ? `/assets/blog/${seed}.jpg` : `/assets/blog/${seed}-${width}.jpg`;
-}
+const generatedPostImages = generatedPostImageManifest as Record<string, GeneratedPostImageEntry>;
 
-function generatedPostImageCandidates(seed: string): Array<{ src: string; width: number }> {
-  if (!hasGeneratedPostImage(seed)) return [];
+function getGeneratedPostImage(seed: string | null | undefined): GeneratedPostImageEntry | null {
+  const normalizedSeed = String(seed || '').trim();
+  if (!normalizedSeed) return null;
 
-  return POST_IMAGE_VARIANT_WIDTHS.map(width => ({
-    src: generatedPostImagePath(seed, width),
-    width,
-  }));
+  return generatedPostImages[normalizedSeed] || null;
 }
 
 function imageKindFromElement(img: HTMLImageElement): PostImageKind {
@@ -31,37 +27,13 @@ function imageKindFromElement(img: HTMLImageElement): PostImageKind {
 }
 
 export function resolveGeneratedPostImage(seed: string | null | undefined): string {
-  const normalizedSeed = String(seed || '').trim();
-  if (!normalizedSeed) return '';
-
-  return hasGeneratedPostImage(normalizedSeed) ? generatedPostImagePath(normalizedSeed) : '';
-}
-
-export function generatedPostImageSrcSet(seed: string | null | undefined): string {
-  const normalizedSeed = String(seed || '').trim();
-  if (!normalizedSeed) return '';
-
-  return generatedPostImageCandidates(normalizedSeed)
-    .map(({ src, width }) => `${src} ${width}w`)
-    .join(', ');
-}
-
-export function generatedPostImageSizes(kind: PostImageKind): string {
-  if (kind === 'hero') {
-    return '(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) calc(100vw - 4rem), 1200px';
-  }
-
-  if (kind === 'content') {
-    return '(max-width: 767px) calc(100vw - 2rem), 800px';
-  }
-
-  return '(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) calc((100vw - 6rem) / 2), 400px';
+  return getGeneratedPostImage(seed)?.src || '';
 }
 
 export function getPostImageAttributes(
   imageUrl: string | null | undefined,
   seed: string | null | undefined,
-  kind: PostImageKind = 'card'
+  _kind: PostImageKind = 'card'
 ): {
   src: string;
   srcset?: string;
@@ -69,28 +41,27 @@ export function getPostImageAttributes(
   width: number;
   height: number;
 } {
-  const srcset = generatedPostImageSrcSet(seed);
+  const generatedImage = getGeneratedPostImage(seed);
+  if (generatedImage) {
+    return {
+      src: generatedImage.src,
+      width: generatedImage.width,
+      height: generatedImage.height,
+    };
+  }
 
   return {
-    src: normalizePostImageUrl(imageUrl, seed || ''),
-    srcset: srcset || undefined,
-    sizes: srcset ? generatedPostImageSizes(kind) : undefined,
-    width: POST_IMAGE_BASE_WIDTH,
-    height: POST_IMAGE_BASE_HEIGHT,
+    src: String(imageUrl || '').trim(),
+    width: DEFAULT_POST_IMAGE_WIDTH,
+    height: DEFAULT_POST_IMAGE_HEIGHT,
   };
 }
 
 export function normalizePostImageUrl(imageUrl: string | null | undefined, seed: string = ''): string {
-  const generatedImage = resolveGeneratedPostImage(seed);
-  if (generatedImage) return generatedImage;
-
-  return String(imageUrl || '').trim();
+  return resolveGeneratedPostImage(seed) || String(imageUrl || '').trim();
 }
 
 export function seoPostImageUrl(imageUrl: string | null | undefined, seed: string = ''): string {
-  const generatedImage = resolveGeneratedPostImage(seed);
-  if (generatedImage) return generatedImage;
-
   return normalizePostImageUrl(imageUrl, seed);
 }
 
@@ -98,29 +69,14 @@ export function absoluteImageUrl(imageUrl: string): string {
   return imageUrl.startsWith('/') ? `${SITE_ORIGIN}${imageUrl}` : imageUrl;
 }
 
-export function sanitizeArticleHtmlImages(html: string, seed: string = ''): string {
-  const generatedImage = resolveGeneratedPostImage(seed);
-  if (!generatedImage) return String(html || '');
-  const srcset = generatedPostImageSrcSet(seed);
-  const sizes = generatedPostImageSizes('content');
-
-  return String(html || '').replace(/(<img\b[^>]*\bsrc=["'])([^"']*)(["'][^>]*>)/gi, (_match, prefix, _src, suffix) => {
-    let nextSuffix = suffix;
-
-    if (seed && !/\sdata-post-slug=/i.test(nextSuffix)) {
-      nextSuffix = nextSuffix.replace(/\s*\/?>$/, (match: string) => ` data-post-slug="${seed}" data-image-kind="content"${match}`);
-    }
-
-    if (srcset && !/\ssrcset=/i.test(nextSuffix)) {
-      nextSuffix = nextSuffix.replace(
-        /\s*\/?>$/,
-        (match: string) =>
-          ` srcset="${srcset}" sizes="${sizes}" width="${POST_IMAGE_BASE_WIDTH}" height="${POST_IMAGE_BASE_HEIGHT}"${match}`
-      );
-    }
-
-    return `${prefix}${generatedImage}${nextSuffix}`;
-  });
+export function sanitizeArticleHtmlImages(html: string, _seed: string = ''): string {
+  return String(html || '')
+    .replace(/<figure\b[^>]*>[\s\S]*?(?:<picture\b[^>]*>[\s\S]*?<\/picture>|<img\b[^>]*>)[\s\S]*?<\/figure>/gi, '')
+    .replace(/<picture\b[^>]*>[\s\S]*?<\/picture>/gi, '')
+    .replace(/<img\b[^>]*>/gi, '')
+    .replace(/<a\b[^>]*>\s*(?:&nbsp;|\s|<br\s*\/?>)*<\/a>/gi, '')
+    .replace(/<(p|div)>\s*(?:&nbsp;|\s|<br\s*\/?>)*<\/\1>/gi, '')
+    .trim();
 }
 
 export function syncResolvedImageUrls(root: ParentNode = document): void {
@@ -146,12 +102,7 @@ export function syncResolvedImageUrls(root: ParentNode = document): void {
       img.removeAttribute('sizes');
     }
 
-    if (!img.getAttribute('width')) {
-      img.setAttribute('width', String(image.width));
-    }
-
-    if (!img.getAttribute('height')) {
-      img.setAttribute('height', String(image.height));
-    }
+    img.setAttribute('width', String(image.width));
+    img.setAttribute('height', String(image.height));
   });
 }
