@@ -5,11 +5,12 @@ const ROOT_DIR = process.cwd();
 const DIST_DIR = join(ROOT_DIR, 'dist');
 const PUBLIC_DIR = join(ROOT_DIR, 'public');
 const BASE_URL = 'https://maketrades.info';
-const LANGUAGES = ['ru', 'en', 'de', 'uk', 'zh'];
+const LANGUAGES = ['ru', 'en'];
 const sitemapOnly = process.argv.includes('--sitemap-only');
 const generatedPostImageManifest = JSON.parse(await readFile(join(ROOT_DIR, 'src', 'generated-post-image-manifest.json'), 'utf8'));
 const blogArticleGroupsManifest = JSON.parse(await readFile(join(ROOT_DIR, 'src', 'blog-article-groups.json'), 'utf8'));
 const faqContentManifest = JSON.parse(await readFile(join(ROOT_DIR, 'src', 'faq-content.json'), 'utf8'));
+const retiredLanguageRedirects = JSON.parse(await readFile(join(ROOT_DIR, 'src', 'retired-language-redirects.json'), 'utf8'));
 const generatedPostImagesBySeed = generatedPostImageManifest;
 const DEFAULT_POST_IMAGE_WIDTH = 1200;
 const DEFAULT_POST_IMAGE_HEIGHT = 675;
@@ -17,9 +18,6 @@ const groupOrderByKey = new Map(blogArticleGroupsManifest.coreOrder.map((key, in
 const OG_LOCALES = {
   ru: 'ru_RU',
   en: 'en_US',
-  de: 'de_DE',
-  uk: 'uk_UA',
-  zh: 'zh_CN',
 };
 
 const blogIndexCopy = {
@@ -34,24 +32,6 @@ const blogIndexCopy = {
     heading: 'MakeTrades Blog',
     subtitle: 'Useful articles about brokerage launch, trading strategies and financial platform management',
     keywords: 'broker launch blog, white label platform, broker CRM, forex brokerage, trading platform provider',
-  },
-  de: {
-    title: 'MakeTrades Blog - Artikel zu Trading und Brokerage',
-    heading: 'MakeTrades Blog',
-    subtitle: 'Praxisnahe Artikel zu Brokerage-Start, Handelsstrategien und Finanzplattformen',
-    keywords: 'Broker-Launch Blog, White-Label-Plattform, Broker CRM, Forex-Brokerage, Trading-Plattform-Anbieter',
-  },
-  uk: {
-    title: 'Блог MakeTrades - статті про трейдинг і брокерський бізнес',
-    heading: 'Блог MakeTrades',
-    subtitle: 'Корисні статті про запуск брокера, торгові стратегії та керування фінансовими платформами',
-    keywords: 'блог про запуск брокера, white label платформа, CRM для брокера, forex брокер, торгова платформа',
-  },
-  zh: {
-    title: 'MakeTrades Blog - 交易和经纪业务文章',
-    heading: 'MakeTrades Blog',
-    subtitle: '关于经纪业务启动、交易策略和金融平台管理的实用文章',
-    keywords: '经纪商启动博客, 白标平台, 经纪商CRM, 外汇经纪业务, 交易平台',
   },
 };
 
@@ -69,26 +49,6 @@ const homeSeoCopy = {
       'Launch a forex brokerage with a white-label platform, broker CRM, trading platform, payments and operating infrastructure from MakeTrades.',
     keywords:
       'forex broker launch, white label platform, broker CRM, trading platform for brokers, brokerage infrastructure',
-  },
-  de: {
-    title: 'MakeTrades - White-Label-Plattform für den Forex-Broker-Start',
-    description:
-      'Starten Sie einen Forex-Broker mit White-Label-Plattform, Broker-CRM, Trading-Infrastruktur, Zahlungen und technischem Support von MakeTrades.',
-    keywords:
-      'Forex Broker starten, White-Label-Plattform, Broker CRM, Trading-Plattform für Broker, Broker-Infrastruktur',
-  },
-  uk: {
-    title: 'MakeTrades - white label платформа для запуску forex брокера',
-    description:
-      'Запускайте forex брокера на базі white-label платформи з CRM для брокера, торговою платформою, платежами та інфраструктурою MakeTrades.',
-    keywords:
-      'запуск forex брокера, white label платформа, CRM для брокера, торгова платформа для брокера, інфраструктура брокера',
-  },
-  zh: {
-    title: 'MakeTrades - 外汇经纪商白标平台与业务启动方案',
-    description:
-      '通过 MakeTrades 白标平台启动外汇经纪业务，获得经纪商 CRM、交易平台、支付集成与运营基础设施。',
-    keywords: '外汇经纪商搭建, 白标平台, 经纪商CRM, 经纪业务启动, 交易平台基础设施',
   },
 };
 
@@ -299,7 +259,15 @@ async function fetchSeoData(config) {
 
   const faqItems = buildFaqItemsFromManifest();
 
-  return { posts: applyContentArchitecture(ensureUniquePublicSlugs(posts)), publishedCount, faqItems, translations };
+  // В базе могут оставаться статьи на снятых с публикации языках — в сборку они не идут.
+  const supportedPosts = posts.filter(post => LANGUAGES.includes(post.language));
+
+  return {
+    posts: applyContentArchitecture(ensureUniquePublicSlugs(supportedPosts)),
+    publishedCount: supportedPosts.length,
+    faqItems,
+    translations,
+  };
 }
 
 function escapeHtml(value) {
@@ -360,17 +328,10 @@ async function inlineDeferredHomeBootstrap(html) {
 }
 
 const TECHNICAL_SLUG_PATTERNS = [
-  /^(?:post|article|blog|news|entry|page)-\d+(?:-(?:ru|en|de|uk|zh))?$/i,
+  /^(?:post|article|blog|news|entry|page)-\d+(?:-(?:ru|en))?$/i,
   /^(?:draft|temp|test|untitled)(?:-\d+)?$/i,
   /^new-(?:post|article)(?:-\d+)?$/i,
 ];
-
-const GERMAN_CHAR_REPLACEMENTS = {
-  'ä': 'ae',
-  'ö': 'oe',
-  'ü': 'ue',
-  'ß': 'ss',
-};
 
 const CYRILLIC_TO_LATIN = {
   'а': 'a',
@@ -442,11 +403,7 @@ function truncateSlug(slug, maxLength = 80) {
 function replaceLanguageSpecificChars(value, language) {
   const lowerCased = String(value || '').toLowerCase();
 
-  if (language === 'de') {
-    return Array.from(lowerCased, char => GERMAN_CHAR_REPLACEMENTS[char] ?? char).join('');
-  }
-
-  if (language === 'ru' || language === 'uk') {
+  if (language === 'ru') {
     return Array.from(lowerCased, char => CYRILLIC_TO_LATIN[char] ?? char).join('');
   }
 
@@ -995,9 +952,6 @@ function formatDate(value, language) {
   const locales = {
     ru: 'ru-RU',
     en: 'en-US',
-    de: 'de-DE',
-    uk: 'uk-UA',
-    zh: 'zh-CN',
   };
 
   return new Date(value).toLocaleDateString(locales[language] || 'en-US');
@@ -1614,6 +1568,39 @@ function legacyHomeRedirectRules() {
   return rules;
 }
 
+function retiredLanguageRedirectRules() {
+  const rules = [];
+  const retired = Object.entries(retiredLanguageRedirects.retiredLanguages);
+
+  // 1. Конкретные статьи — на соответствующий материал в оставшемся языке.
+  for (const { from, to } of retiredLanguageRedirects.articles) {
+    rules.push(`${from.slice(0, -1)} ${to} 301!`);
+    rules.push(`${from} ${to} 301!`);
+  }
+
+  // 2. Разделы.
+  for (const [language, target] of retired) {
+    const home = homePath(target);
+    rules.push(`/${language} ${home} 301!`);
+    rules.push(`/${language}/ ${home} 301!`);
+    rules.push(`/blog/${language} /blog/${target}/ 301!`);
+    rules.push(`/blog/${language}/ /blog/${target}/ 301!`);
+    rules.push(`/faq/${language} /faq/${target}/ 301!`);
+    rules.push(`/faq/${language}/ /faq/${target}/ 301!`);
+    rules.push(`/ lang=${language} ${home} 301!`);
+    rules.push(`/index.html lang=${language} ${home} 301!`);
+    rules.push(`/blog.html lang=${language} /blog/${target}/ 301!`);
+    rules.push(`/faq.html lang=${language} /faq/${target}/ 301!`);
+  }
+
+  // 3. Хвост: всё, чего нет в карте (архивные статьи вне групп) — на индекс блога.
+  for (const [language, target] of retired) {
+    rules.push(`/blog/${language}/* /blog/${target}/ 301!`);
+  }
+
+  return rules;
+}
+
 function netlifyRedirects(entries) {
   return `${Array.from(new Set([
     ...entries.flatMap(entry => [
@@ -1621,6 +1608,7 @@ function netlifyRedirects(entries) {
     `${entry.from_path} ${entry.to_path} 301!`,
     ]),
     ...legacyHomeRedirectRules(),
+    ...retiredLanguageRedirectRules(),
   ])).join('\n')}\n`;
 }
 

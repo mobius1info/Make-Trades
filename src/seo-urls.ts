@@ -4,7 +4,7 @@ import {
   type ArticleSlugSource,
 } from './article-slugs';
 
-export const SUPPORTED_LANGUAGES = ['ru', 'en', 'de', 'uk', 'zh'] as const;
+export const SUPPORTED_LANGUAGES = ['ru', 'en'] as const;
 export const DEFAULT_LANGUAGE = 'ru' as const;
 
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];

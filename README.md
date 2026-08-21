@@ -64,6 +64,25 @@ npm run dev
 npm run build
 ```
 
+## Переменные окружения
+
+Скопируйте `.env.example` в `.env` и заполните значения из панели Supabase
+(Project Settings → API Keys).
+
+| Переменная | Где используется | Комментарий |
+|---|---|---|
+| `VITE_SUPABASE_URL` | фронт, админка, `scripts/seo-build.mjs` | Project URL |
+| `VITE_SUPABASE_ANON_KEY` | фронт, админка, `scripts/seo-build.mjs` | Publishable key (новый аналог anon key), имя переменной историческое |
+| `SUPABASE_SECRET_KEY` | только Supabase CLI / серверные задачи | **Никогда** не добавляйте префикс `VITE_` — иначе ключ попадёт в браузерный бандл |
+
+Vite подставляет в сборку только переменные с префиксом `VITE_`, поэтому
+`SUPABASE_SECRET_KEY` физически не может утечь на клиент.
+
+Edge Functions ключи из `.env` не читают — Supabase сам прокидывает в них
+`SUPABASE_URL` и `SUPABASE_SERVICE_ROLE_KEY`.
+
+Файл `.env` в `.gitignore` и не коммитится.
+
 ## База данных
 
 Проект использует Supabase со следующими таблицами:
@@ -166,8 +185,8 @@ URL: `/admin.html`
 
 Первый администратор уже создан автоматически:
 
-- **Email:** admin@maketrades.space
-- **Пароль:** Admin123456!
+Учётные данные администратора не хранятся в репозитории. Сброс пароля —
+Supabase → Authentication → Users.
 
 **ВАЖНО:** Смените пароль после первого входа!
 

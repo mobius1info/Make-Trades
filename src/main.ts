@@ -289,11 +289,7 @@ async function loadBlogPosts(limit: number = 3, force: boolean = false) {
             <span>${post.author}</span>
             <span>•</span>
             <span>${new Date(post.created_at).toLocaleDateString(
-              currentLanguage === 'ru' ? 'ru-RU' :
-              currentLanguage === 'en' ? 'en-US' :
-              currentLanguage === 'de' ? 'de-DE' :
-              currentLanguage === 'uk' ? 'uk-UA' :
-              currentLanguage === 'zh' ? 'zh-CN' : 'en-US'
+              currentLanguage === 'ru' ? 'ru-RU' : 'en-US'
             )}</span>
           </div>
         </div>
@@ -755,15 +751,28 @@ async function handleDemoRequest(e: Event) {
         language: currentLanguage,
       }),
     }).catch(() => {});
-  } catch {
+
+    trackEvent('demo_form_submitted', {
+      language: currentLanguage,
+      has_telegram: !!data.telegram,
+    });
+
+    form.reset();
+    resetCustomSelects(form);
+    showBonusModal();
+  } catch (error: any) {
+    // Раньше ошибка глоталась и модалка успеха показывалась всё равно —
+    // заявка терялась молча, и ни пользователь, ни мы об этом не узнавали.
+    console.error('Error submitting demo request:', error);
+    showFormMessage(
+      form,
+      t('error.submit_failed', 'Could not submit the request. Please try again.'),
+      'error'
+    );
   } finally {
     submitBtn.disabled = false;
     submitBtn.textContent = originalBtnText;
   }
-
-  form.reset();
-  resetCustomSelects(form);
-  showBonusModal();
 }
 
 async function handleContactSubmission(e: Event) {

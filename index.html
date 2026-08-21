@@ -40,9 +40,6 @@
     <!-- Hreflang Tags for Multilingual Support -->
     <link rel="alternate" hreflang="ru" href="https://maketrades.info/" />
     <link rel="alternate" hreflang="en" href="https://maketrades.info/en/" />
-    <link rel="alternate" hreflang="de" href="https://maketrades.info/de/" />
-    <link rel="alternate" hreflang="uk" href="https://maketrades.info/uk/" />
-    <link rel="alternate" hreflang="zh" href="https://maketrades.info/zh/" />
     <link rel="alternate" hreflang="x-default" href="https://maketrades.info/" />
 
     <!-- Favicon & Icons -->
@@ -176,13 +173,13 @@
             "@type": "ContactPoint",
             "telephone": "+1-855-635-6252",
             "contactType": "sales",
-            "availableLanguage": ["en", "ru", "de", "uk", "zh"]
+            "availableLanguage": ["en", "ru"]
           },
           {
             "@type": "ContactPoint",
             "telephone": "+44-744-191-7770",
             "contactType": "customer support",
-            "availableLanguage": ["en", "ru", "de", "uk", "zh"]
+            "availableLanguage": ["en", "ru"]
           }
         ]
       }
@@ -196,7 +193,7 @@
         "name": "MakeTrades",
         "url": "https://maketrades.info",
         "description": "Комплексная платформа для создания брокерской компании, криптобирж и дилинговых центров под ключ",
-        "inLanguage": ["ru", "en", "de", "uk", "zh"],
+        "inLanguage": ["ru", "en"],
         "publisher": {
           "@type": "Organization",
           "name": "MakeTrades",
@@ -560,9 +557,6 @@
             <div class="language-selector" role="navigation" aria-label="Выбор языка">
               <button class="lang-btn active" data-lang="ru" aria-label="Русский язык">RU</button>
               <button class="lang-btn" data-lang="en" aria-label="English language">EN</button>
-              <button class="lang-btn" data-lang="de" aria-label="Deutsche Sprache">DE</button>
-              <button class="lang-btn" data-lang="uk" aria-label="Українська мова">UK</button>
-              <button class="lang-btn" data-lang="zh" aria-label="中文">ZH</button>
             </div>
 
             <a href="#login" class="btn btn-secondary header-login-link" aria-label="Войти в личный кабинет">
@@ -1183,7 +1177,7 @@
     <script type="module" src="/src/faq-accordion-entry.ts"></script>
     <script type="module">
       const params = new URLSearchParams(window.location.search);
-      const supportedHomeLanguages = new Set(['ru', 'en', 'de', 'uk', 'zh']);
+      const supportedHomeLanguages = new Set(['ru', 'en']);
       const requestedLanguage = params.get('lang');
       const targetHomePath = requestedLanguage && supportedHomeLanguages.has(requestedLanguage)
         ? (requestedLanguage === 'ru' ? '/' : `/${requestedLanguage}/`)

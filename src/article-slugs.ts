@@ -8,17 +8,10 @@ export interface ArticleSlugSource {
 }
 
 const TECHNICAL_SLUG_PATTERNS = [
-  /^(?:post|article|blog|news|entry|page)-\d+(?:-(?:ru|en|de|uk|zh))?$/i,
+  /^(?:post|article|blog|news|entry|page)-\d+(?:-(?:ru|en))?$/i,
   /^(?:draft|temp|test|untitled)(?:-\d+)?$/i,
   /^new-(?:post|article)(?:-\d+)?$/i,
 ];
-
-const GERMAN_CHAR_REPLACEMENTS: Record<string, string> = {
-  'ä': 'ae',
-  'ö': 'oe',
-  'ü': 'ue',
-  'ß': 'ss',
-};
 
 const CYRILLIC_TO_LATIN: Record<string, string> = {
   'а': 'a',
@@ -102,11 +95,7 @@ function truncateSlug(slug: string, maxLength: number = 80): string {
 function replaceLanguageSpecificChars(value: string, language?: string | null): string {
   const lowerCased = value.toLowerCase();
 
-  if (language === 'de') {
-    return Array.from(lowerCased, char => GERMAN_CHAR_REPLACEMENTS[char] ?? char).join('');
-  }
-
-  if (language === 'ru' || language === 'uk') {
+  if (language === 'ru') {
     return Array.from(lowerCased, char => CYRILLIC_TO_LATIN[char] ?? char).join('');
   }
 

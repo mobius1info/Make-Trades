@@ -1,0 +1,369 @@
+{
+  "retiredLanguages": {
+    "de": "en",
+    "uk": "ru",
+    "zh": "en"
+  },
+  "articles": [
+    {
+      "from": "/blog/de/forex-broker-gruenden-anleitung-2025/",
+      "to": "/blog/en/how-to-start-forex-brokerage-2025/"
+    },
+    {
+      "from": "/blog/uk/yak-stvoryty-foreks-brokera-z-nulya/",
+      "to": "/blog/ru/kak-otkryt-forex-brokera-s-nulya-2025/"
+    },
+    {
+      "from": "/blog/uk/yak-vidkryty-forex-brokera-z-nulya-instruktsiya/",
+      "to": "/blog/ru/kak-otkryt-forex-brokera-s-nulya-2025/"
+    },
+    {
+      "from": "/blog/zh/cong-ling-chuangjian-waihui-jingjishang/",
+      "to": "/blog/en/how-to-start-forex-brokerage-2025/"
+    },
+    {
+      "from": "/blog/zh/cong-ling-kaishi-chuangjian-waihui-jingjishang/",
+      "to": "/blog/en/how-to-start-forex-brokerage-2025/"
+    },
+    {
+      "from": "/blog/de/forex-lizenzierung-jurisdiktionen-de/",
+      "to": "/blog/en/forex-licensing-guide-jurisdictions/"
+    },
+    {
+      "from": "/blog/de/brokerlizenzierung-leitfaden-de/",
+      "to": "/blog/en/forex-licensing-guide-jurisdictions/"
+    },
+    {
+      "from": "/blog/de/forex-regulierung-weltweit-de/",
+      "to": "/blog/en/forex-licensing-guide-jurisdictions/"
+    },
+    {
+      "from": "/blog/uk/licenzuvannya-foreks-brokera-krayiny-ta-vymogy/",
+      "to": "/blog/ru/litsenzirovanie-forex-deyatelnosti/"
+    },
+    {
+      "from": "/blog/uk/litsenziuvannya-forex-diyalnosti-oglyad/",
+      "to": "/blog/ru/litsenzirovanie-forex-deyatelnosti/"
+    },
+    {
+      "from": "/blog/uk/regulyaciya-foreks-rynku-svitovi-standarty/",
+      "to": "/blog/ru/litsenzirovanie-forex-deyatelnosti/"
+    },
+    {
+      "from": "/blog/zh/jingjishang-paizhao-guojia-yaoqiu/",
+      "to": "/blog/en/forex-licensing-guide-jurisdictions/"
+    },
+    {
+      "from": "/blog/zh/waihui-jingying-xukezheng-guanxiaqu-duibi/",
+      "to": "/blog/en/forex-licensing-guide-jurisdictions/"
+    },
+    {
+      "from": "/blog/zh/waihui-shichang-jianguan-quanqiu-biaozhun/",
+      "to": "/blog/en/forex-licensing-guide-jurisdictions/"
+    },
+    {
+      "from": "/blog/de/geschaeftsplan-brokerage-de/",
+      "to": "/blog/en/brokerage-business-plan-guide/"
+    },
+    {
+      "from": "/blog/uk/biznes-plan-foreks-brokera-shablon/",
+      "to": "/blog/ru/biznes-plan-brokerskoj-kompanii/"
+    },
+    {
+      "from": "/blog/zh/jingjishang-shangye-jihua-moban/",
+      "to": "/blog/en/brokerage-business-plan-guide/"
+    },
+    {
+      "from": "/blog/de/betriebskosten-forex-broker-de/",
+      "to": "/blog/en/forex-broker-operating-costs-budget/"
+    },
+    {
+      "from": "/blog/uk/vartist-zapusku-forex-brokera-2025/",
+      "to": "/blog/ru/operatsionnye-raskhody-forex-brokera/"
+    },
+    {
+      "from": "/blog/uk/vartist-orendy-torgovoyi-platformy/",
+      "to": "/blog/ru/operatsionnye-raskhody-forex-brokera/"
+    },
+    {
+      "from": "/blog/zh/2025-nian-qidong-waihui-jingjishang-chengben/",
+      "to": "/blog/en/forex-broker-operating-costs-budget/"
+    },
+    {
+      "from": "/blog/zh/zulin-pingtai-chengben-fenxi/",
+      "to": "/blog/en/forex-broker-operating-costs-budget/"
+    },
+    {
+      "from": "/blog/de/technische-infrastruktur-broker-de/",
+      "to": "/blog/en/technical-infrastructure-forex-broker/"
+    },
+    {
+      "from": "/blog/uk/tekhnologichna-infrastruktura-brokera/",
+      "to": "/blog/ru/tekhnicheskaya-infrastruktura-brokera/"
+    },
+    {
+      "from": "/blog/zh/jishu-jichu-sheshi-jingjishang/",
+      "to": "/blog/en/technical-infrastructure-forex-broker/"
+    },
+    {
+      "from": "/blog/de/zahlungssysteme-forex-broker-de/",
+      "to": "/blog/en/payment-systems-forex-broker-guide/"
+    },
+    {
+      "from": "/blog/de/krypto-zahlungsabwicklung-broker-de/",
+      "to": "/blog/en/payment-systems-forex-broker-guide/"
+    },
+    {
+      "from": "/blog/uk/platizni-shlyuzy-v-orendovanij-platformi/",
+      "to": "/blog/ru/platezhnye-sistemy-dlya-brokera/"
+    },
+    {
+      "from": "/blog/zh/zhifu-wangguan-jiaoyi-pingtai-zhenghe/",
+      "to": "/blog/en/payment-systems-forex-broker-guide/"
+    },
+    {
+      "from": "/blog/de/a-book-vs-b-book-risikomanagement-de/",
+      "to": "/blog/en/risk-management-a-book-vs-b-book/"
+    },
+    {
+      "from": "/blog/uk/upravlinnya-ryzykamy-brokera-osnovy/",
+      "to": "/blog/ru/upravlenie-riskami-a-book-b-book/"
+    },
+    {
+      "from": "/blog/zh/fengxian-guanli-jingjishang-jichu/",
+      "to": "/blog/en/risk-management-a-book-vs-b-book/"
+    },
+    {
+      "from": "/blog/de/schluesselfertige-forex-plattform-mieten/",
+      "to": "/blog/en/turnkey-forex-platform-rental-overview/"
+    },
+    {
+      "from": "/blog/de/fertiges-brokergeschaeft-starten-de/",
+      "to": "/blog/en/turnkey-forex-platform-rental-overview/"
+    },
+    {
+      "from": "/blog/uk/orenda-forex-platformy-pid-klyuch-gid/",
+      "to": "/blog/ru/arenda-forex-platformy-pod-klyuch/"
+    },
+    {
+      "from": "/blog/uk/orenda-torgovoyi-platformy-perevagu-dlya-brokera/",
+      "to": "/blog/ru/arenda-forex-platformy-pod-klyuch/"
+    },
+    {
+      "from": "/blog/zh/jiaoyanshi-waihui-pingtai-zulin-zhinan/",
+      "to": "/blog/en/turnkey-forex-platform-rental-overview/"
+    },
+    {
+      "from": "/blog/zh/zulin-jiaoyi-pingtai-youshi/",
+      "to": "/blog/en/turnkey-forex-platform-rental-overview/"
+    },
+    {
+      "from": "/blog/de/white-label-vs-eigenentwicklung/",
+      "to": "/blog/en/white-label-vs-custom-development/"
+    },
+    {
+      "from": "/blog/uk/white-label-proty-vlasnoi-rozrobky/",
+      "to": "/blog/ru/white-label-vs-sobstvennaya-razrabotka/"
+    },
+    {
+      "from": "/blog/zh/white-label-yu-zizhu-kaifa-xuanze/",
+      "to": "/blog/en/white-label-vs-custom-development/"
+    },
+    {
+      "from": "/blog/de/plattformanbieter-auswaehlen-de/",
+      "to": "/blog/en/choosing-trading-platform-provider-guide/"
+    },
+    {
+      "from": "/blog/de/handelsplattform-fuer-broker-waehlen-de/",
+      "to": "/blog/en/choosing-trading-platform-provider-guide/"
+    },
+    {
+      "from": "/blog/uk/yak-obrati-postachalnyka-torgovoyi-platformy/",
+      "to": "/blog/ru/vybor-postavshchika-torgovoj-platformy/"
+    },
+    {
+      "from": "/blog/zh/xuanze-pingtai-gongyingshang-qingdan/",
+      "to": "/blog/en/choosing-trading-platform-provider-guide/"
+    },
+    {
+      "from": "/blog/de/plattform-updates-support-de/",
+      "to": "/blog/en/scaling-rented-trading-platform/"
+    },
+    {
+      "from": "/blog/uk/masshtabuvannya-orendovanoyi-platformy/",
+      "to": "/blog/ru/masshtabirovanie-arendovannoj-platformy/"
+    },
+    {
+      "from": "/blog/uk/tekhnichna-pidtrymka-orendovanoyi-platformy/",
+      "to": "/blog/ru/masshtabirovanie-arendovannoj-platformy/"
+    },
+    {
+      "from": "/blog/uk/kastomizaciya-orendovanoyi-platformy/",
+      "to": "/blog/ru/masshtabirovanie-arendovannoj-platformy/"
+    },
+    {
+      "from": "/blog/zh/pingtai-kuozhan-cong-chuangye-dao-daxing/",
+      "to": "/blog/en/scaling-rented-trading-platform/"
+    },
+    {
+      "from": "/blog/zh/jishu-zhichi-pingtai-zulin/",
+      "to": "/blog/en/scaling-rented-trading-platform/"
+    },
+    {
+      "from": "/blog/zh/pingtai-dingzhi-gongneng-yu-xianzhi/",
+      "to": "/blog/en/scaling-rented-trading-platform/"
+    },
+    {
+      "from": "/blog/de/crm-fuer-forex-broker-ueberblick/",
+      "to": "/blog/en/crm-for-forex-brokers-complete-overview/"
+    },
+    {
+      "from": "/blog/de/crm-automatisierung-technologie-de/",
+      "to": "/blog/en/crm-for-forex-brokers-complete-overview/"
+    },
+    {
+      "from": "/blog/uk/crm-systema-dlya-foreks-brokera-povnyj-oglyad/",
+      "to": "/blog/ru/crm-dlya-forex-brokera-polnyj-obzor/"
+    },
+    {
+      "from": "/blog/uk/crm-dlya-brokera-vybir-ta-vprovadzhennya/",
+      "to": "/blog/ru/crm-dlya-forex-brokera-polnyj-obzor/"
+    },
+    {
+      "from": "/blog/zh/waihuijingjishang-crm-xitong-quanmian-jiexi/",
+      "to": "/blog/en/crm-for-forex-brokers-complete-overview/"
+    },
+    {
+      "from": "/blog/zh/waihui-jingjishang-crm-xitong-zhinan/",
+      "to": "/blog/en/crm-for-forex-brokers-complete-overview/"
+    },
+    {
+      "from": "/blog/zh/crm-xuanze-yu-bushu-zhinan/",
+      "to": "/blog/en/crm-for-forex-brokers-complete-overview/"
+    },
+    {
+      "from": "/blog/de/kyc-aml-compliance-durch-crm/",
+      "to": "/blog/en/kyc-aml-compliance-through-crm/"
+    },
+    {
+      "from": "/blog/uk/kyc-aml-komplayens-cherez-crm-posibnik/",
+      "to": "/blog/ru/compliance-kyc-aml-cherez-crm/"
+    },
+    {
+      "from": "/blog/uk/kyc-aml-dlya-brokera-vprovadzhennya/",
+      "to": "/blog/ru/compliance-kyc-aml-cherez-crm/"
+    },
+    {
+      "from": "/blog/zh/kyc-aml-heguixing-crm-shijian-zhinan/",
+      "to": "/blog/en/kyc-aml-compliance-through-crm/"
+    },
+    {
+      "from": "/blog/zh/kyc-aml-jingjishang-shishi/",
+      "to": "/blog/en/kyc-aml-compliance-through-crm/"
+    },
+    {
+      "from": "/blog/de/crm-metatrader-integration-de/",
+      "to": "/blog/en/crm-metatrader-integration-guide/"
+    },
+    {
+      "from": "/blog/uk/integraciya-crm-z-torgovoyu-platformoyu/",
+      "to": "/blog/ru/integratsiya-crm-s-metatrader/"
+    },
+    {
+      "from": "/blog/zh/crm-yu-jiaoyi-pingtai-zhenghe/",
+      "to": "/blog/en/crm-metatrader-integration-guide/"
+    },
+    {
+      "from": "/blog/de/lead-management-forex-broker-de/",
+      "to": "/blog/en/lead-management-forex-brokerage/"
+    },
+    {
+      "from": "/blog/de/kundenbasis-automatisierung-broker-de/",
+      "to": "/blog/en/lead-management-forex-brokerage/"
+    },
+    {
+      "from": "/blog/uk/upravlinnya-lidamy-v-crm-brokera/",
+      "to": "/blog/ru/upravlenie-lidami-v-brokerskom-biznese/"
+    },
+    {
+      "from": "/blog/zh/qianzai-kehu-guanli-crm-celue/",
+      "to": "/blog/en/lead-management-forex-brokerage/"
+    },
+    {
+      "from": "/blog/de/crm-analytik-konversion-broker-de/",
+      "to": "/blog/en/broker-crm-analytics-conversion/"
+    },
+    {
+      "from": "/blog/de/crm-roi-brokergeschaeft-de/",
+      "to": "/blog/en/broker-crm-analytics-conversion/"
+    },
+    {
+      "from": "/blog/de/multikanal-kommunikation-broker-crm-de/",
+      "to": "/blog/en/broker-crm-analytics-conversion/"
+    },
+    {
+      "from": "/blog/de/sichere-crm-migration-de/",
+      "to": "/blog/en/broker-crm-analytics-conversion/"
+    },
+    {
+      "from": "/blog/uk/analityka-prodazhiv-u-crm-brokera/",
+      "to": "/blog/ru/crm-analitika-konversiya-brokera/"
+    },
+    {
+      "from": "/blog/uk/avtomatyzaciya-marketyngu-cherez-crm/",
+      "to": "/blog/ru/crm-analitika-konversiya-brokera/"
+    },
+    {
+      "from": "/blog/uk/crm-ta-utrymannya-kliyentiv-brokera/",
+      "to": "/blog/ru/crm-analitika-konversiya-brokera/"
+    },
+    {
+      "from": "/blog/uk/bezpeka-danyh-u-crm-brokera/",
+      "to": "/blog/ru/crm-analitika-konversiya-brokera/"
+    },
+    {
+      "from": "/blog/zh/xiaoshou-fenxi-crm-guanjian-zhibiao/",
+      "to": "/blog/en/broker-crm-analytics-conversion/"
+    },
+    {
+      "from": "/blog/zh/yingxiao-zidonghua-crm-gongju/",
+      "to": "/blog/en/broker-crm-analytics-conversion/"
+    },
+    {
+      "from": "/blog/zh/crm-kehu-liucun-celue/",
+      "to": "/blog/en/broker-crm-analytics-conversion/"
+    },
+    {
+      "from": "/blog/zh/crm-shuju-anquan-biaozhun/",
+      "to": "/blog/en/broker-crm-analytics-conversion/"
+    },
+    {
+      "from": "/blog/de/marketingstrategie-neuer-broker-de/",
+      "to": "/blog/en/marketing-strategy-new-forex-broker/"
+    },
+    {
+      "from": "/blog/de/broker-marketing-kundenakquise-de/",
+      "to": "/blog/en/marketing-strategy-new-forex-broker/"
+    },
+    {
+      "from": "/blog/uk/marketyngova-strategiya-novogo-brokera/",
+      "to": "/blog/ru/marketing-dlya-startuyushchego-brokera/"
+    },
+    {
+      "from": "/blog/zh/shuzi-yingxiao-waihui-jingjishang/",
+      "to": "/blog/en/marketing-strategy-new-forex-broker/"
+    },
+    {
+      "from": "/blog/de/team-aufbau-forex-broker-de/",
+      "to": "/blog/en/hiring-team-new-forex-broker/"
+    },
+    {
+      "from": "/blog/uk/komand-brokerskoyi-kompaniyi-kogo-naymaty/",
+      "to": "/blog/ru/podbor-komandy-dlya-brokera/"
+    },
+    {
+      "from": "/blog/zh/jingjishang-tuandui-zhaopian-youxianji/",
+      "to": "/blog/en/hiring-team-new-forex-broker/"
+    }
+  ]
+}

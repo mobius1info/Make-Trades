@@ -1,6 +1,6 @@
 import groupsManifest from './blog-article-groups.json';
 
-export const BLOG_GROUP_LANGUAGES = ['ru', 'en', 'de', 'uk', 'zh'] as const;
+export const BLOG_GROUP_LANGUAGES = ['ru', 'en'] as const;
 export type BlogGroupLanguage = (typeof BLOG_GROUP_LANGUAGES)[number];
 export type BlogContentStatus = 'core' | 'merged' | 'archived';
 

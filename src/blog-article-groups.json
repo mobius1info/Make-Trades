@@ -28,22 +28,15 @@
       "translations": {
         "ru": {
           "primary": "kak-otkryt-forex-brokera-s-nulya-2025",
-          "merge": ["kak-sozdat-brokerskuyu-kompaniyu"]
+          "merge": [
+            "kak-sozdat-brokerskuyu-kompaniyu"
+          ]
         },
         "en": {
           "primary": "how-to-start-forex-brokerage-2025",
-          "merge": ["how-to-start-brokerage-company"]
-        },
-        "de": {
-          "primary": "forex-broker-gruenden-anleitung-2025"
-        },
-        "uk": {
-          "primary": "yak-stvoryty-foreks-brokera-z-nulya",
-          "merge": ["yak-vidkryty-forex-brokera-z-nulya-instruktsiya"]
-        },
-        "zh": {
-          "primary": "cong-ling-chuangjian-waihui-jingjishang",
-          "merge": ["cong-ling-kaishi-chuangjian-waihui-jingjishang"]
+          "merge": [
+            "how-to-start-brokerage-company"
+          ]
         }
       }
     },
@@ -66,27 +59,6 @@
             "brokerage-licensing-complete-guide",
             "forex-regulation-worldwide-2025"
           ]
-        },
-        "de": {
-          "primary": "forex-lizenzierung-jurisdiktionen-de",
-          "merge": [
-            "brokerlizenzierung-leitfaden-de",
-            "forex-regulierung-weltweit-de"
-          ]
-        },
-        "uk": {
-          "primary": "licenzuvannya-foreks-brokera-krayiny-ta-vymogy",
-          "merge": [
-            "litsenziuvannya-forex-diyalnosti-oglyad",
-            "regulyaciya-foreks-rynku-svitovi-standarty"
-          ]
-        },
-        "zh": {
-          "primary": "jingjishang-paizhao-guojia-yaoqiu",
-          "merge": [
-            "waihui-jingying-xukezheng-guanxiaqu-duibi",
-            "waihui-shichang-jianguan-quanqiu-biaozhun"
-          ]
         }
       }
     },
@@ -101,15 +73,6 @@
         },
         "en": {
           "primary": "brokerage-business-plan-guide"
-        },
-        "de": {
-          "primary": "geschaeftsplan-brokerage-de"
-        },
-        "uk": {
-          "primary": "biznes-plan-foreks-brokera-shablon"
-        },
-        "zh": {
-          "primary": "jingjishang-shangye-jihua-moban"
         }
       }
     },
@@ -121,22 +84,15 @@
       "translations": {
         "ru": {
           "primary": "operatsionnye-raskhody-forex-brokera",
-          "merge": ["stoimost-zapuska-brokera-cherez-arendu"]
+          "merge": [
+            "stoimost-zapuska-brokera-cherez-arendu"
+          ]
         },
         "en": {
           "primary": "forex-broker-operating-costs-budget",
-          "merge": ["cost-starting-forex-broker-rental"]
-        },
-        "de": {
-          "primary": "betriebskosten-forex-broker-de"
-        },
-        "uk": {
-          "primary": "vartist-zapusku-forex-brokera-2025",
-          "merge": ["vartist-orendy-torgovoyi-platformy"]
-        },
-        "zh": {
-          "primary": "2025-nian-qidong-waihui-jingjishang-chengben",
-          "merge": ["zulin-pingtai-chengben-fenxi"]
+          "merge": [
+            "cost-starting-forex-broker-rental"
+          ]
         }
       }
     },
@@ -151,15 +107,6 @@
         },
         "en": {
           "primary": "technical-infrastructure-forex-broker"
-        },
-        "de": {
-          "primary": "technische-infrastruktur-broker-de"
-        },
-        "uk": {
-          "primary": "tekhnologichna-infrastruktura-brokera"
-        },
-        "zh": {
-          "primary": "jishu-jichu-sheshi-jingjishang"
         }
       }
     },
@@ -171,21 +118,15 @@
       "translations": {
         "ru": {
           "primary": "platezhnye-sistemy-dlya-brokera",
-          "merge": ["kripto-protsessing-dlya-brokera"]
+          "merge": [
+            "kripto-protsessing-dlya-brokera"
+          ]
         },
         "en": {
           "primary": "payment-systems-forex-broker-guide",
-          "merge": ["crypto-payment-processing-broker"]
-        },
-        "de": {
-          "primary": "zahlungssysteme-forex-broker-de",
-          "merge": ["krypto-zahlungsabwicklung-broker-de"]
-        },
-        "uk": {
-          "primary": "platizni-shlyuzy-v-orendovanij-platformi"
-        },
-        "zh": {
-          "primary": "zhifu-wangguan-jiaoyi-pingtai-zhenghe"
+          "merge": [
+            "crypto-payment-processing-broker"
+          ]
         }
       }
     },
@@ -197,20 +138,15 @@
       "translations": {
         "ru": {
           "primary": "upravlenie-riskami-a-book-b-book",
-          "merge": ["risk-menedzhment-brokera"]
+          "merge": [
+            "risk-menedzhment-brokera"
+          ]
         },
         "en": {
           "primary": "risk-management-a-book-vs-b-book",
-          "merge": ["risk-management-new-forex-brokers"]
-        },
-        "de": {
-          "primary": "a-book-vs-b-book-risikomanagement-de"
-        },
-        "uk": {
-          "primary": "upravlinnya-ryzykamy-brokera-osnovy"
-        },
-        "zh": {
-          "primary": "fengxian-guanli-jingjishang-jichu"
+          "merge": [
+            "risk-management-new-forex-brokers"
+          ]
         }
       }
     },
@@ -222,23 +158,15 @@
       "translations": {
         "ru": {
           "primary": "arenda-forex-platformy-pod-klyuch",
-          "merge": ["gotovyj-brokerskij-biznes-start"]
+          "merge": [
+            "gotovyj-brokerskij-biznes-start"
+          ]
         },
         "en": {
           "primary": "turnkey-forex-platform-rental-overview",
-          "merge": ["ready-made-brokerage-business-guide"]
-        },
-        "de": {
-          "primary": "schluesselfertige-forex-plattform-mieten",
-          "merge": ["fertiges-brokergeschaeft-starten-de"]
-        },
-        "uk": {
-          "primary": "orenda-forex-platformy-pid-klyuch-gid",
-          "merge": ["orenda-torgovoyi-platformy-perevagu-dlya-brokera"]
-        },
-        "zh": {
-          "primary": "jiaoyanshi-waihui-pingtai-zulin-zhinan",
-          "merge": ["zulin-jiaoyi-pingtai-youshi"]
+          "merge": [
+            "ready-made-brokerage-business-guide"
+          ]
         }
       }
     },
@@ -253,15 +181,6 @@
         },
         "en": {
           "primary": "white-label-vs-custom-development"
-        },
-        "de": {
-          "primary": "white-label-vs-eigenentwicklung"
-        },
-        "uk": {
-          "primary": "white-label-proty-vlasnoi-rozrobky"
-        },
-        "zh": {
-          "primary": "white-label-yu-zizhu-kaifa-xuanze"
         }
       }
     },
@@ -273,21 +192,15 @@
       "translations": {
         "ru": {
           "primary": "vybor-postavshchika-torgovoj-platformy",
-          "merge": ["kak-vybrat-torgovuyu-platformu-dlya-brokera"]
+          "merge": [
+            "kak-vybrat-torgovuyu-platformu-dlya-brokera"
+          ]
         },
         "en": {
           "primary": "choosing-trading-platform-provider-guide",
-          "merge": ["choosing-trading-platform-for-broker"]
-        },
-        "de": {
-          "primary": "plattformanbieter-auswaehlen-de",
-          "merge": ["handelsplattform-fuer-broker-waehlen-de"]
-        },
-        "uk": {
-          "primary": "yak-obrati-postachalnyka-torgovoyi-platformy"
-        },
-        "zh": {
-          "primary": "xuanze-pingtai-gongyingshang-qingdan"
+          "merge": [
+            "choosing-trading-platform-for-broker"
+          ]
         }
       }
     },
@@ -310,23 +223,6 @@
             "platform-updates-support-maintenance",
             "mobile-trading-rental-platform-solutions"
           ]
-        },
-        "de": {
-          "primary": "plattform-updates-support-de"
-        },
-        "uk": {
-          "primary": "masshtabuvannya-orendovanoyi-platformy",
-          "merge": [
-            "tekhnichna-pidtrymka-orendovanoyi-platformy",
-            "kastomizaciya-orendovanoyi-platformy"
-          ]
-        },
-        "zh": {
-          "primary": "pingtai-kuozhan-cong-chuangye-dao-daxing",
-          "merge": [
-            "jishu-zhichi-pingtai-zulin",
-            "pingtai-dingzhi-gongneng-yu-xianzhi"
-          ]
         }
       }
     },
@@ -338,25 +234,14 @@
       "translations": {
         "ru": {
           "primary": "crm-dlya-forex-brokera-polnyj-obzor",
-          "merge": ["crm-dlya-brokera-avtomatizatsiya"]
+          "merge": [
+            "crm-dlya-brokera-avtomatizatsiya"
+          ]
         },
         "en": {
           "primary": "crm-for-forex-brokers-complete-overview",
-          "merge": ["crm-for-broker-automation"]
-        },
-        "de": {
-          "primary": "crm-fuer-forex-broker-ueberblick",
-          "merge": ["crm-automatisierung-technologie-de"]
-        },
-        "uk": {
-          "primary": "crm-systema-dlya-foreks-brokera-povnyj-oglyad",
-          "merge": ["crm-dlya-brokera-vybir-ta-vprovadzhennya"]
-        },
-        "zh": {
-          "primary": "waihuijingjishang-crm-xitong-quanmian-jiexi",
           "merge": [
-            "waihui-jingjishang-crm-xitong-zhinan",
-            "crm-xuanze-yu-bushu-zhinan"
+            "crm-for-broker-automation"
           ]
         }
       }
@@ -372,17 +257,6 @@
         },
         "en": {
           "primary": "kyc-aml-compliance-through-crm"
-        },
-        "de": {
-          "primary": "kyc-aml-compliance-durch-crm"
-        },
-        "uk": {
-          "primary": "kyc-aml-komplayens-cherez-crm-posibnik",
-          "merge": ["kyc-aml-dlya-brokera-vprovadzhennya"]
-        },
-        "zh": {
-          "primary": "kyc-aml-heguixing-crm-shijian-zhinan",
-          "merge": ["kyc-aml-jingjishang-shishi"]
         }
       }
     },
@@ -397,15 +271,6 @@
         },
         "en": {
           "primary": "crm-metatrader-integration-guide"
-        },
-        "de": {
-          "primary": "crm-metatrader-integration-de"
-        },
-        "uk": {
-          "primary": "integraciya-crm-z-torgovoyu-platformoyu"
-        },
-        "zh": {
-          "primary": "crm-yu-jiaoyi-pingtai-zhenghe"
         }
       }
     },
@@ -417,21 +282,15 @@
       "translations": {
         "ru": {
           "primary": "upravlenie-lidami-v-brokerskom-biznese",
-          "merge": ["avtomatizatsiya-klientskoj-bazy-brokera"]
+          "merge": [
+            "avtomatizatsiya-klientskoj-bazy-brokera"
+          ]
         },
         "en": {
           "primary": "lead-management-forex-brokerage",
-          "merge": ["client-base-automation-brokers"]
-        },
-        "de": {
-          "primary": "lead-management-forex-broker-de",
-          "merge": ["kundenbasis-automatisierung-broker-de"]
-        },
-        "uk": {
-          "primary": "upravlinnya-lidamy-v-crm-brokera"
-        },
-        "zh": {
-          "primary": "qianzai-kehu-guanli-crm-celue"
+          "merge": [
+            "client-base-automation-brokers"
+          ]
         }
       }
     },
@@ -456,30 +315,6 @@
             "multichannel-communications-broker-crm",
             "safe-crm-migration-data-preservation"
           ]
-        },
-        "de": {
-          "primary": "crm-analytik-konversion-broker-de",
-          "merge": [
-            "crm-roi-brokergeschaeft-de",
-            "multikanal-kommunikation-broker-crm-de",
-            "sichere-crm-migration-de"
-          ]
-        },
-        "uk": {
-          "primary": "analityka-prodazhiv-u-crm-brokera",
-          "merge": [
-            "avtomatyzaciya-marketyngu-cherez-crm",
-            "crm-ta-utrymannya-kliyentiv-brokera",
-            "bezpeka-danyh-u-crm-brokera"
-          ]
-        },
-        "zh": {
-          "primary": "xiaoshou-fenxi-crm-guanjian-zhibiao",
-          "merge": [
-            "yingxiao-zidonghua-crm-gongju",
-            "crm-kehu-liucun-celue",
-            "crm-shuju-anquan-biaozhun"
-          ]
         }
       }
     },
@@ -491,21 +326,15 @@
       "translations": {
         "ru": {
           "primary": "marketing-dlya-startuyushchego-brokera",
-          "merge": ["marketing-dlya-brokerov-kak-privlech-klientov"]
+          "merge": [
+            "marketing-dlya-brokerov-kak-privlech-klientov"
+          ]
         },
         "en": {
           "primary": "marketing-strategy-new-forex-broker",
-          "merge": ["broker-marketing-client-acquisition"]
-        },
-        "de": {
-          "primary": "marketingstrategie-neuer-broker-de",
-          "merge": ["broker-marketing-kundenakquise-de"]
-        },
-        "uk": {
-          "primary": "marketyngova-strategiya-novogo-brokera"
-        },
-        "zh": {
-          "primary": "shuzi-yingxiao-waihui-jingjishang"
+          "merge": [
+            "broker-marketing-client-acquisition"
+          ]
         }
       }
     },
@@ -520,15 +349,6 @@
         },
         "en": {
           "primary": "hiring-team-new-forex-broker"
-        },
-        "de": {
-          "primary": "team-aufbau-forex-broker-de"
-        },
-        "uk": {
-          "primary": "komand-brokerskoyi-kompaniyi-kogo-naymaty"
-        },
-        "zh": {
-          "primary": "jingjishang-tuandui-zhaopian-youxianji"
         }
       }
     }

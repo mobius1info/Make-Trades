@@ -26,8 +26,20 @@ Deno.serve(async (req: Request) => {
       },
     });
 
-    const adminEmail = "admin@maketrades.space";
-    const adminPassword = "Admin123456!";
+    // Креды берутся из секретов функции, а не из репозитория:
+    // supabase secrets set FIRST_ADMIN_EMAIL=... FIRST_ADMIN_PASSWORD=...
+    const adminEmail = Deno.env.get("FIRST_ADMIN_EMAIL");
+    const adminPassword = Deno.env.get("FIRST_ADMIN_PASSWORD");
+
+    if (!adminEmail || !adminPassword) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: "Не заданы секреты FIRST_ADMIN_EMAIL и FIRST_ADMIN_PASSWORD.",
+        }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
     const { data: existingAdmins, error: checkError } = await supabaseAdmin
       .from("admin_users")

@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 
-const supportedLanguages = ['ru', 'en', 'de', 'uk', 'zh'];
+const supportedLanguages = ['ru', 'en'];
 const supportedLanguagesPattern = supportedLanguages.join('|');
 
 function rewriteLocalizedRoute(url: string): string | null {

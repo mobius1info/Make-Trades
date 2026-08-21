@@ -1,4 +1,9 @@
+// Значения берутся из .env (VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY).
+// Фолбэки оставлены, чтобы сборка не падала, если переменные не заданы в
+// панели хостинга: URL и publishable key — публичные по своей природе,
+// доступ к данным ограничен политиками RLS.
+// VITE_SUPABASE_ANON_KEY хранит publishable key — новый аналог anon key.
 export const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://gknfzfxjaeuvrncgljyi.supabase.co';
 export const supabaseAnonKey =
   import.meta.env.VITE_SUPABASE_ANON_KEY ||
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdrbmZ6ZnhqYWV1dnJuY2dsanlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA1NzMwNjEsImV4cCI6MjA4NjE0OTA2MX0.rZoKwEl9nbE4KLh3J5MZM5FfbdtCxOJGXTSTCe9VEds';
+  'sb_publishable_kIrFfj1eE5XHGfpJ45V_WA__3nuvX5E';
