@@ -17,7 +17,17 @@
     "crm-lead-management",
     "crm-analytics-roi",
     "broker-marketing",
-    "broker-team-ops"
+    "broker-team-ops",
+    "ai-trading",
+    "algorithmic-liquidity",
+    "cbdc-brokers",
+    "defi-brokerage",
+    "esg-investing",
+    "quantum-finance",
+    "metaverse-trading",
+    "nft-collateral",
+    "mica-regulation",
+    "social-trading"
   ],
   "groups": [
     {
@@ -349,6 +359,116 @@
         },
         "en": {
           "primary": "hiring-team-new-forex-broker"
+        }
+      }
+    },
+    {
+      "key": "ai-trading",
+      "label": "ИИ в трейдинге",
+      "focus": "ИИ в трейдинге",
+      "keepReason": "Самостоятельный материал, добавлен отдельно от кластеров-пилларов.",
+      "translations": {
+        "ru": {
+          "primary": "ai-v-treydinge-2026"
+        }
+      }
+    },
+    {
+      "key": "algorithmic-liquidity",
+      "label": "Алгоритмическая ликвидность",
+      "focus": "Алгоритмическая ликвидность",
+      "keepReason": "Самостоятельный материал, добавлен отдельно от кластеров-пилларов.",
+      "translations": {
+        "ru": {
+          "primary": "algorithmicheskaya-likvidnost-2026"
+        }
+      }
+    },
+    {
+      "key": "cbdc-brokers",
+      "label": "CBDC и брокеры",
+      "focus": "CBDC и брокеры",
+      "keepReason": "Самостоятельный материал, добавлен отдельно от кластеров-пилларов.",
+      "translations": {
+        "ru": {
+          "primary": "central-bank-digital-currency"
+        }
+      }
+    },
+    {
+      "key": "defi-brokerage",
+      "label": "DeFi брокеридж",
+      "focus": "DeFi брокеридж",
+      "keepReason": "Самостоятельный материал, добавлен отдельно от кластеров-пилларов.",
+      "translations": {
+        "ru": {
+          "primary": "defi-brokeridzh-2026"
+        }
+      }
+    },
+    {
+      "key": "esg-investing",
+      "label": "ESG-инвестиции",
+      "focus": "ESG-инвестиции",
+      "keepReason": "Самостоятельный материал, добавлен отдельно от кластеров-пилларов.",
+      "translations": {
+        "ru": {
+          "primary": "esg-investitsii-brokery"
+        }
+      }
+    },
+    {
+      "key": "quantum-finance",
+      "label": "Квантовые вычисления в финансах",
+      "focus": "Квантовые вычисления в финансах",
+      "keepReason": "Самостоятельный материал, добавлен отдельно от кластеров-пилларов.",
+      "translations": {
+        "ru": {
+          "primary": "kvantovye-vychisleniya-finansy"
+        }
+      }
+    },
+    {
+      "key": "metaverse-trading",
+      "label": "Трейдинг в метавселенной",
+      "focus": "Трейдинг в метавселенной",
+      "keepReason": "Самостоятельный материал, добавлен отдельно от кластеров-пилларов.",
+      "translations": {
+        "ru": {
+          "primary": "metavers-trading-platforms"
+        }
+      }
+    },
+    {
+      "key": "nft-collateral",
+      "label": "NFT как обеспечение",
+      "focus": "NFT как обеспечение",
+      "keepReason": "Самостоятельный материал, добавлен отдельно от кластеров-пилларов.",
+      "translations": {
+        "ru": {
+          "primary": "nft-kollateral-kreditovanie"
+        }
+      }
+    },
+    {
+      "key": "mica-regulation",
+      "label": "Регуляция MiCA",
+      "focus": "Регуляция MiCA",
+      "keepReason": "Самостоятельный материал, добавлен отдельно от кластеров-пилларов.",
+      "translations": {
+        "ru": {
+          "primary": "regulyatsiya-mica-2026"
+        }
+      }
+    },
+    {
+      "key": "social-trading",
+      "label": "Социальный трейдинг",
+      "focus": "Социальный трейдинг",
+      "keepReason": "Самостоятельный материал, добавлен отдельно от кластеров-пилларов.",
+      "translations": {
+        "ru": {
+          "primary": "social-trading-platforma"
         }
       }
     }

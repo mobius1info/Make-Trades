@@ -1,17 +1,12 @@
-import { FAQ_ACCORDION_OPEN_EVENT } from './faq-accordion';
-import { loadTranslations } from './content-loader';
-import { checkRecentSubmission, fetchFaqItems, fetchVisibleBlogPosts, insertPublicRow } from './public-api';
-import { getPostImageAttributes, syncResolvedImageUrls } from './post-images';
-import { articleHref, blogIndexHref, faqHref, getHomeLanguageFromPath, homePath } from './seo-urls';
-import { supabaseAnonKey, supabaseUrl } from './supabase-config';
+import { loadTranslations, loadImages } from './content-loader';
+import { supabase, supabaseUrl, supabaseAnonKey } from './supabase';
 
-const initialDocumentLanguage = document.documentElement.lang || 'ru';
-let currentLanguage = getHomeLanguageFromPath(window.location.pathname) || 'ru';
+const params = new URLSearchParams(window.location.search);
+let currentLanguage = params.get('lang') || 'ru';
 let translations: Record<string, string> = {};
 let demoFormOpenedAt = 0;
 let pageLoadedAt = Date.now();
 let currentCaptchaAnswer = 0;
-const isInitialServerLanguage = initialDocumentLanguage === currentLanguage;
 let userActivity = {
   mouseMoved: false,
   scrolled: false,
@@ -22,29 +17,7 @@ declare global {
   interface Window {
     gtag?: (...args: any[]) => void;
     ym?: (...args: any[]) => void;
-    __makeTradesAnalytics?: {
-      yandexCounterId?: number;
-    };
   }
-}
-
-let cachedYandexCounterId: number | null = null;
-
-function resolveYandexCounterId(): number | null {
-  const globalCounterId = window.__makeTradesAnalytics?.yandexCounterId;
-  if (typeof globalCounterId === 'number' && Number.isFinite(globalCounterId) && globalCounterId > 0) {
-    return globalCounterId;
-  }
-
-  if (cachedYandexCounterId !== null) {
-    return cachedYandexCounterId;
-  }
-
-  const analyticsLoader = document.querySelector<HTMLScriptElement>('script[src="/analytics-loader.js"][data-ym-id]');
-  const parsedCounterId = Number(analyticsLoader?.dataset.ymId || analyticsLoader?.getAttribute('data-ym-id') || '');
-
-  cachedYandexCounterId = Number.isFinite(parsedCounterId) && parsedCounterId > 0 ? parsedCounterId : null;
-  return cachedYandexCounterId;
 }
 
 function trackEvent(eventName: string, eventParams?: Record<string, any>) {
@@ -52,28 +25,46 @@ function trackEvent(eventName: string, eventParams?: Record<string, any>) {
     window.gtag('event', eventName, eventParams);
   }
 
-  const yandexCounterId = resolveYandexCounterId();
-  if (typeof window.ym === 'function' && yandexCounterId) {
-    window.ym(yandexCounterId, 'reachGoal', eventName, eventParams);
+  if (typeof window.ym === 'function') {
+    window.ym(parseInt('XXXXXXXX'), 'reachGoal', eventName, eventParams);
   }
 }
 
-function hasStaticBlogPreview(): boolean {
-  return Boolean(document.querySelector('#blogGrid .blog-card'));
+// Поля соответствуют колонкам в `select` соответствующих запросов.
+interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  image_url: string;
+  author: string;
+  created_at: string;
 }
 
-function hasStaticFaqPreview(): boolean {
-  return Boolean(document.querySelector('#faqList .faq-item'));
+interface FAQItem {
+  id: string;
+  question: string;
+  answer: string;
 }
 
 async function setLanguage(lang: string) {
-  const targetPath = homePath(lang);
-  if (currentLanguage === lang && window.location.pathname === targetPath) {
-    return;
-  }
+  currentLanguage = lang;
+  document.documentElement.lang = lang;
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  document.querySelector(`[data-lang="${lang}"]`)?.classList.add('active');
+
+  const url = new URL(window.location.href);
+  url.searchParams.set('lang', lang);
+  window.history.replaceState({}, '', url.toString());
 
   trackEvent('language_changed', { language: lang });
-  window.location.assign(targetPath);
+
+  translations = await loadTranslations(lang);
+  await updateContent();
+  loadBlogPosts();
+  loadFAQItems();
 }
 
 function t(key: string, fallback: string): string {
@@ -88,68 +79,6 @@ function setText(selector: string, key: string, fallback: string) {
 function setById(id: string, key: string, fallback: string) {
   const el = document.getElementById(id);
   if (el) el.textContent = t(key, fallback);
-}
-
-function renderPreviewCardImage(post: {
-  image_url?: string | null;
-  slug: string;
-  shared_image_seed?: string;
-  title: string;
-}): string {
-  const imageSeed = post.shared_image_seed || post.slug;
-  const image = getPostImageAttributes(post.image_url, imageSeed, 'card');
-
-  return `<img src="${image.src}"
-             alt="${post.title}"
-             class="blog-card-image"
-             data-post-slug="${imageSeed}"
-             data-image-kind="card"
-             width="${image.width}"
-             height="${image.height}"
-             ${image.srcset ? `srcset="${image.srcset}"` : ''}
-             ${image.sizes ? `sizes="${image.sizes}"` : ''}
-             loading="lazy"
-             decoding="async">`;
-}
-
-function renderFaqPreviewItems(items: Array<{ id: string; question: string; answer: string }>): string {
-  return items
-    .map(
-      item => `
-      <div class="faq-item" data-faq-id="${item.id}">
-        <div class="faq-question">
-          <span>${item.question}</span>
-          <span>+</span>
-        </div>
-        <div class="faq-answer">
-          <div>${item.answer}</div>
-        </div>
-      </div>
-    `
-    )
-    .join('');
-}
-
-function updateHomeFAQSchema(items: Array<{ question: string; answer: string }>) {
-  const schemaScript = document.getElementById('homeFaqSchema');
-  if (!schemaScript) return;
-
-  schemaScript.textContent = JSON.stringify(
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: items.map(item => ({
-        '@type': 'Question',
-        name: item.question,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: item.answer,
-        },
-      })),
-    },
-    null,
-    2
-  );
 }
 
 async function updateContent() {
@@ -251,37 +180,39 @@ function updateModalsAndForms() {
   const loginSubmitBtn = document.getElementById('loginSubmitBtn');
   if (loginSubmitBtn) loginSubmitBtn.textContent = t('login.button', 'Log In');
 
-  updatePageLinks();
-}
-
-function updatePageLinks() {
   const allArticlesLink = document.getElementById('allArticlesBtn') as HTMLAnchorElement;
-  if (allArticlesLink) allArticlesLink.href = blogIndexHref(currentLanguage);
+  if (allArticlesLink) allArticlesLink.href = `/blog.html?lang=${currentLanguage}`;
 
   const allFaqLink = document.getElementById('allFaqBtn') as HTMLAnchorElement;
-  if (allFaqLink) allFaqLink.href = faqHref(currentLanguage);
+  if (allFaqLink) allFaqLink.href = `/faq.html?lang=${currentLanguage}`;
 }
 
-async function loadBlogPosts(limit: number = 3, force: boolean = false) {
+async function loadBlogPosts(limit: number = 3) {
   const blogGrid = document.getElementById('blogGrid');
   if (!blogGrid) return;
 
-  if (!force && hasStaticBlogPreview()) {
-    syncResolvedImageUrls(blogGrid);
-    return;
-  }
-
   try {
-    const posts = await fetchVisibleBlogPosts(currentLanguage, limit);
+    const { data: posts, error } = await supabase
+      .from('blog_posts')
+      .select('id, title, slug, excerpt, image_url, author, created_at')
+      .eq('language', currentLanguage)
+      .eq('published', true)
+      .order('created_at', { ascending: false })
+      .limit(limit);
+
+    if (error) throw error;
 
     if (!posts || posts.length === 0) {
       blogGrid.innerHTML = `<p style="text-align: center; color: var(--neutral-500);">${t('blog.empty', 'Articles coming soon')}</p>`;
       return;
     }
 
-    blogGrid.innerHTML = posts.map(post => `
-      <a href="${articleHref(post, currentLanguage)}" class="blog-card">
-        ${renderPreviewCardImage(post)}
+    blogGrid.innerHTML = posts.map((post: BlogPost) => `
+      <a href="/blog-post.html?slug=${post.slug}&lang=${currentLanguage}" class="blog-card fade-in">
+        <img src="${post.image_url || 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=400'}"
+             alt="${post.title}"
+             class="blog-card-image"
+             loading="lazy">
         <div class="blog-card-content">
           <h3>${post.title}</h3>
           <p>${post.excerpt}</p>
@@ -295,36 +226,55 @@ async function loadBlogPosts(limit: number = 3, force: boolean = false) {
         </div>
       </a>
     `).join('');
-    syncResolvedImageUrls(blogGrid);
   } catch (error) {
     console.error('Error loading blog posts:', error);
     blogGrid.innerHTML = `<p style="text-align: center; color: var(--error-500);">${t('blog.error', 'Error loading articles')}</p>`;
   }
 }
 
-async function loadFAQItems(limit: number = 4, force: boolean = false) {
+async function loadFAQItems(limit: number = 4) {
   const faqList = document.getElementById('faqList');
   if (!faqList) return;
 
-  if (!force && hasStaticFaqPreview()) {
-    return;
-  }
-
   try {
-    const items = await fetchFaqItems(currentLanguage, 'all', limit);
+    const { data: items, error } = await supabase
+      .from('faq_items')
+      .select('id, question, answer')
+      .eq('language', currentLanguage)
+      .order('order', { ascending: true })
+      .limit(limit);
+
+    if (error) throw error;
 
     if (!items || items.length === 0) {
       faqList.innerHTML = `<p style="text-align: center; color: var(--neutral-500);">${t('faq.empty', 'FAQ coming soon')}</p>`;
-      updateHomeFAQSchema([]);
       return;
     }
 
-    faqList.innerHTML = renderFaqPreviewItems(items);
-    updateHomeFAQSchema(items);
+    faqList.innerHTML = items.map((item: FAQItem) => `
+      <div class="faq-item fade-in" data-faq-id="${item.id}">
+        <div class="faq-question">
+          <span>${item.question}</span>
+          <span>+</span>
+        </div>
+        <div class="faq-answer">${item.answer}</div>
+      </div>
+    `).join('');
+
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const wasActive = item.classList.contains('active');
+        item.classList.toggle('active');
+
+        if (!wasActive) {
+          const faqId = item.getAttribute('data-faq-id');
+          trackEvent('faq_item_opened', { faq_id: faqId, language: currentLanguage });
+        }
+      });
+    });
   } catch (error) {
     console.error('Error loading FAQ items:', error);
     faqList.innerHTML = `<p style="text-align: center; color: var(--error-500);">${t('faq.error', 'Error loading FAQ')}</p>`;
-    updateHomeFAQSchema([]);
   }
 }
 
@@ -488,15 +438,15 @@ async function handleLogin(e: Event) {
   let hasError = false;
 
   if (!emailInput.value.trim()) {
-    showFieldError(emailInput, t('error.login_email_required', 'Please enter your email'));
+    showFieldError(emailInput, t('error.login_email_required', 'Пожалуйста, введите email'));
     hasError = true;
   } else if (!validateEmail(emailInput.value.trim())) {
-    showFieldError(emailInput, t('error.login_email_invalid', 'Please enter a valid email address'));
+    showFieldError(emailInput, t('error.login_email_invalid', 'Пожалуйста, введите корректный email'));
     hasError = true;
   }
 
   if (!passwordInput.value) {
-    showFieldError(passwordInput, t('error.login_password_required', 'Please enter your password'));
+    showFieldError(passwordInput, t('error.login_password_required', 'Пожалуйста, введите пароль'));
     hasError = true;
   }
 
@@ -508,14 +458,13 @@ async function handleLogin(e: Event) {
   submitBtn.textContent = '...';
 
   try {
-    const { supabase } = await import('./supabase');
     const { data: signInData, error } = await supabase.auth.signInWithPassword({
       email: emailInput.value.trim(),
       password: passwordInput.value,
     });
 
     if (error) {
-      showFormMessage(form, t('error.login_invalid', 'Invalid email or password'), 'error');
+      showFormMessage(form, t('error.login_invalid', 'Неверный email или пароль'), 'error');
       trackEvent('login_failed', { language: currentLanguage });
       return;
     }
@@ -528,7 +477,7 @@ async function handleLogin(e: Event) {
 
     if (adminCheck) {
       await supabase.auth.signOut();
-      showFormMessage(form, t('error.login_invalid', 'Invalid email or password'), 'error');
+      showFormMessage(form, t('error.login_invalid', 'Неверный email или пароль'), 'error');
       return;
     }
 
@@ -538,7 +487,7 @@ async function handleLogin(e: Event) {
     form.reset();
     showFormMessage(form, t('login.success', 'You have successfully logged in'), 'success');
   } catch (err) {
-    showFormMessage(form, t('error.login_invalid', 'Invalid email or password'), 'error');
+    showFormMessage(form, t('error.login_invalid', 'Неверный email или пароль'), 'error');
   } finally {
     submitBtn.disabled = false;
     submitBtn.textContent = originalText;
@@ -626,15 +575,15 @@ async function handleDemoRequest(e: Event) {
   let hasError = false;
 
   if (!nameInput.value.trim()) {
-    showFieldError(nameInput, t('error.name_required', 'Please enter your name'));
+    showFieldError(nameInput, t('error.name_required', 'Пожалуйста, введите ваше имя'));
     hasError = true;
   }
 
   if (!emailInput.value.trim()) {
-    showFieldError(emailInput, t('error.email_required', 'Please enter your email'));
+    showFieldError(emailInput, t('error.email_required', 'Пожалуйста, введите email'));
     hasError = true;
   } else if (!validateEmail(emailInput.value.trim())) {
-    showFieldError(emailInput, t('error.email_invalid', 'Please enter a valid email address'));
+    showFieldError(emailInput, t('error.email_invalid', 'Пожалуйста, введите корректный email'));
     hasError = true;
   }
 
@@ -643,7 +592,7 @@ async function handleDemoRequest(e: Event) {
     if (!existingSelectError) {
       const errorEl = document.createElement('div');
       errorEl.className = 'select-error';
-      errorEl.textContent = t('error.referral_required', 'Please select how you heard about us');
+      errorEl.textContent = t('error.referral_required', 'Пожалуйста, укажите откуда вы узнали о нас');
       selectGroup?.appendChild(errorEl);
       requestAnimationFrame(() => errorEl.classList.add('visible'));
     }
@@ -660,7 +609,7 @@ async function handleDemoRequest(e: Event) {
     if (!existingRadioError) {
       const errorEl = document.createElement('div');
       errorEl.className = 'radio-error';
-      errorEl.textContent = t('error.broker_experience_required', 'Please select an option');
+      errorEl.textContent = t('error.broker_experience_required', 'Пожалуйста, выберите один из вариантов');
       radioGroup?.appendChild(errorEl);
       requestAnimationFrame(() => errorEl.classList.add('visible'));
     }
@@ -679,7 +628,7 @@ async function handleDemoRequest(e: Event) {
       if (!existingCaptchaError) {
         const errorEl = document.createElement('div');
         errorEl.className = 'captcha-error';
-        errorEl.textContent = t('error.captcha_wrong', 'Wrong answer, try again');
+        errorEl.textContent = t('error.captcha_wrong', 'Неверный ответ, попробуйте ещё раз');
         captchaField.appendChild(errorEl);
         requestAnimationFrame(() => errorEl.classList.add('visible'));
       }
@@ -728,6 +677,7 @@ async function handleDemoRequest(e: Event) {
     referral_source: formData.get('referral_source') as string,
   };
 
+  const restUrl = `${supabaseUrl}/rest/v1/demo_requests`;
   const headers = {
     'Content-Type': 'application/json',
     'apikey': supabaseAnonKey,
@@ -736,7 +686,18 @@ async function handleDemoRequest(e: Event) {
   };
 
   try {
-    await insertPublicRow('demo_requests', data);
+    const res = await fetch(restUrl, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(data),
+    });
+
+    // fetch не бросает исключение на 4xx/5xx, поэтому статус проверяем сами:
+    // без этого отказ RLS проходил молча и заявка терялась.
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ message: res.statusText }));
+      throw new Error(err.message || err.error || `HTTP ${res.status}`);
+    }
 
     fetch(`${supabaseUrl}/rest/v1/leads`, {
       method: 'POST',
@@ -761,12 +722,10 @@ async function handleDemoRequest(e: Event) {
     resetCustomSelects(form);
     showBonusModal();
   } catch (error: any) {
-    // Раньше ошибка глоталась и модалка успеха показывалась всё равно —
-    // заявка терялась молча, и ни пользователь, ни мы об этом не узнавали.
     console.error('Error submitting demo request:', error);
     showFormMessage(
       form,
-      t('error.submit_failed', 'Could not submit the request. Please try again.'),
+      t('error.submit_failed', 'Произошла ошибка. Пожалуйста, попробуйте позже.'),
       'error'
     );
   } finally {
@@ -792,6 +751,7 @@ async function handleContactSubmission(e: Event) {
   submitBtn.disabled = true;
   submitBtn.textContent = '...';
 
+  const restUrl = `${supabaseUrl}/rest/v1/contact_submissions`;
   const headers = {
     'Content-Type': 'application/json',
     'apikey': supabaseAnonKey,
@@ -800,14 +760,26 @@ async function handleContactSubmission(e: Event) {
   };
 
   try {
-    const dupCheck = await checkRecentSubmission(data.email, data.telegram);
+    const { data: dupCheck } = await supabase.rpc('check_recent_submission', {
+      p_email: data.email,
+      p_telegram: data.telegram,
+    });
 
     if (dupCheck?.is_duplicate) {
-      showFormMessage(form, t('error.duplicate_submission', 'You have already submitted a request. Please wait 24 hours before submitting again.'), 'error');
+      showFormMessage(form, t('error.duplicate_submission', 'Вы уже отправляли заявку. Пожалуйста, подождите 24 часа перед повторной отправкой.'), 'error');
       return;
     }
 
-    await insertPublicRow('contact_submissions', data);
+    const res = await fetch(restUrl, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ message: res.statusText }));
+      throw new Error(err.message || err.error || `HTTP ${res.status}`);
+    }
 
     fetch(`${supabaseUrl}/rest/v1/leads`, {
       method: 'POST',
@@ -846,17 +818,6 @@ function setupLanguageSwitcher() {
       if (lang) {
         setLanguage(lang);
       }
-    });
-  });
-}
-
-function setupFaqOpenTracking() {
-  document.addEventListener(FAQ_ACCORDION_OPEN_EVENT, event => {
-    const detail = (event as CustomEvent<{ faqId: string | null }>).detail;
-
-    trackEvent('faq_item_opened', {
-      faq_id: detail?.faqId || undefined,
-      language: currentLanguage,
     });
   });
 }
@@ -947,12 +908,7 @@ async function init() {
 
   trackUserActivity();
   setupLanguageSwitcher();
-  setupFaqOpenTracking();
   setupModal();
-  const prerenderedBlogGrid = document.getElementById('blogGrid');
-  if (prerenderedBlogGrid) {
-    syncResolvedImageUrls(prerenderedBlogGrid);
-  }
 
   const demoForm = document.getElementById('demoForm');
   const contactForm = document.getElementById('contactForm');
@@ -977,6 +933,7 @@ async function init() {
     captchaField?.classList.remove('has-error');
   });
 
+  generateCaptcha();
   initCustomSelects(demoForm);
 
   demoForm?.querySelectorAll<HTMLInputElement>('input[name="broker_experience"]').forEach(radio => {
@@ -1007,13 +964,12 @@ async function init() {
   });
 
   try {
-    if (!isInitialServerLanguage) {
-      translations = await loadTranslations(currentLanguage);
-      await updateContent();
-    } else {
-      updatePageLinks();
-    }
-
+    const [translationsData] = await Promise.all([
+      loadTranslations(currentLanguage),
+      loadImages()
+    ]);
+    translations = translationsData;
+    await updateContent();
     setupLazyContentLoading();
   } catch (e) {
     console.error('Failed to load content:', e);
@@ -1025,8 +981,8 @@ function setupLazyContentLoading() {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const id = entry.target.id;
-        if (id === 'blogGrid') loadBlogPosts(3, true);
-        if (id === 'faqList') loadFAQItems(4, true);
+        if (id === 'blogGrid') loadBlogPosts();
+        if (id === 'faqList') loadFAQItems();
         lazyObserver.unobserve(entry.target);
       }
     });
@@ -1034,18 +990,11 @@ function setupLazyContentLoading() {
 
   const blogGrid = document.getElementById('blogGrid');
   const faqList = document.getElementById('faqList');
-  if (blogGrid && !hasStaticBlogPreview()) lazyObserver.observe(blogGrid);
-  if (faqList && !hasStaticFaqPreview()) lazyObserver.observe(faqList);
+  if (blogGrid) lazyObserver.observe(blogGrid);
+  if (faqList) lazyObserver.observe(faqList);
 }
 
 function setupScrollAnimations() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce), (hover: none) and (pointer: coarse)').matches) {
-    document.querySelectorAll<HTMLElement>('.reveal, .reveal-left, .reveal-right').forEach(el => {
-      el.classList.add('visible');
-    });
-    return;
-  }
-
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {

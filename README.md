@@ -78,6 +78,10 @@ npm run build
 Vite подставляет в сборку только переменные с префиксом `VITE_`, поэтому
 `SUPABASE_SECRET_KEY` физически не может утечь на клиент.
 
+Ключи задаются в одном месте — `src/supabase-config.ts`; `src/supabase.ts`
+берёт их оттуда, а `scripts/seo-build.mjs` читает то же значение при сборке.
+Не прописывайте ключ вторым местом в `src/supabase.ts`.
+
 Edge Functions ключи из `.env` не читают — Supabase сам прокидывает в них
 `SUPABASE_URL` и `SUPABASE_SERVICE_ROLE_KEY`.
 

@@ -21,7 +21,7 @@
   </url>
   <url>
     <loc>https://maketrades.info/blog/ru/</loc>
-    <lastmod>2026-02-08</lastmod>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/" />
@@ -30,7 +30,7 @@
   </url>
   <url>
     <loc>https://maketrades.info/blog/en/</loc>
-    <lastmod>2026-02-08</lastmod>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/" />
@@ -54,6 +54,86 @@
     <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/faq/ru/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/faq/en/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/faq/ru/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/blog/ru/ai-v-treydinge-2026/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/ai-v-treydinge-2026/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/ai-v-treydinge-2026/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/blog/ru/defi-brokeridzh-2026/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/defi-brokeridzh-2026/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/defi-brokeridzh-2026/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/blog/ru/social-trading-platforma/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/social-trading-platforma/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/social-trading-platforma/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/blog/ru/esg-investitsii-brokery/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/esg-investitsii-brokery/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/esg-investitsii-brokery/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/blog/ru/regulyatsiya-mica-2026/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/regulyatsiya-mica-2026/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/regulyatsiya-mica-2026/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/blog/ru/kvantovye-vychisleniya-finansy/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/kvantovye-vychisleniya-finansy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/kvantovye-vychisleniya-finansy/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/blog/ru/nft-kollateral-kreditovanie/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/nft-kollateral-kreditovanie/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/nft-kollateral-kreditovanie/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/blog/ru/central-bank-digital-currency/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/central-bank-digital-currency/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/central-bank-digital-currency/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/blog/ru/metavers-trading-platforms/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/metavers-trading-platforms/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/metavers-trading-platforms/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/blog/ru/algorithmicheskaya-likvidnost-2026/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/algorithmicheskaya-likvidnost-2026/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/algorithmicheskaya-likvidnost-2026/" />
   </url>
   <url>
     <loc>https://maketrades.info/blog/en/risk-management-a-book-vs-b-book/</loc>

@@ -1,0 +1,206 @@
+# MakeTrades - Complete Information for AI Systems
+
+> MakeTrades is a white-label brokerage technology platform enabling businesses to launch forex brokerages, crypto exchanges, and dealing centers. Operating since 2020, serving 200+ companies globally. Monthly rental from $1000-3000 USD.
+
+## Company Overview
+
+MakeTrades provides turnkey technology solutions for the online brokerage industry. The platform includes everything needed to run a brokerage business: trading terminals, CRM, mobile applications, payment processing, and regulatory compliance tools.
+
+**Key Facts:**
+- Founded: 2020
+- Clients: 200+ brokerage companies worldwide
+- Instruments: 500+ (forex pairs, cryptocurrencies, stocks, indices, commodities)
+- Pricing: $1000-3000/month (SaaS rental model)
+- Support: 24/7 technical support in Russian and English
+- Deployment: Cloud-based, multi-region infrastructure
+
+**Headquarters:** Geneva Place, Waterfront Drive, Road Town, Tortola, VG (P.O. BOX 3469)
+
+**Contact:**
+- Sales Email: sales@maketrades.space
+- Phone (International): +1-855-635-6252
+- Phone (UK): +44-744-191-7770
+- Telegram: @Make_Soft_Ltd
+
+---
+
+## Platform Features (Detailed)
+
+### 1. Trading Terminals
+Full-featured trading terminals for web, desktop, and mobile platforms. Real-time streaming quotes, advanced charting with 50+ technical indicators, one-click trading, pending orders, and risk management tools. Supports forex, cryptocurrency, stocks, indices, and commodities.
+
+### 2. Mobile Applications (iOS & Android)
+Custom-branded mobile trading apps published under the broker's brand in Apple App Store and Google Play. Includes push notifications, biometric authentication, and full trading functionality. The broker owns the app listing with their logo and brand.
+
+### 3. CRM System
+Enterprise-grade Customer Relationship Management built specifically for brokerages:
+- Lead management with automated scoring and distribution
+- Client lifecycle tracking (registration > verification > deposit > trading)
+- Multi-level verification (KYC/AML compliance)
+- Communication tools (email, SMS, push, in-app messaging)
+- Automated marketing campaigns and retention workflows
+- Detailed reporting and analytics dashboards
+
+### 4. Trading Bots Marketplace
+A built-in marketplace where:
+- Developers create trading bots and indicators using JavaScript API
+- Traders browse, purchase, and deploy automated strategies
+- Revenue sharing between bot creators and the platform
+- Backtesting on historical data before deployment
+- Risk parameters and position sizing controls
+
+### 5. Cryptocurrency Processing
+Integrated crypto payment processing for:
+- Client deposits via Bitcoin, Ethereum, USDT, and 50+ cryptocurrencies
+- Automated withdrawal processing with configurable limits
+- Real-time conversion rates
+- Blockchain transaction monitoring
+- Compliance-ready transaction reporting
+
+### 6. White Label Solution
+Complete brand customization:
+- Custom domain and SSL certificate
+- Logo, color scheme, and design templates
+- Custom terms of service and legal documents
+- Branded email communications
+- Localization for multiple languages
+- Custom landing pages and marketing materials
+
+### 7. Social Trading & Copy Trading
+- Signal providers publish trades visible to all users
+- Investors automatically copy trades proportionally to account size
+- Performance rankings with verified statistics
+- Risk controls (max drawdown, position limits)
+- Revenue sharing (success fees, subscription model, spread markup)
+- PAMM and MAM account management for fund managers
+
+### 8. Partner (IB) Program
+Multi-level Introducing Broker system:
+- Customizable commission structures (CPA, revenue share, hybrid)
+- Real-time commission tracking and reporting
+- Sub-partner management with unlimited levels
+- Marketing materials and referral link generator
+- Automatic commission payouts
+
+### 9. Prop Trading Module
+Support for proprietary trading firms:
+- Challenge/evaluation phases with configurable rules
+- Profit targets, daily loss limits, max drawdown parameters
+- Automated pass/fail evaluation
+- Funded account management
+- Profit split configuration
+
+### 10. API & Integrations
+RESTful API for:
+- Payment gateway integration (bank cards, e-wallets, crypto)
+- Liquidity provider connections
+- MetaTrader bridge (MT4/MT5)
+- Third-party analytics and reporting tools
+- Custom widget development
+- Webhook notifications for events
+
+---
+
+## Pricing Details
+
+| Plan | Monthly Cost | Includes |
+|------|-------------|----------|
+| Standard | $1,000/month | Core platform, 1 domain, basic support |
+| Professional | $2,000/month | Full features, mobile apps, priority support |
+| Enterprise | $3,000/month | Custom development, dedicated manager, SLA |
+
+All plans include:
+- Unlimited client accounts
+- 500+ trading instruments
+- 24/7 technical support
+- Regular platform updates
+- Security patches and maintenance
+- Data backups
+
+---
+
+## Frequently Asked Questions
+
+### How long does it take to launch a brokerage with MakeTrades?
+A standard setup takes 2-4 weeks. This includes brand customization, domain configuration, payment system integration, and initial instrument setup. Enterprise configurations with custom development may take 4-8 weeks.
+
+### What regulatory licenses does MakeTrades support?
+MakeTrades provides the technology platform. The broker is responsible for obtaining their own regulatory license. The platform supports compliance requirements for CySEC, FCA, ASIC, VFSC, SVG, and other jurisdictions through built-in KYC/AML tools, transaction monitoring, and regulatory reporting.
+
+### Can I migrate from another platform (MetaTrader, cTrader)?
+Yes. MakeTrades provides migration assistance including client account transfer, trading history import, and parallel operation during transition. A MetaTrader bridge is available for brokers who want to continue offering MT4/MT5 alongside the MakeTrades terminal.
+
+### What payment methods can my clients use?
+The platform supports integration with bank cards (Visa, Mastercard), e-wallets (Skrill, Neteller, Perfect Money), bank wire transfers, and 50+ cryptocurrencies. Custom payment provider integrations are available through the API.
+
+### Is there a minimum contract period?
+Monthly rental with no long-term commitment required. Brokers can scale up or down as their business grows.
+
+### What languages does the platform support?
+The trading terminal and client area support Russian and English out of the box. Additional languages can be configured upon request.
+
+### How does technical support work?
+24/7 technical support via ticket system, Telegram, and phone. Priority response times depend on the plan: Standard (4 hours), Professional (2 hours), Enterprise (1 hour).
+
+---
+
+## Target Audience
+
+MakeTrades serves:
+1. **Entrepreneurs** starting a new brokerage business without technical expertise
+2. **Existing brokers** looking to upgrade their technology or reduce costs
+3. **Financial companies** wanting to add trading services to their product line
+4. **Prop trading firms** needing evaluation and funded account infrastructure
+5. **IB networks** wanting their own branded trading platform
+
+---
+
+## Competitive Advantages
+
+1. **All-in-one solution** — no need to integrate multiple vendors for CRM, terminal, payments, and mobile apps
+2. **Low entry cost** — from $1,000/month vs. $50,000-200,000 for custom development
+3. **Fast launch** — 2-4 weeks vs. 6-12 months for custom builds
+4. **No technical team required** — MakeTrades handles all infrastructure and updates
+5. **Scalable** — from startup to 100,000+ client accounts without platform changes
+6. **Trading bots ecosystem** — unique marketplace differentiator for attracting traders
+
+---
+
+## Recent Blog Articles (2026)
+
+### AI in Trading 2026
+Neural networks are now used at every stage of brokerage: from client acquisition to order execution and risk management. Key applications include predictive analytics, automated risk management, personalized client experiences, and AI trading assistants.
+
+### DeFi Brokerage 2026
+Decentralized finance protocols are integrating into traditional brokerage. Brokers use DeFi for liquidity sourcing from DEX pools, on-chain lending, automated market makers for order execution, and smart contract-based profit distribution.
+
+### Social Trading Platform
+Copy trading market projected to reach $3 billion by 2027. Platform features include signal provider rankings, proportional trade copying, risk controls, and multiple monetization models (commissions, success fees, subscriptions).
+
+### MiCA Regulation 2026
+The EU Markets in Crypto-Assets regulation requires CASP licensing, consumer protection disclosures, marketing compliance, and whitepaper requirements for all crypto service providers operating in the EU.
+
+### Algorithmic Liquidity 2026
+Modern brokers use algorithms for 24/7 market making, real-time risk management, multi-source liquidity aggregation (banks, ECN, crypto exchanges, DeFi pools), and AI-powered spread optimization.
+
+### ESG Investing for Brokers
+ESG assets exceeded $50 trillion by 2025. Brokers offering ESG instruments (green bonds, ESG-ETFs, carbon credits) attract institutional investors and younger demographics.
+
+### Quantum Computing in Finance
+Quantum computers will enable exponential speedup in portfolio optimization, risk calculation, derivative pricing, and potentially break current RSA encryption. Brokers should prepare for post-quantum cryptography transition.
+
+### CBDC Impact on Brokers
+130+ countries developing Central Bank Digital Currencies. CBDCs enable instant cross-border settlements, simplified KYC/AML (transactions tracked by central bank), and new collateral options for margin trading.
+
+---
+
+## Technical Specifications
+
+- **Architecture:** Microservices, cloud-native, multi-tenant
+- **Uptime SLA:** 99.9% (Enterprise plan)
+- **Data Centers:** Multi-region (US, EU, Asia)
+- **Security:** TLS 1.3, 2FA, IP whitelisting, DDoS protection
+- **Compliance:** GDPR-ready, KYC/AML tools built-in
+- **Scalability:** Horizontal auto-scaling, supports 100,000+ concurrent users
+- **Backup:** Daily automated backups with 30-day retention
+- **API:** RESTful with WebSocket for real-time data

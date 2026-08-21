@@ -1,0 +1,57 @@
+# MakeTrades
+
+> MakeTrades is a white-label brokerage platform for launching forex brokers, crypto exchanges, and dealing centers. Turnkey solution from $1000-3000/month with 500+ trading instruments, CRM, mobile apps, trading bots marketplace, and prop trading support.
+
+## Company Information
+
+- [About MakeTrades](https://maketrades.info): White-label platform for creating brokerages, crypto exchanges and dealing centers
+- [FAQ](https://maketrades.info/faq.html): Frequently asked questions about pricing, features, support, and integration
+- [Blog](https://maketrades.info/blog.html): Articles about trading, brokerage business, technology, and market analysis
+
+## Core Features
+
+- Trading Terminals: Web, desktop and mobile terminals with real-time quotes for 500+ instruments (forex, crypto, stocks, indices)
+- Mobile Apps: Custom-branded iOS and Android applications published to App Store and Google Play
+- CRM System: Full-featured broker CRM with lead management, client segmentation, and automated workflows
+- Trading Bots Marketplace: JavaScript-based bot store where traders create, sell, and use automated strategies
+- Crypto Processing: Built-in cryptocurrency deposit and withdrawal processing
+- White Label: Fully customizable branding, domain, logos, and design
+- Social Trading: Copy trading and PAMM/MAM accounts for investment portfolios
+- Partner Program: Multi-level IB (Introducing Broker) cabinet with commission tracking
+- Prop Trading: Proprietary trading and binary options integration
+- API: RESTful API for payment systems, third-party services, and custom integrations
+- Flexible Configuration: Customizable spreads, commissions, and instrument parameters
+
+## Pricing
+
+- Monthly rental: $1000-3000/month depending on configuration
+- 200+ companies already use the platform
+- 24/7 technical support included
+- No setup fees for standard configuration
+
+## Technology
+
+- Platform: Cloud-based SaaS with multi-region deployment
+- Security: KYC/AML compliance, SSL encryption, 2FA
+- Integration: MetaTrader bridge, payment gateways, liquidity providers
+- Languages: Russian, English (UI and support)
+
+## Contact
+
+- Email: sales@maketrades.space
+- Phone: +1-855-635-6252
+- Telegram: @Make_Soft_Ltd
+- Address: Geneva Place, Waterfront Drive, Road Town, Tortola, VG
+
+## Blog Topics
+
+- [AI in Trading 2026](https://maketrades.info/blog-post.html?slug=ai-v-treydinge-2026): How neural networks transform brokerage business
+- [DeFi Brokerage 2026](https://maketrades.info/blog-post.html?slug=defi-brokeridzh-2026): Decentralized finance integration in brokerages
+- [Social Trading Platform](https://maketrades.info/blog-post.html?slug=social-trading-platforma): How to build a copy trading platform
+- [MiCA Regulation 2026](https://maketrades.info/blog-post.html?slug=regulyatsiya-mica-2026): EU crypto regulation impact on brokers
+- [Algorithmic Trading](https://maketrades.info/blog-post.html?slug=algoritmicheskiy-trejding-torgovy-bot): Creating profitable trading bots
+- [Broker Licensing](https://maketrades.info/blog-post.html?slug=litsenzirovanie-brokerskoy-deyatelnosti): Complete licensing guide
+- [Choosing a Trading Platform](https://maketrades.info/blog-post.html?slug=kak-vybrat-torgovuyu-platformu-dlya-brokera): Platform selection guide for brokers
+- [Risk Management A-Book vs B-Book](https://maketrades.info/blog-post.html?slug=upravlenie-riskami-a-book-b-book): Brokerage risk management models
+- [Broker Marketing](https://maketrades.info/blog-post.html?slug=marketing-dlya-brokerov-kak-privlech-klientov): Client acquisition strategies
+- [Crypto Brokerage](https://maketrades.info/blog-post.html?slug=kriptovalyutny-brokeridzh-osobennosti): Features and advantages of crypto brokerage

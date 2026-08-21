@@ -443,6 +443,26 @@ document.getElementById('markAllReadBtn')?.addEventListener('click', async () =>
   }
 });
 
+document.getElementById('deleteAllLeadsBtn')?.addEventListener('click', async () => {
+  if (!confirm('Вы уверены, что хотите удалить ВСЕ заявки? Это действие нельзя отменить.')) return;
+
+  try {
+    const sb = getSupabase();
+    const { error } = await sb.from('leads').delete().gte('id', '00000000-0000-0000-0000-000000000000');
+
+    if (error) {
+      console.error('Error deleting all leads:', error);
+      alert('Ошибка удаления: ' + error.message);
+      return;
+    }
+
+    await loadLeads();
+  } catch (err: any) {
+    console.error('Error in deleteAllLeadsBtn:', err);
+    alert('Ошибка: ' + (err.message || 'Не удалось удалить заявки'));
+  }
+});
+
 document.getElementById('leadsSearch')?.addEventListener('input', () => {
   filterAndRenderLeads();
 });
@@ -552,28 +572,156 @@ document.getElementById('imageForm')?.addEventListener('submit', async (e) => {
   loadImages();
 });
 
+let isSourceMode = false;
+
+function openBlogEditor() {
+  const modal = document.getElementById('blogModal')!;
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  isSourceMode = false;
+  const visual = document.getElementById('blogContentVisual') as HTMLElement;
+  const source = document.getElementById('blogContent') as HTMLTextAreaElement;
+  const toggleBtn = document.getElementById('toggleSourceBtn');
+  visual.style.display = '';
+  source.style.display = 'none';
+  toggleBtn?.classList.remove('active');
+  updateImagePreview();
+}
+
+function closeBlogEditor() {
+  document.getElementById('blogModal')!.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function syncVisualToSource() {
+  const visual = document.getElementById('blogContentVisual') as HTMLElement;
+  const source = document.getElementById('blogContent') as HTMLTextAreaElement;
+  source.value = visual.innerHTML;
+}
+
+function syncSourceToVisual() {
+  const visual = document.getElementById('blogContentVisual') as HTMLElement;
+  const source = document.getElementById('blogContent') as HTMLTextAreaElement;
+  visual.innerHTML = source.value;
+}
+
+function updateImagePreview() {
+  const urlInput = document.getElementById('blogImageUrl') as HTMLInputElement;
+  const preview = document.getElementById('blogImagePreview') as HTMLElement;
+  if (!preview) return;
+  const url = urlInput?.value;
+  if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+    preview.innerHTML = `<img src="${escapeHtml(url)}" alt="Preview" onerror="this.parentElement.innerHTML=''">`;
+  } else {
+    preview.innerHTML = '';
+  }
+}
+
+document.getElementById('blogImageUrl')?.addEventListener('input', updateImagePreview);
+
+document.getElementById('toggleSourceBtn')?.addEventListener('click', () => {
+  const visual = document.getElementById('blogContentVisual') as HTMLElement;
+  const source = document.getElementById('blogContent') as HTMLTextAreaElement;
+  const toggleBtn = document.getElementById('toggleSourceBtn')!;
+
+  if (isSourceMode) {
+    syncSourceToVisual();
+    visual.style.display = '';
+    source.style.display = 'none';
+    toggleBtn.classList.remove('active');
+  } else {
+    syncVisualToSource();
+    source.style.display = '';
+    visual.style.display = 'none';
+    toggleBtn.classList.add('active');
+  }
+  isSourceMode = !isSourceMode;
+});
+
+document.querySelectorAll('.toolbar-btn[data-cmd]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const cmd = (btn as HTMLElement).dataset.cmd;
+    if (!cmd || cmd === 'toggleSource') return;
+
+    const visual = document.getElementById('blogContentVisual') as HTMLElement;
+    visual.focus();
+
+    switch (cmd) {
+      case 'bold': document.execCommand('bold'); break;
+      case 'italic': document.execCommand('italic'); break;
+      case 'underline': document.execCommand('underline'); break;
+      case 'h2': document.execCommand('formatBlock', false, 'h2'); break;
+      case 'h3': document.execCommand('formatBlock', false, 'h3'); break;
+      case 'p': document.execCommand('formatBlock', false, 'p'); break;
+      case 'ul': document.execCommand('insertUnorderedList'); break;
+      case 'ol': document.execCommand('insertOrderedList'); break;
+      case 'link': {
+        const url = prompt('URL ссылки:');
+        if (url) document.execCommand('createLink', false, url);
+        break;
+      }
+      case 'image': {
+        const url = prompt('URL картинки:');
+        if (url) document.execCommand('insertImage', false, url);
+        break;
+      }
+    }
+  });
+});
+
 document.getElementById('addBlogBtn')?.addEventListener('click', () => {
   editingBlogId = null;
-  document.getElementById('blogModalTitle')!.textContent = 'Добавить статью';
+  document.getElementById('blogModalTitle')!.textContent = 'Новая статья';
   (document.getElementById('blogForm') as HTMLFormElement).reset();
-  document.getElementById('blogModal')!.classList.add('active');
+  (document.getElementById('blogContentVisual') as HTMLElement).innerHTML = '';
+  (document.getElementById('blogAuthor') as HTMLInputElement).value = 'MakeTrades Team';
+  (document.getElementById('blogCategory') as HTMLInputElement).value = 'Trading';
+  (document.getElementById('blogTags') as HTMLInputElement).value = 'trading';
+  openBlogEditor();
+});
+
+document.getElementById('blogTitle')?.addEventListener('input', () => {
+  if (editingBlogId) return;
+  const title = (document.getElementById('blogTitle') as HTMLInputElement).value;
+  const slug = title.toLowerCase()
+    .replace(/[а-яё]/gi, c => {
+      const map: Record<string, string> = {а:'a',б:'b',в:'v',г:'g',д:'d',е:'e',ё:'yo',ж:'zh',з:'z',и:'i',й:'y',к:'k',л:'l',м:'m',н:'n',о:'o',п:'p',р:'r',с:'s',т:'t',у:'u',ф:'f',х:'kh',ц:'ts',ч:'ch',ш:'sh',щ:'shch',ъ:'',ы:'y',ь:'',э:'e',ю:'yu',я:'ya'};
+      return map[c.toLowerCase()] || c;
+    })
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+  (document.getElementById('blogSlug') as HTMLInputElement).value = slug;
 });
 
 document.getElementById('closeBlogModal')?.addEventListener('click', () => {
-  document.getElementById('blogModal')!.classList.remove('active');
+  closeBlogEditor();
 });
 
 document.getElementById('blogForm')?.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const title = (document.getElementById('blogTitle') as HTMLInputElement).value;
-  const slug = (document.getElementById('blogSlug') as HTMLInputElement).value;
+  if (!isSourceMode) syncVisualToSource();
+
+  const title = (document.getElementById('blogTitle') as HTMLInputElement).value.trim();
+  const slug = (document.getElementById('blogSlug') as HTMLInputElement).value.trim();
   const language = (document.getElementById('blogLanguage') as HTMLSelectElement).value;
-  const excerpt = (document.getElementById('blogExcerpt') as HTMLTextAreaElement).value;
-  const content = (document.getElementById('blogContent') as HTMLTextAreaElement).value;
+  const excerpt = (document.getElementById('blogExcerpt') as HTMLInputElement).value.trim();
+  const content = (document.getElementById('blogContent') as HTMLTextAreaElement).value.trim();
+
+  if (!title || !slug || !excerpt || !content) {
+    alert('Заполните все обязательные поля: заголовок, slug, описание и контент.');
+    return;
+  }
   const image_url = (document.getElementById('blogImageUrl') as HTMLInputElement).value;
   const published = (document.getElementById('blogPublished') as HTMLSelectElement).value === 'true';
   const publish_date = (document.getElementById('blogPublishDate') as HTMLInputElement).value;
+  const author = (document.getElementById('blogAuthor') as HTMLInputElement).value || 'MakeTrades Team';
+  const category = (document.getElementById('blogCategory') as HTMLInputElement).value || 'Trading';
+  const tagsStr = (document.getElementById('blogTags') as HTMLInputElement).value;
+  const tags = tagsStr ? tagsStr.split(',').map(t => t.trim()).filter(Boolean) : ['trading'];
+
+  const wordCount = content.replace(/<[^>]*>/g, ' ').split(/\s+/).filter(Boolean).length;
+  const reading_time = Math.max(1, Math.round(wordCount / 200));
 
   const data = {
     title,
@@ -584,40 +732,50 @@ document.getElementById('blogForm')?.addEventListener('submit', async (e) => {
     image_url,
     published,
     publish_date,
-    author: 'MakeTrades Team',
-    category: 'Trading',
-    tags: ['trading'],
-    reading_time: 5,
+    author,
+    category,
+    tags,
+    reading_time,
     meta_title: title,
     meta_description: excerpt,
     views: 0
   };
 
+  const saveBtn = document.querySelector('.blog-editor-save') as HTMLButtonElement;
+  const origText = saveBtn.textContent;
+  saveBtn.disabled = true;
+  saveBtn.textContent = 'Сохранение...';
+
   const sb = getSupabase();
 
-  if (editingBlogId) {
-    const { error } = await sb
-      .from('blog_posts')
-      .update({ ...data, updated_at: new Date().toISOString() })
-      .eq('id', editingBlogId);
+  try {
+    if (editingBlogId) {
+      const { error } = await sb
+        .from('blog_posts')
+        .update({ ...data, updated_at: new Date().toISOString() })
+        .eq('id', editingBlogId);
 
-    if (error) {
-      alert('Ошибка обновления: ' + error.message);
-      return;
-    }
-  } else {
-    const { error } = await sb
-      .from('blog_posts')
-      .insert([data]);
+      if (error) {
+        alert('Ошибка обновления: ' + error.message);
+        return;
+      }
+    } else {
+      const { error } = await sb
+        .from('blog_posts')
+        .insert([data]);
 
-    if (error) {
-      alert('Ошибка добавления: ' + error.message);
-      return;
+      if (error) {
+        alert('Ошибка добавления: ' + error.message);
+        return;
+      }
     }
+
+    closeBlogEditor();
+    loadBlogPosts();
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.textContent = origText;
   }
-
-  document.getElementById('blogModal')!.classList.remove('active');
-  loadBlogPosts();
 });
 
 (window as any).editTranslation = async (id: string) => {
@@ -705,13 +863,17 @@ document.getElementById('blogForm')?.addEventListener('submit', async (e) => {
     (document.getElementById('blogTitle') as HTMLInputElement).value = data.title;
     (document.getElementById('blogSlug') as HTMLInputElement).value = data.slug;
     (document.getElementById('blogLanguage') as HTMLSelectElement).value = data.language;
-    (document.getElementById('blogExcerpt') as HTMLTextAreaElement).value = data.excerpt;
+    (document.getElementById('blogExcerpt') as HTMLInputElement).value = data.excerpt;
     (document.getElementById('blogContent') as HTMLTextAreaElement).value = data.content;
+    (document.getElementById('blogContentVisual') as HTMLElement).innerHTML = data.content;
     (document.getElementById('blogImageUrl') as HTMLInputElement).value = data.image_url;
     (document.getElementById('blogPublished') as HTMLSelectElement).value = data.published.toString();
     (document.getElementById('blogPublishDate') as HTMLInputElement).value = data.publish_date.replace('Z', '').substring(0, 16);
+    (document.getElementById('blogAuthor') as HTMLInputElement).value = data.author || 'MakeTrades Team';
+    (document.getElementById('blogCategory') as HTMLInputElement).value = data.category || 'Trading';
+    (document.getElementById('blogTags') as HTMLInputElement).value = (data.tags || []).join(', ');
     document.getElementById('blogModalTitle')!.textContent = 'Изменить статью';
-    document.getElementById('blogModal')!.classList.add('active');
+    openBlogEditor();
   }
 };
 

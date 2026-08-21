@@ -108,7 +108,10 @@ function articleArchitecture(post) {
     canonical_target_slug: match.translation.primary,
     shared_image_seed: match.group.key,
     listing_order: groupOrderByKey.get(match.group.key) ?? Number.MAX_SAFE_INTEGER,
-    alternates: LANGUAGES.map(alternateLanguage => ({
+    // Группа может быть заведена не на всех языках — такие языки пропускаем.
+    alternates: LANGUAGES.filter(
+      alternateLanguage => match.group.translations[alternateLanguage]?.primary
+    ).map(alternateLanguage => ({
       language: alternateLanguage,
       slug: match.group.translations[alternateLanguage].primary,
       legacy_slug: match.group.translations[alternateLanguage].primary,
@@ -786,7 +789,9 @@ function replaceJsonLdById(html, id, data) {
 }
 
 function replaceAlternateLinks(html, linksHtml) {
-  const re = /    <link rel="alternate" hreflang="ru"[\s\S]*?    <link rel="alternate" hreflang="x-default"[^>]*\/>\s*/i;
+  // Отступ и способ закрытия тега (> или />) зависят от того, чем форматировали
+  // разметку, поэтому на них не завязываемся.
+  const re = /[ 	]*<link rel="alternate" hreflang="ru"[\s\S]*?<link rel="alternate" hreflang="x-default"[^>]*>\s*/i;
   return html.replace(re, linksHtml);
 }
 

@@ -106,7 +106,11 @@ export function getBlogArticleState(identity: BlogArticleIdentity): BlogArticleS
     };
   }
 
-  const alternates = BLOG_GROUP_LANGUAGES.map(alternateLanguage => ({
+  // Группа может быть заведена не на всех языках (например, статья только на ru),
+  // поэтому языки без перевода просто пропускаем.
+  const alternates = BLOG_GROUP_LANGUAGES.filter(
+    alternateLanguage => match.group.translations[alternateLanguage]?.primary
+  ).map(alternateLanguage => ({
     language: alternateLanguage,
     slug: match.group.translations[alternateLanguage].primary,
   }));

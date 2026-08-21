@@ -16,8 +16,11 @@ const manifestEntries = await Promise.all(
     const absolutePath = join(PUBLIC_DIR, 'assets', 'blog', `${seed}.webp`);
     const metadata = await sharp(absolutePath).metadata().catch(() => null);
 
+    // Своя обложка есть не у каждой группы. Для остальных seo-build подставит
+    // image_url из базы (см. postImageAttributes), поэтому просто пропускаем.
     if (!metadata?.width || !metadata?.height) {
-      throw new Error(`Missing or unreadable blog image: ${absolutePath}`);
+      console.warn(`[blog-images] Нет обложки для "${seed}" — будет использован image_url из базы.`);
+      return null;
     }
 
     return [
@@ -31,10 +34,15 @@ const manifestEntries = await Promise.all(
   })
 );
 
+const resolvedEntries = manifestEntries.filter(Boolean);
+
 await writeFile(
   generatedManifestPath,
-  `${JSON.stringify(Object.fromEntries(manifestEntries), null, 2)}\n`,
+  `${JSON.stringify(Object.fromEntries(resolvedEntries), null, 2)}\n`,
   'utf8'
 );
 
-console.log(`[blog-images] Synced manifest for ${manifestEntries.length} webp blog covers.`);
+console.log(
+  `[blog-images] Synced manifest for ${resolvedEntries.length} webp blog covers` +
+  ` (пропущено без обложки: ${manifestEntries.length - resolvedEntries.length}).`
+);
