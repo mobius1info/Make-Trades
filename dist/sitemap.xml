@@ -145,6 +145,33 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/upravlenie-riskami-a-book-b-book/" />
   </url>
   <url>
+    <loc>https://maketrades.info/blog/en/hiring-team-new-forex-broker/</loc>
+    <lastmod>2026-02-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/podbor-komandy-dlya-brokera/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/hiring-team-new-forex-broker/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/podbor-komandy-dlya-brokera/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/blog/en/technical-infrastructure-forex-broker/</loc>
+    <lastmod>2026-02-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/tekhnicheskaya-infrastruktura-brokera/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/technical-infrastructure-forex-broker/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/tekhnicheskaya-infrastruktura-brokera/" />
+  </url>
+  <url>
+    <loc>https://maketrades.info/blog/en/payment-systems-forex-broker-guide/</loc>
+    <lastmod>2026-02-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/platezhnye-sistemy-dlya-brokera/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/payment-systems-forex-broker-guide/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/platezhnye-sistemy-dlya-brokera/" />
+  </url>
+  <url>
     <loc>https://maketrades.info/blog/en/forex-broker-operating-costs-budget/</loc>
     <lastmod>2026-02-08</lastmod>
     <changefreq>monthly</changefreq>
@@ -163,31 +190,31 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/marketing-dlya-startuyushchego-brokera/" />
   </url>
   <url>
-    <loc>https://maketrades.info/blog/en/payment-systems-forex-broker-guide/</loc>
+    <loc>https://maketrades.info/blog/en/choosing-trading-platform-provider-guide/</loc>
     <lastmod>2026-02-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/platezhnye-sistemy-dlya-brokera/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/payment-systems-forex-broker-guide/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/platezhnye-sistemy-dlya-brokera/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/vybor-postavshchika-torgovoj-platformy/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/choosing-trading-platform-provider-guide/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/vybor-postavshchika-torgovoj-platformy/" />
   </url>
   <url>
-    <loc>https://maketrades.info/blog/en/technical-infrastructure-forex-broker/</loc>
+    <loc>https://maketrades.info/blog/en/lead-management-forex-brokerage/</loc>
     <lastmod>2026-02-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/tekhnicheskaya-infrastruktura-brokera/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/technical-infrastructure-forex-broker/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/tekhnicheskaya-infrastruktura-brokera/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/upravlenie-lidami-v-brokerskom-biznese/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/lead-management-forex-brokerage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/upravlenie-lidami-v-brokerskom-biznese/" />
   </url>
   <url>
-    <loc>https://maketrades.info/blog/en/hiring-team-new-forex-broker/</loc>
+    <loc>https://maketrades.info/blog/en/broker-crm-analytics-conversion/</loc>
     <lastmod>2026-02-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/podbor-komandy-dlya-brokera/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/hiring-team-new-forex-broker/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/podbor-komandy-dlya-brokera/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/crm-analitika-konversiya-brokera/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/broker-crm-analytics-conversion/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/crm-analitika-konversiya-brokera/" />
   </url>
   <url>
     <loc>https://maketrades.info/blog/en/scaling-rented-trading-platform/</loc>
@@ -206,33 +233,6 @@
     <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/biznes-plan-brokerskoj-kompanii/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/brokerage-business-plan-guide/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/biznes-plan-brokerskoj-kompanii/" />
-  </url>
-  <url>
-    <loc>https://maketrades.info/blog/en/broker-crm-analytics-conversion/</loc>
-    <lastmod>2026-02-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/crm-analitika-konversiya-brokera/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/broker-crm-analytics-conversion/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/crm-analitika-konversiya-brokera/" />
-  </url>
-  <url>
-    <loc>https://maketrades.info/blog/en/choosing-trading-platform-provider-guide/</loc>
-    <lastmod>2026-02-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/vybor-postavshchika-torgovoj-platformy/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/choosing-trading-platform-provider-guide/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/vybor-postavshchika-torgovoj-platformy/" />
-  </url>
-  <url>
-    <loc>https://maketrades.info/blog/en/lead-management-forex-brokerage/</loc>
-    <lastmod>2026-02-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://maketrades.info/blog/ru/upravlenie-lidami-v-brokerskom-biznese/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://maketrades.info/blog/en/lead-management-forex-brokerage/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://maketrades.info/blog/ru/upravlenie-lidami-v-brokerskom-biznese/" />
   </url>
   <url>
     <loc>https://maketrades.info/blog/en/crm-metatrader-integration-guide/</loc>

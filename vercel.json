@@ -1,0 +1,1398 @@
+{
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/blog/ru/post-2-ru",
+      "destination": "/blog/ru/kak-vybrat-nadezhnogo-brokera-v-2026/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-2-ru/",
+      "destination": "/blog/ru/kak-vybrat-nadezhnogo-brokera-v-2026/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-8-ru",
+      "destination": "/blog/ru/psihologiya-treydinga-kak-kontrolirovat-emotsii/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-8-ru/",
+      "destination": "/blog/ru/psihologiya-treydinga-kak-kontrolirovat-emotsii/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-1-en",
+      "destination": "/blog/en/top-10-trading-strategies-for-beginners/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-1-en/",
+      "destination": "/blog/en/top-10-trading-strategies-for-beginners/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-2-en",
+      "destination": "/blog/en/how-to-choose-a-reliable-broker-in-2024/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-2-en/",
+      "destination": "/blog/en/how-to-choose-a-reliable-broker-in-2024/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-3-ru",
+      "destination": "/blog/ru/tehnicheskiy-analiz-polnoe-rukovodstvo/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-3-ru/",
+      "destination": "/blog/ru/tehnicheskiy-analiz-polnoe-rukovodstvo/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-3-en",
+      "destination": "/blog/en/technical-analysis-complete-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-3-en/",
+      "destination": "/blog/en/technical-analysis-complete-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-4-en",
+      "destination": "/blog/en/risk-management-in-trading/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-4-en/",
+      "destination": "/blog/en/risk-management-in-trading/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-4-ru",
+      "destination": "/blog/ru/upravlenie-riskami-v-treydinge/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-4-ru/",
+      "destination": "/blog/ru/upravlenie-riskami-v-treydinge/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-5-en",
+      "destination": "/blog/en/cryptocurrency-trading-for-beginners/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-5-en/",
+      "destination": "/blog/en/cryptocurrency-trading-for-beginners/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-5-ru",
+      "destination": "/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-5-ru/",
+      "destination": "/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-6-en",
+      "destination": "/blog/en/forex-basics-of-currency-markets/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-6-en/",
+      "destination": "/blog/en/forex-basics-of-currency-markets/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-6-ru",
+      "destination": "/blog/ru/foreks-osnovy-valyutnogo-rynka/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-6-ru/",
+      "destination": "/blog/ru/foreks-osnovy-valyutnogo-rynka/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-7-en",
+      "destination": "/blog/en/trading-bots-strategy-automation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-7-en/",
+      "destination": "/blog/en/trading-bots-strategy-automation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-7-ru",
+      "destination": "/blog/ru/torgovye-boty-avtomatizatsiya-strategiy/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-7-ru/",
+      "destination": "/blog/ru/torgovye-boty-avtomatizatsiya-strategiy/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-8-en",
+      "destination": "/blog/en/trading-psychology-controlling-emotions/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-8-en/",
+      "destination": "/blog/en/trading-psychology-controlling-emotions/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-9-en",
+      "destination": "/blog/en/technical-analysis-indicators/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-9-en/",
+      "destination": "/blog/en/technical-analysis-indicators/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-9-ru",
+      "destination": "/blog/ru/indikatory-tehnicheskogo-analiza/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-9-ru/",
+      "destination": "/blog/ru/indikatory-tehnicheskogo-analiza/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-10-ru",
+      "destination": "/blog/ru/svechnoy-analiz-yaponskie-svechi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-10-ru/",
+      "destination": "/blog/ru/svechnoy-analiz-yaponskie-svechi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-10-en",
+      "destination": "/blog/en/candlestick-analysis-japanese-candles/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-10-en/",
+      "destination": "/blog/en/candlestick-analysis-japanese-candles/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-1-ru",
+      "destination": "/blog/ru/top-10-torgovyh-strategiy-dlya-nachinayushchih/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-1-ru/",
+      "destination": "/blog/ru/top-10-torgovyh-strategiy-dlya-nachinayushchih/",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ru/",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "lang",
+          "value": "ru"
+        }
+      ]
+    },
+    {
+      "source": "/",
+      "destination": "/en/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "lang",
+          "value": "en"
+        }
+      ]
+    },
+    {
+      "source": "/index.html",
+      "destination": "/en/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "lang",
+          "value": "en"
+        }
+      ]
+    },
+    {
+      "source": "/en",
+      "destination": "/en/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/forex-broker-gruenden-anleitung-2025",
+      "destination": "/blog/en/how-to-start-forex-brokerage-2025/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/forex-broker-gruenden-anleitung-2025/",
+      "destination": "/blog/en/how-to-start-forex-brokerage-2025/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/yak-stvoryty-foreks-brokera-z-nulya",
+      "destination": "/blog/ru/kak-otkryt-forex-brokera-s-nulya-2025/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/yak-stvoryty-foreks-brokera-z-nulya/",
+      "destination": "/blog/ru/kak-otkryt-forex-brokera-s-nulya-2025/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/yak-vidkryty-forex-brokera-z-nulya-instruktsiya",
+      "destination": "/blog/ru/kak-otkryt-forex-brokera-s-nulya-2025/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/yak-vidkryty-forex-brokera-z-nulya-instruktsiya/",
+      "destination": "/blog/ru/kak-otkryt-forex-brokera-s-nulya-2025/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/cong-ling-chuangjian-waihui-jingjishang",
+      "destination": "/blog/en/how-to-start-forex-brokerage-2025/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/cong-ling-chuangjian-waihui-jingjishang/",
+      "destination": "/blog/en/how-to-start-forex-brokerage-2025/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/cong-ling-kaishi-chuangjian-waihui-jingjishang",
+      "destination": "/blog/en/how-to-start-forex-brokerage-2025/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/cong-ling-kaishi-chuangjian-waihui-jingjishang/",
+      "destination": "/blog/en/how-to-start-forex-brokerage-2025/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/forex-lizenzierung-jurisdiktionen-de",
+      "destination": "/blog/en/forex-licensing-guide-jurisdictions/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/forex-lizenzierung-jurisdiktionen-de/",
+      "destination": "/blog/en/forex-licensing-guide-jurisdictions/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/brokerlizenzierung-leitfaden-de",
+      "destination": "/blog/en/forex-licensing-guide-jurisdictions/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/brokerlizenzierung-leitfaden-de/",
+      "destination": "/blog/en/forex-licensing-guide-jurisdictions/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/forex-regulierung-weltweit-de",
+      "destination": "/blog/en/forex-licensing-guide-jurisdictions/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/forex-regulierung-weltweit-de/",
+      "destination": "/blog/en/forex-licensing-guide-jurisdictions/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/licenzuvannya-foreks-brokera-krayiny-ta-vymogy",
+      "destination": "/blog/ru/litsenzirovanie-forex-deyatelnosti/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/licenzuvannya-foreks-brokera-krayiny-ta-vymogy/",
+      "destination": "/blog/ru/litsenzirovanie-forex-deyatelnosti/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/litsenziuvannya-forex-diyalnosti-oglyad",
+      "destination": "/blog/ru/litsenzirovanie-forex-deyatelnosti/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/litsenziuvannya-forex-diyalnosti-oglyad/",
+      "destination": "/blog/ru/litsenzirovanie-forex-deyatelnosti/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/regulyaciya-foreks-rynku-svitovi-standarty",
+      "destination": "/blog/ru/litsenzirovanie-forex-deyatelnosti/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/regulyaciya-foreks-rynku-svitovi-standarty/",
+      "destination": "/blog/ru/litsenzirovanie-forex-deyatelnosti/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/jingjishang-paizhao-guojia-yaoqiu",
+      "destination": "/blog/en/forex-licensing-guide-jurisdictions/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/jingjishang-paizhao-guojia-yaoqiu/",
+      "destination": "/blog/en/forex-licensing-guide-jurisdictions/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/waihui-jingying-xukezheng-guanxiaqu-duibi",
+      "destination": "/blog/en/forex-licensing-guide-jurisdictions/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/waihui-jingying-xukezheng-guanxiaqu-duibi/",
+      "destination": "/blog/en/forex-licensing-guide-jurisdictions/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/waihui-shichang-jianguan-quanqiu-biaozhun",
+      "destination": "/blog/en/forex-licensing-guide-jurisdictions/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/waihui-shichang-jianguan-quanqiu-biaozhun/",
+      "destination": "/blog/en/forex-licensing-guide-jurisdictions/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/geschaeftsplan-brokerage-de",
+      "destination": "/blog/en/brokerage-business-plan-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/geschaeftsplan-brokerage-de/",
+      "destination": "/blog/en/brokerage-business-plan-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/biznes-plan-foreks-brokera-shablon",
+      "destination": "/blog/ru/biznes-plan-brokerskoj-kompanii/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/biznes-plan-foreks-brokera-shablon/",
+      "destination": "/blog/ru/biznes-plan-brokerskoj-kompanii/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/jingjishang-shangye-jihua-moban",
+      "destination": "/blog/en/brokerage-business-plan-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/jingjishang-shangye-jihua-moban/",
+      "destination": "/blog/en/brokerage-business-plan-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/betriebskosten-forex-broker-de",
+      "destination": "/blog/en/forex-broker-operating-costs-budget/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/betriebskosten-forex-broker-de/",
+      "destination": "/blog/en/forex-broker-operating-costs-budget/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/vartist-zapusku-forex-brokera-2025",
+      "destination": "/blog/ru/operatsionnye-raskhody-forex-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/vartist-zapusku-forex-brokera-2025/",
+      "destination": "/blog/ru/operatsionnye-raskhody-forex-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/vartist-orendy-torgovoyi-platformy",
+      "destination": "/blog/ru/operatsionnye-raskhody-forex-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/vartist-orendy-torgovoyi-platformy/",
+      "destination": "/blog/ru/operatsionnye-raskhody-forex-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/2025-nian-qidong-waihui-jingjishang-chengben",
+      "destination": "/blog/en/forex-broker-operating-costs-budget/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/2025-nian-qidong-waihui-jingjishang-chengben/",
+      "destination": "/blog/en/forex-broker-operating-costs-budget/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/zulin-pingtai-chengben-fenxi",
+      "destination": "/blog/en/forex-broker-operating-costs-budget/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/zulin-pingtai-chengben-fenxi/",
+      "destination": "/blog/en/forex-broker-operating-costs-budget/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/technische-infrastruktur-broker-de",
+      "destination": "/blog/en/technical-infrastructure-forex-broker/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/technische-infrastruktur-broker-de/",
+      "destination": "/blog/en/technical-infrastructure-forex-broker/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/tekhnologichna-infrastruktura-brokera",
+      "destination": "/blog/ru/tekhnicheskaya-infrastruktura-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/tekhnologichna-infrastruktura-brokera/",
+      "destination": "/blog/ru/tekhnicheskaya-infrastruktura-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/jishu-jichu-sheshi-jingjishang",
+      "destination": "/blog/en/technical-infrastructure-forex-broker/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/jishu-jichu-sheshi-jingjishang/",
+      "destination": "/blog/en/technical-infrastructure-forex-broker/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/zahlungssysteme-forex-broker-de",
+      "destination": "/blog/en/payment-systems-forex-broker-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/zahlungssysteme-forex-broker-de/",
+      "destination": "/blog/en/payment-systems-forex-broker-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/krypto-zahlungsabwicklung-broker-de",
+      "destination": "/blog/en/payment-systems-forex-broker-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/krypto-zahlungsabwicklung-broker-de/",
+      "destination": "/blog/en/payment-systems-forex-broker-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/platizni-shlyuzy-v-orendovanij-platformi",
+      "destination": "/blog/ru/platezhnye-sistemy-dlya-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/platizni-shlyuzy-v-orendovanij-platformi/",
+      "destination": "/blog/ru/platezhnye-sistemy-dlya-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/zhifu-wangguan-jiaoyi-pingtai-zhenghe",
+      "destination": "/blog/en/payment-systems-forex-broker-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/zhifu-wangguan-jiaoyi-pingtai-zhenghe/",
+      "destination": "/blog/en/payment-systems-forex-broker-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/a-book-vs-b-book-risikomanagement-de",
+      "destination": "/blog/en/risk-management-a-book-vs-b-book/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/a-book-vs-b-book-risikomanagement-de/",
+      "destination": "/blog/en/risk-management-a-book-vs-b-book/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/upravlinnya-ryzykamy-brokera-osnovy",
+      "destination": "/blog/ru/upravlenie-riskami-a-book-b-book/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/upravlinnya-ryzykamy-brokera-osnovy/",
+      "destination": "/blog/ru/upravlenie-riskami-a-book-b-book/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/fengxian-guanli-jingjishang-jichu",
+      "destination": "/blog/en/risk-management-a-book-vs-b-book/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/fengxian-guanli-jingjishang-jichu/",
+      "destination": "/blog/en/risk-management-a-book-vs-b-book/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/schluesselfertige-forex-plattform-mieten",
+      "destination": "/blog/en/turnkey-forex-platform-rental-overview/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/schluesselfertige-forex-plattform-mieten/",
+      "destination": "/blog/en/turnkey-forex-platform-rental-overview/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/fertiges-brokergeschaeft-starten-de",
+      "destination": "/blog/en/turnkey-forex-platform-rental-overview/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/fertiges-brokergeschaeft-starten-de/",
+      "destination": "/blog/en/turnkey-forex-platform-rental-overview/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/orenda-forex-platformy-pid-klyuch-gid",
+      "destination": "/blog/ru/arenda-forex-platformy-pod-klyuch/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/orenda-forex-platformy-pid-klyuch-gid/",
+      "destination": "/blog/ru/arenda-forex-platformy-pod-klyuch/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/orenda-torgovoyi-platformy-perevagu-dlya-brokera",
+      "destination": "/blog/ru/arenda-forex-platformy-pod-klyuch/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/orenda-torgovoyi-platformy-perevagu-dlya-brokera/",
+      "destination": "/blog/ru/arenda-forex-platformy-pod-klyuch/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/jiaoyanshi-waihui-pingtai-zulin-zhinan",
+      "destination": "/blog/en/turnkey-forex-platform-rental-overview/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/jiaoyanshi-waihui-pingtai-zulin-zhinan/",
+      "destination": "/blog/en/turnkey-forex-platform-rental-overview/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/zulin-jiaoyi-pingtai-youshi",
+      "destination": "/blog/en/turnkey-forex-platform-rental-overview/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/zulin-jiaoyi-pingtai-youshi/",
+      "destination": "/blog/en/turnkey-forex-platform-rental-overview/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/white-label-vs-eigenentwicklung",
+      "destination": "/blog/en/white-label-vs-custom-development/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/white-label-vs-eigenentwicklung/",
+      "destination": "/blog/en/white-label-vs-custom-development/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/white-label-proty-vlasnoi-rozrobky",
+      "destination": "/blog/ru/white-label-vs-sobstvennaya-razrabotka/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/white-label-proty-vlasnoi-rozrobky/",
+      "destination": "/blog/ru/white-label-vs-sobstvennaya-razrabotka/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/white-label-yu-zizhu-kaifa-xuanze",
+      "destination": "/blog/en/white-label-vs-custom-development/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/white-label-yu-zizhu-kaifa-xuanze/",
+      "destination": "/blog/en/white-label-vs-custom-development/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/plattformanbieter-auswaehlen-de",
+      "destination": "/blog/en/choosing-trading-platform-provider-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/plattformanbieter-auswaehlen-de/",
+      "destination": "/blog/en/choosing-trading-platform-provider-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/handelsplattform-fuer-broker-waehlen-de",
+      "destination": "/blog/en/choosing-trading-platform-provider-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/handelsplattform-fuer-broker-waehlen-de/",
+      "destination": "/blog/en/choosing-trading-platform-provider-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/yak-obrati-postachalnyka-torgovoyi-platformy",
+      "destination": "/blog/ru/vybor-postavshchika-torgovoj-platformy/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/yak-obrati-postachalnyka-torgovoyi-platformy/",
+      "destination": "/blog/ru/vybor-postavshchika-torgovoj-platformy/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/xuanze-pingtai-gongyingshang-qingdan",
+      "destination": "/blog/en/choosing-trading-platform-provider-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/xuanze-pingtai-gongyingshang-qingdan/",
+      "destination": "/blog/en/choosing-trading-platform-provider-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/plattform-updates-support-de",
+      "destination": "/blog/en/scaling-rented-trading-platform/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/plattform-updates-support-de/",
+      "destination": "/blog/en/scaling-rented-trading-platform/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/masshtabuvannya-orendovanoyi-platformy",
+      "destination": "/blog/ru/masshtabirovanie-arendovannoj-platformy/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/masshtabuvannya-orendovanoyi-platformy/",
+      "destination": "/blog/ru/masshtabirovanie-arendovannoj-platformy/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/tekhnichna-pidtrymka-orendovanoyi-platformy",
+      "destination": "/blog/ru/masshtabirovanie-arendovannoj-platformy/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/tekhnichna-pidtrymka-orendovanoyi-platformy/",
+      "destination": "/blog/ru/masshtabirovanie-arendovannoj-platformy/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/kastomizaciya-orendovanoyi-platformy",
+      "destination": "/blog/ru/masshtabirovanie-arendovannoj-platformy/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/kastomizaciya-orendovanoyi-platformy/",
+      "destination": "/blog/ru/masshtabirovanie-arendovannoj-platformy/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/pingtai-kuozhan-cong-chuangye-dao-daxing",
+      "destination": "/blog/en/scaling-rented-trading-platform/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/pingtai-kuozhan-cong-chuangye-dao-daxing/",
+      "destination": "/blog/en/scaling-rented-trading-platform/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/jishu-zhichi-pingtai-zulin",
+      "destination": "/blog/en/scaling-rented-trading-platform/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/jishu-zhichi-pingtai-zulin/",
+      "destination": "/blog/en/scaling-rented-trading-platform/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/pingtai-dingzhi-gongneng-yu-xianzhi",
+      "destination": "/blog/en/scaling-rented-trading-platform/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/pingtai-dingzhi-gongneng-yu-xianzhi/",
+      "destination": "/blog/en/scaling-rented-trading-platform/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/crm-fuer-forex-broker-ueberblick",
+      "destination": "/blog/en/crm-for-forex-brokers-complete-overview/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/crm-fuer-forex-broker-ueberblick/",
+      "destination": "/blog/en/crm-for-forex-brokers-complete-overview/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/crm-automatisierung-technologie-de",
+      "destination": "/blog/en/crm-for-forex-brokers-complete-overview/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/crm-automatisierung-technologie-de/",
+      "destination": "/blog/en/crm-for-forex-brokers-complete-overview/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/crm-systema-dlya-foreks-brokera-povnyj-oglyad",
+      "destination": "/blog/ru/crm-dlya-forex-brokera-polnyj-obzor/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/crm-systema-dlya-foreks-brokera-povnyj-oglyad/",
+      "destination": "/blog/ru/crm-dlya-forex-brokera-polnyj-obzor/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/crm-dlya-brokera-vybir-ta-vprovadzhennya",
+      "destination": "/blog/ru/crm-dlya-forex-brokera-polnyj-obzor/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/crm-dlya-brokera-vybir-ta-vprovadzhennya/",
+      "destination": "/blog/ru/crm-dlya-forex-brokera-polnyj-obzor/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/waihuijingjishang-crm-xitong-quanmian-jiexi",
+      "destination": "/blog/en/crm-for-forex-brokers-complete-overview/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/waihuijingjishang-crm-xitong-quanmian-jiexi/",
+      "destination": "/blog/en/crm-for-forex-brokers-complete-overview/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/waihui-jingjishang-crm-xitong-zhinan",
+      "destination": "/blog/en/crm-for-forex-brokers-complete-overview/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/waihui-jingjishang-crm-xitong-zhinan/",
+      "destination": "/blog/en/crm-for-forex-brokers-complete-overview/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/crm-xuanze-yu-bushu-zhinan",
+      "destination": "/blog/en/crm-for-forex-brokers-complete-overview/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/crm-xuanze-yu-bushu-zhinan/",
+      "destination": "/blog/en/crm-for-forex-brokers-complete-overview/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/kyc-aml-compliance-durch-crm",
+      "destination": "/blog/en/kyc-aml-compliance-through-crm/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/kyc-aml-compliance-durch-crm/",
+      "destination": "/blog/en/kyc-aml-compliance-through-crm/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/kyc-aml-komplayens-cherez-crm-posibnik",
+      "destination": "/blog/ru/compliance-kyc-aml-cherez-crm/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/kyc-aml-komplayens-cherez-crm-posibnik/",
+      "destination": "/blog/ru/compliance-kyc-aml-cherez-crm/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/kyc-aml-dlya-brokera-vprovadzhennya",
+      "destination": "/blog/ru/compliance-kyc-aml-cherez-crm/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/kyc-aml-dlya-brokera-vprovadzhennya/",
+      "destination": "/blog/ru/compliance-kyc-aml-cherez-crm/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/kyc-aml-heguixing-crm-shijian-zhinan",
+      "destination": "/blog/en/kyc-aml-compliance-through-crm/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/kyc-aml-heguixing-crm-shijian-zhinan/",
+      "destination": "/blog/en/kyc-aml-compliance-through-crm/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/kyc-aml-jingjishang-shishi",
+      "destination": "/blog/en/kyc-aml-compliance-through-crm/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/kyc-aml-jingjishang-shishi/",
+      "destination": "/blog/en/kyc-aml-compliance-through-crm/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/crm-metatrader-integration-de",
+      "destination": "/blog/en/crm-metatrader-integration-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/crm-metatrader-integration-de/",
+      "destination": "/blog/en/crm-metatrader-integration-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/integraciya-crm-z-torgovoyu-platformoyu",
+      "destination": "/blog/ru/integratsiya-crm-s-metatrader/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/integraciya-crm-z-torgovoyu-platformoyu/",
+      "destination": "/blog/ru/integratsiya-crm-s-metatrader/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/crm-yu-jiaoyi-pingtai-zhenghe",
+      "destination": "/blog/en/crm-metatrader-integration-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/crm-yu-jiaoyi-pingtai-zhenghe/",
+      "destination": "/blog/en/crm-metatrader-integration-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/lead-management-forex-broker-de",
+      "destination": "/blog/en/lead-management-forex-brokerage/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/lead-management-forex-broker-de/",
+      "destination": "/blog/en/lead-management-forex-brokerage/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/kundenbasis-automatisierung-broker-de",
+      "destination": "/blog/en/lead-management-forex-brokerage/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/kundenbasis-automatisierung-broker-de/",
+      "destination": "/blog/en/lead-management-forex-brokerage/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/upravlinnya-lidamy-v-crm-brokera",
+      "destination": "/blog/ru/upravlenie-lidami-v-brokerskom-biznese/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/upravlinnya-lidamy-v-crm-brokera/",
+      "destination": "/blog/ru/upravlenie-lidami-v-brokerskom-biznese/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/qianzai-kehu-guanli-crm-celue",
+      "destination": "/blog/en/lead-management-forex-brokerage/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/qianzai-kehu-guanli-crm-celue/",
+      "destination": "/blog/en/lead-management-forex-brokerage/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/crm-analytik-konversion-broker-de",
+      "destination": "/blog/en/broker-crm-analytics-conversion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/crm-analytik-konversion-broker-de/",
+      "destination": "/blog/en/broker-crm-analytics-conversion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/crm-roi-brokergeschaeft-de",
+      "destination": "/blog/en/broker-crm-analytics-conversion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/crm-roi-brokergeschaeft-de/",
+      "destination": "/blog/en/broker-crm-analytics-conversion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/multikanal-kommunikation-broker-crm-de",
+      "destination": "/blog/en/broker-crm-analytics-conversion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/multikanal-kommunikation-broker-crm-de/",
+      "destination": "/blog/en/broker-crm-analytics-conversion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/sichere-crm-migration-de",
+      "destination": "/blog/en/broker-crm-analytics-conversion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/sichere-crm-migration-de/",
+      "destination": "/blog/en/broker-crm-analytics-conversion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/analityka-prodazhiv-u-crm-brokera",
+      "destination": "/blog/ru/crm-analitika-konversiya-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/analityka-prodazhiv-u-crm-brokera/",
+      "destination": "/blog/ru/crm-analitika-konversiya-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/avtomatyzaciya-marketyngu-cherez-crm",
+      "destination": "/blog/ru/crm-analitika-konversiya-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/avtomatyzaciya-marketyngu-cherez-crm/",
+      "destination": "/blog/ru/crm-analitika-konversiya-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/crm-ta-utrymannya-kliyentiv-brokera",
+      "destination": "/blog/ru/crm-analitika-konversiya-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/crm-ta-utrymannya-kliyentiv-brokera/",
+      "destination": "/blog/ru/crm-analitika-konversiya-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/bezpeka-danyh-u-crm-brokera",
+      "destination": "/blog/ru/crm-analitika-konversiya-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/bezpeka-danyh-u-crm-brokera/",
+      "destination": "/blog/ru/crm-analitika-konversiya-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/xiaoshou-fenxi-crm-guanjian-zhibiao",
+      "destination": "/blog/en/broker-crm-analytics-conversion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/xiaoshou-fenxi-crm-guanjian-zhibiao/",
+      "destination": "/blog/en/broker-crm-analytics-conversion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/yingxiao-zidonghua-crm-gongju",
+      "destination": "/blog/en/broker-crm-analytics-conversion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/yingxiao-zidonghua-crm-gongju/",
+      "destination": "/blog/en/broker-crm-analytics-conversion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/crm-kehu-liucun-celue",
+      "destination": "/blog/en/broker-crm-analytics-conversion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/crm-kehu-liucun-celue/",
+      "destination": "/blog/en/broker-crm-analytics-conversion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/crm-shuju-anquan-biaozhun",
+      "destination": "/blog/en/broker-crm-analytics-conversion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/crm-shuju-anquan-biaozhun/",
+      "destination": "/blog/en/broker-crm-analytics-conversion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/marketingstrategie-neuer-broker-de",
+      "destination": "/blog/en/marketing-strategy-new-forex-broker/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/marketingstrategie-neuer-broker-de/",
+      "destination": "/blog/en/marketing-strategy-new-forex-broker/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/broker-marketing-kundenakquise-de",
+      "destination": "/blog/en/marketing-strategy-new-forex-broker/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/broker-marketing-kundenakquise-de/",
+      "destination": "/blog/en/marketing-strategy-new-forex-broker/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/marketyngova-strategiya-novogo-brokera",
+      "destination": "/blog/ru/marketing-dlya-startuyushchego-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/marketyngova-strategiya-novogo-brokera/",
+      "destination": "/blog/ru/marketing-dlya-startuyushchego-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/shuzi-yingxiao-waihui-jingjishang",
+      "destination": "/blog/en/marketing-strategy-new-forex-broker/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/shuzi-yingxiao-waihui-jingjishang/",
+      "destination": "/blog/en/marketing-strategy-new-forex-broker/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/team-aufbau-forex-broker-de",
+      "destination": "/blog/en/hiring-team-new-forex-broker/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/team-aufbau-forex-broker-de/",
+      "destination": "/blog/en/hiring-team-new-forex-broker/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/komand-brokerskoyi-kompaniyi-kogo-naymaty",
+      "destination": "/blog/ru/podbor-komandy-dlya-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/komand-brokerskoyi-kompaniyi-kogo-naymaty/",
+      "destination": "/blog/ru/podbor-komandy-dlya-brokera/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/jingjishang-tuandui-zhaopian-youxianji",
+      "destination": "/blog/en/hiring-team-new-forex-broker/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/jingjishang-tuandui-zhaopian-youxianji/",
+      "destination": "/blog/en/hiring-team-new-forex-broker/",
+      "statusCode": 301
+    },
+    {
+      "source": "/de",
+      "destination": "/en/",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/",
+      "destination": "/en/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de",
+      "destination": "/blog/en/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/de/",
+      "destination": "/blog/en/",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/de",
+      "destination": "/faq/en/",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/de/",
+      "destination": "/faq/en/",
+      "statusCode": 301
+    },
+    {
+      "source": "/",
+      "destination": "/en/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "lang",
+          "value": "de"
+        }
+      ]
+    },
+    {
+      "source": "/index.html",
+      "destination": "/en/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "lang",
+          "value": "de"
+        }
+      ]
+    },
+    {
+      "source": "/blog.html",
+      "destination": "/blog/en/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "lang",
+          "value": "de"
+        }
+      ]
+    },
+    {
+      "source": "/faq.html",
+      "destination": "/faq/en/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "lang",
+          "value": "de"
+        }
+      ]
+    },
+    {
+      "source": "/uk",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/uk/",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk",
+      "destination": "/blog/ru/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/",
+      "destination": "/blog/ru/",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/uk",
+      "destination": "/faq/ru/",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/uk/",
+      "destination": "/faq/ru/",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "lang",
+          "value": "uk"
+        }
+      ]
+    },
+    {
+      "source": "/blog.html",
+      "destination": "/blog/ru/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "lang",
+          "value": "uk"
+        }
+      ]
+    },
+    {
+      "source": "/faq.html",
+      "destination": "/faq/ru/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "lang",
+          "value": "uk"
+        }
+      ]
+    },
+    {
+      "source": "/zh",
+      "destination": "/en/",
+      "statusCode": 301
+    },
+    {
+      "source": "/zh/",
+      "destination": "/en/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh",
+      "destination": "/blog/en/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/",
+      "destination": "/blog/en/",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/zh",
+      "destination": "/faq/en/",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/zh/",
+      "destination": "/faq/en/",
+      "statusCode": 301
+    },
+    {
+      "source": "/",
+      "destination": "/en/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "lang",
+          "value": "zh"
+        }
+      ]
+    },
+    {
+      "source": "/index.html",
+      "destination": "/en/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "lang",
+          "value": "zh"
+        }
+      ]
+    },
+    {
+      "source": "/blog.html",
+      "destination": "/blog/en/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "lang",
+          "value": "zh"
+        }
+      ]
+    },
+    {
+      "source": "/faq.html",
+      "destination": "/faq/en/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "lang",
+          "value": "zh"
+        }
+      ]
+    },
+    {
+      "source": "/blog/de/:splat*",
+      "destination": "/blog/en/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/uk/:splat*",
+      "destination": "/blog/ru/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zh/:splat*",
+      "destination": "/blog/en/",
+      "statusCode": 301
+    }
+  ]
+}

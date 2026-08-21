@@ -1555,18 +1555,18 @@ function redirectEntries(posts) {
 
 function legacyHomeRedirectRules() {
   const rules = [
-    '/index.html / 301!',
-    '/ru / 301!',
-    '/ru/ / 301!',
+    { from: '/index.html', to: '/' },
+    { from: '/ru', to: '/' },
+    { from: '/ru/', to: '/' },
   ];
 
   for (const language of LANGUAGES) {
     const target = homePath(language);
-    rules.push(`/ lang=${language} ${target} 301!`);
-    rules.push(`/index.html lang=${language} ${target} 301!`);
+    rules.push({ from: '/', to: target, query: { key: 'lang', value: language } });
+    rules.push({ from: '/index.html', to: target, query: { key: 'lang', value: language } });
 
     if (language !== 'ru') {
-      rules.push(`/${language} ${target} 301!`);
+      rules.push({ from: `/${language}`, to: target });
     }
   }
 
@@ -1579,43 +1579,86 @@ function retiredLanguageRedirectRules() {
 
   // 1. Конкретные статьи — на соответствующий материал в оставшемся языке.
   for (const { from, to } of retiredLanguageRedirects.articles) {
-    rules.push(`${from.slice(0, -1)} ${to} 301!`);
-    rules.push(`${from} ${to} 301!`);
+    rules.push({ from: from.slice(0, -1), to });
+    rules.push({ from, to });
   }
 
   // 2. Разделы.
   for (const [language, target] of retired) {
     const home = homePath(target);
-    rules.push(`/${language} ${home} 301!`);
-    rules.push(`/${language}/ ${home} 301!`);
-    rules.push(`/blog/${language} /blog/${target}/ 301!`);
-    rules.push(`/blog/${language}/ /blog/${target}/ 301!`);
-    rules.push(`/faq/${language} /faq/${target}/ 301!`);
-    rules.push(`/faq/${language}/ /faq/${target}/ 301!`);
-    rules.push(`/ lang=${language} ${home} 301!`);
-    rules.push(`/index.html lang=${language} ${home} 301!`);
-    rules.push(`/blog.html lang=${language} /blog/${target}/ 301!`);
-    rules.push(`/faq.html lang=${language} /faq/${target}/ 301!`);
+    rules.push({ from: `/${language}`, to: home });
+    rules.push({ from: `/${language}/`, to: home });
+    rules.push({ from: `/blog/${language}`, to: `/blog/${target}/` });
+    rules.push({ from: `/blog/${language}/`, to: `/blog/${target}/` });
+    rules.push({ from: `/faq/${language}`, to: `/faq/${target}/` });
+    rules.push({ from: `/faq/${language}/`, to: `/faq/${target}/` });
+    rules.push({ from: '/', to: home, query: { key: 'lang', value: language } });
+    rules.push({ from: '/index.html', to: home, query: { key: 'lang', value: language } });
+    rules.push({ from: '/blog.html', to: `/blog/${target}/`, query: { key: 'lang', value: language } });
+    rules.push({ from: '/faq.html', to: `/faq/${target}/`, query: { key: 'lang', value: language } });
   }
 
   // 3. Хвост: всё, чего нет в карте (архивные статьи вне групп) — на индекс блога.
+  // Идёт последним: и Netlify, и Vercel применяют первое совпавшее правило.
   for (const [language, target] of retired) {
-    rules.push(`/blog/${language}/* /blog/${target}/ 301!`);
+    rules.push({ from: `/blog/${language}/*`, to: `/blog/${target}/`, splat: true });
   }
 
   return rules;
 }
 
-function netlifyRedirects(entries) {
-  return `${Array.from(new Set([
+// Единый список правил. Из него рендерятся оба формата, чтобы они не разъезжались:
+// Netlify читает _redirects, Vercel — vercel.json, и ни один не понимает чужой.
+function redirectRules(entries) {
+  const rules = [
     ...entries.flatMap(entry => [
-    `${entry.from_path.slice(0, -1)} ${entry.to_path} 301!`,
-    `${entry.from_path} ${entry.to_path} 301!`,
+      { from: entry.from_path.slice(0, -1), to: entry.to_path },
+      { from: entry.from_path, to: entry.to_path },
     ]),
     ...legacyHomeRedirectRules(),
     ...retiredLanguageRedirectRules(),
-  ])).join('\n')}\n`;
+  ];
+
+  const seen = new Set();
+  return rules.filter(rule => {
+    const key = `${rule.from}|${rule.query?.key || ''}=${rule.query?.value || ''}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
+
+function netlifyRedirects(entries) {
+  const lines = redirectRules(entries).map(rule => {
+    const query = rule.query ? ` ${rule.query.key}=${rule.query.value}` : '';
+    return `${rule.from}${query} ${rule.to} 301!`;
+  });
+
+  return `${lines.join('\n')}\n`;
+}
+
+function vercelConfig(entries) {
+  const redirects = redirectRules(entries)
+    // Netlify при совпадении по query-параметру его отбрасывает, а Vercel
+    // переносит query на цель. Из-за этого правило вида "/?lang=ru -> /"
+    // на Vercel зациклится, поэтому редиректы «сам на себя» выкидываем.
+    .filter(rule => rule.from !== rule.to)
+    .map(rule => {
+    const source = rule.splat ? rule.from.replace(/\*$/, ':splat*') : rule.from;
+    const redirect = { source, destination: rule.to, statusCode: 301 };
+
+    if (rule.query) {
+      redirect.has = [{ type: 'query', key: rule.query.key, value: rule.query.value }];
+    }
+
+    return redirect;
+  });
+
+  // Канонические адреса сайта заканчиваются слешем — Vercel должен их сохранять,
+  // иначе он уведёт на вариант без слеша, и canonical разойдётся с фактическим URL.
+  return { trailingSlash: true, redirects };
+}
+
 
 async function writeTextFile(filePath, content) {
   await mkdir(join(filePath, '..'), { recursive: true }).catch(() => {});
@@ -1649,6 +1692,12 @@ async function writeRedirectArtifacts(entries) {
   try {
     await writeFile(join(DIST_DIR, 'blog-slug-redirects.json'), manifestJson, 'utf8');
     await writeFile(join(DIST_DIR, '_redirects'), netlifyRedirects(entries), 'utf8');
+    // Vercel не читает _redirects, поэтому те же правила кладём и в vercel.json.
+    await writeFile(
+      join(ROOT_DIR, 'vercel.json'),
+      `${JSON.stringify(vercelConfig(entries), null, 2)}\n`,
+      'utf8'
+    );
   } catch (error) {
     if (!sitemapOnly) throw error;
   }
