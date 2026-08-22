@@ -1380,17 +1380,17 @@
       ]
     },
     {
-      "source": "/blog/de/:splat*",
+      "source": "/blog/de/:splat(.*)",
       "destination": "/blog/en/",
       "statusCode": 301
     },
     {
-      "source": "/blog/uk/:splat*",
+      "source": "/blog/uk/:splat(.*)",
       "destination": "/blog/ru/",
       "statusCode": 301
     },
     {
-      "source": "/blog/zh/:splat*",
+      "source": "/blog/zh/:splat(.*)",
       "destination": "/blog/en/",
       "statusCode": 301
     }

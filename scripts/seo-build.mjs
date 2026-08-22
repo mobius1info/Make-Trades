@@ -1644,7 +1644,9 @@ function vercelConfig(entries) {
     // на Vercel зациклится, поэтому редиректы «сам на себя» выкидываем.
     .filter(rule => rule.from !== rule.to)
     .map(rule => {
-    const source = rule.splat ? rule.from.replace(/\*$/, ':splat*') : rule.from;
+    // :splat* не совпадает с адресом, у которого на конце слеш, а trailingSlash
+    // приводит все URL именно к такому виду. :splat(.*) ловит оба варианта.
+    const source = rule.splat ? rule.from.replace(/\*$/, ':splat(.*)') : rule.from;
     const redirect = { source, destination: rule.to, statusCode: 301 };
 
     if (rule.query) {
