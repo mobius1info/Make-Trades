@@ -1,5 +1,6 @@
 import { loadTranslations } from './content-loader';
 import { supabase } from './supabase';
+import { articleAbsoluteUrl, articleHref } from './seo-urls';
 
 let currentLanguage = new URLSearchParams(window.location.search).get('lang') || 'ru';
 let translations: Record<string, string> = {};
@@ -87,7 +88,7 @@ async function loadAllBlogPosts() {
     const minLabel = t('blog_page.min_read', 'min');
 
     blogGrid.innerHTML = posts.map((post: BlogPost) => `
-      <a href="/blog-post.html?slug=${post.slug}&lang=${currentLanguage}" class="blog-card fade-in" itemscope itemtype="https://schema.org/BlogPosting">
+      <a href="${articleHref(post, currentLanguage)}" class="blog-card fade-in" itemscope itemtype="https://schema.org/BlogPosting">
         <img src="${(post.image_url || 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg') + '?auto=compress&cs=tinysrgb&w=400'}"
              alt="${post.title}"
              class="blog-card-image"
@@ -110,7 +111,7 @@ async function loadAllBlogPosts() {
             <span>${post.reading_time || 5} ${minLabel}</span>
           </div>
         </div>
-        <meta itemprop="url" content="https://maketrades.info/blog-post.html?slug=${post.slug}">
+        <meta itemprop="url" content="${articleAbsoluteUrl(post, currentLanguage)}">
       </a>
     `).join('');
   } catch (error) {

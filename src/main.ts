@@ -1,5 +1,6 @@
 import { loadTranslations, loadImages } from './content-loader';
 import { supabase, supabaseUrl, supabaseAnonKey } from './supabase';
+import { articleHref, blogIndexHref, faqHref } from './seo-urls';
 
 const params = new URLSearchParams(window.location.search);
 let currentLanguage = params.get('lang') || 'ru';
@@ -181,10 +182,10 @@ function updateModalsAndForms() {
   if (loginSubmitBtn) loginSubmitBtn.textContent = t('login.button', 'Log In');
 
   const allArticlesLink = document.getElementById('allArticlesBtn') as HTMLAnchorElement;
-  if (allArticlesLink) allArticlesLink.href = `/blog.html?lang=${currentLanguage}`;
+  if (allArticlesLink) allArticlesLink.href = blogIndexHref(currentLanguage);
 
   const allFaqLink = document.getElementById('allFaqBtn') as HTMLAnchorElement;
-  if (allFaqLink) allFaqLink.href = `/faq.html?lang=${currentLanguage}`;
+  if (allFaqLink) allFaqLink.href = faqHref(currentLanguage);
 }
 
 async function loadBlogPosts(limit: number = 3) {
@@ -208,7 +209,7 @@ async function loadBlogPosts(limit: number = 3) {
     }
 
     blogGrid.innerHTML = posts.map((post: BlogPost) => `
-      <a href="/blog-post.html?slug=${post.slug}&lang=${currentLanguage}" class="blog-card fade-in">
+      <a href="${articleHref(post, currentLanguage)}" class="blog-card fade-in">
         <img src="${post.image_url || 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=400'}"
              alt="${post.title}"
              class="blog-card-image"

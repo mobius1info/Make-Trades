@@ -1,5 +1,6 @@
 import { loadTranslations } from './content-loader';
 import { supabase, supabaseUrl, supabaseAnonKey } from './supabase';
+import { articleAbsoluteUrl, articleHref, blogIndexHref } from './seo-urls';
 
 const params = new URLSearchParams(window.location.search);
 let currentLanguage = params.get('lang') || 'ru';
@@ -60,10 +61,10 @@ function updatePageContent() {
   setById('postCopyright', 'footer.copyright', '© 2026 MakeTrades. All rights reserved.');
 
   const backBlogLink = document.getElementById('backBlogBtn') as HTMLAnchorElement;
-  if (backBlogLink) backBlogLink.href = `/blog.html?lang=${currentLanguage}`;
+  if (backBlogLink) backBlogLink.href = blogIndexHref(currentLanguage);
 
   const errorBackLink = document.getElementById('errorBackBtn') as HTMLAnchorElement;
-  if (errorBackLink) errorBackLink.href = `/blog.html?lang=${currentLanguage}`;
+  if (errorBackLink) errorBackLink.href = blogIndexHref(currentLanguage);
 }
 
 async function setLanguage(lang: string) {
@@ -102,7 +103,7 @@ function updateMetaTags(post: BlogPost) {
   if (metaKeywords && post.tags) metaKeywords.content = post.tags.join(', ');
 
   const canonical = document.getElementById('page-canonical') as HTMLLinkElement;
-  if (canonical) canonical.href = `https://maketrades.info/blog-post.html?slug=${post.slug}`;
+  if (canonical) canonical.href = articleAbsoluteUrl(post, currentLanguage);
 
   const ogTitle = document.getElementById('og-title') as HTMLMetaElement;
   if (ogTitle) ogTitle.content = post.title;
@@ -114,7 +115,7 @@ function updateMetaTags(post: BlogPost) {
   if (ogImage) ogImage.content = post.image_url || 'https://maketrades.info/og-image.jpg';
 
   const ogUrl = document.getElementById('og-url') as HTMLMetaElement;
-  if (ogUrl) ogUrl.content = `https://maketrades.info/blog-post.html?slug=${post.slug}`;
+  if (ogUrl) ogUrl.content = articleAbsoluteUrl(post, currentLanguage);
 
   const twitterTitle = document.getElementById('twitter-title') as HTMLMetaElement;
   if (twitterTitle) twitterTitle.content = post.title;
@@ -141,7 +142,7 @@ function updateMetaTags(post: BlogPost) {
     "dateModified": post.updated_at,
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://maketrades.info/blog-post.html?slug=${post.slug}`
+      "@id": articleAbsoluteUrl(post, currentLanguage)
     }
   };
 
@@ -289,7 +290,7 @@ async function addInternalLinks(tags: string[]) {
       const linksList = document.createElement('ul');
       relatedByTags.forEach(post => {
         const li = document.createElement('li');
-        li.innerHTML = `<a href="/blog-post.html?slug=${post.slug}&lang=${currentLanguage}">${post.title}</a>`;
+        li.innerHTML = `<a href="${articleHref(post, currentLanguage)}">${post.title}</a>`;
         linksList.appendChild(li);
       });
       linksContainer.appendChild(linksList);
@@ -329,7 +330,7 @@ async function loadRelatedPosts(category: string, currentPostId: string) {
     }
 
     gridEl.innerHTML = posts.map((post: BlogPost) => `
-      <a href="/blog-post.html?slug=${post.slug}&lang=${currentLanguage}" class="blog-card fade-in">
+      <a href="${articleHref(post, currentLanguage)}" class="blog-card fade-in">
         <img src="${(post.image_url || 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg') + '?auto=compress&cs=tinysrgb&w=400'}"
              alt="${post.title}"
              class="blog-card-image"

@@ -1380,6 +1380,2469 @@
       ]
     },
     {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/ai-v-treydinge-2026/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "ai-v-treydinge-2026"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/defi-brokeridzh-2026/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "defi-brokeridzh-2026"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/social-trading-platforma/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "social-trading-platforma"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/esg-investitsii-brokery/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "esg-investitsii-brokery"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/regulyatsiya-mica-2026/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "regulyatsiya-mica-2026"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kvantovye-vychisleniya-finansy/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kvantovye-vychisleniya-finansy"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/nft-kollateral-kreditovanie/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "nft-kollateral-kreditovanie"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/central-bank-digital-currency/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "central-bank-digital-currency"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/metavers-trading-platforms/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "metavers-trading-platforms"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/algorithmicheskaya-likvidnost-2026/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "algorithmicheskaya-likvidnost-2026"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kak-vybrat-nadezhnogo-brokera-v-2026/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-2-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kak-vybrat-nadezhnogo-brokera-v-2026/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kak-vybrat-nadezhnogo-brokera-v-2026"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/multi-level-partner-network-broker/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "multi-level-partner-network-broker"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/affiliate-marketing-forex-guide/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "affiliate-marketing-forex-guide"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/trader-psychology-emotion-control/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "trader-psychology-emotion-control"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/forex-trading-strategies-proven-methods/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "forex-trading-strategies-proven-methods"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/trading-bots-advantages-2024/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "trading-bots-advantages-2024"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/choosing-trading-platform-for-broker/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "choosing-trading-platform-for-broker"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/crm-for-broker-automation/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "crm-for-broker-automation"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/capital-management-trading-rules/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "capital-management-trading-rules"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/technical-analysis-basics-strategies/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "technical-analysis-basics-strategies"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/fundamental-analysis-news-markets/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "fundamental-analysis-news-markets"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/algorithmic-trading-profitable-bot/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "algorithmic-trading-profitable-bot"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/broker-marketing-client-acquisition/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "broker-marketing-client-acquisition"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/brokerage-licensing-complete-guide/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "brokerage-licensing-complete-guide"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/broker-partner-program-overview/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "broker-partner-program-overview"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/risk-management-a-book-vs-b-book/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "risk-management-a-book-vs-b-book"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/trading-psychology-mastering-emotions/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "trading-psychology-mastering-emotions"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/forex-vs-stocks-vs-crypto-markets/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "forex-vs-stocks-vs-crypto-markets"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/copy-trading-guide-earning/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "copy-trading-guide-earning"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/automatic-trade-copying-systems/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "automatic-trade-copying-systems"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/backtesting-trading-strategies-guide/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "backtesting-trading-strategies-guide"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/algorithmic-trading-api-solutions/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "algorithmic-trading-api-solutions"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/top-10-brokerage-business-trends-2024/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "top-10-brokerage-business-trends-2024"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/cryptocurrency-brokerage-features/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "cryptocurrency-brokerage-features"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/how-to-choose-broker-checklist-15/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "how-to-choose-broker-checklist-15"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/turbo-options-strategies-tips/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "turbo-options-strategies-tips"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/binary-options-regulation-worldwide/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "binary-options-regulation-worldwide"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/crypto-binary-options-trading/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "crypto-binary-options-trading"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/prop-trading-vs-classic-brokerage/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "prop-trading-vs-classic-brokerage"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/forex-regulation-worldwide-2025/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "forex-regulation-worldwide-2025"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/hiring-team-new-forex-broker/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "hiring-team-new-forex-broker"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/technical-infrastructure-forex-broker/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "technical-infrastructure-forex-broker"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/funded-account-model-overview/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "funded-account-model-overview"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/prop-trading-challenge-system/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "prop-trading-challenge-system"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/crypto-payment-processing-broker/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "crypto-payment-processing-broker"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/defi-integration-brokerage-platform/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "defi-integration-brokerage-platform"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/crypto-exchange-security-practices/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "crypto-exchange-security-practices"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/best-broker-for-beginners-guide/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "best-broker-for-beginners-guide"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/best-brokers-for-scalping-2025/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "best-brokers-for-scalping-2025"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/verify-forex-broker-reliability/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "verify-forex-broker-reliability"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/payment-systems-forex-broker-guide/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "payment-systems-forex-broker-guide"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/forex-broker-operating-costs-budget/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "forex-broker-operating-costs-budget"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/marketing-strategy-new-forex-broker/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "marketing-strategy-new-forex-broker"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/crypto-exchange-rental-requirements/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "crypto-exchange-rental-requirements"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/choosing-trading-platform-provider-guide/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "choosing-trading-platform-provider-guide"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/client-base-automation-brokers/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "client-base-automation-brokers"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/lead-management-forex-brokerage/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "lead-management-forex-brokerage"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/broker-crm-analytics-conversion/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "broker-crm-analytics-conversion"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/scaling-rented-trading-platform/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "scaling-rented-trading-platform"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/brokerage-business-plan-guide/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "brokerage-business-plan-guide"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/platform-updates-support-maintenance/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "platform-updates-support-maintenance"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/mobile-trading-rental-platform-solutions/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "mobile-trading-rental-platform-solutions"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/ready-made-brokerage-business-guide/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "ready-made-brokerage-business-guide"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/crm-implementation-roi-brokerage/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "crm-implementation-roi-brokerage"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/multichannel-communications-broker-crm/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "multichannel-communications-broker-crm"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/safe-crm-migration-data-preservation/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "safe-crm-migration-data-preservation"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/crm-metatrader-integration-guide/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "crm-metatrader-integration-guide"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/how-to-build-crypto-exchange-guide/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "how-to-build-crypto-exchange-guide"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/crypto-regulation-2025-overview/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "crypto-regulation-2025-overview"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/prop-trading-platform-review-2025/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "prop-trading-platform-review-2025"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/launch-prop-trading-company-guide/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "launch-prop-trading-company-guide"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/binary-options-platform-capabilities/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "binary-options-platform-capabilities"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/binary-options-beginner-strategies/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "binary-options-beginner-strategies"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/top-forex-brokers-2025-objective-rating/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "top-forex-brokers-2025-objective-rating"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/ecn-vs-market-maker-broker-models/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "ecn-vs-market-maker-broker-models"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/forex-trading-bots-technology/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "forex-trading-bots-technology"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/technical-analysis-beginners-guide/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "technical-analysis-beginners-guide"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/crm-for-forex-brokers-complete-overview/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "crm-for-forex-brokers-complete-overview"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/how-to-choose-crm-dealing-center/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "how-to-choose-crm-dealing-center"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/kyc-aml-compliance-through-crm/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kyc-aml-compliance-through-crm"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/turnkey-forex-platform-rental-overview/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "turnkey-forex-platform-rental-overview"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/white-label-vs-custom-development/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "white-label-vs-custom-development"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/cost-starting-forex-broker-rental/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "cost-starting-forex-broker-rental"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/saas-model-forex-brokers-cloud/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "saas-model-forex-brokers-cloud"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/how-to-start-forex-brokerage-2025/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "how-to-start-forex-brokerage-2025"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/forex-licensing-guide-jurisdictions/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "forex-licensing-guide-jurisdictions"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/risk-management-new-forex-brokers/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "risk-management-new-forex-brokers"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/torgovyj-bot-dlya-forex-obzor/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "torgovyj-bot-dlya-forex-obzor"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kopirovanie-sdelok-avtomaticheski/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kopirovanie-sdelok-avtomaticheski"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/backtesting-torgovyh-strategij/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "backtesting-torgovyh-strategij"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/api-dlya-algoritmicheskoj-torgovli/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "api-dlya-algoritmicheskoj-torgovli"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/partnerskaya-programma-brokera-obzor/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "partnerskaya-programma-brokera-obzor"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/multi-urovnevaya-partnerskaya-set/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "multi-urovnevaya-partnerskaya-set"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/affiliate-marketing-v-forex/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "affiliate-marketing-v-forex"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/tekhnicheskij-analiz-dlya-nachinayushchih/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "tekhnicheskij-analiz-dlya-nachinayushchih"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/psihologiya-trejdera-upravlenie-emociyami/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "psihologiya-trejdera-upravlenie-emociyami"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/torgovye-strategii-na-forex/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "torgovye-strategii-na-forex"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/platforma-binarnyh-optsionov-obzor/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "platforma-binarnyh-optsionov-obzor"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/strategii-torgovli-binarnymi-optsionami/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "strategii-torgovli-binarnymi-optsionami"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/regulirovanie-binarnyh-optsionov/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "regulirovanie-binarnyh-optsionov"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/binarnye-optsiony-na-kriptovalyuty/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "binarnye-optsiony-na-kriptovalyuty"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/turbo-optsiony-strategii-i-sovety/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "turbo-optsiony-strategii-i-sovety"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/rejting-forex-brokerov-2025/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "rejting-forex-brokerov-2025"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/luchshij-broker-dlya-nachinayushchih/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "luchshij-broker-dlya-nachinayushchih"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kak-proverit-nadezhnost-brokera/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kak-proverit-nadezhnost-brokera"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/ecn-broker-vs-market-maker/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "ecn-broker-vs-market-maker"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/luchshie-brokery-dlya-skalpinga/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "luchshie-brokery-dlya-skalpinga"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kak-sozdat-kriptobirzhu-s-nulya/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kak-sozdat-kriptobirzhu-s-nulya"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kripto-protsessing-dlya-brokera/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kripto-protsessing-dlya-brokera"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/bezopasnost-kriptovalyutnoj-birzhi/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "bezopasnost-kriptovalyutnoj-birzhi"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/defi-integratsiya-v-brokerskuyu-platformu/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "defi-integratsiya-v-brokerskuyu-platformu"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/regulirovanie-kriptovalyut-2025/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "regulirovanie-kriptovalyut-2025"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/prop-trejding-platforma-obzor/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "prop-trejding-platforma-obzor"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kak-zapustit-prop-kompaniyu/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kak-zapustit-prop-kompaniyu"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/challenge-sistema-prop-trading/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "challenge-sistema-prop-trading"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/funded-account-model-obzor/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "funded-account-model-obzor"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/prop-trejding-vs-klassicheskij-brokerage/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "prop-trejding-vs-klassicheskij-brokerage"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kak-otkryt-forex-brokera-s-nulya-2025/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kak-otkryt-forex-brokera-s-nulya-2025"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/litsenzirovanie-forex-deyatelnosti/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "litsenzirovanie-forex-deyatelnosti"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/biznes-plan-brokerskoj-kompanii/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "biznes-plan-brokerskoj-kompanii"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/tekhnicheskaya-infrastruktura-brokera/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "tekhnicheskaya-infrastruktura-brokera"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/marketing-dlya-startuyushchego-brokera/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "marketing-dlya-startuyushchego-brokera"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/operatsionnye-raskhody-forex-brokera/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "operatsionnye-raskhody-forex-brokera"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/podbor-komandy-dlya-brokera/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "podbor-komandy-dlya-brokera"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/regulirovanie-forex-v-raznyh-stranah/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "regulirovanie-forex-v-raznyh-stranah"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/platezhnye-sistemy-dlya-brokera/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "platezhnye-sistemy-dlya-brokera"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/risk-menedzhment-brokera/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "risk-menedzhment-brokera"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/arenda-forex-platformy-pod-klyuch/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "arenda-forex-platformy-pod-klyuch"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/white-label-vs-sobstvennaya-razrabotka/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "white-label-vs-sobstvennaya-razrabotka"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/stoimost-zapuska-brokera-cherez-arendu/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "stoimost-zapuska-brokera-cherez-arendu"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/arenda-kriptobirzhi-trebovaniya/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "arenda-kriptobirzhi-trebovaniya"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/gotovyj-brokerskij-biznes-start/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "gotovyj-brokerskij-biznes-start"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/saas-model-forex-brokerov/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "saas-model-forex-brokerov"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/masshtabirovanie-arendovannoj-platformy/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "masshtabirovanie-arendovannoj-platformy"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/vybor-postavshchika-torgovoj-platformy/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "vybor-postavshchika-torgovoj-platformy"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/obnovlenie-i-podderzhka-arendovannoj-platformy/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "obnovlenie-i-podderzhka-arendovannoj-platformy"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/mobilnyj-trejding-v-arendovannoj-platforme/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "mobilnyj-trejding-v-arendovannoj-platforme"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/crm-dlya-forex-brokera-polnyj-obzor/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "crm-dlya-forex-brokera-polnyj-obzor"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/vybor-crm-sistemy-dlya-dilingovogo-tsentra/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "vybor-crm-sistemy-dlya-dilingovogo-tsentra"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/avtomatizatsiya-klientskoj-bazy-brokera/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "avtomatizatsiya-klientskoj-bazy-brokera"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/integratsiya-crm-s-metatrader/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "integratsiya-crm-s-metatrader"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/upravlenie-lidami-v-brokerskom-biznese/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "upravlenie-lidami-v-brokerskom-biznese"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/crm-analitika-konversiya-brokera/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "crm-analitika-konversiya-brokera"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/migratsiya-crm-bez-poteri-dannyh/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "migratsiya-crm-bez-poteri-dannyh"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/multichannel-kommunikatsii-crm-broker/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "multichannel-kommunikatsii-crm-broker"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/roi-vnedreniya-crm-brokerskaya-kompaniya/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "roi-vnedreniya-crm-brokerskaya-kompaniya"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/compliance-kyc-aml-cherez-crm/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "compliance-kyc-aml-cherez-crm"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/psihologiya-treydinga-kak-kontrolirovat-emotsii/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-8-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/psihologiya-treydinga-kak-kontrolirovat-emotsii/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "psihologiya-treydinga-kak-kontrolirovat-emotsii"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/top-10-trading-strategies-for-beginners/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-1-en"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/top-10-trading-strategies-for-beginners/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "top-10-trading-strategies-for-beginners"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/how-to-choose-a-reliable-broker-in-2024/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-2-en"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/how-to-choose-a-reliable-broker-in-2024/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "how-to-choose-a-reliable-broker-in-2024"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/tehnicheskiy-analiz-polnoe-rukovodstvo/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-3-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/tehnicheskiy-analiz-polnoe-rukovodstvo/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "tehnicheskiy-analiz-polnoe-rukovodstvo"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/technical-analysis-complete-guide/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-3-en"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/technical-analysis-complete-guide/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "technical-analysis-complete-guide"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/risk-management-in-trading/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-4-en"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/risk-management-in-trading/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "risk-management-in-trading"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/upravlenie-riskami-v-treydinge/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-4-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/upravlenie-riskami-v-treydinge/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "upravlenie-riskami-v-treydinge"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/cryptocurrency-trading-for-beginners/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-5-en"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/cryptocurrency-trading-for-beginners/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "cryptocurrency-trading-for-beginners"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-5-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kriptovalyutnaya-torgovlya-dlya-nachinayushchih"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/forex-basics-of-currency-markets/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-6-en"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/forex-basics-of-currency-markets/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "forex-basics-of-currency-markets"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/foreks-osnovy-valyutnogo-rynka/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-6-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/foreks-osnovy-valyutnogo-rynka/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "foreks-osnovy-valyutnogo-rynka"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/trading-bots-strategy-automation/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-7-en"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/trading-bots-strategy-automation/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "trading-bots-strategy-automation"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/torgovye-boty-avtomatizatsiya-strategiy/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-7-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/torgovye-boty-avtomatizatsiya-strategiy/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "torgovye-boty-avtomatizatsiya-strategiy"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/trading-psychology-controlling-emotions/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-8-en"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/trading-psychology-controlling-emotions/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "trading-psychology-controlling-emotions"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/technical-analysis-indicators/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-9-en"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/technical-analysis-indicators/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "technical-analysis-indicators"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/indikatory-tehnicheskogo-analiza/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-9-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/indikatory-tehnicheskogo-analiza/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "indikatory-tehnicheskogo-analiza"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/svechnoy-analiz-yaponskie-svechi/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-10-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/svechnoy-analiz-yaponskie-svechi/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "svechnoy-analiz-yaponskie-svechi"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/candlestick-analysis-japanese-candles/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-10-en"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/candlestick-analysis-japanese-candles/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "candlestick-analysis-japanese-candles"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/top-10-torgovyh-strategiy-dlya-nachinayushchih/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-1-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/top-10-torgovyh-strategiy-dlya-nachinayushchih/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "top-10-torgovyh-strategiy-dlya-nachinayushchih"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/upravlenie-kapitalom-trejding-pravilo-1-2/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "upravlenie-kapitalom-trejding-pravilo-1-2"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/forex-vs-akcii-vs-kriptovalyuty/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "forex-vs-akcii-vs-kriptovalyuty"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/tehnicheskiy-analiz-dlya-nachinayuschih/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "tehnicheskiy-analiz-dlya-nachinayuschih"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kak-vybrat-torgovuyu-platformu-dlya-brokera/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kak-vybrat-torgovuyu-platformu-dlya-brokera"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/crm-dlya-brokera-avtomatizatsiya/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "crm-dlya-brokera-avtomatizatsiya"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/top-10-trendov-brokerskogo-biznesa-2024/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "top-10-trendov-brokerskogo-biznesa-2024"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/copy-trading-kak-zarabatyvat/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "copy-trading-kak-zarabatyvat"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kriptovalyutny-brokeridg-osobennosti/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kriptovalyutny-brokeridg-osobennosti"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kak-vybrat-brokera-chek-list/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kak-vybrat-brokera-chek-list"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/marketing-dlya-brokerov-kak-privlech-klientov/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "marketing-dlya-brokerov-kak-privlech-klientov"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/upravlenie-riskami-a-book-b-book/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "upravlenie-riskami-a-book-b-book"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/algoritmicheskiy-trejding-torgovy-bot/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "algoritmicheskiy-trejding-torgovy-bot"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/psihologiya-trejdinga-emotsii/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "psihologiya-trejdinga-emotsii"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/fundamentalny-analiz-novosti-rynki/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "fundamentalny-analiz-novosti-rynki"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/litsenzirovanie-brokerskoy-deyatelnosti/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "litsenzirovanie-brokerskoy-deyatelnosti"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kak-sozdat-brokerskuyu-kompaniyu/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kak-sozdat-brokerskuyu-kompaniyu"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/preimuschestva-torgovyh-botov/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "preimuschestva-torgovyh-botov"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/how-to-start-brokerage-company/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "how-to-start-brokerage-company"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog.html",
+      "destination": "/blog/ru/",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq.html",
+      "destination": "/faq/ru/",
+      "statusCode": 301
+    },
+    {
       "source": "/blog/de/:splat(.*)",
       "destination": "/blog/en/",
       "statusCode": 301

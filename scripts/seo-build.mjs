@@ -1598,18 +1598,54 @@ function retiredLanguageRedirectRules() {
     rules.push({ from: '/faq.html', to: `/faq/${target}/`, query: { key: 'lang', value: language } });
   }
 
-  // 3. Хвост: всё, чего нет в карте (архивные статьи вне групп) — на индекс блога.
-  // Идёт последним: и Netlify, и Vercel применяют первое совпавшее правило.
-  for (const [language, target] of retired) {
-    rules.push({ from: `/blog/${language}/*`, to: `/blog/${target}/`, splat: true });
+  return rules;
+}
+
+// Хвост: всё, чего нет в карте (архивные статьи вне групп) — на индекс блога.
+// Должен идти последним: и Netlify, и Vercel применяют первое совпавшее правило.
+function retiredLanguageWildcardRules() {
+  return Object.entries(retiredLanguageRedirects.retiredLanguages).map(([language, target]) => ({
+    from: `/blog/${language}/*`,
+    to: `/blog/${target}/`,
+    splat: true,
+  }));
+}
+
+// Статьи в базе перелинкованы адресами старой схемы /blog-post.html?slug=...
+// Она отдаёт пустую оболочку с canonical на саму себя, одинаковым для всех
+// статей, поэтому уводим такие адреса на канонические.
+function legacyQuerySlugRules(posts) {
+  const rules = [];
+  const seen = new Set();
+
+  for (const post of posts) {
+    const to = articlePath(post);
+
+    for (const candidate of [post.slug, post.legacy_slug, post.canonical_slug]) {
+      const value = String(candidate || '').trim();
+      if (!value || seen.has(value)) continue;
+
+      seen.add(value);
+      rules.push({ from: '/blog-post.html', to, query: { key: 'slug', value } });
+    }
   }
 
   return rules;
 }
 
+// Голые legacy-страницы дублируют разделы по чистым адресам.
+// Идут после query-правил выше, иначе перехватили бы их.
+function legacyPageFallbackRules() {
+  return [
+    { from: '/blog-post.html', to: '/blog/ru/' },
+    { from: '/blog.html', to: '/blog/ru/' },
+    { from: '/faq.html', to: '/faq/ru/' },
+  ];
+}
+
 // Единый список правил. Из него рендерятся оба формата, чтобы они не разъезжались:
 // Netlify читает _redirects, Vercel — vercel.json, и ни один не понимает чужой.
-function redirectRules(entries) {
+function redirectRules(entries, posts = []) {
   const rules = [
     ...entries.flatMap(entry => [
       { from: entry.from_path.slice(0, -1), to: entry.to_path },
@@ -1617,6 +1653,9 @@ function redirectRules(entries) {
     ]),
     ...legacyHomeRedirectRules(),
     ...retiredLanguageRedirectRules(),
+    ...legacyQuerySlugRules(posts),
+    ...legacyPageFallbackRules(),
+    ...retiredLanguageWildcardRules(),
   ];
 
   const seen = new Set();
@@ -1628,8 +1667,8 @@ function redirectRules(entries) {
   });
 }
 
-function netlifyRedirects(entries) {
-  const lines = redirectRules(entries).map(rule => {
+function netlifyRedirects(entries, posts) {
+  const lines = redirectRules(entries, posts).map(rule => {
     const query = rule.query ? ` ${rule.query.key}=${rule.query.value}` : '';
     return `${rule.from}${query} ${rule.to} 301!`;
   });
@@ -1637,8 +1676,8 @@ function netlifyRedirects(entries) {
   return `${lines.join('\n')}\n`;
 }
 
-function vercelConfig(entries) {
-  const redirects = redirectRules(entries)
+function vercelConfig(entries, posts) {
+  const redirects = redirectRules(entries, posts)
     // Netlify при совпадении по query-параметру его отбрасывает, а Vercel
     // переносит query на цель. Из-за этого правило вида "/?lang=ru -> /"
     // на Vercel зациклится, поэтому редиректы «сам на себя» выкидываем.
@@ -1684,7 +1723,7 @@ async function writeSitemap(xml) {
   }
 }
 
-async function writeRedirectArtifacts(entries) {
+async function writeRedirectArtifacts(entries, posts) {
   const manifestJson = `${JSON.stringify(entries, null, 2)}\n`;
 
   if (sitemapOnly) {
@@ -1693,11 +1732,11 @@ async function writeRedirectArtifacts(entries) {
 
   try {
     await writeFile(join(DIST_DIR, 'blog-slug-redirects.json'), manifestJson, 'utf8');
-    await writeFile(join(DIST_DIR, '_redirects'), netlifyRedirects(entries), 'utf8');
+    await writeFile(join(DIST_DIR, '_redirects'), netlifyRedirects(entries, posts), 'utf8');
     // Vercel не читает _redirects, поэтому те же правила кладём и в vercel.json.
     await writeFile(
       join(ROOT_DIR, 'vercel.json'),
-      `${JSON.stringify(vercelConfig(entries), null, 2)}\n`,
+      `${JSON.stringify(vercelConfig(entries, posts), null, 2)}\n`,
       'utf8'
     );
   } catch (error) {
@@ -1714,7 +1753,7 @@ async function generateSeoFiles(data) {
   const indexableCount = posts.filter(post => post.indexable).length;
   const nonIndexableCount = posts.length - indexableCount;
   await writeSitemap(sitemap);
-  await writeRedirectArtifacts(redirects);
+  await writeRedirectArtifacts(redirects, posts);
 
   if (sitemapOnly) {
     console.log(`[seo-build] Generated sitemap with ${indexableCount} indexable article URLs from ${publishedCount} published records.`);
