@@ -1697,7 +1697,17 @@ function vercelConfig(entries, posts) {
 
   // Канонические адреса сайта заканчиваются слешем — Vercel должен их сохранять,
   // иначе он уведёт на вариант без слеша, и canonical разойдётся с фактическим URL.
-  return { trailingSlash: true, redirects };
+  //
+  // buildCommand и outputDirectory заданы здесь, а не в панели Vercel, чтобы
+  // настройка жила в репозитории. Без своей сборки Vercel раздавал бы
+  // закоммиченный dist, и правки статей в базе не доходили бы до сайта.
+  return {
+    framework: null,
+    buildCommand: 'npm run build',
+    outputDirectory: 'dist',
+    trailingSlash: true,
+    redirects,
+  };
 }
 
 

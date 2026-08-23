@@ -12,6 +12,9 @@
     "generate:sitemap": "node scripts/seo-build.mjs --sitemap-only",
     "preview": "vite preview"
   },
+  "engines": {
+    "node": "22.x"
+  },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0"
   },
