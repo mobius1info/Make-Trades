@@ -12,163 +12,13 @@
       "statusCode": 301
     },
     {
-      "source": "/blog/ru/post-8-ru",
-      "destination": "/blog/ru/psihologiya-treydinga-kak-kontrolirovat-emotsii/",
+      "source": "/blog/ru/post-1-ru",
+      "destination": "/blog/ru/top-10-torgovyh-strategiy-dlya-nachinayushchih/",
       "statusCode": 301
     },
     {
-      "source": "/blog/ru/post-8-ru/",
-      "destination": "/blog/ru/psihologiya-treydinga-kak-kontrolirovat-emotsii/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/en/post-1-en",
-      "destination": "/blog/en/top-10-trading-strategies-for-beginners/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/en/post-1-en/",
-      "destination": "/blog/en/top-10-trading-strategies-for-beginners/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/en/post-2-en",
-      "destination": "/blog/en/how-to-choose-a-reliable-broker-in-2024/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/en/post-2-en/",
-      "destination": "/blog/en/how-to-choose-a-reliable-broker-in-2024/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/ru/post-3-ru",
-      "destination": "/blog/ru/tehnicheskiy-analiz-polnoe-rukovodstvo/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/ru/post-3-ru/",
-      "destination": "/blog/ru/tehnicheskiy-analiz-polnoe-rukovodstvo/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/en/post-3-en",
-      "destination": "/blog/en/technical-analysis-complete-guide/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/en/post-3-en/",
-      "destination": "/blog/en/technical-analysis-complete-guide/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/en/post-4-en",
-      "destination": "/blog/en/risk-management-in-trading/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/en/post-4-en/",
-      "destination": "/blog/en/risk-management-in-trading/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/ru/post-4-ru",
-      "destination": "/blog/ru/upravlenie-riskami-v-treydinge/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/ru/post-4-ru/",
-      "destination": "/blog/ru/upravlenie-riskami-v-treydinge/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/en/post-5-en",
-      "destination": "/blog/en/cryptocurrency-trading-for-beginners/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/en/post-5-en/",
-      "destination": "/blog/en/cryptocurrency-trading-for-beginners/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/ru/post-5-ru",
-      "destination": "/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/ru/post-5-ru/",
-      "destination": "/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/en/post-6-en",
-      "destination": "/blog/en/forex-basics-of-currency-markets/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/en/post-6-en/",
-      "destination": "/blog/en/forex-basics-of-currency-markets/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/ru/post-6-ru",
-      "destination": "/blog/ru/foreks-osnovy-valyutnogo-rynka/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/ru/post-6-ru/",
-      "destination": "/blog/ru/foreks-osnovy-valyutnogo-rynka/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/en/post-7-en",
-      "destination": "/blog/en/trading-bots-strategy-automation/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/en/post-7-en/",
-      "destination": "/blog/en/trading-bots-strategy-automation/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/ru/post-7-ru",
-      "destination": "/blog/ru/torgovye-boty-avtomatizatsiya-strategiy/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/ru/post-7-ru/",
-      "destination": "/blog/ru/torgovye-boty-avtomatizatsiya-strategiy/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/en/post-8-en",
-      "destination": "/blog/en/trading-psychology-controlling-emotions/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/en/post-8-en/",
-      "destination": "/blog/en/trading-psychology-controlling-emotions/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/en/post-9-en",
-      "destination": "/blog/en/technical-analysis-indicators/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/en/post-9-en/",
-      "destination": "/blog/en/technical-analysis-indicators/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/ru/post-9-ru",
-      "destination": "/blog/ru/indikatory-tehnicheskogo-analiza/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/ru/post-9-ru/",
-      "destination": "/blog/ru/indikatory-tehnicheskogo-analiza/",
+      "source": "/blog/ru/post-1-ru/",
+      "destination": "/blog/ru/top-10-torgovyh-strategiy-dlya-nachinayushchih/",
       "statusCode": 301
     },
     {
@@ -182,6 +32,156 @@
       "statusCode": 301
     },
     {
+      "source": "/blog/ru/post-9-ru",
+      "destination": "/blog/ru/indikatory-tehnicheskogo-analiza/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-9-ru/",
+      "destination": "/blog/ru/indikatory-tehnicheskogo-analiza/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-8-ru",
+      "destination": "/blog/ru/psihologiya-treydinga-kak-kontrolirovat-emotsii/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-8-ru/",
+      "destination": "/blog/ru/psihologiya-treydinga-kak-kontrolirovat-emotsii/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-7-ru",
+      "destination": "/blog/ru/torgovye-boty-avtomatizatsiya-strategiy/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-7-ru/",
+      "destination": "/blog/ru/torgovye-boty-avtomatizatsiya-strategiy/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-6-ru",
+      "destination": "/blog/ru/foreks-osnovy-valyutnogo-rynka/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-6-ru/",
+      "destination": "/blog/ru/foreks-osnovy-valyutnogo-rynka/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-5-ru",
+      "destination": "/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-5-ru/",
+      "destination": "/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-4-ru",
+      "destination": "/blog/ru/upravlenie-riskami-v-treydinge/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-4-ru/",
+      "destination": "/blog/ru/upravlenie-riskami-v-treydinge/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-3-ru",
+      "destination": "/blog/ru/tehnicheskiy-analiz-polnoe-rukovodstvo/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/post-3-ru/",
+      "destination": "/blog/ru/tehnicheskiy-analiz-polnoe-rukovodstvo/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-1-en",
+      "destination": "/blog/en/top-10-trading-strategies-for-beginners/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-1-en/",
+      "destination": "/blog/en/top-10-trading-strategies-for-beginners/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-6-en",
+      "destination": "/blog/en/forex-basics-of-currency-markets/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-6-en/",
+      "destination": "/blog/en/forex-basics-of-currency-markets/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-4-en",
+      "destination": "/blog/en/risk-management-in-trading/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-4-en/",
+      "destination": "/blog/en/risk-management-in-trading/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-7-en",
+      "destination": "/blog/en/trading-bots-strategy-automation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-7-en/",
+      "destination": "/blog/en/trading-bots-strategy-automation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-3-en",
+      "destination": "/blog/en/technical-analysis-complete-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-3-en/",
+      "destination": "/blog/en/technical-analysis-complete-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-8-en",
+      "destination": "/blog/en/trading-psychology-controlling-emotions/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-8-en/",
+      "destination": "/blog/en/trading-psychology-controlling-emotions/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-2-en",
+      "destination": "/blog/en/how-to-choose-a-reliable-broker-in-2024/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-2-en/",
+      "destination": "/blog/en/how-to-choose-a-reliable-broker-in-2024/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-9-en",
+      "destination": "/blog/en/technical-analysis-indicators/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/en/post-9-en/",
+      "destination": "/blog/en/technical-analysis-indicators/",
+      "statusCode": 301
+    },
+    {
       "source": "/blog/en/post-10-en",
       "destination": "/blog/en/candlestick-analysis-japanese-candles/",
       "statusCode": 301
@@ -192,13 +192,13 @@
       "statusCode": 301
     },
     {
-      "source": "/blog/ru/post-1-ru",
-      "destination": "/blog/ru/top-10-torgovyh-strategiy-dlya-nachinayushchih/",
+      "source": "/blog/en/post-5-en",
+      "destination": "/blog/en/cryptocurrency-trading-for-beginners/",
       "statusCode": 301
     },
     {
-      "source": "/blog/ru/post-1-ru/",
-      "destination": "/blog/ru/top-10-torgovyh-strategiy-dlya-nachinayushchih/",
+      "source": "/blog/en/post-5-en/",
+      "destination": "/blog/en/cryptocurrency-trading-for-beginners/",
       "statusCode": 301
     },
     {
@@ -1525,6 +1525,426 @@
     },
     {
       "source": "/blog-post.html",
+      "destination": "/blog/ru/top-10-torgovyh-strategiy-dlya-nachinayushchih/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-1-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/top-10-torgovyh-strategiy-dlya-nachinayushchih/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "top-10-torgovyh-strategiy-dlya-nachinayushchih"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/svechnoy-analiz-yaponskie-svechi/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-10-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/svechnoy-analiz-yaponskie-svechi/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "svechnoy-analiz-yaponskie-svechi"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/indikatory-tehnicheskogo-analiza/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-9-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/indikatory-tehnicheskogo-analiza/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "indikatory-tehnicheskogo-analiza"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/psihologiya-treydinga-kak-kontrolirovat-emotsii/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-8-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/psihologiya-treydinga-kak-kontrolirovat-emotsii/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "psihologiya-treydinga-kak-kontrolirovat-emotsii"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/torgovye-boty-avtomatizatsiya-strategiy/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-7-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/torgovye-boty-avtomatizatsiya-strategiy/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "torgovye-boty-avtomatizatsiya-strategiy"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/foreks-osnovy-valyutnogo-rynka/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-6-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/foreks-osnovy-valyutnogo-rynka/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "foreks-osnovy-valyutnogo-rynka"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-5-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kriptovalyutnaya-torgovlya-dlya-nachinayushchih"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/upravlenie-riskami-v-treydinge/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-4-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/upravlenie-riskami-v-treydinge/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "upravlenie-riskami-v-treydinge"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/tehnicheskiy-analiz-polnoe-rukovodstvo/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-3-ru"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/tehnicheskiy-analiz-polnoe-rukovodstvo/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "tehnicheskiy-analiz-polnoe-rukovodstvo"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/fundamentalny-analiz-novosti-rynki/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "fundamentalny-analiz-novosti-rynki"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/marketing-dlya-brokerov-kak-privlech-klientov/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "marketing-dlya-brokerov-kak-privlech-klientov"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/algoritmicheskiy-trejding-torgovy-bot/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "algoritmicheskiy-trejding-torgovy-bot"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kriptovalyutny-brokeridg-osobennosti/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kriptovalyutny-brokeridg-osobennosti"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/litsenzirovanie-brokerskoy-deyatelnosti/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "litsenzirovanie-brokerskoy-deyatelnosti"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/upravlenie-riskami-a-book-b-book/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "upravlenie-riskami-a-book-b-book"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/forex-vs-akcii-vs-kriptovalyuty/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "forex-vs-akcii-vs-kriptovalyuty"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/copy-trading-kak-zarabatyvat/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "copy-trading-kak-zarabatyvat"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kak-vybrat-torgovuyu-platformu-dlya-brokera/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kak-vybrat-torgovuyu-platformu-dlya-brokera"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/top-10-trendov-brokerskogo-biznesa-2024/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "top-10-trendov-brokerskogo-biznesa-2024"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/psihologiya-trejdinga-emotsii/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "psihologiya-trejdinga-emotsii"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kak-vybrat-brokera-chek-list/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kak-vybrat-brokera-chek-list"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/upravlenie-kapitalom-trejding-pravilo-1-2/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "upravlenie-kapitalom-trejding-pravilo-1-2"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/crm-dlya-brokera-avtomatizatsiya/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "crm-dlya-brokera-avtomatizatsiya"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/tehnicheskiy-analiz-dlya-nachinayuschih/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "tehnicheskiy-analiz-dlya-nachinayuschih"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/preimuschestva-torgovyh-botov/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "preimuschestva-torgovyh-botov"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/ru/kak-sozdat-brokerskuyu-kompaniyu/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "kak-sozdat-brokerskuyu-kompaniyu"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
       "destination": "/blog/en/multi-level-partner-network-broker/",
       "statusCode": 301,
       "has": [
@@ -1532,42 +1952,6 @@
           "type": "query",
           "key": "slug",
           "value": "multi-level-partner-network-broker"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/en/affiliate-marketing-forex-guide/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "affiliate-marketing-forex-guide"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/en/trader-psychology-emotion-control/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "trader-psychology-emotion-control"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/en/forex-trading-strategies-proven-methods/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "forex-trading-strategies-proven-methods"
         }
       ]
     },
@@ -1693,13 +2077,37 @@
     },
     {
       "source": "/blog-post.html",
-      "destination": "/blog/en/risk-management-a-book-vs-b-book/",
+      "destination": "/blog/en/affiliate-marketing-forex-guide/",
       "statusCode": 301,
       "has": [
         {
           "type": "query",
           "key": "slug",
-          "value": "risk-management-a-book-vs-b-book"
+          "value": "affiliate-marketing-forex-guide"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/forex-trading-strategies-proven-methods/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "forex-trading-strategies-proven-methods"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/trader-psychology-emotion-control/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "trader-psychology-emotion-control"
         }
       ]
     },
@@ -1849,6 +2257,18 @@
     },
     {
       "source": "/blog-post.html",
+      "destination": "/blog/en/risk-management-a-book-vs-b-book/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "risk-management-a-book-vs-b-book"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
       "destination": "/blog/en/prop-trading-vs-classic-brokerage/",
       "statusCode": 301,
       "has": [
@@ -1861,13 +2281,13 @@
     },
     {
       "source": "/blog-post.html",
-      "destination": "/blog/en/forex-regulation-worldwide-2025/",
+      "destination": "/blog/en/marketing-strategy-new-forex-broker/",
       "statusCode": 301,
       "has": [
         {
           "type": "query",
           "key": "slug",
-          "value": "forex-regulation-worldwide-2025"
+          "value": "marketing-strategy-new-forex-broker"
         }
       ]
     },
@@ -2017,13 +2437,13 @@
     },
     {
       "source": "/blog-post.html",
-      "destination": "/blog/en/marketing-strategy-new-forex-broker/",
+      "destination": "/blog/en/forex-regulation-worldwide-2025/",
       "statusCode": 301,
       "has": [
         {
           "type": "query",
           "key": "slug",
-          "value": "marketing-strategy-new-forex-broker"
+          "value": "forex-regulation-worldwide-2025"
         }
       ]
     },
@@ -2036,30 +2456,6 @@
           "type": "query",
           "key": "slug",
           "value": "crypto-exchange-rental-requirements"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/en/choosing-trading-platform-provider-guide/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "choosing-trading-platform-provider-guide"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/en/client-base-automation-brokers/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "client-base-automation-brokers"
         }
       ]
     },
@@ -2192,6 +2588,30 @@
           "type": "query",
           "key": "slug",
           "value": "crm-metatrader-integration-guide"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/choosing-trading-platform-provider-guide/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "choosing-trading-platform-provider-guide"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/client-base-automation-brokers/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "client-base-automation-brokers"
         }
       ]
     },
@@ -3157,30 +3577,6 @@
     },
     {
       "source": "/blog-post.html",
-      "destination": "/blog/ru/psihologiya-treydinga-kak-kontrolirovat-emotsii/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "post-8-ru"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/psihologiya-treydinga-kak-kontrolirovat-emotsii/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "psihologiya-treydinga-kak-kontrolirovat-emotsii"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
       "destination": "/blog/en/top-10-trading-strategies-for-beginners/",
       "statusCode": 301,
       "has": [
@@ -3200,174 +3596,6 @@
           "type": "query",
           "key": "slug",
           "value": "top-10-trading-strategies-for-beginners"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/en/how-to-choose-a-reliable-broker-in-2024/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "post-2-en"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/en/how-to-choose-a-reliable-broker-in-2024/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "how-to-choose-a-reliable-broker-in-2024"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/tehnicheskiy-analiz-polnoe-rukovodstvo/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "post-3-ru"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/tehnicheskiy-analiz-polnoe-rukovodstvo/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "tehnicheskiy-analiz-polnoe-rukovodstvo"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/en/technical-analysis-complete-guide/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "post-3-en"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/en/technical-analysis-complete-guide/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "technical-analysis-complete-guide"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/en/risk-management-in-trading/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "post-4-en"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/en/risk-management-in-trading/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "risk-management-in-trading"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/upravlenie-riskami-v-treydinge/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "post-4-ru"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/upravlenie-riskami-v-treydinge/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "upravlenie-riskami-v-treydinge"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/en/cryptocurrency-trading-for-beginners/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "post-5-en"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/en/cryptocurrency-trading-for-beginners/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "cryptocurrency-trading-for-beginners"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "post-5-ru"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "kriptovalyutnaya-torgovlya-dlya-nachinayushchih"
         }
       ]
     },
@@ -3397,25 +3625,25 @@
     },
     {
       "source": "/blog-post.html",
-      "destination": "/blog/ru/foreks-osnovy-valyutnogo-rynka/",
+      "destination": "/blog/en/risk-management-in-trading/",
       "statusCode": 301,
       "has": [
         {
           "type": "query",
           "key": "slug",
-          "value": "post-6-ru"
+          "value": "post-4-en"
         }
       ]
     },
     {
       "source": "/blog-post.html",
-      "destination": "/blog/ru/foreks-osnovy-valyutnogo-rynka/",
+      "destination": "/blog/en/risk-management-in-trading/",
       "statusCode": 301,
       "has": [
         {
           "type": "query",
           "key": "slug",
-          "value": "foreks-osnovy-valyutnogo-rynka"
+          "value": "risk-management-in-trading"
         }
       ]
     },
@@ -3445,25 +3673,25 @@
     },
     {
       "source": "/blog-post.html",
-      "destination": "/blog/ru/torgovye-boty-avtomatizatsiya-strategiy/",
+      "destination": "/blog/en/technical-analysis-complete-guide/",
       "statusCode": 301,
       "has": [
         {
           "type": "query",
           "key": "slug",
-          "value": "post-7-ru"
+          "value": "post-3-en"
         }
       ]
     },
     {
       "source": "/blog-post.html",
-      "destination": "/blog/ru/torgovye-boty-avtomatizatsiya-strategiy/",
+      "destination": "/blog/en/technical-analysis-complete-guide/",
       "statusCode": 301,
       "has": [
         {
           "type": "query",
           "key": "slug",
-          "value": "torgovye-boty-avtomatizatsiya-strategiy"
+          "value": "technical-analysis-complete-guide"
         }
       ]
     },
@@ -3493,6 +3721,30 @@
     },
     {
       "source": "/blog-post.html",
+      "destination": "/blog/en/how-to-choose-a-reliable-broker-in-2024/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "post-2-en"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog/en/how-to-choose-a-reliable-broker-in-2024/",
+      "statusCode": 301,
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "how-to-choose-a-reliable-broker-in-2024"
+        }
+      ]
+    },
+    {
+      "source": "/blog-post.html",
       "destination": "/blog/en/technical-analysis-indicators/",
       "statusCode": 301,
       "has": [
@@ -3512,54 +3764,6 @@
           "type": "query",
           "key": "slug",
           "value": "technical-analysis-indicators"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/indikatory-tehnicheskogo-analiza/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "post-9-ru"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/indikatory-tehnicheskogo-analiza/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "indikatory-tehnicheskogo-analiza"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/svechnoy-analiz-yaponskie-svechi/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "post-10-ru"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/svechnoy-analiz-yaponskie-svechi/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "svechnoy-analiz-yaponskie-svechi"
         }
       ]
     },
@@ -3589,229 +3793,25 @@
     },
     {
       "source": "/blog-post.html",
-      "destination": "/blog/ru/top-10-torgovyh-strategiy-dlya-nachinayushchih/",
+      "destination": "/blog/en/cryptocurrency-trading-for-beginners/",
       "statusCode": 301,
       "has": [
         {
           "type": "query",
           "key": "slug",
-          "value": "post-1-ru"
+          "value": "post-5-en"
         }
       ]
     },
     {
       "source": "/blog-post.html",
-      "destination": "/blog/ru/top-10-torgovyh-strategiy-dlya-nachinayushchih/",
+      "destination": "/blog/en/cryptocurrency-trading-for-beginners/",
       "statusCode": 301,
       "has": [
         {
           "type": "query",
           "key": "slug",
-          "value": "top-10-torgovyh-strategiy-dlya-nachinayushchih"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/upravlenie-kapitalom-trejding-pravilo-1-2/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "upravlenie-kapitalom-trejding-pravilo-1-2"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/forex-vs-akcii-vs-kriptovalyuty/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "forex-vs-akcii-vs-kriptovalyuty"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/tehnicheskiy-analiz-dlya-nachinayuschih/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "tehnicheskiy-analiz-dlya-nachinayuschih"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/kak-vybrat-torgovuyu-platformu-dlya-brokera/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "kak-vybrat-torgovuyu-platformu-dlya-brokera"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/crm-dlya-brokera-avtomatizatsiya/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "crm-dlya-brokera-avtomatizatsiya"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/top-10-trendov-brokerskogo-biznesa-2024/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "top-10-trendov-brokerskogo-biznesa-2024"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/copy-trading-kak-zarabatyvat/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "copy-trading-kak-zarabatyvat"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/kriptovalyutny-brokeridg-osobennosti/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "kriptovalyutny-brokeridg-osobennosti"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/kak-vybrat-brokera-chek-list/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "kak-vybrat-brokera-chek-list"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/marketing-dlya-brokerov-kak-privlech-klientov/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "marketing-dlya-brokerov-kak-privlech-klientov"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/upravlenie-riskami-a-book-b-book/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "upravlenie-riskami-a-book-b-book"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/algoritmicheskiy-trejding-torgovy-bot/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "algoritmicheskiy-trejding-torgovy-bot"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/psihologiya-trejdinga-emotsii/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "psihologiya-trejdinga-emotsii"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/fundamentalny-analiz-novosti-rynki/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "fundamentalny-analiz-novosti-rynki"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/litsenzirovanie-brokerskoy-deyatelnosti/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "litsenzirovanie-brokerskoy-deyatelnosti"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/kak-sozdat-brokerskuyu-kompaniyu/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "kak-sozdat-brokerskuyu-kompaniyu"
-        }
-      ]
-    },
-    {
-      "source": "/blog-post.html",
-      "destination": "/blog/ru/preimuschestva-torgovyh-botov/",
-      "statusCode": 301,
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "preimuschestva-torgovyh-botov"
+          "value": "cryptocurrency-trading-for-beginners"
         }
       ]
     },

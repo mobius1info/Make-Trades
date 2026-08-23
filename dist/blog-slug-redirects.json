@@ -11,153 +11,23 @@
   },
   {
     "language": "ru",
-    "legacy_slug": "post-8-ru",
-    "canonical_slug": "psihologiya-treydinga-kak-kontrolirovat-emotsii",
-    "from_path": "/blog/ru/post-8-ru/",
-    "from_url": "https://maketrades.info/blog/ru/post-8-ru/",
-    "to_path": "/blog/ru/psihologiya-treydinga-kak-kontrolirovat-emotsii/",
-    "to_url": "https://maketrades.info/blog/ru/psihologiya-treydinga-kak-kontrolirovat-emotsii/",
-    "title": "Психология трейдинга: как контролировать эмоции"
-  },
-  {
-    "language": "en",
-    "legacy_slug": "post-1-en",
-    "canonical_slug": "top-10-trading-strategies-for-beginners",
-    "from_path": "/blog/en/post-1-en/",
-    "from_url": "https://maketrades.info/blog/en/post-1-en/",
-    "to_path": "/blog/en/top-10-trading-strategies-for-beginners/",
-    "to_url": "https://maketrades.info/blog/en/top-10-trading-strategies-for-beginners/",
-    "title": "Top 10 Trading Strategies for Beginners"
-  },
-  {
-    "language": "en",
-    "legacy_slug": "post-2-en",
-    "canonical_slug": "how-to-choose-a-reliable-broker-in-2024",
-    "from_path": "/blog/en/post-2-en/",
-    "from_url": "https://maketrades.info/blog/en/post-2-en/",
-    "to_path": "/blog/en/how-to-choose-a-reliable-broker-in-2024/",
-    "to_url": "https://maketrades.info/blog/en/how-to-choose-a-reliable-broker-in-2024/",
-    "title": "How to Choose a Reliable Broker in 2024"
+    "legacy_slug": "post-1-ru",
+    "canonical_slug": "top-10-torgovyh-strategiy-dlya-nachinayushchih",
+    "from_path": "/blog/ru/post-1-ru/",
+    "from_url": "https://maketrades.info/blog/ru/post-1-ru/",
+    "to_path": "/blog/ru/top-10-torgovyh-strategiy-dlya-nachinayushchih/",
+    "to_url": "https://maketrades.info/blog/ru/top-10-torgovyh-strategiy-dlya-nachinayushchih/",
+    "title": "Топ 10 торговых стратегий для начинающих"
   },
   {
     "language": "ru",
-    "legacy_slug": "post-3-ru",
-    "canonical_slug": "tehnicheskiy-analiz-polnoe-rukovodstvo",
-    "from_path": "/blog/ru/post-3-ru/",
-    "from_url": "https://maketrades.info/blog/ru/post-3-ru/",
-    "to_path": "/blog/ru/tehnicheskiy-analiz-polnoe-rukovodstvo/",
-    "to_url": "https://maketrades.info/blog/ru/tehnicheskiy-analiz-polnoe-rukovodstvo/",
-    "title": "Технический анализ: полное руководство"
-  },
-  {
-    "language": "en",
-    "legacy_slug": "post-3-en",
-    "canonical_slug": "technical-analysis-complete-guide",
-    "from_path": "/blog/en/post-3-en/",
-    "from_url": "https://maketrades.info/blog/en/post-3-en/",
-    "to_path": "/blog/en/technical-analysis-complete-guide/",
-    "to_url": "https://maketrades.info/blog/en/technical-analysis-complete-guide/",
-    "title": "Technical Analysis: Complete Guide"
-  },
-  {
-    "language": "en",
-    "legacy_slug": "post-4-en",
-    "canonical_slug": "risk-management-in-trading",
-    "from_path": "/blog/en/post-4-en/",
-    "from_url": "https://maketrades.info/blog/en/post-4-en/",
-    "to_path": "/blog/en/risk-management-in-trading/",
-    "to_url": "https://maketrades.info/blog/en/risk-management-in-trading/",
-    "title": "Risk Management in Trading"
-  },
-  {
-    "language": "ru",
-    "legacy_slug": "post-4-ru",
-    "canonical_slug": "upravlenie-riskami-v-treydinge",
-    "from_path": "/blog/ru/post-4-ru/",
-    "from_url": "https://maketrades.info/blog/ru/post-4-ru/",
-    "to_path": "/blog/ru/upravlenie-riskami-v-treydinge/",
-    "to_url": "https://maketrades.info/blog/ru/upravlenie-riskami-v-treydinge/",
-    "title": "Управление рисками в трейдинге"
-  },
-  {
-    "language": "en",
-    "legacy_slug": "post-5-en",
-    "canonical_slug": "cryptocurrency-trading-for-beginners",
-    "from_path": "/blog/en/post-5-en/",
-    "from_url": "https://maketrades.info/blog/en/post-5-en/",
-    "to_path": "/blog/en/cryptocurrency-trading-for-beginners/",
-    "to_url": "https://maketrades.info/blog/en/cryptocurrency-trading-for-beginners/",
-    "title": "Cryptocurrency Trading for Beginners"
-  },
-  {
-    "language": "ru",
-    "legacy_slug": "post-5-ru",
-    "canonical_slug": "kriptovalyutnaya-torgovlya-dlya-nachinayushchih",
-    "from_path": "/blog/ru/post-5-ru/",
-    "from_url": "https://maketrades.info/blog/ru/post-5-ru/",
-    "to_path": "/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
-    "to_url": "https://maketrades.info/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
-    "title": "Криптовалютная торговля для начинающих"
-  },
-  {
-    "language": "en",
-    "legacy_slug": "post-6-en",
-    "canonical_slug": "forex-basics-of-currency-markets",
-    "from_path": "/blog/en/post-6-en/",
-    "from_url": "https://maketrades.info/blog/en/post-6-en/",
-    "to_path": "/blog/en/forex-basics-of-currency-markets/",
-    "to_url": "https://maketrades.info/blog/en/forex-basics-of-currency-markets/",
-    "title": "Forex: Basics of Currency Markets"
-  },
-  {
-    "language": "ru",
-    "legacy_slug": "post-6-ru",
-    "canonical_slug": "foreks-osnovy-valyutnogo-rynka",
-    "from_path": "/blog/ru/post-6-ru/",
-    "from_url": "https://maketrades.info/blog/ru/post-6-ru/",
-    "to_path": "/blog/ru/foreks-osnovy-valyutnogo-rynka/",
-    "to_url": "https://maketrades.info/blog/ru/foreks-osnovy-valyutnogo-rynka/",
-    "title": "Форекс: основы валютного рынка"
-  },
-  {
-    "language": "en",
-    "legacy_slug": "post-7-en",
-    "canonical_slug": "trading-bots-strategy-automation",
-    "from_path": "/blog/en/post-7-en/",
-    "from_url": "https://maketrades.info/blog/en/post-7-en/",
-    "to_path": "/blog/en/trading-bots-strategy-automation/",
-    "to_url": "https://maketrades.info/blog/en/trading-bots-strategy-automation/",
-    "title": "Trading Bots: Strategy Automation"
-  },
-  {
-    "language": "ru",
-    "legacy_slug": "post-7-ru",
-    "canonical_slug": "torgovye-boty-avtomatizatsiya-strategiy",
-    "from_path": "/blog/ru/post-7-ru/",
-    "from_url": "https://maketrades.info/blog/ru/post-7-ru/",
-    "to_path": "/blog/ru/torgovye-boty-avtomatizatsiya-strategiy/",
-    "to_url": "https://maketrades.info/blog/ru/torgovye-boty-avtomatizatsiya-strategiy/",
-    "title": "Торговые боты: автоматизация стратегий"
-  },
-  {
-    "language": "en",
-    "legacy_slug": "post-8-en",
-    "canonical_slug": "trading-psychology-controlling-emotions",
-    "from_path": "/blog/en/post-8-en/",
-    "from_url": "https://maketrades.info/blog/en/post-8-en/",
-    "to_path": "/blog/en/trading-psychology-controlling-emotions/",
-    "to_url": "https://maketrades.info/blog/en/trading-psychology-controlling-emotions/",
-    "title": "Trading Psychology: Controlling Emotions"
-  },
-  {
-    "language": "en",
-    "legacy_slug": "post-9-en",
-    "canonical_slug": "technical-analysis-indicators",
-    "from_path": "/blog/en/post-9-en/",
-    "from_url": "https://maketrades.info/blog/en/post-9-en/",
-    "to_path": "/blog/en/technical-analysis-indicators/",
-    "to_url": "https://maketrades.info/blog/en/technical-analysis-indicators/",
-    "title": "Technical Analysis Indicators"
+    "legacy_slug": "post-10-ru",
+    "canonical_slug": "svechnoy-analiz-yaponskie-svechi",
+    "from_path": "/blog/ru/post-10-ru/",
+    "from_url": "https://maketrades.info/blog/ru/post-10-ru/",
+    "to_path": "/blog/ru/svechnoy-analiz-yaponskie-svechi/",
+    "to_url": "https://maketrades.info/blog/ru/svechnoy-analiz-yaponskie-svechi/",
+    "title": "Свечной анализ: японские свечи"
   },
   {
     "language": "ru",
@@ -171,13 +41,143 @@
   },
   {
     "language": "ru",
-    "legacy_slug": "post-10-ru",
-    "canonical_slug": "svechnoy-analiz-yaponskie-svechi",
-    "from_path": "/blog/ru/post-10-ru/",
-    "from_url": "https://maketrades.info/blog/ru/post-10-ru/",
-    "to_path": "/blog/ru/svechnoy-analiz-yaponskie-svechi/",
-    "to_url": "https://maketrades.info/blog/ru/svechnoy-analiz-yaponskie-svechi/",
-    "title": "Свечной анализ: японские свечи"
+    "legacy_slug": "post-8-ru",
+    "canonical_slug": "psihologiya-treydinga-kak-kontrolirovat-emotsii",
+    "from_path": "/blog/ru/post-8-ru/",
+    "from_url": "https://maketrades.info/blog/ru/post-8-ru/",
+    "to_path": "/blog/ru/psihologiya-treydinga-kak-kontrolirovat-emotsii/",
+    "to_url": "https://maketrades.info/blog/ru/psihologiya-treydinga-kak-kontrolirovat-emotsii/",
+    "title": "Психология трейдинга: как контролировать эмоции"
+  },
+  {
+    "language": "ru",
+    "legacy_slug": "post-7-ru",
+    "canonical_slug": "torgovye-boty-avtomatizatsiya-strategiy",
+    "from_path": "/blog/ru/post-7-ru/",
+    "from_url": "https://maketrades.info/blog/ru/post-7-ru/",
+    "to_path": "/blog/ru/torgovye-boty-avtomatizatsiya-strategiy/",
+    "to_url": "https://maketrades.info/blog/ru/torgovye-boty-avtomatizatsiya-strategiy/",
+    "title": "Торговые боты: автоматизация стратегий"
+  },
+  {
+    "language": "ru",
+    "legacy_slug": "post-6-ru",
+    "canonical_slug": "foreks-osnovy-valyutnogo-rynka",
+    "from_path": "/blog/ru/post-6-ru/",
+    "from_url": "https://maketrades.info/blog/ru/post-6-ru/",
+    "to_path": "/blog/ru/foreks-osnovy-valyutnogo-rynka/",
+    "to_url": "https://maketrades.info/blog/ru/foreks-osnovy-valyutnogo-rynka/",
+    "title": "Форекс: основы валютного рынка"
+  },
+  {
+    "language": "ru",
+    "legacy_slug": "post-5-ru",
+    "canonical_slug": "kriptovalyutnaya-torgovlya-dlya-nachinayushchih",
+    "from_path": "/blog/ru/post-5-ru/",
+    "from_url": "https://maketrades.info/blog/ru/post-5-ru/",
+    "to_path": "/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
+    "to_url": "https://maketrades.info/blog/ru/kriptovalyutnaya-torgovlya-dlya-nachinayushchih/",
+    "title": "Криптовалютная торговля для начинающих"
+  },
+  {
+    "language": "ru",
+    "legacy_slug": "post-4-ru",
+    "canonical_slug": "upravlenie-riskami-v-treydinge",
+    "from_path": "/blog/ru/post-4-ru/",
+    "from_url": "https://maketrades.info/blog/ru/post-4-ru/",
+    "to_path": "/blog/ru/upravlenie-riskami-v-treydinge/",
+    "to_url": "https://maketrades.info/blog/ru/upravlenie-riskami-v-treydinge/",
+    "title": "Управление рисками в трейдинге"
+  },
+  {
+    "language": "ru",
+    "legacy_slug": "post-3-ru",
+    "canonical_slug": "tehnicheskiy-analiz-polnoe-rukovodstvo",
+    "from_path": "/blog/ru/post-3-ru/",
+    "from_url": "https://maketrades.info/blog/ru/post-3-ru/",
+    "to_path": "/blog/ru/tehnicheskiy-analiz-polnoe-rukovodstvo/",
+    "to_url": "https://maketrades.info/blog/ru/tehnicheskiy-analiz-polnoe-rukovodstvo/",
+    "title": "Технический анализ: полное руководство"
+  },
+  {
+    "language": "en",
+    "legacy_slug": "post-1-en",
+    "canonical_slug": "top-10-trading-strategies-for-beginners",
+    "from_path": "/blog/en/post-1-en/",
+    "from_url": "https://maketrades.info/blog/en/post-1-en/",
+    "to_path": "/blog/en/top-10-trading-strategies-for-beginners/",
+    "to_url": "https://maketrades.info/blog/en/top-10-trading-strategies-for-beginners/",
+    "title": "Top 10 Trading Strategies for Beginners"
+  },
+  {
+    "language": "en",
+    "legacy_slug": "post-6-en",
+    "canonical_slug": "forex-basics-of-currency-markets",
+    "from_path": "/blog/en/post-6-en/",
+    "from_url": "https://maketrades.info/blog/en/post-6-en/",
+    "to_path": "/blog/en/forex-basics-of-currency-markets/",
+    "to_url": "https://maketrades.info/blog/en/forex-basics-of-currency-markets/",
+    "title": "Forex: Basics of Currency Markets"
+  },
+  {
+    "language": "en",
+    "legacy_slug": "post-4-en",
+    "canonical_slug": "risk-management-in-trading",
+    "from_path": "/blog/en/post-4-en/",
+    "from_url": "https://maketrades.info/blog/en/post-4-en/",
+    "to_path": "/blog/en/risk-management-in-trading/",
+    "to_url": "https://maketrades.info/blog/en/risk-management-in-trading/",
+    "title": "Risk Management in Trading"
+  },
+  {
+    "language": "en",
+    "legacy_slug": "post-7-en",
+    "canonical_slug": "trading-bots-strategy-automation",
+    "from_path": "/blog/en/post-7-en/",
+    "from_url": "https://maketrades.info/blog/en/post-7-en/",
+    "to_path": "/blog/en/trading-bots-strategy-automation/",
+    "to_url": "https://maketrades.info/blog/en/trading-bots-strategy-automation/",
+    "title": "Trading Bots: Strategy Automation"
+  },
+  {
+    "language": "en",
+    "legacy_slug": "post-3-en",
+    "canonical_slug": "technical-analysis-complete-guide",
+    "from_path": "/blog/en/post-3-en/",
+    "from_url": "https://maketrades.info/blog/en/post-3-en/",
+    "to_path": "/blog/en/technical-analysis-complete-guide/",
+    "to_url": "https://maketrades.info/blog/en/technical-analysis-complete-guide/",
+    "title": "Technical Analysis: Complete Guide"
+  },
+  {
+    "language": "en",
+    "legacy_slug": "post-8-en",
+    "canonical_slug": "trading-psychology-controlling-emotions",
+    "from_path": "/blog/en/post-8-en/",
+    "from_url": "https://maketrades.info/blog/en/post-8-en/",
+    "to_path": "/blog/en/trading-psychology-controlling-emotions/",
+    "to_url": "https://maketrades.info/blog/en/trading-psychology-controlling-emotions/",
+    "title": "Trading Psychology: Controlling Emotions"
+  },
+  {
+    "language": "en",
+    "legacy_slug": "post-2-en",
+    "canonical_slug": "how-to-choose-a-reliable-broker-in-2024",
+    "from_path": "/blog/en/post-2-en/",
+    "from_url": "https://maketrades.info/blog/en/post-2-en/",
+    "to_path": "/blog/en/how-to-choose-a-reliable-broker-in-2024/",
+    "to_url": "https://maketrades.info/blog/en/how-to-choose-a-reliable-broker-in-2024/",
+    "title": "How to Choose a Reliable Broker in 2024"
+  },
+  {
+    "language": "en",
+    "legacy_slug": "post-9-en",
+    "canonical_slug": "technical-analysis-indicators",
+    "from_path": "/blog/en/post-9-en/",
+    "from_url": "https://maketrades.info/blog/en/post-9-en/",
+    "to_path": "/blog/en/technical-analysis-indicators/",
+    "to_url": "https://maketrades.info/blog/en/technical-analysis-indicators/",
+    "title": "Technical Analysis Indicators"
   },
   {
     "language": "en",
@@ -190,13 +190,13 @@
     "title": "Candlestick Analysis: Japanese Candles"
   },
   {
-    "language": "ru",
-    "legacy_slug": "post-1-ru",
-    "canonical_slug": "top-10-torgovyh-strategiy-dlya-nachinayushchih",
-    "from_path": "/blog/ru/post-1-ru/",
-    "from_url": "https://maketrades.info/blog/ru/post-1-ru/",
-    "to_path": "/blog/ru/top-10-torgovyh-strategiy-dlya-nachinayushchih/",
-    "to_url": "https://maketrades.info/blog/ru/top-10-torgovyh-strategiy-dlya-nachinayushchih/",
-    "title": "Топ 10 торговых стратегий для начинающих"
+    "language": "en",
+    "legacy_slug": "post-5-en",
+    "canonical_slug": "cryptocurrency-trading-for-beginners",
+    "from_path": "/blog/en/post-5-en/",
+    "from_url": "https://maketrades.info/blog/en/post-5-en/",
+    "to_path": "/blog/en/cryptocurrency-trading-for-beginners/",
+    "to_url": "https://maketrades.info/blog/en/cryptocurrency-trading-for-beginners/",
+    "title": "Cryptocurrency Trading for Beginners"
   }
 ]
