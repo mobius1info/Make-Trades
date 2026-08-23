@@ -157,13 +157,44 @@ function homeUrl(language) {
   return `${BASE_URL}${homePath(language)}`;
 }
 
+// Значение переменной окружения легко испортить при вставке в панель хостинга:
+// потерять https://, прихватить пробел, кавычки или перевод строки. Приводим
+// к нормальному виду и проверяем, что получился рабочий адрес.
+function normalizeSupabaseUrl(value) {
+  const trimmed = String(value || '').trim().replace(/^['"]|['"]$/g, '');
+  if (!trimmed) return null;
+
+  const withScheme = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+
+  try {
+    const parsed = new URL(withScheme);
+    if (!parsed.hostname.includes('.')) return null;
+    return `${parsed.protocol}//${parsed.host}`;
+  } catch {
+    return null;
+  }
+}
+
 async function readSupabasePublicConfig() {
   const source = await readFile(join(ROOT_DIR, 'src', 'supabase-config.ts'), 'utf8');
   const defaultUrl = source.match(/supabaseUrl[\s\S]*?\|\|\s*'([^']+)'/)?.[1];
   const defaultAnonKey = source.match(/supabaseAnonKey[\s\S]*?\|\|\s*'([^']+)'/)?.[1];
 
-  const url = process.env.VITE_SUPABASE_URL || defaultUrl;
-  const anonKey = process.env.VITE_SUPABASE_ANON_KEY || defaultAnonKey;
+  let url = normalizeSupabaseUrl(process.env.VITE_SUPABASE_URL);
+  if (process.env.VITE_SUPABASE_URL && !url) {
+    // Не валим сборку из-за опечатки в панели: берём значение из кода,
+    // но говорим об этом громко. Само значение не печатаем - в него могли
+    // по ошибке вписать ключ.
+    console.warn(
+      '[seo-build] VITE_SUPABASE_URL не похож на адрес проекта Supabase и был проигнорирован.'
+    );
+    console.warn(
+      '[seo-build] Ожидается вид https://<ref>.supabase.co. Использую значение из src/supabase-config.ts.'
+    );
+  }
+  if (!url) url = normalizeSupabaseUrl(defaultUrl);
+
+  const anonKey = String(process.env.VITE_SUPABASE_ANON_KEY || defaultAnonKey || '').trim();
 
   if (!url || !anonKey) {
     throw new Error('Missing Supabase public config. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
