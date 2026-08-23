@@ -177,8 +177,8 @@ function normalizeSupabaseUrl(value) {
 
 async function readSupabasePublicConfig() {
   const source = await readFile(join(ROOT_DIR, 'src', 'supabase-config.ts'), 'utf8');
-  const defaultUrl = source.match(/supabaseUrl[\s\S]*?\|\|\s*'([^']+)'/)?.[1];
-  const defaultAnonKey = source.match(/supabaseAnonKey[\s\S]*?\|\|\s*'([^']+)'/)?.[1];
+  const defaultUrl = source.match(/DEFAULT_SUPABASE_URL\s*=\s*'([^']+)'/)?.[1];
+  const defaultAnonKey = source.match(/DEFAULT_SUPABASE_ANON_KEY\s*=\s*'([^']+)'/)?.[1];
 
   let url = normalizeSupabaseUrl(process.env.VITE_SUPABASE_URL);
   if (process.env.VITE_SUPABASE_URL && !url) {
