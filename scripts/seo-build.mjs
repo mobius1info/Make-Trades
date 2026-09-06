@@ -1664,6 +1664,27 @@ function legacyQuerySlugRules(posts) {
   return rules;
 }
 
+// Адреса, которые Google успел обойти, пока они были битыми, и держит в
+// индексе. Сам источник ошибок уже исправлен, но внешние ссылки остаются.
+function knownBrokenUrlRules() {
+  return [
+    // Опечатка в перелинковке: в текстах статей стояло brokeridzh,
+    // а слаг статьи - brokeridg.
+    {
+      from: '/blog/ru/kriptovalyutny-brokeridzh-osobennosti',
+      to: '/blog/ru/kriptovalyutny-brokeridg-osobennosti/',
+    },
+    {
+      from: '/blog/ru/kriptovalyutny-brokeridzh-osobennosti/',
+      to: '/blog/ru/kriptovalyutny-brokeridg-osobennosti/',
+    },
+    // Пути, которые браузеры и роботы запрашивают по умолчанию.
+    { from: '/favicon.ico', to: '/icon.png' },
+    { from: '/apple-touch-icon.png', to: '/icon.png' },
+    { from: '/apple-touch-icon-precomposed.png', to: '/icon.png' },
+  ];
+}
+
 // Голые legacy-страницы дублируют разделы по чистым адресам.
 // Идут после query-правил выше, иначе перехватили бы их.
 function legacyPageFallbackRules() {
@@ -1685,6 +1706,7 @@ function redirectRules(entries, posts = []) {
     ...legacyHomeRedirectRules(),
     ...retiredLanguageRedirectRules(),
     ...legacyQuerySlugRules(posts),
+    ...knownBrokenUrlRules(),
     ...legacyPageFallbackRules(),
     ...retiredLanguageWildcardRules(),
   ];

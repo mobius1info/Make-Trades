@@ -3831,6 +3831,31 @@
       ]
     },
     {
+      "source": "/blog/ru/kriptovalyutny-brokeridzh-osobennosti",
+      "destination": "/blog/ru/kriptovalyutny-brokeridg-osobennosti/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ru/kriptovalyutny-brokeridzh-osobennosti/",
+      "destination": "/blog/ru/kriptovalyutny-brokeridg-osobennosti/",
+      "statusCode": 301
+    },
+    {
+      "source": "/favicon.ico",
+      "destination": "/icon.png",
+      "statusCode": 301
+    },
+    {
+      "source": "/apple-touch-icon.png",
+      "destination": "/icon.png",
+      "statusCode": 301
+    },
+    {
+      "source": "/apple-touch-icon-precomposed.png",
+      "destination": "/icon.png",
+      "statusCode": 301
+    },
+    {
       "source": "/blog-post.html",
       "destination": "/blog/ru/",
       "statusCode": 301
