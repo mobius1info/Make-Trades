@@ -19,35 +19,11 @@
 
   <style>
     .not-found {
-      position: relative;
       min-height: 100vh;
       display: flex;
       align-items: center;
       padding: 8rem 0 4rem;
-      overflow: hidden;
       text-align: center;
-    }
-
-    .not-found::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 600px 400px at 30% 30%, var(--accent-glow) 0%, transparent 70%),
-        radial-gradient(ellipse 500px 350px at 75% 70%, var(--blue-glow) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .not-found .container {
-      position: relative;
-      z-index: 1;
-    }
-
-    .not-found-chart {
-      width: min(280px, 70vw);
-      height: auto;
-      margin: 0 auto 1.5rem;
-      display: block;
     }
 
     .not-found-code {
@@ -56,21 +32,12 @@
       line-height: 1;
       letter-spacing: -0.05em;
       margin-bottom: 1rem;
-      background: linear-gradient(135deg, var(--accent-400) 0%, var(--blue-400) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--accent-400);
     }
 
     .not-found-title {
       font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-      margin-bottom: 1rem;
-    }
-
-    .not-found-text {
-      max-width: 520px;
-      margin: 0 auto 2.5rem;
-      font-size: 1.0625rem;
+      margin-bottom: 2.5rem;
     }
 
     .not-found-actions {
@@ -78,12 +45,6 @@
       justify-content: center;
       flex-wrap: wrap;
       gap: 0.75rem;
-    }
-
-    .not-found-en {
-      margin-top: 3rem;
-      font-size: 0.875rem;
-      color: var(--text-muted);
     }
   </style>
 
@@ -132,38 +93,13 @@
   <main>
     <section class="not-found">
       <div class="container">
-        <svg class="not-found-chart" viewBox="0 0 280 110" fill="none" aria-hidden="true">
-          <g stroke-width="2" stroke-linecap="round">
-            <line x1="20" y1="8" x2="20" y2="46" stroke="#34d399"/>
-            <rect x="12" y="14" width="16" height="24" rx="3" fill="#10b981"/>
-            <line x1="68" y1="18" x2="68" y2="58" stroke="#34d399"/>
-            <rect x="60" y="26" width="16" height="22" rx="3" fill="#10b981"/>
-            <line x1="116" y1="34" x2="116" y2="72" stroke="#f87171"/>
-            <rect x="108" y="40" width="16" height="22" rx="3" fill="#ef4444"/>
-            <line x1="164" y1="48" x2="164" y2="86" stroke="#f87171"/>
-            <rect x="156" y="54" width="16" height="24" rx="3" fill="#ef4444"/>
-            <line x1="212" y1="62" x2="212" y2="100" stroke="#f87171"/>
-            <rect x="204" y="68" width="16" height="24" rx="3" fill="#ef4444"/>
-            <line x1="260" y1="74" x2="260" y2="106" stroke="#64748b" stroke-dasharray="3 5"/>
-          </g>
-        </svg>
-
         <p class="not-found-code">404</p>
         <h1 class="not-found-title">Страница не найдена</h1>
-        <p class="not-found-text">
-          Похоже, этот адрес ушёл ниже уровня поддержки. Возможно, ссылка устарела
-          или в ней опечатка — попробуйте начать с главной страницы.
-        </p>
-
         <div class="not-found-actions">
           <a href="/" class="btn btn-primary btn-large">На главную</a>
           <a href="/blog/ru/" class="btn btn-secondary btn-large">Блог</a>
           <a href="/faq/ru/" class="btn btn-secondary btn-large">FAQ</a>
         </div>
-
-        <p class="not-found-en">
-          Page not found. <a href="/en/">Go to the English homepage</a>
-        </p>
       </div>
     </section>
   </main>
