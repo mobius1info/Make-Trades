@@ -1212,6 +1212,10 @@ img {
   position: relative;
 }
 
+.form-field > input {
+  width: 100%;
+}
+
 .field-error {
   font-size: 0.8125rem;
   color: #ef4444;
