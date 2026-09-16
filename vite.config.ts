@@ -15,6 +15,7 @@ export default defineConfig({
         blogPost: resolve(__dirname, 'blog-post.html'),
         faq: resolve(__dirname, 'faq.html'),
         admin: resolve(__dirname, 'admin.html'),
+        notFound: resolve(__dirname, '404.html'),
       },
       output: {
         manualChunks: {
